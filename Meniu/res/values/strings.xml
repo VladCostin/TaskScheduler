@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Meniu</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Welcome!</string>
+    <string name="getTask">Sugereaza Task</string>
+    <string name="addTask">Adauga Task</string>
+    <string name="schedule">Vizualizare taskuri</string>
+
+</resources>
