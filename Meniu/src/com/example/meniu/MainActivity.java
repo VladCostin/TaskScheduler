@@ -2,14 +2,30 @@ package com.example.meniu;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * @author ${Vlad Herescu}
+ *
+ */
 public class MainActivity extends Activity {
 	
+	/**
+	 * represents the menu and its menuItem to view 
+	 * schedule, add a task or suggest a task
+	 */
 	ListView listaMeniu;
+	
+	/**
+	 * names of the menuItems
+	 */
 	static final String[] FRUITS = new String[3];
 
 	@Override
@@ -24,8 +40,29 @@ public class MainActivity extends Activity {
 		
 		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
 	//	listaMeniu.setAdapter( new ArrayAdapter<String>(this, R.layout.activity_main,FRUITS));
-		 listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,FRUITS));
+		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,FRUITS));
 		
+		//
+		 
+		
+		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
+		
+	/*	listaMeniu.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				 Log.w("apasare meniu", "am apasat un meniu" + FRUITS[arg2]);
+				 
+				 
+				 
+				
+			}
+			
+			
+			
+		}); */ 
+		 
 	}
 
 	@Override
@@ -36,3 +73,57 @@ public class MainActivity extends Activity {
 	}
 
 }
+
+
+/**
+ * @author ${Vlad Herescu}
+ *
+ */
+class MenuItemTouched implements OnItemClickListener{
+	
+	/**
+	 *  instance of the main activity class to gain access to its
+	 *  members 
+	 */
+	MainActivity mainActivity;
+	
+	/**
+	 * @param received : the mainActivity of the app
+	 */
+	MenuItemTouched(MainActivity received){
+		mainActivity = received;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		
+		
+		// Log.w("apasare meniu", "am apasat un meniu" + mainActivity.FRUITS[arg2]);
+		
+		 Intent intent = null;
+		
+		 
+		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0){
+			 
+			  intent = new Intent(mainActivity, AddTask.class);
+			
+			 
+			 
+		 }
+		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0){
+			  intent = new Intent(mainActivity, AddTask.class);
+			 
+		 }
+		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0){
+			  intent = new Intent(mainActivity, AddTask.class);
+			 
+		 }
+		 
+		 mainActivity.startActivity(intent);
+		 
+		
+	}
+	
+}
+
+

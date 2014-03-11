@@ -7,5 +7,58 @@
     <string name="getTask">Sugereaza Task</string>
     <string name="addTask">Adauga Task</string>
     <string name="schedule">Vizualizare taskuri</string>
+    <string name="title_activity_add_task">AddTask</string>
+    
+    
+     <string name="domain">Choose a domain</string>
+    <string name="country_prompt">Choose a domain</string>
+    
+     <string-array name="country_arrays">
+        <item>Sport</item>
+        <item>Bill pay</item>
+        <item>Shopping</item>
+        <item>Work</item>
+        <item>Studying</item>
+        <item>Travelling</item>
+        <item>Art</item>
+        <item>House Managing</item>
+        <item>Reading</item>
+        <item>Meeting</item>
+        <item>Conversation</item>
+        <item>Other</item>
+   	 </string-array>
+    
+     <string name="priority">Choose Priority</string>
+     <string name="priority_prompt">Choose a Priority</string>
+    
+     <string-array name="priority_arrays">
+        <item>1 (Lowest)</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5 ( Highest)</item>
+        <item>Unknown</item>
+       
+    </string-array>
+     <string name="Repeatable">How often does it repeat</string>
+     <string name="repeatable_prompt">Choose how often does it repeat</string>
+    
+     <string-array name="repeatable_arrays">
+        <item>It does not</item>
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+        <item>Unknown</item>
+       
+    </string-array>
+    
+     <string name="StartTime">The earliest time when the execution should have started</string>
+     <string name="EndTime">The latest time when the execution should have ended</string>
+    
+     
+     
+     
+     
+     
 
 </resources>
