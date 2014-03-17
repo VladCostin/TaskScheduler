@@ -32,11 +32,10 @@
      <string name="priority_prompt">Choose a Priority</string>
     
      <string-array name="priority_arrays">
-        <item>1 (Lowest)</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5 ( Highest)</item>
+        <item>Minor</item>
+        <item>Average</item>
+        <item>Major</item>
+        <item>Critical</item>
         <item>Unknown</item>
        
     </string-array>
@@ -54,6 +53,10 @@
     
      <string name="StartTime">The earliest time when the execution should have started</string>
      <string name="EndTime">The latest time when the execution should have ended</string>
+     <string name="addLocation">LOCATION</string>
+     <string name="chooseObject">OBJECTS</string>
+     <string name="setDeadline">Set Deadline</string>
+     <string name="saveButton">SAVE TASK</string>
     
      
      

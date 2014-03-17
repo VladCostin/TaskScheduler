@@ -39,29 +39,9 @@ public class MainActivity extends Activity {
 	   FRUITS[2] =	this.getString(R.string.schedule);
 		
 		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
-	//	listaMeniu.setAdapter( new ArrayAdapter<String>(this, R.layout.activity_main,FRUITS));
 		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,FRUITS));
-		
-		//
-		 
-		
 		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
 		
-	/*	listaMeniu.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				 Log.w("apasare meniu", "am apasat un meniu" + FRUITS[arg2]);
-				 
-				 
-				 
-				
-			}
-			
-			
-			
-		}); */ 
 		 
 	}
 

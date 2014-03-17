@@ -8,11 +8,85 @@
         android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-
 	
-
+        <TextView
+            android:id="@+id/addLocation"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:drawableLeft="@drawable/location"
+        	android:text="@string/addLocation" />
+        
+        <EditText 
+            android:id="@+id/Location"
+            android:inputType="text"
+            android:layout_below="@+id/addLocation"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content" />
+        
+         <View
+            android:id="@+id/drawLineLocation"
+        	android:layout_below="@+id/Location"
+ 			android:layout_width="match_parent"
+ 			android:layout_height="1dp"
+ 			android:background="@android:color/black" />
+         
+         
+         <TextView
+            android:id="@+id/chooseObject"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/drawLineLocation"
+            android:drawableLeft="@drawable/device"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/chooseObject" />
+        
+        <EditText 
+            android:id="@+id/Objects"
+            android:inputType="text"
+            android:layout_below="@+id/chooseObject"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+        
+         <View
+            android:id="@+id/drawLineObject"
+        	android:layout_below="@+id/Objects"
+ 			android:layout_width="match_parent"
+ 			android:layout_height="1dp"
+ 			android:background="@android:color/black" />
+ 
+		<Button
+            android:id="@+id/setDeadline"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/date"
+            android:layout_below="@+id/drawLineObject"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/setDeadline" />	 
+			
+         
+		<TextView
+		    android:id="@+id/deadline"
+		    android:layout_below="@+id/drawLineObject"
+		    android:layout_toRightOf="@+id/setDeadline"
+       	    android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:textAppearance="?android:attr/textAppearanceLarge"
+        	android:text="@string/hello_world" />
+		
+		
+		 <View
+            android:id="@+id/drawLineDeadline"
+        	android:layout_below="@+id/setDeadline"
+ 			android:layout_width="match_parent"
+ 			android:layout_height="1dp"
+ 			android:background="@android:color/black" />
+		
+	
     	<TextView
         	android:id="@+id/domain"
+        	android:layout_marginTop="20dp"
+        	android:layout_below="@+id/drawLineDeadline"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/domain" />
@@ -29,6 +103,7 @@
     	<TextView
   	      	android:id="@+id/priority"
     	  	android:layout_below="@+id/spinner1"
+    	  	android:drawableLeft="@drawable/warning"
         	android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
         	android:text="@string/priority" />
@@ -84,8 +159,15 @@
         	android:layout_below="@+id/endTime"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content" />
-     
-
+      	
+      	<Button
+      	    android:id="@+id/saveButton"
+      	    android:layout_width="wrap_content"
+      	    android:layout_height="wrap_content"
+      	    android:layout_centerHorizontal="true"
+      	    android:layout_below="@+id/timePicker2"
+      	    android:layout_marginTop="20dp"
+      	    android:text="@string/saveButton" />
 
 	</RelativeLayout>
 	
