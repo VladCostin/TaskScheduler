@@ -35,8 +35,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
+    private static final String KEY_Title = "title";
     private static final String KEY_Location = "location";
     private static final String KEY_Date = "date"; 
+    private static final String KEY_Priority = "priority"; 
  
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,9 +47,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_Location + " TEXT,"
-                + KEY_Date + " TEXT" + ")";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + 
+        		"(" + KEY_ID + " INTEGER PRIMARY KEY," 
+        			+ KEY_Title + " TEXT,"
+        		    + KEY_Priority + " TEXT, "
+        		    + KEY_Location + " TEXT,"
+                    + KEY_Date + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
  
@@ -66,15 +71,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new contact
-    void addContact(TaskToDataBase contact) {
+    public void addContact(String name, String priority, String location, String date ) {
     	
-    /*	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    	Date cal = contact.getCalendar();
-    	String date = sdf.format(cal); 
-    	System.out.println(date);*/
-    	 
     	
         SQLiteDatabase db = this.getWritableDatabase();
+    	ContentValues values = new ContentValues();
+    	values.put(KEY_Title, name);  
+    	values.put(KEY_Priority, priority);
+    	values.put(KEY_Location, location);
+    	values.put(KEY_Date, date);
+    	
+    	db.insert(TABLE_CONTACTS, null, values);
+    	db.close();
+    	
+    	Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");
+    	
+    /*    SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
         values.put(KEY_Location, contact.getLocation()); // Contact Name
@@ -85,7 +97,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
         
         
-        Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");
+        Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");*/
     }
  
     // Getting single contact

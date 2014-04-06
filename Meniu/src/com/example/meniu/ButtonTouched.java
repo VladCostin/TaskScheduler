@@ -37,13 +37,15 @@ public class ButtonTouched implements OnClickListener {
 		
 
 		
-	/*	 String date= task.getDate().getText().toString();
+		 String date= task.getDate().getText().toString();
 		 String location = task.getLocation().getText().toString();
 		 String priority = task.getPriority().getSelectedItem().toString();
 		 String name = task.getTitletask().getText().toString();
 		 
 		 
-		 Log.w("information",date + " " + location + " " + priority + " " + name );*/
+		 Log.w("information",date + " " + location + " " + priority + " " + name );
+		
+		 MainActivity.database.addContact(name,priority,location,date);      
 		
 	//	  MainActivity.database.addContact(new TaskToDataBase(location, date));        
 		
