@@ -5,6 +5,7 @@ package com.example.meniu;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import DatabaseOperation.TaskToDataBase;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,13 +35,17 @@ public class ButtonTouched implements OnClickListener {
 	public void onClick(View v) {
 		
 		
-		Log.w("pipi", "caca");
+
 		
-		 String date= task.date.getText().toString();
+	/*	 String date= task.getDate().getText().toString();
 		 String location = task.getLocation().getText().toString();
-	    
+		 String priority = task.getPriority().getSelectedItem().toString();
+		 String name = task.getTitletask().getText().toString();
+		 
+		 
+		 Log.w("information",date + " " + location + " " + priority + " " + name );*/
 		
-		  MainActivity.database.addContact(new TaskToDataBase(location, date));        
+	//	  MainActivity.database.addContact(new TaskToDataBase(location, date));        
 		
 		
 	//	Log.w(task.getPriority().getSelectedItem().toString(),"cucu" );

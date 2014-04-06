@@ -8,10 +8,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.RelativeLayout;
 
+/**
+ * shows the tasks the user has introduced
+ * @author ${Vlad Herescu}
+ *
+ */
 public class ShowTasks extends Activity {
 	
 	
-	RelativeLayout layout;
+//	RelativeLayout layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +24,10 @@ public class ShowTasks extends Activity {
 		setContentView(R.layout.activity_show_tasks);
 		
 		
-		layout = (RelativeLayout)  this.findViewById(R.id.showTasks);
+		
+		
+		
+	/*	layout = (RelativeLayout)  this.findViewById(R.id.showTasks);
 		
 		
 		List<TaskToDataBase> contacts = MainActivity.database.getAllContacts();   
@@ -32,7 +40,7 @@ public class ShowTasks extends Activity {
 	                // Writing Contacts to log
 	            
 	            Log.w("Name: ", log);
-	        } 
+	        } */ 
 	}
 
 	@Override

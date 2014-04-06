@@ -1,7 +1,9 @@
 package Task;
 
-import ContextElements.LocationContext;
-import ContextElements.TemporalContext;
+import java.util.HashMap;
+
+import ContextElements.ContextElementType;
+import ContextElements.ContextElement;
 
 
 
@@ -17,11 +19,24 @@ public class Context {
 	/**
 	 * the location where the task can be executed
 	 */
-	LocationContext location;
+//	LocationContext location;
 	
 	/**
 	 * data refering to the duration and interval when the task can be executed
 	 */
-	TemporalContext time;
+private //	TemporalContext time;
+	
+	
+	HashMap<ContextElementType,ContextElement> contextElementsCollection;
+
+	public HashMap<ContextElementType,ContextElement> getContextElementsCollection() {
+		return contextElementsCollection;
+	}
+
+	public void setContextElementsCollection(HashMap<ContextElementType,ContextElement> contextElementsCollection) {
+		contextElementsCollection = contextElementsCollection;
+	}
+	
+	
 	
 }

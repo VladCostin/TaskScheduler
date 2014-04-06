@@ -1,15 +1,9 @@
 package com.example.meniu;
 
-import java.util.ArrayList;
-
 import android.view.View.OnClickListener;
-
 import java.util.Calendar;
-import java.util.List;
-
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ActionBar.LayoutParams;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.view.Menu;
@@ -17,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +20,12 @@ import android.widget.TextView;
  *
  */
 public class AddTask extends Activity {
+	
+	
+	/**
+	 * the title of the task
+	 */
+	private EditText title;
 	
 	/**
 	 * show list of domains
@@ -63,7 +62,10 @@ public class AddTask extends Activity {
 	 */
 	Button saveButton;
 	
-	TextView date;
+	/**
+	 * contains the deadline established by the user
+	 */
+	private TextView date;
 	
 	static final int DATE_DIALOG_ID = 999;
 	
@@ -76,6 +78,7 @@ public class AddTask extends Activity {
 		
 		domain 	 = (Spinner) this.findViewById(R.id.spinner1);
 		priority = (Spinner) this.findViewById(R.id.spinner2);	
+		title    = (EditText) this.findViewById(R.id.title);
 		location = (EditText) this.findViewById(R.id.Location);
 		
 		addDeadline = (Button) this.findViewById(R.id.setDeadline);
@@ -167,6 +170,22 @@ public EditText getLocation() {
 
 public void setLocation(EditText location) {
 	this.location = location;
+}
+
+public TextView getDate() {
+	return date;
+}
+
+public void setDate(TextView date) {
+	this.date = date;
+}
+
+public EditText getTitletask() {
+	return title;
+}
+
+public void setTitle(EditText title) {
+	this.title = title;
 }
 
 

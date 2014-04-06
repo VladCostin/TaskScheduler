@@ -55,5 +55,6 @@
     <string name="setDeadline">Set Deadline</string>
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
+    <string name="taskTitle">TITLE</string>
 
 </resources>

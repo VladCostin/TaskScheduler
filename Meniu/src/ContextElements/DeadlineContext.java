@@ -5,6 +5,11 @@ package ContextElements;
  * @author ${Vlad Herescu}
  *
  */
-public class DeadlineContext {
+public class DeadlineContext extends ContextElement{
+	
+	/**
+	 * the task's deadline
+	 */
+	String deadline;
 
 }
