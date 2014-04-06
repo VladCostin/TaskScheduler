@@ -1,5 +1,7 @@
 package com.example.meniu;
 
+
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,16 +29,21 @@ public class MainActivity extends Activity {
 	 * names of the menuItems
 	 */
 	static final String[] FRUITS = new String[3];
+	
+	
+	static DatabaseHandler database;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		 database = new DatabaseHandler(this);
 		
-	   FRUITS[0] =	this.getString(R.string.getTask);
-	   FRUITS[1] =	this.getString(R.string.addTask);
-	   FRUITS[2] =	this.getString(R.string.schedule);
+		
+	    FRUITS[0] =	this.getString(R.string.getTask);
+	    FRUITS[1] =	this.getString(R.string.addTask);
+	    FRUITS[2] =	this.getString(R.string.schedule);
 		
 		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
 		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,FRUITS));
@@ -83,21 +90,15 @@ class MenuItemTouched implements OnItemClickListener{
 		 Intent intent = null;
 		
 		 
-		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0){
-			 
+		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0)	 
 			  intent = new Intent(mainActivity, AddTask.class);
 			
-			 
-			 
-		 }
-		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0){
+		 
+		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0)
 			  intent = new Intent(mainActivity, AddTask.class);
 			 
-		 }
-		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0){
-			  intent = new Intent(mainActivity, AddTask.class);
-			 
-		 }
+		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0)
+			  intent = new Intent(mainActivity, ShowTasks.class);
 		 
 		 mainActivity.startActivity(intent);
 		 

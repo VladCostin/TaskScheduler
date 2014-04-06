@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +39,13 @@ public class AddTask extends Activity {
 	private Spinner priority;
 	
 	
+	
+	/**
+	 * contains the location introduces by the user
+	 */
+	private EditText location;
+	
+	
 	/**
 	 * for selecting objects from a list or suggesting one
 	 */
@@ -55,9 +63,6 @@ public class AddTask extends Activity {
 	 */
 	Button saveButton;
 	
-	
-
-	
 	TextView date;
 	
 	static final int DATE_DIALOG_ID = 999;
@@ -70,7 +75,8 @@ public class AddTask extends Activity {
 		setContentView(R.layout.activity_add_task);
 		
 		domain 	 = (Spinner) this.findViewById(R.id.spinner1);
-		priority = (Spinner) this.findViewById(R.id.spinner2);		
+		priority = (Spinner) this.findViewById(R.id.spinner2);	
+		location = (EditText) this.findViewById(R.id.Location);
 		
 		addDeadline = (Button) this.findViewById(R.id.setDeadline);
 		date = (TextView) this.findViewById(R.id.deadline);
@@ -89,7 +95,7 @@ public class AddTask extends Activity {
 		
 		
 		saveButton = (Button) this.findViewById(R.id.saveButton);
-		saveButton.setOnClickListener(new ButtomTouched(this));
+		saveButton.setOnClickListener(new ButtonTouched(this));
 
 		
 	}
@@ -118,8 +124,8 @@ public class AddTask extends Activity {
 			public void onDateSet(DatePicker view, int selectedYear,
 								  int selectedMonth, int selectedDay) {
 				
-					date.setText(Integer.toString(selectedDay) + "-" + 
-					Integer.toString(selectedMonth+ 1) +"-" + Integer.toString(selectedYear) );
+					date.setText(Integer.toString(selectedYear) + "-" + 
+					Integer.toString(selectedMonth+ 1) +"-" + Integer.toString(selectedDay) );
 				
 			}
 	};
@@ -153,6 +159,14 @@ public Button getAddObjectsNeeded() {
 
 public void setAddObjectsNeeded(Button addObjectsNeeded) {
 	this.addObjectsNeeded = addObjectsNeeded;
+}
+
+public EditText getLocation() {
+	return location;
+}
+
+public void setLocation(EditText location) {
+	this.location = location;
 }
 
 
