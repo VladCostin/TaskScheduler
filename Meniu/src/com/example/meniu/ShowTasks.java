@@ -2,6 +2,8 @@ package com.example.meniu;
 
 import java.util.List;
 
+import DatabaseOperation.TaskToDataBase;
+import Task.Task;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -25,6 +27,9 @@ public class ShowTasks extends Activity {
 		
 		
 		
+	    Task task =	MainActivity.database.getContact(1);
+		
+	 //   Log.w("DATA TASK: ", task.getLocation());
 		
 		
 	/*	layout = (RelativeLayout)  this.findViewById(R.id.showTasks);

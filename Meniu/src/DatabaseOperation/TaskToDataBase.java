@@ -13,6 +13,8 @@ public class TaskToDataBase {
 	
 	private int id;
 	
+	private String title;
+	
 	private String location;
 	
 	private String calendar;
@@ -35,16 +37,6 @@ public class TaskToDataBase {
 		
 		this.calendar = calendar;
 		
-	/*	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date;
-		date = sdf.parse(calendar);
-		this.calendar = date;
-		
-		*/
-		
-		
-		
-		
 	}
 
 	public String getLocation() {
@@ -62,8 +54,6 @@ public class TaskToDataBase {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
-	
+		
 
 }

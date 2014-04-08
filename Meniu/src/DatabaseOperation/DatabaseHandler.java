@@ -14,6 +14,16 @@ import java.util.List;
 
 
 
+
+
+
+
+
+import ContextElements.ContextElementType;
+import ContextElements.DeadlineContext;
+import ContextElements.LocationContext;
+import ContextElements.TemporalContext;
+import Task.Task;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,13 +35,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
-    private static final String DATABASE_NAME = "contactsManager";
+    private static final String DATABASE_NAME = "Scheduler";
  
     // Contacts table name
-    private static final String TABLE_CONTACTS = "contacts";
+    private static final String TABLE_CONTACTS = "tasks";
  
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
@@ -101,24 +111,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
  
     // Getting single contact
-    TaskToDataBase getContact(int id) {
+    /**
+     * @param id : the id of the record that must be returned
+     * @return : the record identified by the id 
+     */
+    public Task getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
  
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
-                KEY_Location, KEY_Date }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = 
+        db.query(TABLE_CONTACTS, new String[]
+        { KEY_ID, KEY_Title, KEY_Priority,KEY_Location, KEY_Date }, KEY_ID + "=?",
+         new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
- 
-        TaskToDataBase contact = new TaskToDataBase();
         
-        contact.setId(Integer.parseInt(cursor.getString(0)));
-        contact.setLocation(cursor.getString(1));
-        contact.setCalendar(cursor.getString(2));
-                
+        Task  oneTask = new Task();
+        
+        oneTask.setPriority(cursor.getString(1));
+        oneTask.setPriority(cursor.getString(2));
+        
+        oneTask.getInternContext().getContextElementsCollection().
+        put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(cursor.getString(3)));
+        
+        
+        oneTask.getExternContext().getContextElementsCollection().
+        put(ContextElementType.TIME_CONTEXT_ELEMENT, new DeadlineContext(cursor.getString(4)));
+        
+
         
         // return contact
-        return contact;
+        return oneTask;
     }
      
     // Getting All Contacts

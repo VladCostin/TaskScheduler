@@ -5,6 +5,10 @@ package com.example.meniu;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+
+
+import DatabaseOperation.DatabaseHandler;
 import DatabaseOperation.TaskToDataBase;
 import android.util.Log;
 import android.view.View;
@@ -35,7 +39,6 @@ public class ButtonTouched implements OnClickListener {
 	public void onClick(View v) {
 		
 		
-
 		
 		 String date= task.getDate().getText().toString();
 		 String location = task.getLocation().getText().toString();
@@ -46,6 +49,8 @@ public class ButtonTouched implements OnClickListener {
 		 Log.w("information",date + " " + location + " " + priority + " " + name );
 		
 		 MainActivity.database.addContact(name,priority,location,date);      
+		 
+	//	 MainActivity.database.getWritableDatabase().execSQL("DROP TABLE IF EXISTS contacts");
 		
 	//	  MainActivity.database.addContact(new TaskToDataBase(location, date));        
 		

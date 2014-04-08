@@ -13,7 +13,7 @@ public class Task {
 	/**
 	 * the priority's value for the task
 	 */
-	private int priority;
+	private String priority;
 	
 	
 	/**
@@ -38,7 +38,7 @@ public class Task {
 	private Context scheduledContext;
 	
 	
-	Task(){
+	public Task(){
 		
 		internalContext = new Context();
 		externalContext = new Context();
@@ -87,11 +87,11 @@ public class Task {
 
 
 
-	public int getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 	}
 	

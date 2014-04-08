@@ -23,5 +23,13 @@ public class LocationContext extends ContextElement{
 	 * the latitude of the locations
 	 */
 	ArrayList<Integer> latitude;
+	
+	
+	public LocationContext(String location) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
 
 }
