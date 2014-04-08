@@ -50,6 +50,7 @@ public class MainActivity extends Activity {
 		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,FRUITS));
 		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
 		
+		
 		 
 	}
 
@@ -96,7 +97,8 @@ class MenuItemTouched implements OnItemClickListener{
 			
 		 
 		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0)
-			  intent = new Intent(mainActivity, AddTask.class);
+			intent = new Intent(mainActivity, AddTask.class);
+			
 			 
 		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0)
 			  intent = new Intent(mainActivity, ShowTasks.class);

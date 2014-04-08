@@ -27,7 +27,7 @@ public class ShowTasks extends Activity {
 		
 		
 		
-	    Task task =	MainActivity.database.getContact(1);
+	  //  Task task =	MainActivity.database.getContact(1);
 		
 	 //   Log.w("DATA TASK: ", task.getLocation());
 		

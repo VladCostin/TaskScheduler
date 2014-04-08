@@ -56,5 +56,6 @@
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>
+    <string name="title_activity_incercare">INCERCARE</string>
 
 </resources>

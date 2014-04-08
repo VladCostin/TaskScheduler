@@ -42,16 +42,18 @@
         	android:drawableLeft="@drawable/location"
         	android:text="@string/addLocation" />
         
-        <EditText 
-            android:id="@+id/Location"
-            android:inputType="text"
-            android:layout_below="@+id/addLocation"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content" />
+        
+       	<fragment 
+  			android:id="@+id/map"
+  			android:layout_below="@+id/addLocation"
+ 			android:layout_width="match_parent"
+  			android:layout_height="500dp"
+  			class="com.example.meniu.WorkaroundMapFragment"/>
+        
         
          <View
             android:id="@+id/drawLineLocation"
-        	android:layout_below="@+id/Location"
+        	android:layout_below="@+id/map"
  			android:layout_width="match_parent"
  			android:layout_height="1dp"
  			android:background="@android:color/black" />
