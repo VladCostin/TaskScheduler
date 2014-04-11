@@ -6,7 +6,6 @@ import DatabaseOperation.DatabaseHandler;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +31,10 @@ public class MainActivity extends Activity {
 	static final String[] FRUITS = new String[3];
 	
 	
-	static DatabaseHandler database;
+	/**
+	 * object where the tasks are stored
+	 */
+	private static DatabaseHandler database;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,10 @@ public class MainActivity extends Activity {
 		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
 		
 		
+	//	System.out.println("DIMENSIUNEA ESTE : " + database.getAllTasks().size());
+	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
+	//	database.createTable();
+		
 		 
 	}
 
@@ -59,6 +65,14 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	public static DatabaseHandler getDatabase() {
+		return database;
+	}
+
+	public static void setDatabase(DatabaseHandler database) {
+		MainActivity.database = database;
 	}
 
 }
@@ -93,7 +107,7 @@ class MenuItemTouched implements OnItemClickListener{
 		
 		 
 		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0)	 
-			  intent = new Intent(mainActivity, AddTask.class);
+			  intent = new Intent(mainActivity, ShowTasks.class); 
 			
 		 
 		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0)

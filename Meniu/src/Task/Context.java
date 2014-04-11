@@ -29,6 +29,12 @@ private //	TemporalContext time;
 	
 	HashMap<ContextElementType,ContextElement> contextElementsCollection;
 
+
+	public Context()
+	{
+		contextElementsCollection = new HashMap<ContextElementType,ContextElement>();
+	}
+
 	public HashMap<ContextElementType,ContextElement> getContextElementsCollection() {
 		return contextElementsCollection;
 	}

@@ -11,6 +11,11 @@ package Task;
 public class Task {
 	
 	/**
+	 * the task's id in the database
+	 */
+	private int ID;
+	
+	/**
 	 * the priority's value for the task
 	 */
 	private String priority;
@@ -20,6 +25,12 @@ public class Task {
 	 * name of the task that must be executed
 	 */
 	private String nameTask;
+	
+	
+	/**
+	 * the distance from the current position to the location if this task
+	 */
+	private Integer distance;
 
 	
 	/**
@@ -93,6 +104,30 @@ public class Task {
 
 	public void setPriority(String priority) {
 		this.priority = priority;
+	}
+
+
+
+	public Integer getDistance() {
+		return distance;
+	}
+
+
+
+	public void setDistance(float distance) {
+		this.distance = (int) distance;
+	}
+
+
+
+	public int getID() {
+		return ID;
+	}
+
+
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 }

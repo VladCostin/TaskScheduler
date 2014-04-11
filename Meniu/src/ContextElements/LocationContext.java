@@ -2,6 +2,12 @@ package ContextElements;
 
 import java.util.ArrayList;
 
+import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
+
+
+
 /**
  * defines the location where the task must be executed
  * @author ${Vlad Herescu}
@@ -10,26 +16,50 @@ import java.util.ArrayList;
 public class LocationContext extends ContextElement{
 	
 	/**
-	 * list with the locations names where the task can be executed
+	 * the latitudine of the task's location
 	 */
-	ArrayList<String> locations;
+	private Double latitude;
 	
 	/**
-	 * the longitude of the locations
+	 * the longitudine of the task's location
 	 */
-	ArrayList<Integer> longitude;
+	private Double longitude;
+	
+	
 	
 	/**
-	 * the latitude of the locations
+	 * @param location : the task's location in String, from database
 	 */
-	ArrayList<Integer> latitude;
+	public LocationContext(String location) 
+	{
 	
-	
-	public LocationContext(String location) {
-		// TODO Auto-generated constructor stub
+		String coordonates[] = location.split(" ");
+		latitude = Double.valueOf(coordonates[0]);
+		longitude = Double.valueOf(coordonates[1]);
+		
 	}
+	/**
+	 * @param location : the current user location
+	 */
+	public LocationContext(LatLng location)
+	{
+		latitude = location.latitude;
+		
+		longitude = location.longitude;
 	
-	
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	public Double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
 	
 
 }

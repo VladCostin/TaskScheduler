@@ -10,14 +10,25 @@ public class DeadlineContext extends ContextElement{
 	/**
 	 * the task's deadline
 	 */
-	String deadline;
+	private String deadline;
 	
 	
 	/**
 	 * @param deadline : the deadline of the task set in the database
 	 */
 	public DeadlineContext(String deadline) {
-		// TODO Auto-generated constructor stub
+		
+		this.deadline = deadline; 
+	}
+
+
+	public String getDeadline() {
+		return deadline;
+	}
+
+
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
 	}
 
 }

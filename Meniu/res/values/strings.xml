@@ -26,7 +26,7 @@
         <item>Other</item>
     </string-array>
 
-    <string name="priority">Choose Priority</string>
+    <string name="priority">Priority</string>
     <string name="priority_prompt">Choose a Priority</string>
 
     <string-array name="priority_arrays">
@@ -52,10 +52,12 @@
     <string name="EndTime">The latest time when the execution should have ended</string>
     <string name="addLocation">LOCATION</string>
     <string name="chooseObject">OBJECTS</string>
-    <string name="setDeadline">Set Deadline</string>
+    <string name="setDeadline">Deadline</string>
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>
     <string name="title_activity_incercare">INCERCARE</string>
+    <string name="Distance">Distance</string>
+    <string name="ERASE">ERASE TASK</string>
 
 </resources>

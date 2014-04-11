@@ -70,6 +70,7 @@ int drawable warning 0x7f020022
 int id ListView1 0x7f05001f
 int id Objects 0x7f05000e
 int id RelativeLayout01 0x7f050006
+int id RelativeLayoutShow 0x7f050020
 int id ScrollView01 0x7f050005
 int id action_settings 0x7f050021
 int id addLocation 0x7f05000a
@@ -91,7 +92,6 @@ int id repeatable 0x7f050017
 int id satellite 0x7f050002
 int id saveButton 0x7f05001d
 int id setDeadline 0x7f050010
-int id showTasks 0x7f050020
 int id spinner1 0x7f050014
 int id spinner2 0x7f050016
 int id spinner3 0x7f050018
@@ -109,6 +109,8 @@ int menu add_task 0x7f0b0000
 int menu incercare 0x7f0b0001
 int menu main 0x7f0b0002
 int menu show_tasks 0x7f0b0003
+int string Distance 0x7f060030
+int string ERASE 0x7f060031
 int string EndTime 0x7f060028
 int string Repeatable 0x7f060025
 int string StartTime 0x7f060027

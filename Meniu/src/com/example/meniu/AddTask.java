@@ -1,5 +1,6 @@
 package com.example.meniu;
 
+import DatabaseOperation.AddTaskButton;
 import android.util.Log;
 import android.view.View.OnClickListener;
 
@@ -12,26 +13,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,11 +59,11 @@ public class AddTask extends   FragmentActivity
 	private Spinner priority;
 	
 	
-	
 	/**
-	 * contains the location introduces by the user
+	 * the location selected by the user
 	 */
-	private EditText location;
+	private String location;
+	
 	
 	
 	/**
@@ -147,21 +140,11 @@ public class AddTask extends   FragmentActivity
 		
 		
 		saveButton = (Button) this.findViewById(R.id.saveButton);
-		saveButton.setOnClickListener(new ButtonTouched(this));
+		saveButton.setOnClickListener(new AddTaskButton(this));
 		
 		
 		mLocationClient = new LocationClient(this, this, this);
 
-		
-
-		
-	//	 Try to obtain the map from the SupportMapFragment.
-     //   map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-      //          .getMap();
-        
-        
-        
-    //    map.setOnMapClickListener(this);
 		
 		
 		
@@ -171,12 +154,13 @@ public class AddTask extends   FragmentActivity
 			
         
         
-        ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).setListener(new WorkaroundMapFragment.OnTouchListener() {
+        ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).
+        setListener(new WorkaroundMapFragment.OnTouchListener() {
             @Override
             public void onTouch() {
                 scroll.requestDisallowInterceptTouchEvent(true);
             }
-       });
+        });
         
       
 		
@@ -224,13 +208,10 @@ public class AddTask extends   FragmentActivity
 	};
 	
 		@Override
-	public void onMapClick(LatLng arg0) {
+	public void onMapClick(LatLng locationMap) { 
 		
-		
-
-		Log.d("CACAT", arg0.toString());
-
-		map.addMarker(new MarkerOptions().position(arg0).icon(BitmapDescriptorFactory.fromResource(R.drawable.location)));
+		location = Double.toString( locationMap.latitude) + " " + Double.toString(locationMap.longitude);
+		map.addMarker(new MarkerOptions().position(locationMap).icon(BitmapDescriptorFactory.fromResource(R.drawable.location)));
 		
 	}
 
@@ -314,11 +295,11 @@ public void setAddObjectsNeeded(Button addObjectsNeeded) {
 	this.addObjectsNeeded = addObjectsNeeded;
 }
 
-public EditText getLocation() {
+public String getLocation() {
 	return location;
 }
 
-public void setLocation(EditText location) {
+public void setLocation(String location) {
 	this.location = location;
 }
 

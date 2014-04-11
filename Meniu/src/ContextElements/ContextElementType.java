@@ -15,6 +15,12 @@ public enum ContextElementType {
 	/**
 	 * defines the object temporal object
 	 */
-	TIME_CONTEXT_ELEMENT;
+	TIME_CONTEXT_ELEMENT,
+	
+	
+	/**
+	 * defines the task's deadline
+	 */
+	DEADLINE_ELEMENT;
 	
 }
