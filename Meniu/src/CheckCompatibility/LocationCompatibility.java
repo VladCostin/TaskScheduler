@@ -24,15 +24,8 @@ public class LocationCompatibility extends Compatibility  {
 		LocationContext taskContext = (LocationContext) task;
 		
 		
-		System.out.println("CACAT3 " + currentContext.getLatitude() + " " + currentContext.getLongitude());
-		System.out.println("CACAT3 " + taskContext.getLatitude() + " " + taskContext.getLongitude());
-		
 		Location.distanceBetween(currentContext.getLatitude(), currentContext.getLongitude(),
 				                 taskContext.getLatitude(), taskContext.getLongitude(), results);
-		
-		System.out.println("DIMENSIUNEA ESTE : " + results.length);
-		System.out.println("DISTANTA IN METRI ESTE : " + results[1]);
-		
 		taskdetails.setDistance(results[0]);
 		
 		

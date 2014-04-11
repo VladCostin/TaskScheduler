@@ -6,16 +6,13 @@ import java.util.List;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.model.LatLng;
 
 import CheckCompatibility.Compatibility;
 import CheckCompatibility.LocationCompatibility;
-import CheckCompatibility.TemporalCompatibility;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.LocationContext;
-import ContextElements.TemporalContext;
 import DatabaseOperation.EraseTask;
 import Task.Context;
 import Task.Task;
@@ -26,9 +23,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -156,6 +151,8 @@ public class ShowTasks extends Activity
     
     /**
      * create a context regarding the current state of the user
+     * @param position : the position of the user
+     * @return : the current context of the user
      */
     private Context createCurrentState(LatLng position) {
 		
@@ -356,8 +353,6 @@ public class ShowTasks extends Activity
 			butonErase.setOnClickListener(new EraseTask(this));
 			idTasks.put(numberOfView, task.getID());
 			
-			System.out.println("BUTON " + numberOfView);
-			
 			params_erase.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			butonErase.setLayoutParams(params_erase);
 			
@@ -368,11 +363,6 @@ public class ShowTasks extends Activity
 			params_line.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			line.setLayoutParams(params_line);
 			
-			
-			
-			
-	//		line.setLayoutParams(new ViewGroup.LayoutParams
-		//						(ViewGroup.LayoutParams.MATCH_PARENT,2));
 			
 			layout.addView(title);
 			layout.addView(titleValue);

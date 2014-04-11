@@ -1,8 +1,5 @@
 package ContextElements;
 
-import java.util.ArrayList;
-
-import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 

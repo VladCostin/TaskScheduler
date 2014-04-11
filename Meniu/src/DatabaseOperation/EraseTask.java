@@ -5,8 +5,12 @@ import com.example.meniu.ShowTasks;
 
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 
+/**
+ * erases the task associated with the buton pushed 
+ * @author ${Vlad Herescu}
+ *
+ */
 public class EraseTask implements OnClickListener  {
 	
 	
