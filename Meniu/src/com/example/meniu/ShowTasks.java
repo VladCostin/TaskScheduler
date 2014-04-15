@@ -1,5 +1,9 @@
 package com.example.meniu;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,9 +14,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 import CheckCompatibility.Compatibility;
 import CheckCompatibility.LocationCompatibility;
+import CheckCompatibility.TemporalCompatibility;
+import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.LocationContext;
+import ContextElements.TemporalContext;
 import DatabaseOperation.EraseTask;
 import Task.Context;
 import Task.Task;
@@ -77,7 +84,7 @@ public class ShowTasks extends Activity
 		idTasks = new HashMap<Integer,Integer>();
 		
 		checkers.put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationCompatibility());
-	//	checkers.put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalCompatibility());
+		checkers.put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalCompatibility());
 		
 		mLocationClient = new LocationClient(this,this,this);
 	}
@@ -159,6 +166,14 @@ public class ShowTasks extends Activity
     	Context currentContext = new Context();
     	currentContext.getContextElementsCollection().
     	put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(position));
+    	currentContext.getContextElementsCollection().
+    	put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext() );
+    	
+    /*	SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    	Date date = new Date();
+    	System.out.println(sdf.format(calendar.getTime()));
+    	
+    	Calendar cal = new GregorianCalendar();*/
     	
     	return currentContext;
     	
@@ -174,6 +189,10 @@ public class ShowTasks extends Activity
 	private void checkAllTasksCompatibility(Context currentContext) {
 	
 		List<Task> tasks = MainActivity.getDatabase().getAllTasks();
+		
+		
+		Collections.sort(tasks, new PriorityComparator());
+	
 		
 		boolean isTaskCompatible = true;
 		for(Task task : tasks)
@@ -336,7 +355,7 @@ public class ShowTasks extends Activity
 			
 			
 			DeadlineContext  deadlineTask = (DeadlineContext) 
-			task.getExternContext().getContextElementsCollection().get(ContextElementType.TIME_CONTEXT_ELEMENT);
+			task.getExternContext().getContextElementsCollection().get(ContextElementType.DEADLINE_ELEMENT);
 			
 			
 			deadlineValue.setText(deadlineTask.getDeadline());

@@ -184,9 +184,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(cursor.getString(3)));
           
-          
+     
         oneTask.getExternContext().getContextElementsCollection().
-        put(ContextElementType.TIME_CONTEXT_ELEMENT, new DeadlineContext(cursor.getString(4)));
+        put(ContextElementType.DEADLINE_ELEMENT, new DeadlineContext(cursor.getString(4)));
+        
+        oneTask.getExternContext().getContextElementsCollection().
+        put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext());
         
 
         

@@ -35,13 +35,21 @@ public class MainActivity extends Activity {
 	 * object where the tasks are stored
 	 */
 	private static DatabaseHandler database;
+	
+	
+	/**
+	 * obtaining the general information of the application
+	 */
+	private static Core core;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		 database = new DatabaseHandler(this);
+		database = new DatabaseHandler(this);
+		core = new Core();
+		Core.init();
 		
 		
 	    FRUITS[0] =	this.getString(R.string.getTask);
@@ -73,6 +81,14 @@ public class MainActivity extends Activity {
 
 	public static void setDatabase(DatabaseHandler database) {
 		MainActivity.database = database;
+	}
+
+	public static Core getCore() {
+		return core;
+	}
+
+	public static void setCore(Core core) {
+		MainActivity.core = core;
 	}
 
 }
