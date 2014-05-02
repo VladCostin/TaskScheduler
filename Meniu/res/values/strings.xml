@@ -7,6 +7,7 @@
     <string name="getTask">Sugereaza Task</string>
     <string name="addTask">Adauga Task</string>
     <string name="schedule">Vizualizare taskuri</string>
+    <string name="discoverDevice">Descopera dispozitive</string>
     <string name="title_activity_add_task">AddTask</string>
     <string name="domain">Choose a domain</string>
     <string name="country_prompt">Choose a domain</string>
@@ -59,5 +60,12 @@
     <string name="title_activity_incercare">INCERCARE</string>
     <string name="Distance">Distance</string>
     <string name="ERASE">ERASE TASK</string>
+    <string name="title_activity_add_device">AddDeviceActivity</string>
+    
+    <string name="DeviceName">Device Name</string>
+    <string name="MacAdress">Mac Address</string>
+    <string name="addOwner">Add Owner</string>
+    <string name="addOwnerDevice">Add Owner Device</string>
+    <string name="noDevice">No new Devices have been detected</string>
 
 </resources>

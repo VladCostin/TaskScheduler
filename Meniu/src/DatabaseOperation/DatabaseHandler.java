@@ -1,28 +1,15 @@
 package DatabaseOperation;
 
 
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
  
-
-
-
-
-
-
-
-
-
-
 
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.LocationContext;
 import ContextElements.TemporalContext;
+import DeviceData.Device;
 import Task.Task;
 import android.content.ContentValues;
 import android.content.Context;
@@ -42,13 +29,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
     // Contacts table name
     private static final String TABLE_TASKS = "tasks";
+    
+    private static final String TABLE_DEVICES = "devices";
  
-    // Contacts Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_Title = "title";
-    private static final String KEY_Location = "location";
-    private static final String KEY_Date = "date"; 
-    private static final String KEY_Priority = "priority"; 
+
  
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,32 +42,43 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void createTable()
     {
     	SQLiteDatabase db = this.getReadableDatabase();
-    	String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_TASKS + 
-        		"(" + KEY_ID + " INTEGER PRIMARY KEY," 
-        			+ KEY_Title + " TEXT,"
-        		    + KEY_Priority + " TEXT, "
-        		    + KEY_Location + " TEXT,"
-                    + KEY_Date + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+    	addTableComand(db);
     }
     
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_TASKS + 
-        		"(" + KEY_ID + " INTEGER PRIMARY KEY," 
-        			+ KEY_Title + " TEXT,"
-        		    + KEY_Priority + " TEXT, "
-        		    + KEY_Location + " TEXT,"
-                    + KEY_Date + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+  
+    	addTableComand(db);
     }
+    
+    
+    public void addTableComand(SQLiteDatabase db)
+    {
+    	 String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_TASKS + 
+         		"(" + Tasks.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
+         			+ Tasks.KEY_Title + " " + TypeAttribute.COLLUMN_STRING + ","
+         		    + Tasks.KEY_Priority + " " + TypeAttribute.COLLUMN_STRING + ","
+         		    + Tasks.KEY_Location + " " + TypeAttribute.COLLUMN_STRING + ","
+                     + Tasks.KEY_Date + " " + TypeAttribute.COLLUMN_STRING +  ")";
+         
+         String CREATE_DEVICE_TABLE = "CREATE TABLE " + TABLE_DEVICES + 
+         		"(" + DeviceData.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
+         			+ DeviceData.KEY_MAC + " " + TypeAttribute.COLLUMN_STRING + ","
+         			+ DeviceData.KEY_DEVICE + " " + TypeAttribute.COLLUMN_STRING + ","
+                     + DeviceData.KEY_OWNER + " " + TypeAttribute.COLLUMN_STRING +  ")";
+         
+         db.execSQL(CREATE_CONTACTS_TABLE);
+         db.execSQL(CREATE_DEVICE_TABLE);
+    }
+    
  
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEVICES);
  
         // Create tables again
         onCreate(db);
@@ -92,34 +87,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
      * 
-     * adding a 
+     * adding a task
      * 
-     * @param name 
-     * @param priority 
-     * @param location  
-     * @param date 
+     * @param name : task's name	
+     * @param priority : task's priority
+     * @param location : tasks's location
+     * @param date : task's date
      */
- 
-   
     public void addTask(String name, String priority, String location, String date ) { 
-    	
-    	
-        SQLiteDatabase db = this.getWritableDatabase();
+ 
     	ContentValues values = new ContentValues();
-    	values.put(KEY_Title, name);  
-    	values.put(KEY_Priority, priority);
-    	values.put(KEY_Location, location);
-    	values.put(KEY_Date, date);
-    	
-    	db.insert(TABLE_TASKS, null, values);
-    	db.close();
-    	
-    	Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");
+    	values.put(Tasks.KEY_Title, name);  
+    	values.put(Tasks.KEY_Priority, priority);
+    	values.put(Tasks.KEY_Location, location);
+    	values.put(Tasks.KEY_Date, date);
+
+    	insertRegistreation(values, TABLE_TASKS);
     	
     }
- 
-    // Getting single contact
+    
     /**
+     * @param macAddress : devices's mac adress
+     * @param nameDevice : device's name
+     * @param owner : device's owner
+     */
+    public void addDevice(String macAddress, String nameDevice, String owner)
+    {
+    	ContentValues values = new ContentValues();
+    	values.put(DeviceData.KEY_MAC, macAddress);
+    	values.put(DeviceData.KEY_DEVICE, nameDevice);
+    	values.put(DeviceData.KEY_OWNER, owner);
+    	
+    	insertRegistreation(values, TABLE_DEVICES);
+
+    }
+    
+    
+    /**
+     * @param content : the data to be inserted
+     * @param nameTable : the table the data will be inserted to
+     */
+    public void insertRegistreation(ContentValues content, String nameTable)
+    {
+    	  SQLiteDatabase db = this.getWritableDatabase();
+    	  db.insert(nameTable, null, content);
+          db.close();
+          
+          Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");
+    }
+    
+    
+ 
+    
+    /**
+     * Getting single task
      * @param id : the id of the record that must be returned
      * @return : the record identified by the id 
      */
@@ -128,7 +149,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         Cursor cursor = 
         db.query(TABLE_TASKS, new String[]
-        { KEY_ID, KEY_Title, KEY_Priority,KEY_Location, KEY_Date }, KEY_ID + "=?",
+        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date }, Tasks.KEY_ID + "=?",
          new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -137,8 +158,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return takeTaskFromDataBase(cursor);
     }
      
-    
-    /**
+
+
+	/**
      * @return  Getting All Contacts
      */
     public List<Task> getAllTasks() { 
@@ -184,7 +206,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(cursor.getString(3)));
           
-     
         oneTask.getExternContext().getContextElementsCollection().
         put(ContextElementType.DEADLINE_ELEMENT, new DeadlineContext(cursor.getString(4)));
         
@@ -194,8 +215,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         
         return oneTask;
-    	
-    	
+    	   	
     }
   
   
@@ -208,11 +228,70 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	
     	//db.delete(TABLE_TASKS, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
     	
-    	db.delete(TABLE_TASKS, KEY_ID + " = ?",new String[] { Integer.toString(id) });
+    	db.delete(TABLE_TASKS, Tasks.KEY_ID + " = ?",new String[] { Integer.toString(id) });
     	
     	
     	db.close();
     
     }
+    
+    /**
+     * @param adressMac : mac address usd to detect the corect registration in the table
+     * @return : the Device which has the MacAdress received as a parameter
+     */
+    public Device  getDeviceData(String adressMac)
+    {
+    	 SQLiteDatabase db = this.getReadableDatabase();
+    	 Cursor cursor = 
+         db.query(TABLE_DEVICES, new String[]
+         { DeviceData.KEY_ID, DeviceData.KEY_MAC, DeviceData.KEY_DEVICE,DeviceData.KEY_OWNER }, DeviceData.KEY_MAC + "=?",
+         new String[] { null , String.valueOf(adressMac) }, null, null, null);
+    	 
+    	 
+    	 if (cursor != null)
+             cursor.moveToFirst();
+    	 
+    	 return createDeviceObject(cursor);
+    	 
+    }
+    
+    /**
+     * @return : all the devices detected with Bluetooth and saved in the application
+     */
+    public List<Device> getAllDevices() 
+    {
+    	 List<Device> contactList = new ArrayList<Device>();
+         // Select All Query
+         String selectQuery = "SELECT  * FROM " + TABLE_DEVICES;
+  
+         SQLiteDatabase db = this.getWritableDatabase();
+         Cursor cursor = db.rawQuery(selectQuery, null);
+  
+         // looping through all rows and adding to list
+         if (cursor.moveToFirst()) {
+             do {
+             	
+                 contactList.add( createDeviceObject(cursor) );
+             } while (cursor.moveToNext());
+         }
+  
+         // return contact list
+         return contactList;
+    }
+    
+    
+    
+    
+    /**
+     * @param cursor : object containing the data extracted from the table
+     * @return : the object Device completed with the data extracted
+     */
+    public Device createDeviceObject(Cursor cursor) {
+		
+    	
+    	return new Device( Integer.parseInt( cursor.getString(0)), 
+        cursor.getString(1), cursor.getString(2), cursor.getString(3));
+    	
+	}
     
 }

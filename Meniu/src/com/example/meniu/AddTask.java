@@ -220,6 +220,8 @@ public class AddTask extends   FragmentActivity
 		  // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         Location l =  mLocationClient.getLastLocation(); 
+        
+       
        
         
         LatLng position = new LatLng(l.getLatitude(), l.getLongitude());

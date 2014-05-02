@@ -2,7 +2,10 @@ package com.example.meniu;
 
 
 
+import java.util.List;
+
 import DatabaseOperation.DatabaseHandler;
+import DeviceData.Device;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -28,7 +31,7 @@ public class MainActivity extends Activity {
 	/**
 	 * names of the menuItems
 	 */
-	static final String[] FRUITS = new String[3];
+	static final String[] MenUApp = new String[4];
 	
 	
 	/**
@@ -52,18 +55,28 @@ public class MainActivity extends Activity {
 		Core.init();
 		
 		
-	    FRUITS[0] =	this.getString(R.string.getTask);
-	    FRUITS[1] =	this.getString(R.string.addTask);
-	    FRUITS[2] =	this.getString(R.string.schedule);
+	    MenUApp[0] =	this.getString(R.string.getTask);
+	    MenUApp[1] =	this.getString(R.string.addTask);
+	    MenUApp[2] =	this.getString(R.string.schedule);
+	    MenUApp[3] =	this.getString(R.string.discoverDevice);
 		
 		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
-		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,FRUITS));
+		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,MenUApp));
 		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
 		
 		
 	//	System.out.println("DIMENSIUNEA ESTE : " + database.getAllTasks().size());
-	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
-	//	database.createTable();
+	/*	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
+		database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS devices");
+		database.createTable();*/
+		
+		
+	/*	List<Device> devices = database.getAllDevices();
+		for(Device d : devices)
+		{
+			System.out.println(d.getNameDevice() + " " + d.getOwnerDevice() + " " +d.getMacAddress());
+		}*/
+		
 		
 		 
 	}
@@ -122,16 +135,19 @@ class MenuItemTouched implements OnItemClickListener{
 		 Intent intent = null;
 		
 		 
-		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0)	 
+		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0)	 
 			  intent = new Intent(mainActivity, ShowTasks.class); 
 			
 		 
-		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0)
+		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0)
 			intent = new Intent(mainActivity, AddTask.class);
 			
 			 
-		 if(mainActivity.FRUITS[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0)
+		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0)
 			  intent = new Intent(mainActivity, ShowTasks.class);
+		 
+		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.discoverDevice)) == 0)
+			  intent = new Intent(mainActivity, AddDeviceActivity.class);
 		 
 		 mainActivity.startActivity(intent);
 		 

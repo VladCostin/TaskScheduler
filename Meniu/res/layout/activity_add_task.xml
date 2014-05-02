@@ -22,7 +22,7 @@
             android:id="@+id/title"
             android:inputType="text"
             android:layout_below="@+id/nameTask"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
         	android:layout_height="wrap_content" />
         
         
@@ -72,7 +72,7 @@
             android:id="@+id/Objects"
             android:inputType="text"
             android:layout_below="@+id/chooseObject"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
         	android:layout_height="wrap_content"/>
         
          <View
@@ -98,6 +98,7 @@
 		    android:layout_toRightOf="@+id/setDeadline"
        	    android:layout_width="wrap_content"
        		android:layout_height="wrap_content"
+       		android:layout_marginTop="20dp"
        		android:textAppearance="?android:attr/textAppearanceLarge"
         	android:text="@string/hello_world" />
 		
