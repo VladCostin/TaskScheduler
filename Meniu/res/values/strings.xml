@@ -70,8 +70,10 @@
     <string name="addOwnerDevice">Add Owner Device</string>
     <string name="myDeviceConstant">My Device</string>
     <string name="noDevice">No new Devices have been detected</string>
-    
+    <string name="Succes">The data has been inserted  </string>
+    <string name="Error">Please insert the :</string>
     
     <string name="notChoosed"> Not Choosed </string>
+    
 
 </resources>

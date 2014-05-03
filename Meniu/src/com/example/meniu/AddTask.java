@@ -107,6 +107,13 @@ public class AddTask extends   FragmentActivity
 	private TextView people;
 	
 	
+	
+	/**
+	 * shows a message whether the data have been successfully inserted
+	 */
+	private TextView messageInsert;
+	
+	
 	/**
 	 * shows the devices selected by the user
 	 */
@@ -153,65 +160,80 @@ public class AddTask extends   FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_task);
 		
-		domain 	 = (Spinner) this.findViewById(R.id.spinner1);
-		priority = (Spinner) this.findViewById(R.id.spinner2);	
-		title    = (EditText) this.findViewById(R.id.title);
+		domain 	 = (Spinner)  findViewById(R.id.spinner1);
+		priority = (Spinner)  findViewById(R.id.spinner2);	
+		title    = (EditText) findViewById(R.id.title);
 		
 		
-		scroll   = (ScrollView) this.findViewById(R.id.ScrollView01);
+		scroll   = (ScrollView) findViewById(R.id.ScrollView01);
 		scroll.requestDisallowInterceptTouchEvent(true);
 		
 		
-		people = (TextView) this.findViewById(R.id.choosePeopleText);
-		date     = (TextView) this.findViewById(R.id.deadline);
-		devices = (TextView) this.findViewById(R.id.chooseDevices);
+		people = (TextView)   findViewById(R.id.choosePeopleText);
+		date     = (TextView) findViewById(R.id.deadline);
+		devices = (TextView)  findViewById(R.id.chooseDevices);
+		messageInsert = (TextView) this.findViewById(R.id.messageInsert);
 		
-		addPeopleNeeded = (Button) this.findViewById(R.id.choosePeopleButton);
+		addPeopleNeeded = (Button) findViewById(R.id.choosePeopleButton);
 		addPeopleNeeded.setOnClickListener( new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
 				showDialog(PEOPLE_DIALOG_ID);
+				v.setFocusableInTouchMode(true);
+				v.requestFocus();
 				
 			}
 		});
 		
-		addDeadline = (Button) this.findViewById(R.id.setDeadline);
+	//	addPeopleNeeded.setOnClickListener(this);
+		
+		addDeadline = (Button) findViewById(R.id.setDeadline);
 		addDeadline.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
+				
+				
 				showDialog(DATE_DIALOG_ID);
+				
+				
+				
+				addDeadline.setFocusableInTouchMode(true);
+				addDeadline.requestFocus();
+
 				
 			}
 		});
 		
 		
 		
-		addDevicesNeeded = (Button) this.findViewById(R.id.chooseDevicesButton);
+		addDevicesNeeded = (Button) findViewById(R.id.chooseDevicesButton);
 		addDevicesNeeded.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
 				System.out.println("TREBUIE SA AFISEZE DISPOZTIVELE");
-				showDialog(DEVICES_DIALOG_ID);		
+				showDialog(DEVICES_DIALOG_ID);	
+				
 				
 			}
 		});
 		
 		
-		saveButton = (Button) this.findViewById(R.id.saveButton);
+		saveButton = (Button) findViewById(R.id.saveButton);
 		saveButton.setOnClickListener(new AddTaskButton(this));
+		
+		
+	//	addDevicesNeeded.setFocusable(true); 
 		
 		
 		mLocationClient = new LocationClient(this, this, this);
 
-		
-		
-		
+
 		
 		 map = ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 		 map.setOnMapClickListener(this); 
@@ -240,6 +262,7 @@ public class AddTask extends   FragmentActivity
 		return true;
 	}
 	
+
 	
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -326,7 +349,8 @@ public class AddTask extends   FragmentActivity
             		peopleString = getResources().getString(R.string.notChoosed);
             	
             	people.setText(peopleString);
-             
+            	addPeopleNeeded.setFocusableInTouchMode(true);
+            	addPeopleNeeded.requestFocus();
             }
         });
 		
@@ -388,6 +412,8 @@ public class AddTask extends   FragmentActivity
             	
             	
             	devices.setText(deviceString);
+            	addDevicesNeeded.setFocusableInTouchMode(true);
+            	addDevicesNeeded.requestFocus();
              
             }
         });
@@ -600,6 +626,25 @@ public TextView getDevices() {
 public void setDevices(TextView devices) {
 	this.devices = devices;
 }
+
+
+
+
+public TextView getMessageInsert() {
+	return messageInsert;
+}
+
+
+
+
+public void setMessageInsert(TextView messageInsert) {
+	this.messageInsert = messageInsert;
+}
+
+
+
+
+
 
 
 

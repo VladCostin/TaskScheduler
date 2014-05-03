@@ -2,6 +2,7 @@ package DatabaseOperation;
 
 import com.example.meniu.AddTask;
 import com.example.meniu.MainActivity;
+import com.example.meniu.R;
 
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,12 @@ public class AddTaskButton implements OnClickListener {
 	
 	
 	/**
+	 * the message to be shown after trying to insert data
+	 */
+	String messageToShow;
+	
+	
+	/**
 	 * @param task : 
 	 */
 	public AddTaskButton(AddTask task) {
@@ -31,6 +38,18 @@ public class AddTaskButton implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		
+		 if(checkDatas() == false ){
+			 
+			 task.getMessageInsert().setText( messageToShow );
+			 task.getMessageInsert().setFocusableInTouchMode(true);
+			 task.getMessageInsert().requestFocus();
+			 return;
+		 }
+		 
+	
+		 task.getMessageInsert().setText( messageToShow );
+		 task.getMessageInsert().setFocusableInTouchMode(true);
+		 task.getMessageInsert().requestFocus(); 
 		
 		
 		 String date= task.getDate().getText().toString();
@@ -45,6 +64,34 @@ public class AddTaskButton implements OnClickListener {
 		
 		 MainActivity.getDatabase().addTask(name,priority,location,date, people, device);      
 		 
+	}
+
+
+	/**
+	 * @return : true if the data have been inserted
+	 */
+	public boolean checkDatas() {
+		
+		if(task.getLocation() == null ||
+		   task.getTitletask().getText().toString().compareTo("") == 0 )
+		{
+			messageToShow = task.getResources().getString(R.string.Error) ;
+			
+			if(task.getLocation() == null)
+				messageToShow += "  LOCATION ";
+
+			if(task.getTitletask().getText().toString().compareTo("") == 0 )
+				messageToShow += " TITLE ";
+			
+			return false;
+			
+			
+		}
+
+	
+		messageToShow = task.getResources().getString(R.string.Succes);
+		
+		return true;
 	}
 
 }
