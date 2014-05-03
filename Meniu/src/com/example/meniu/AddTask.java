@@ -589,6 +589,20 @@ public void setPeople(TextView people) {
 
 
 
+
+public TextView getDevices() {
+	return devices;
+}
+
+
+
+
+public void setDevices(TextView devices) {
+	this.devices = devices;
+}
+
+
+
 }
 
 

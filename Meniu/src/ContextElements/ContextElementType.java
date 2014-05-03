@@ -1,5 +1,6 @@
 package ContextElements;
 
+
 /**
  * the types of context elements which define how, where, when the task has to be executed
  * @author ${Vlad Herescu}
@@ -27,6 +28,11 @@ public enum ContextElementType {
 	/**
 	 * people needed to execute the task
 	 */
-	PEOPLE_ELEMENT;
+	PEOPLE_ELEMENT,
+	
+	/**
+	 * devices needed to execute the task
+	 */
+	DEVICES_ELEMENT;
 	
 }

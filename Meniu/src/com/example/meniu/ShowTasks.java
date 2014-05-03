@@ -18,6 +18,7 @@ import CheckCompatibility.TemporalCompatibility;
 import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
+import ContextElements.DeviceContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
@@ -234,8 +235,8 @@ public class ShowTasks extends Activity
 	{
 		  
 	
-		   TextView title,priority, distance, deadline,people;
-		   TextView titleValue, priorityValue , distanceValue, deadlineValue, peopleValue;
+		   TextView title,priority, distance, deadline,people, devices;
+		   TextView titleValue, priorityValue , distanceValue, deadlineValue, peopleValue, devicesValue;
 		   Button butonErase;
 		   
 		   
@@ -279,6 +280,13 @@ public class ShowTasks extends Activity
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
+		    RelativeLayout.LayoutParams params_devices = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    RelativeLayout.LayoutParams params_devices_value = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
 		    
 		    RelativeLayout.LayoutParams params_line = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
@@ -297,13 +305,14 @@ public class ShowTasks extends Activity
 			distance = new TextView(this);
 			deadline = new TextView(this);
 			people = new TextView(this);
+			devices = new TextView(this);
 			
 			titleValue  =   new TextView(this);
 			priorityValue = new TextView(this);
 			distanceValue = new TextView(this);
 			deadlineValue = new TextView(this);
 			peopleValue =   new TextView(this);
-			
+			devicesValue = new TextView(this);
 			
 			butonErase = new Button(this);
 			line = new View(this);
@@ -395,13 +404,36 @@ public class ShowTasks extends Activity
 			
 
 			peopleValue.setText(peopleTask.getPeopleTaskString());
-			peopleValue.setPadding(20, 10, 0, 10);
+			peopleValue.setPadding(20, 10, 0, 0);
 			peopleValue.setTextSize(20);
 			peopleValue.setId( ++ numberOfView);
 			params_people_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			params_people_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			peopleValue.setLayoutParams(params_people_value);
 			
+			
+			devices.setText(R.string.chooseDevices);
+			devices.setPadding(20, 10, 0, 0);
+			devices.setTextSize(20);
+			devices.setId( ++ numberOfView);
+			params_devices.addRule(RelativeLayout.BELOW, numberOfView - 1);
+			devices.setLayoutParams(params_devices);
+				
+			
+			DeviceContext  deviceTask = (DeviceContext) 
+			task.getInternContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+			
+
+			devicesValue.setText(deviceTask.getDeviceTaskString());
+			devicesValue.setPadding(20, 10, 0, 0);
+			devicesValue.setTextSize(20);
+			devicesValue.setId( ++ numberOfView);
+			params_devices_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
+			params_devices_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
+			devicesValue.setLayoutParams(params_devices_value);
+			
+			
+		
 
 			
 			butonErase.setText(R.string.ERASE);
@@ -430,6 +462,8 @@ public class ShowTasks extends Activity
 			layout.addView(deadlineValue);
 			layout.addView(people);
 			layout.addView(peopleValue);
+			layout.addView(devices);
+			layout.addView(devicesValue); 
 			layout.addView(butonErase);
 			layout.addView(line);
 			
