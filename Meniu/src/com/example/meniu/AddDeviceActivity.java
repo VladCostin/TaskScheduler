@@ -5,12 +5,6 @@ import java.util.List;
 import java.util.Timer;
 
 
-
-
-
-
-
-
 import DatabaseOperation.AddDeviceButton;
 import DeviceData.Device;
 import android.os.Bundle;

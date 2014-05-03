@@ -8,5 +8,6 @@ public interface Tasks {
     String KEY_Location = "location";
     String KEY_Date = "date"; 
     String KEY_Priority = "priority"; 
+    String KEY_People = "people";
 	
 }

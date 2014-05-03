@@ -21,6 +21,12 @@ public enum ContextElementType {
 	/**
 	 * defines the task's deadline
 	 */
-	DEADLINE_ELEMENT;
+	DEADLINE_ELEMENT,
+	
+	
+	/**
+	 * people needed to execute the task
+	 */
+	PEOPLE_ELEMENT;
 	
 }

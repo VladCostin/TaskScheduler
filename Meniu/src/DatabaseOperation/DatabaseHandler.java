@@ -2,12 +2,16 @@ package DatabaseOperation;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
  
+
+
 
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.LocationContext;
+import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
 import DeviceData.Device;
 import Task.Task;
@@ -60,13 +64,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          			+ Tasks.KEY_Title + " " + TypeAttribute.COLLUMN_STRING + ","
          		    + Tasks.KEY_Priority + " " + TypeAttribute.COLLUMN_STRING + ","
          		    + Tasks.KEY_Location + " " + TypeAttribute.COLLUMN_STRING + ","
-                     + Tasks.KEY_Date + " " + TypeAttribute.COLLUMN_STRING +  ")";
+                    + Tasks.KEY_Date + " " + TypeAttribute.COLLUMN_STRING + ","
+                    + Tasks.KEY_People + " " + TypeAttribute.COLLUMN_STRING + 
+                ")";
          
          String CREATE_DEVICE_TABLE = "CREATE TABLE " + TABLE_DEVICES + 
          		"(" + DeviceData.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
          			+ DeviceData.KEY_MAC + " " + TypeAttribute.COLLUMN_STRING + ","
          			+ DeviceData.KEY_DEVICE + " " + TypeAttribute.COLLUMN_STRING + ","
-                     + DeviceData.KEY_OWNER + " " + TypeAttribute.COLLUMN_STRING +  ")";
+                    + DeviceData.KEY_OWNER + " " + TypeAttribute.COLLUMN_STRING +  ")";
          
          db.execSQL(CREATE_CONTACTS_TABLE);
          db.execSQL(CREATE_DEVICE_TABLE);
@@ -93,14 +99,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param priority : task's priority
      * @param location : tasks's location
      * @param date : task's date
+     * @param people : the people needed to execute the task
      */
-    public void addTask(String name, String priority, String location, String date ) { 
+    public void addTask(String name, String priority, String location, String date, String people ) { 
  
     	ContentValues values = new ContentValues();
     	values.put(Tasks.KEY_Title, name);  
     	values.put(Tasks.KEY_Priority, priority);
     	values.put(Tasks.KEY_Location, location);
     	values.put(Tasks.KEY_Date, date);
+    	values.put(Tasks.KEY_People, people); 
 
     	insertRegistreation(values, TABLE_TASKS);
     	
@@ -149,7 +157,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         Cursor cursor = 
         db.query(TABLE_TASKS, new String[]
-        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date }, Tasks.KEY_ID + "=?",
+        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date, Tasks.KEY_People }, Tasks.KEY_ID + "=?",
          new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -202,6 +210,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	oneTask.setID(Integer.parseInt(cursor.getString(0))); 
     	oneTask.setNameTask(cursor.getString(1));
         oneTask.setPriority(cursor.getString(2));
+        
+        
           
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(cursor.getString(3)));
@@ -212,6 +222,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         oneTask.getExternContext().getContextElementsCollection().
         put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext());
         
+        
+
+        ArrayList<String> peopleList = new ArrayList( Arrays.asList(cursor.getString(5).split(","))   );
+        oneTask.getInternContext().getContextElementsCollection().
+        put(ContextElementType.PEOPLE_ELEMENT, new PeopleContext(peopleList));
+       
+       
+        System.out.println( "Oamenii necesari sunt " + peopleList.toString());
 
         
         return oneTask;

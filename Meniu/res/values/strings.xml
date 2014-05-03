@@ -54,6 +54,7 @@
     <string name="addLocation">LOCATION</string>
     <string name="chooseObject">OBJECTS</string>
     <string name="setDeadline">Deadline</string>
+    <string name="choosePeople">People</string> 
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>
@@ -66,6 +67,10 @@
     <string name="MacAdress">Mac Address</string>
     <string name="addOwner">Add Owner</string>
     <string name="addOwnerDevice">Add Owner Device</string>
+    <string name="myDeviceConstant">My Device</string>
     <string name="noDevice">No new Devices have been detected</string>
+    
+    
+    <string name="notChoosed"> Not Choosed </string>
 
 </resources>

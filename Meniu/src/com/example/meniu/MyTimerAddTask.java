@@ -163,7 +163,7 @@ public class MyTimerAddTask extends TimerTask{
 				addOwnerDevice.setLayoutParams(params_Owner);
 				
 				writeOwner.setTextSize(20);
-				writeOwner.setText("My Device");
+				writeOwner.setText(R.string.myDeviceConstant);
 				writeOwner.setId( ++ numberOfView);
 				ownerGet.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 				ownerGet.addRule(RelativeLayout.BELOW, numberOfView - 2);

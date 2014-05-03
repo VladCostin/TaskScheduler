@@ -1,10 +1,13 @@
 package com.example.meniu;
 
 import DatabaseOperation.AddTaskButton;
+import DeviceData.Device;
 import android.util.Log;
 import android.view.View.OnClickListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -18,8 +21,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -72,6 +77,13 @@ public class AddTask extends   FragmentActivity
 	private Button addObjectsNeeded;
 	
 	
+	
+	/**
+	 * for selecting people needed for the task
+	 */
+	private Button addPeopleNeeded;
+	
+	
 	/**
 	 * for selecting a deadline
 	 */
@@ -88,6 +100,12 @@ public class AddTask extends   FragmentActivity
 	 */
 	private TextView date;
 	
+	
+	/**
+	 * shows the people selected
+	 */
+	private TextView people;
+	
 	/**
 	 *  used to set the location of the task
 	 */
@@ -99,7 +117,15 @@ public class AddTask extends   FragmentActivity
 	 */
 	LocationClient mLocationClient;
 	
+	/**
+	 * used to determine which date to choose
+	 */
 	static final int DATE_DIALOG_ID = 999;
+	
+	/**
+	 * used to determine which people to choose
+	 */
+	static final int PEOPLE_DIALOG_ID = 1000;
 	
 	
 	/**
@@ -118,6 +144,7 @@ public class AddTask extends   FragmentActivity
 		domain 	 = (Spinner) this.findViewById(R.id.spinner1);
 		priority = (Spinner) this.findViewById(R.id.spinner2);	
 		title    = (EditText) this.findViewById(R.id.title);
+	
 		
 		scroll   = (ScrollView) this.findViewById(R.id.ScrollView01);
 		scroll.requestDisallowInterceptTouchEvent(true);
@@ -125,8 +152,18 @@ public class AddTask extends   FragmentActivity
 		
 		addDeadline = (Button) this.findViewById(R.id.setDeadline);
 		date = (TextView) this.findViewById(R.id.deadline);
+		people = (TextView) this.findViewById(R.id.choosePeopleText);
 		
-		date.setText("No deadline");
+		addPeopleNeeded = (Button) this.findViewById(R.id.choosePeopleButton);
+		addPeopleNeeded.setOnClickListener( new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				showDialog(PEOPLE_DIALOG_ID);
+				
+			}
+		});
 		
 		addDeadline.setOnClickListener(new OnClickListener() {
 			
@@ -190,10 +227,83 @@ public class AddTask extends   FragmentActivity
 		   // set date picker as current date
 		   return new DatePickerDialog
 		   (this, datePickerListener, year, month,day);
+		   
+		   
+		case PEOPLE_DIALOG_ID:
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			AlertDialog dialog; 
+			builder.setTitle("Choose Poeple to eecute the Task");
+			List<Device> devices = MainActivity.getDatabase().getAllDevices();
+			ArrayList<String> contacts = createContactList(devices);
+			final ArrayList<Integer> itemsId = new ArrayList<Integer>();
+			final CharSequence[] items =  contacts.toArray( new CharSequence[contacts.size()]);
+
+			builder.setMultiChoiceItems(items, null,
+                       new DialogInterface.OnMultiChoiceClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int indexSelected,
+								boolean isChecked) {
+							
+							
+							if(isChecked == true)
+								itemsId.add(indexSelected);
+							else
+								itemsId.remove(indexSelected);
+							
+						}
+						
+						 
+			
+			});
+			
+			 // Set the action buttons
+            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                   
+                	int i;
+                	String peopleString="";
+                	for( i = 0; i < itemsId.size() - 1; i++)
+                	{
+                		 peopleString = peopleString + items[itemsId.get(i)] + ",";
+                	}
+                	
+                	peopleString = peopleString + items[itemsId.get(i)];
+                	people.setText(peopleString);
+                 
+                }
+            });
+			
+			System.out.println("INTRA AICI");
+			dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+            dialog.show();
+			
+			break;
 		}
 		return null;
 	}
 	
+	/**
+	 * @param devices : list of the devices from the database
+	 * @return : the contact list
+	 */
+	public ArrayList<String> createContactList(List<Device> devices) {
+		
+		ArrayList<String> contacts = new ArrayList<String>();
+		
+		for(Device d : devices)
+		{
+			if(contacts.contains(d.getOwnerDevice()) == false)
+				contacts.add(d.getOwnerDevice());
+		}
+		
+		
+		
+		return contacts;
+	}
+
 	private DatePickerDialog.OnDateSetListener datePickerListener 
 			= new DatePickerDialog.OnDateSetListener() {
 
@@ -327,6 +437,21 @@ public GoogleMap getMap() {
 
 public void setMap(GoogleMap map) {
 	this.map = map;
+}
+
+
+
+
+
+public TextView getPeople() {
+	return people;
+}
+
+
+
+
+public void setPeople(TextView people) {
+	this.people = people;
 }
 
 

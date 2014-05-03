@@ -19,6 +19,7 @@ import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.LocationContext;
+import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
 import DatabaseOperation.EraseTask;
 import Task.Context;
@@ -233,8 +234,8 @@ public class ShowTasks extends Activity
 	{
 		  
 	
-		   TextView title,priority, distance, deadline, titleValue,
-				    priorityValue , distanceValue, deadlineValue;
+		   TextView title,priority, distance, deadline,people;
+		   TextView titleValue, priorityValue , distanceValue, deadlineValue, peopleValue;
 		   Button butonErase;
 		   
 		   
@@ -270,12 +271,23 @@ public class ShowTasks extends Activity
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
+		    
+		    RelativeLayout.LayoutParams params_people = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+		 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    RelativeLayout.LayoutParams params_people_value = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+		 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
 		    RelativeLayout.LayoutParams params_line = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
 		    
 		    RelativeLayout.LayoutParams params_erase = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
 				   
 				   
 			
@@ -284,11 +296,13 @@ public class ShowTasks extends Activity
 			priority = new TextView(this);
 			distance = new TextView(this);
 			deadline = new TextView(this);
+			people = new TextView(this);
 			
-			titleValue  = new TextView(this);
+			titleValue  =   new TextView(this);
 			priorityValue = new TextView(this);
 			distanceValue = new TextView(this);
 			deadlineValue = new TextView(this);
+			peopleValue =   new TextView(this);
 			
 			
 			butonErase = new Button(this);
@@ -354,18 +368,41 @@ public class ShowTasks extends Activity
 			deadline.setLayoutParams(params_deadline);
 			
 			
+			
 			DeadlineContext  deadlineTask = (DeadlineContext) 
 			task.getExternContext().getContextElementsCollection().get(ContextElementType.DEADLINE_ELEMENT);
 			
 			
 			deadlineValue.setText(deadlineTask.getDeadline());
-			deadlineValue.setPadding(20, 10, 0, 10);
+			deadlineValue.setPadding(20, 10, 0, 0);
 			deadlineValue.setTextSize(20);
 			deadlineValue.setId( ++ numberOfView);
 			params_deadline_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			params_deadline_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			deadlineValue.setLayoutParams(params_deadline_value);
 			
+			
+			people.setText(R.string.choosePeople);
+			people.setPadding(20, 10, 0, 0);
+			people.setTextSize(20);
+			people.setId( ++ numberOfView);
+			params_people.addRule(RelativeLayout.BELOW, numberOfView - 1);
+			people.setLayoutParams(params_people);
+				
+			
+			PeopleContext  peopleTask = (PeopleContext) 
+			task.getInternContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+			
+
+			peopleValue.setText(peopleTask.getPeopleTaskString());
+			peopleValue.setPadding(20, 10, 0, 10);
+			peopleValue.setTextSize(20);
+			peopleValue.setId( ++ numberOfView);
+			params_people_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
+			params_people_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
+			peopleValue.setLayoutParams(params_people_value);
+			
+
 			
 			butonErase.setText(R.string.ERASE);
 			butonErase.setId( ++ numberOfView);
@@ -391,6 +428,8 @@ public class ShowTasks extends Activity
 			layout.addView(distanceValue);
 			layout.addView(deadline);
 			layout.addView(deadlineValue);
+			layout.addView(people);
+			layout.addView(peopleValue);
 			layout.addView(butonErase);
 			layout.addView(line);
 			
