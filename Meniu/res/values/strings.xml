@@ -55,6 +55,7 @@
     <string name="chooseObject">OBJECTS</string>
     <string name="setDeadline">Deadline</string>
     <string name="choosePeople">People</string> 
+    <string name="chooseDevices">Devices</string> 
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>

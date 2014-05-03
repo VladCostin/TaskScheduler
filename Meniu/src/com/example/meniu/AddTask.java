@@ -74,7 +74,7 @@ public class AddTask extends   FragmentActivity
 	/**
 	 * for selecting objects from a list or suggesting one
 	 */
-	private Button addObjectsNeeded;
+	private Button addDevicesNeeded;
 	
 	
 	
@@ -106,6 +106,12 @@ public class AddTask extends   FragmentActivity
 	 */
 	private TextView people;
 	
+	
+	/**
+	 * shows the devices selected by the user
+	 */
+	private TextView devices;
+	
 	/**
 	 *  used to set the location of the task
 	 */
@@ -129,6 +135,12 @@ public class AddTask extends   FragmentActivity
 	
 	
 	/**
+	 * used to determine which devices to choose
+	 */
+	static final int DEVICES_DIALOG_ID = 1001;
+	
+	
+	/**
 	 * to cease motion on scroll when the map is touched
 	 */
 	ScrollView scroll;
@@ -144,15 +156,15 @@ public class AddTask extends   FragmentActivity
 		domain 	 = (Spinner) this.findViewById(R.id.spinner1);
 		priority = (Spinner) this.findViewById(R.id.spinner2);	
 		title    = (EditText) this.findViewById(R.id.title);
-	
+		
 		
 		scroll   = (ScrollView) this.findViewById(R.id.ScrollView01);
 		scroll.requestDisallowInterceptTouchEvent(true);
 		
 		
-		addDeadline = (Button) this.findViewById(R.id.setDeadline);
-		date = (TextView) this.findViewById(R.id.deadline);
 		people = (TextView) this.findViewById(R.id.choosePeopleText);
+		date     = (TextView) this.findViewById(R.id.deadline);
+		devices = (TextView) this.findViewById(R.id.chooseDevices);
 		
 		addPeopleNeeded = (Button) this.findViewById(R.id.choosePeopleButton);
 		addPeopleNeeded.setOnClickListener( new OnClickListener() {
@@ -165,12 +177,27 @@ public class AddTask extends   FragmentActivity
 			}
 		});
 		
+		addDeadline = (Button) this.findViewById(R.id.setDeadline);
 		addDeadline.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				
 				showDialog(DATE_DIALOG_ID);
+				
+			}
+		});
+		
+		
+		
+		addDevicesNeeded = (Button) this.findViewById(R.id.chooseDevicesButton);
+		addDevicesNeeded.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				System.out.println("TREBUIE SA AFISEZE DISPOZTIVELE");
+				showDialog(DEVICES_DIALOG_ID);		
 				
 			}
 		});
@@ -219,72 +246,185 @@ public class AddTask extends   FragmentActivity
 		switch (id) {
 		case DATE_DIALOG_ID:
 			
-			final Calendar c = Calendar.getInstance();
-			int year = c.get(Calendar.YEAR);
-			int month = c.get(Calendar.MONTH);
-			int day = c.get(Calendar.DAY_OF_MONTH);
-			
-		   // set date picker as current date
-		   return new DatePickerDialog
-		   (this, datePickerListener, year, month,day);
-		   
+			return dateDialog();
 		   
 		case PEOPLE_DIALOG_ID:
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			AlertDialog dialog; 
-			builder.setTitle("Choose Poeple to eecute the Task");
-			List<Device> devices = MainActivity.getDatabase().getAllDevices();
-			ArrayList<String> contacts = createContactList(devices);
-			final ArrayList<Integer> itemsId = new ArrayList<Integer>();
-			final CharSequence[] items =  contacts.toArray( new CharSequence[contacts.size()]);
-
-			builder.setMultiChoiceItems(items, null,
-                       new DialogInterface.OnMultiChoiceClickListener() {
-
-						@Override
-						public void onClick(DialogInterface arg0, int indexSelected,
-								boolean isChecked) {
-							
-							
-							if(isChecked == true)
-								itemsId.add(indexSelected);
-							else
-								itemsId.remove(indexSelected);
-							
-						}
-						
-						 
+			return peopleDialog();
 			
-			});
+		case DEVICES_DIALOG_ID:
 			
-			 // Set the action buttons
-            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                   
-                	int i;
-                	String peopleString="";
-                	for( i = 0; i < itemsId.size() - 1; i++)
-                	{
-                		 peopleString = peopleString + items[itemsId.get(i)] + ",";
-                	}
-                	
-                	peopleString = peopleString + items[itemsId.get(i)];
-                	people.setText(peopleString);
-                 
-                }
-            });
-			
-			System.out.println("INTRA AICI");
-			dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-            dialog.show();
-			
-			break;
+			return devicesDialog();
 		}
 		return null;
 	}
 	
+	
+	/**
+	 * @return : the dialog where the user can choose the deadline of the task
+	 */
+	public Dialog dateDialog()
+	{
+		final Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		
+	   // set date picker as current date
+	   return new DatePickerDialog
+	   (this, datePickerListener, year, month,day);
+	}
+	
+	/**
+	 * @return : the dialog where the user can choose the people he needs to execute the task
+	 */
+	public Dialog peopleDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Choose with which people the task must be executed");
+		List<Device> devices = MainActivity.getDatabase().getAllDevices();
+		ArrayList<String> contacts = createContactList(devices);
+		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
+		final CharSequence[] items =  contacts.toArray( new CharSequence[contacts.size()]);
+
+		builder.setMultiChoiceItems(items, null,
+                   new DialogInterface.OnMultiChoiceClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int indexSelected,
+							boolean isChecked) {
+						
+						
+						if(isChecked == true)
+							itemsId.add(indexSelected);
+						else
+							itemsId.remove(indexSelected);
+						
+					}
+					
+					 
+		
+		});
+		
+		 // Set the action buttons
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+               
+            	int i;
+            	String peopleString="";
+
+            	
+            	if(itemsId.size() != 0)
+            	{
+            		for( i = 0; i < itemsId.size() - 1; i++)
+            			peopleString = peopleString + items[itemsId.get(i)] + ",";
+            	
+            		peopleString = peopleString + items[itemsId.get(i)];
+            	}
+            	else
+            		peopleString = getResources().getString(R.string.notChoosed);
+            	
+            	people.setText(peopleString);
+             
+            }
+        });
+		
+	
+
+		
+		return builder.create();
+	}
+	
+	/**
+	 * @return : the dialog from which the user can select the necessary devices
+	 */
+	public Dialog devicesDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("Choose which devices are needed for executing the task");
+		List<Device> devicesDatabase = MainActivity.getDatabase().getAllDevices();
+		ArrayList<String> devicesMy = createMyDevicesList(devicesDatabase);
+		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
+		final CharSequence[] items =  devicesMy.toArray( new CharSequence[devicesMy.size()]);
+
+		builder.setMultiChoiceItems(items, null,
+                   new DialogInterface.OnMultiChoiceClickListener() {
+
+					@Override
+					public void onClick(DialogInterface arg0, int indexSelected,
+							boolean isChecked) {
+						
+						
+						if(isChecked == true)
+							itemsId.add(indexSelected);
+						else
+							itemsId.remove(indexSelected);
+						
+					}
+					
+					 
+		
+		});
+		
+		 // Set the action buttons
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+               
+            	int i;
+            	String deviceString="";
+            	if(itemsId.size() != 0)
+            	{
+            		for( i = 0; i < itemsId.size() - 1; i++)
+            			deviceString = deviceString + items[itemsId.get(i)] + ","; 
+            		
+            		deviceString = deviceString + items[itemsId.get(i)];
+            		
+            	}
+            	else
+            		deviceString = getResources().getString(R.string.notChoosed);
+            	
+            	
+            	devices.setText(deviceString);
+             
+            }
+        });
+		
+		return builder.create();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * @param devices : list of devices from the database
+	 * @return : myOwnDevices
+	 */
+	public ArrayList<String> createMyDevicesList(List<Device> devices) {
+		
+		ArrayList<String> myDevices = new ArrayList<String>();
+		String myDeviceConstant = this.getResources().getString(R.string.myDeviceConstant);
+		
+		for(Device d : devices)
+		{
+			if(d.getOwnerDevice().compareTo(myDeviceConstant) == 0 )
+			{
+				myDevices.add(d.getNameDevice());
+			}
+		}
+		
+		
+		
+		return myDevices;
+		
+	}
+
+
+
+
 	/**
 	 * @param devices : list of the devices from the database
 	 * @return : the contact list
@@ -292,12 +432,12 @@ public class AddTask extends   FragmentActivity
 	public ArrayList<String> createContactList(List<Device> devices) {
 		
 		ArrayList<String> contacts = new ArrayList<String>();
+		String myDeviceConstant = this.getResources().getString(R.string.myDeviceConstant);
 		
 		for(Device d : devices)
-		{
-			if(contacts.contains(d.getOwnerDevice()) == false)
+			if(contacts.contains(d.getOwnerDevice()) == false &&
+			   d.getOwnerDevice().compareTo(myDeviceConstant) != 0	)
 				contacts.add(d.getOwnerDevice());
-		}
 		
 		
 		
@@ -399,13 +539,6 @@ public void setPriority(Spinner priority) {
 	this.priority = priority;
 }
 
-public Button getAddObjectsNeeded() {
-	return addObjectsNeeded;
-}
-
-public void setAddObjectsNeeded(Button addObjectsNeeded) {
-	this.addObjectsNeeded = addObjectsNeeded;
-}
 
 public String getLocation() {
 	return location;

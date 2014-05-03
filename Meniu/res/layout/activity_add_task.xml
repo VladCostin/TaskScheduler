@@ -58,26 +58,30 @@
  			android:layout_height="1dp"
  			android:background="@android:color/black" />
          
+         <Button
+            android:id="@+id/chooseDevicesButton"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/device"
+            android:layout_below="@+id/drawLineLocation"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/chooseDevices" />
          
          <TextView
-            android:id="@+id/chooseObject"
+            android:id="@+id/chooseDevices"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/drawLineLocation"
-            android:drawableLeft="@drawable/device"
+            android:layout_toRightOf="@+id/chooseDevicesButton"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/chooseObject" />
+        	android:textAppearance="?android:attr/textAppearanceLarge"
+        	android:text="@string/notChoosed" />
         
-        <EditText 
-            android:id="@+id/Objects"
-            android:inputType="text"
-            android:layout_below="@+id/chooseObject"
-            android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"/>
+
         
         <View
             android:id="@+id/drawLineObject"
-        	android:layout_below="@+id/Objects"
+        	android:layout_below="@+id/chooseDevicesButton"
  			android:layout_width="match_parent"
  			android:layout_height="1dp"
  			android:background="@android:color/black" />
