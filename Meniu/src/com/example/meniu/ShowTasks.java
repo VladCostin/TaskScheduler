@@ -1,6 +1,7 @@
 package com.example.meniu;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -23,11 +24,16 @@ import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
 import DatabaseOperation.EraseTask;
+import DeviceData.Device;
 import Task.Context;
 import Task.Task;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +41,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 
 /**
  * shows the tasks the user has introduced
@@ -72,6 +80,24 @@ public class ShowTasks extends Activity
 	 * to each id from database it is associated the value of the erase buton
 	 */
 	private HashMap<Integer,Integer> idTasks;
+	
+	
+	/**
+	 * receives the data about the devices nearby
+	 */
+	private MyBroadCastRecvShow mReceiver;
+	
+	
+	/**
+	 * devices taken from database
+	 */
+	List<Device> devices;
+	
+	
+	/**
+	 * contains for each mac adress a name for the device to be recognized
+	 */
+	private HashMap<String,String> deviceInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +110,20 @@ public class ShowTasks extends Activity
 		
 		checkers = new HashMap<ContextElementType,Compatibility>();
 		idTasks = new HashMap<Integer,Integer>();
+		deviceInfo = new HashMap<String,String>();
 		
 		checkers.put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationCompatibility());
 		checkers.put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalCompatibility());
 		
 		mLocationClient = new LocationClient(this,this,this);
+		
+		
+		devices = MainActivity.getDatabase().getAllDevices();
+		
+		mReceiver = new MyBroadCastRecvShow(this);
+		
+
+		
 	}
 
 
@@ -109,10 +144,35 @@ public class ShowTasks extends Activity
 	@Override
 	public void onConnected(Bundle arg0) {
 		
+		
+		createBlueToothAdapter();
 		showUpdate();
 		
 	}
 	
+	/**
+	 * creates the bluetoothAdapter in order to check for devices
+	 */
+	private void createBlueToothAdapter() {
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
+		    System.out.println("mBluetooth is null");
+		}
+		if (!mBluetoothAdapter.isEnabled()) {
+		    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		    startActivityForResult(enableBtIntent, 11);
+		  
+		}
+		
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter);
+		
+		mBluetoothAdapter.startDiscovery();
+		
+	}
+
+
+
 	/**
 	 * called to show the tasks , at the beginning and after the erase of a task
 	 */
@@ -146,6 +206,7 @@ public class ShowTasks extends Activity
         super.onStart();
         // Connect the client.
         mLocationClient.connect();
+    	
     }
     
     /*
@@ -154,8 +215,11 @@ public class ShowTasks extends Activity
     @Override
     protected void onStop() {
         // Disconnecting the client invalidates it.
+    	super.onStop();
         mLocationClient.disconnect();
-        super.onStop();
+        unregisterReceiver(mReceiver);
+        
+        
     }
     
     /**
@@ -165,6 +229,10 @@ public class ShowTasks extends Activity
      */
     private Context createCurrentState(LatLng position) {
 		
+    	
+    	ArrayList<String> myDevices = detectMyDevices();
+    	ArrayList<String> peopleAround = detectPeople();
+    	
     	Context currentContext = new Context();
     	currentContext.getContextElementsCollection().
     	put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(position));
@@ -177,12 +245,60 @@ public class ShowTasks extends Activity
     	
     	Calendar cal = new GregorianCalendar();*/
     	
+    	
+
+    	
+    	
+    	currentContext.getContextElementsCollection().
+    	put(ContextElementType.PEOPLE_ELEMENT, new PeopleContext(peopleAround));
+    	currentContext.getContextElementsCollection().
+    	put(ContextElementType.DEVICES_ELEMENT, new DeviceContext(myDevices));
+    	
+    	
+    	
+    	
     	return currentContext;
     	
 		
 	}
     
-    /**
+    private ArrayList<String> detectPeople() {
+		
+    	ArrayList<String> people = new ArrayList<String>();
+    	String myDevice = getResources().getString(R.string.myDeviceConstant);
+    	
+    	for(Device d : devices)
+    		if(deviceInfo.containsKey(d.getMacAddress()) && d.getOwnerDevice().compareTo(myDevice) != 0  )
+    				people.add(d.getOwnerDevice());
+    	
+    	
+    	
+		return people;
+	}
+    
+    
+    
+
+
+
+	private ArrayList<String> detectMyDevices() {
+		
+		ArrayList<String> devicesDetected = new ArrayList<String>();
+		String myDevice = getResources().getString(R.string.myDeviceConstant);
+		
+    	for(Device d : devices)
+    		if(deviceInfo.containsKey(d.getMacAddress()) && d.getOwnerDevice().compareTo(myDevice) == 0  )
+    				devicesDetected.add(d.getNameDevice());
+    	
+    	
+    	
+		return devicesDetected;
+		
+	}
+
+
+
+	/**
 	 * for each task i determine the current state
 	 * and then i call methods that check the compatibility 
 	 * with the task state
@@ -481,5 +597,58 @@ public class ShowTasks extends Activity
 	public void setIdTasks(HashMap<Integer,Integer> idTasks) {
 		this.idTasks = idTasks;
 	}
+
+
+
+	public HashMap<String,String> getDeviceInfo() {
+		return deviceInfo;
+	}
+
+
+
+	public void setDeviceInfo(HashMap<String,String> deviceInfo) {
+		this.deviceInfo = deviceInfo;
+	}
+
+}
+
+
+class MyBroadCastRecvShow extends BroadcastReceiver{
+	
+	
+	ShowTasks myActivy;
+	
+	MyBroadCastRecvShow(ShowTasks activity)
+	{
+
+		myActivy = activity;
+		
+	}
+
+	@Override
+	public void onReceive(android.content.Context context, Intent intent) {
+		 String action = intent.getAction();
+		 System.out.println("CUCU");
+		 
+	        // When discovery finds a device
+	     if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+	            // Get the BluetoothDevice object from the Intent
+	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+	            // Add the name and address to an array adapter to show in a ListView
+	           // mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+
+	            System.out.println("Sunt in noul broadcaster"  +" " +System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
+	            
+	           
+	           
+	           myActivy.showUpdate();
+	           
+	           
+	           
+	      }
+		
+	}
+	
+	
 
 }

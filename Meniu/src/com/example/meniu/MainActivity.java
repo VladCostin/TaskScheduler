@@ -66,9 +66,9 @@ public class MainActivity extends Activity {
 		
 		
 	//	System.out.println("DIMENSIUNEA ESTE : " + database.getAllTasks().size());
-	/*	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
+		database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
 		database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS devices");
-		database.createTable();*/
+		database.createTable();
 		
 		
 	/*	List<Device> devices = database.getAllDevices();

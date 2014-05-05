@@ -34,7 +34,13 @@ public class AddDeviceButton implements OnClickListener {
 		MainActivity.getDatabase().addDevice
 		(mac.getText().toString(), name.getText().toString(), owner.getText().toString());
 		
+		System.out.println( "3. MOMENTAN SUNT " + Thread.activeCount());
 		
+		
+		
+		addDevice.setDevices(  MainActivity.getDatabase().getAllDevices());
+		addDevice.getDeviceInfo().remove(mac.getText().toString());
+		addDevice.addInfoMethod();
 
 	}
 
