@@ -73,7 +73,7 @@
     <string name="Succes">The data has been inserted  </string>
     <string name="Error">Please insert the :</string>
     
-    <string name="notChoosed"> Not Choosed </string>
+    <string name="notChoosed">Not Choosed</string>
     
 
 </resources>

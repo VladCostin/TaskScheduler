@@ -290,9 +290,9 @@ public class AddDeviceActivity extends Activity {
 		return true;
 	}
 	
-	public void onStop()
+	public void onDestroy()
 	{
-		super.onStop();
+		super.onDestroy();
 		unregisterReceiver(mReceiver);
 
 	}
@@ -346,7 +346,7 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		 String action = intent.getAction();
-		 System.out.println("CUCU");
+		 System.out.println("CUCU 2");
 		 
 	        // When discovery finds a device
 	     if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -356,12 +356,15 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	           // mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 
 	            System.out.println(System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
+	            System.out.println ("dispozitivele mele sunt " +  myActivy.getDeviceInfo().toString());
 	            
-	           if(checkIfExists(device.getAddress()) == false)
+	           if(checkIfExists(device.getAddress()) == false){
 	        	   myActivy.getDeviceInfo().put(device.getAddress(), device.getName());
 	           
+	           	   System.out.println("Inca nu are dispozitivul " + device.getName());
 	           
-	           myActivy.addInfoMethod();
+	           	   myActivy.addInfoMethod();
+	           }
 	           
 	           
 	           
@@ -371,8 +374,12 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	
 	 public boolean checkIfExists(String macAddress) {
 			
+		 	System.out.println("Verific daca exista in baza de date");
+		 
 			for(Device d : myActivy.getDevices())
 			{
+				System.out.println(d.getMacAddress() + " " + macAddress);
+				
 				if(d.getMacAddress().compareTo(macAddress) == 0)
 					return true;
 			}

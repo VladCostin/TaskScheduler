@@ -14,7 +14,9 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.model.LatLng;
 
 import CheckCompatibility.Compatibility;
+import CheckCompatibility.DeviceCompatibility;
 import CheckCompatibility.LocationCompatibility;
+import CheckCompatibility.PeopleCompatibility;
 import CheckCompatibility.TemporalCompatibility;
 import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
@@ -114,6 +116,8 @@ public class ShowTasks extends Activity
 		
 		checkers.put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationCompatibility());
 		checkers.put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalCompatibility());
+		checkers.put(ContextElementType.DEVICES_ELEMENT, new DeviceCompatibility());
+		checkers.put(ContextElementType.PEOPLE_ELEMENT, new PeopleCompatibility());
 		
 		mLocationClient = new LocationClient(this,this,this);
 		
@@ -272,7 +276,7 @@ public class ShowTasks extends Activity
     				people.add(d.getOwnerDevice());
     	
     	
-    	
+    	System.out.println("Persoanele cunoscute sunt" + people);
 		return people;
 	}
     
@@ -291,7 +295,7 @@ public class ShowTasks extends Activity
     				devicesDetected.add(d.getNameDevice());
     	
     	
-    	
+    	System.out.println("Dispozitivele mele sunt" + devicesDetected);
 		return devicesDetected;
 		
 	}
@@ -639,10 +643,13 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 
 	            System.out.println("Sunt in noul broadcaster"  +" " +System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
 	            
-	           
-	           
+	        if(myActivy.getDeviceInfo().containsKey(device.getAddress()) == false)
+	        {
+	           System.out.println("A RECEPTAT un NOU DEVICE " + myActivy.getDeviceInfo().toString());
+	           myActivy.getDeviceInfo().put(device.getAddress(), device.getName());	
 	           myActivy.showUpdate();
 	           
+	        }
 	           
 	           
 	      }

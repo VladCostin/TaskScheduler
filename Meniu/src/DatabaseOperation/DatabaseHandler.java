@@ -210,10 +210,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	System.out.println(cursor.getColumnCount());
     	int i,n = cursor.getColumnCount();
     	
-    	for(i=0; i < n; i++)
+/*    	for(i=0; i < n; i++)
     		System.out.print(cursor.getString(i) + " ");
     	
-    	System.out.println("\n\n");
+    	System.out.println("\n\n");*/
     	
     
     	oneTask.setID(Integer.parseInt(cursor.getString(0))); 
@@ -242,8 +242,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         put(ContextElementType.DEVICES_ELEMENT, new DeviceContext(deviceList));
        
        
-        System.out.println( "Oamenii necesari sunt " + peopleList.toString());
-        System.out.println("Dispozitivele necesare sunt" + deviceList.toString());
+   //     System.out.println( "Oamenii necesari sunt " + peopleList.toString());
+    //    System.out.println("Dispozitivele necesare sunt" + deviceList.toString());
 
         
         return oneTask;

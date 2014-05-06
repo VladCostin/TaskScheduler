@@ -17,7 +17,7 @@ public class DeviceContext extends ContextElement{
 	{
 		deviceTask = device_Task;
 		
-		System.out.println("DEVICETASK ESTE" + deviceTask);
+	//	System.out.println("DEVICETASK ESTE" + deviceTask);
 	}
 
 	public ArrayList<String> getDeviceTask() {
@@ -36,7 +36,7 @@ public class DeviceContext extends ContextElement{
 			deviceString += deviceTask.get(i) + " ,";
 		deviceString += deviceTask.get(i);
 		
-		System.out.println("deviceString este " + deviceString);
+	//	System.out.println("deviceString este " + deviceString);
 		
 		return deviceString;
 	}

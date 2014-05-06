@@ -22,7 +22,7 @@ public class PeopleContext extends ContextElement{
 	{
 		peopleTask = people_Task;
 		
-		System.out.println("PEOPLETASK ESTE" + peopleTask);
+	//	System.out.println("PEOPLETASK ESTE" + peopleTask);
 	}
 
 	public ArrayList<String> getPeopleTask() {
@@ -43,7 +43,7 @@ public class PeopleContext extends ContextElement{
 		}
 		peopleString += peopleTask.get(i);
 		
-		System.out.println("peopleString este " + peopleString);
+		//System.out.println("peopleString este " + peopleString);
 		
 		return peopleString;
 	}
