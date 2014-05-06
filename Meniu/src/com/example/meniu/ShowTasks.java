@@ -319,7 +319,7 @@ public class ShowTasks extends Activity
 		boolean isTaskCompatible = true;
 		for(Task task : tasks)
 		{
-			
+			isTaskCompatible = true;
 			
 			task.getScheduledContext().getContextElementsCollection().
 			putAll(task.getExternContext().getContextElementsCollection());
@@ -341,6 +341,8 @@ public class ShowTasks extends Activity
 				}
 				
 			}
+			
+			System.out.println( "Am verificat compatibilitatea pentru " + task.getNameTask() + " " + isTaskCompatible);
 			
 			if(isTaskCompatible == true)	
 				addTaskToInterface(task) ;

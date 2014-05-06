@@ -317,11 +317,12 @@ public class AddTask extends   FragmentActivity
 					public void onClick(DialogInterface arg0, int indexSelected,
 							boolean isChecked) {
 						
+						System.out.println("DIALOG AM APASAT PE "  +  indexSelected + " " +  isChecked);
 						
 						if(isChecked == true)
 							itemsId.add(indexSelected);
 						else
-							itemsId.remove(indexSelected);
+							itemsId.remove(Integer.valueOf( indexSelected));
 						
 					}
 					
