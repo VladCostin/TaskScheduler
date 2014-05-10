@@ -2,6 +2,11 @@ package com.example.meniu;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+
 import DatabaseOperation.AddDeviceButton;
 import DeviceData.Device;
 import android.os.Bundle;
@@ -47,6 +52,8 @@ public class AddDeviceActivity extends Activity {
 	
 	
 	int numberOfView;
+	
+	private boolean getOut;
 
 	
 	/**
@@ -57,9 +64,17 @@ public class AddDeviceActivity extends Activity {
 	
 	
 	/**
+	 * adaptorul
+	 */
+	BluetoothAdapter mBluetoothAdapter;
+	
+	/**
 	 * devices taken from database
 	 */
 	private List<Device> devices;
+	
+	
+
 
 
 
@@ -69,15 +84,19 @@ public class AddDeviceActivity extends Activity {
 		setContentView(R.layout.activity_add_device);
 		
 		deviceInfo = new HashMap<String,String>();
-		devices = MainActivity.getDatabase().getAllDevices();
+		System.out.println("1.AM INTRAT AICI " + Thread.currentThread().getId());
+	//	devices = MainActivity.getDatabase().getAllDevices();
 		
 		
 		System.out.println( "1. MOMENTAN SUNT " + Thread.activeCount());
 		
 		addDevice  = new AddDeviceButton(this);
+		getOut = false;
+
+		Thread t = new Thread(new MyRunnable(this));
+		t.start();
 		
-		
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBluetoothAdapter == null) {
 		    System.out.println("mBluetooth is null");
 		}
@@ -86,6 +105,8 @@ public class AddDeviceActivity extends Activity {
 		    startActivityForResult(enableBtIntent, 11);
 		  
 		}
+		
+		
 		
 		layout = (RelativeLayout) findViewById(R.id.layoutAfisare);
 		System.out.println("AFISEZ DISPOZITIVELE PAIRED");
@@ -100,27 +121,44 @@ public class AddDeviceActivity extends Activity {
 		registerReceiver(mReceiver, filter);
 		
 		mBluetoothAdapter.startDiscovery();
+		
+		
 
-		addInfoMethod();
+		 addInfoMethod();
 
 		
 	}
 	
-	
+
 
 	
+	
+	public void makeAdapter()
+	{
+		unregisterReceiver(mReceiver);
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		startActivityForResult(enableBtIntent, 11);
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter);
+		mBluetoothAdapter.startDiscovery();
+		
+	}
+
 	public void addInfoMethod() {
 		
-		System.out.println( "2. MOMENTAN SUNT " + Thread.activeCount());
+	//	System.out.println( "2. MOMENTAN SUNT " + Thread.activeCount());
     	numberOfView = 0;
     	layout.removeAllViews();
     	
-    	System.out.println("AM INTRAT AICI");
+    //	System.out.println("AM INTRAT AICI");
     	
 		
     	if(getDeviceInfo().size() == 0)
+    	{
     		addMessageNoDevice();
-    	
+    		return;
+    	}
     	
     	
     	for(String macAddress : getDeviceInfo().keySet())
@@ -128,7 +166,7 @@ public class AddDeviceActivity extends Activity {
 		  
     	
     	
-    	System.out.println("AM INTRAT AICI 2");
+   // 	System.out.println("AM INTRAT AICI 2");
 		
 	}
 	
@@ -280,7 +318,7 @@ public class AddDeviceActivity extends Activity {
 		layout.addView(addDeviceOwnerButton);
 		layout.addView(line);
 		
-		
+
 	}
 
 	@Override
@@ -293,9 +331,19 @@ public class AddDeviceActivity extends Activity {
 	public void onDestroy()
 	{
 		super.onDestroy();
+		getOut = true;
+	//	timer.cancel();
+	//	timer.purge();
+		
 		unregisterReceiver(mReceiver);
 
 	}
+	
+	/*public void onPause()
+	{
+		super.onPause();
+		unregisterReceiver(mReceiver);
+	}*/
 
 	public RelativeLayout getLayout() {
 		return layout;
@@ -327,6 +375,14 @@ public class AddDeviceActivity extends Activity {
 		this.devices = devices;
 	}
 
+	public boolean isGetOut() {
+		return getOut;
+	}
+
+	public void setGetOut(boolean getOut) {
+		this.getOut = getOut;
+	}
+
 }
 
 
@@ -346,25 +402,27 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		 String action = intent.getAction();
-		 System.out.println("CUCU 2");
+		 System.out.println("AM RECEPTIONAT INCA CEVA");
 		 
 	        // When discovery finds a device
 	     if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+	    	 
+	    	 	myActivy.setGetOut(true); 
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
 	           // mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 
-	            System.out.println(System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
-	            System.out.println ("dispozitivele mele sunt " +  myActivy.getDeviceInfo().toString());
+	       //     System.out.println(System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
+	        //    System.out.println ("dispozitivele mele sunt " +  myActivy.getDeviceInfo().toString());
 	            
-	           if(checkIfExists(device.getAddress()) == false){
+	     //      if(checkIfExists(device.getAddress()) == false){
 	        	   myActivy.getDeviceInfo().put(device.getAddress(), device.getName());
 	           
 	           	   System.out.println("Inca nu are dispozitivul " + device.getName());
 	           
 	           	   myActivy.addInfoMethod();
-	           }
+	       //    }
 	           
 	           
 	           
@@ -376,7 +434,7 @@ class MyBroadCastRecv extends BroadcastReceiver{
 			
 		 	System.out.println("Verific daca exista in baza de date");
 		 
-			for(Device d : myActivy.getDevices())
+	/*		for(Device d : myActivy.getDevices())
 			{
 				System.out.println(d.getMacAddress() + " " + macAddress);
 				
@@ -384,10 +442,80 @@ class MyBroadCastRecv extends BroadcastReceiver{
 					return true;
 			}
 			
-			return false;
+			return false;*/
+		 	return false;
 		}
 	
 	
 
 
 }
+
+
+/*class MyTimer extends TimerTask{
+
+	AddDeviceActivity appContext;
+	int numberOfView;
+	
+	public MyTimer(AddDeviceActivity recvContext)
+	{
+		appContext = recvContext;
+
+	}
+	
+	@Override
+	public void run() {
+		
+		
+	}
+	
+	
+}*/
+
+class MyRunnable implements Runnable{
+
+	AddDeviceActivity appContext;
+	public MyRunnable(AddDeviceActivity recvContext)
+	{
+		appContext = recvContext;
+
+	}
+	
+	@Override
+	public void run() {
+		while(true)
+		{
+			
+			try {
+				Thread.sleep(5000);
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("2.AM INTRAT AICI " + Thread.currentThread().getId());
+			appContext.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					
+            		System.out.println("3.AM INTRAT AICI " + Thread.currentThread().getId() + " " + Thread.activeCount());
+            		if(appContext.getDeviceInfo().size() == 0){
+            			System.out.println("RESETEZ adaptorul\n\n");
+            			appContext.makeAdapter();
+            		}
+            		else
+            			System.out.println("AU FOST DETECTATE DISPOZTIVE");
+            	
+				}
+			});
+		
+			if(appContext.isGetOut() == true){
+				System.out.println("AR TREBUI SA SE TERMINE< VARIABILA ESTE TRUE");
+				break;
+			}
+		}
+		
+	}
+	
+}
+

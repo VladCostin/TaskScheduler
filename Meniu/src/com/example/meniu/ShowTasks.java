@@ -126,7 +126,7 @@ public class ShowTasks extends Activity
 		
 		mReceiver = new MyBroadCastRecvShow(this);
 		
-
+		createBlueToothAdapter();
 		
 	}
 
@@ -149,7 +149,6 @@ public class ShowTasks extends Activity
 	public void onConnected(Bundle arg0) {
 		
 		
-		createBlueToothAdapter();
 		showUpdate();
 		
 	}
@@ -158,6 +157,9 @@ public class ShowTasks extends Activity
 	 * creates the bluetoothAdapter in order to check for devices
 	 */
 	private void createBlueToothAdapter() {
+		
+		System.out.println("\n\nCREEZ IAR ADAPTORUL\n\n");
+		
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBluetoothAdapter == null) {
 		    System.out.println("mBluetooth is null");
@@ -221,9 +223,16 @@ public class ShowTasks extends Activity
         // Disconnecting the client invalidates it.
     	super.onStop();
         mLocationClient.disconnect();
-        unregisterReceiver(mReceiver);
+     
         
         
+    }
+    
+    protected void onDestroy(){
+    	super.onDestroy();
+    	
+    	System.out.println("\n\nA INTRAT IN DESTROY\n\n");
+    	unregisterReceiver(mReceiver);
     }
     
     /**
