@@ -93,7 +93,7 @@ public class AddDeviceActivity extends Activity {
 		addDevice  = new AddDeviceButton(this);
 		getOut = false;
 
-		Thread t = new Thread(new MyRunnable(this));
+		Thread t = new Thread(new MyRunnableDevices(this));
 		t.start();
 		
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -452,30 +452,10 @@ class MyBroadCastRecv extends BroadcastReceiver{
 }
 
 
-/*class MyTimer extends TimerTask{
+class MyRunnableDevices implements Runnable{
 
 	AddDeviceActivity appContext;
-	int numberOfView;
-	
-	public MyTimer(AddDeviceActivity recvContext)
-	{
-		appContext = recvContext;
-
-	}
-	
-	@Override
-	public void run() {
-		
-		
-	}
-	
-	
-}*/
-
-class MyRunnable implements Runnable{
-
-	AddDeviceActivity appContext;
-	public MyRunnable(AddDeviceActivity recvContext)
+	public MyRunnableDevices(AddDeviceActivity recvContext)
 	{
 		appContext = recvContext;
 

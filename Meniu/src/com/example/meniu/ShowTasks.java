@@ -96,6 +96,18 @@ public class ShowTasks extends Activity
 	List<Device> devices;
 	
 	
+	
+	/**
+	 * set true when the activity is destroyed
+	 */
+	private boolean getOut;
+	
+	/**
+	 * adaptorul
+	 */
+	BluetoothAdapter mBluetoothAdapter;
+	
+	
 	/**
 	 * contains for each mac adress a name for the device to be recognized
 	 */
@@ -106,7 +118,8 @@ public class ShowTasks extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_tasks);
 		
-
+		Thread t = new Thread(new MyRunnable(this));
+		t.start();
 
 		layout = (RelativeLayout) findViewById(R.id.RelativeLayoutShow);
 		
@@ -126,7 +139,22 @@ public class ShowTasks extends Activity
 		
 		mReceiver = new MyBroadCastRecvShow(this);
 		
-		createBlueToothAdapter();
+		
+		
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
+		    System.out.println("mBluetooth is null");
+		}
+		if (!mBluetoothAdapter.isEnabled()) {
+		    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		    startActivityForResult(enableBtIntent, 11);
+		  
+		}
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter);
+		
+		mBluetoothAdapter.startDiscovery();
+		
 		
 	}
 
@@ -153,29 +181,7 @@ public class ShowTasks extends Activity
 		
 	}
 	
-	/**
-	 * creates the bluetoothAdapter in order to check for devices
-	 */
-	private void createBlueToothAdapter() {
-		
-		System.out.println("\n\nCREEZ IAR ADAPTORUL\n\n");
-		
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (mBluetoothAdapter == null) {
-		    System.out.println("mBluetooth is null");
-		}
-		if (!mBluetoothAdapter.isEnabled()) {
-		    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		    startActivityForResult(enableBtIntent, 11);
-		  
-		}
-		
-		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		registerReceiver(mReceiver, filter);
-		
-		mBluetoothAdapter.startDiscovery();
-		
-	}
+	
 
 
 
@@ -193,6 +199,17 @@ public class ShowTasks extends Activity
 	     
 	     checkAllTasksCompatibility( createCurrentState(position));  
 		
+	}
+	
+	public void makeAdapter()
+	{
+		unregisterReceiver(mReceiver);
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		startActivityForResult(enableBtIntent, 11);
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter);
+		mBluetoothAdapter.startDiscovery();
 	}
 
 	
@@ -231,6 +248,7 @@ public class ShowTasks extends Activity
     protected void onDestroy(){
     	super.onDestroy();
     	
+    	getOut = true;
     	System.out.println("\n\nA INTRAT IN DESTROY\n\n");
     	unregisterReceiver(mReceiver);
     }
@@ -625,6 +643,18 @@ public class ShowTasks extends Activity
 		this.deviceInfo = deviceInfo;
 	}
 
+
+
+	public boolean isGetOut() {
+		return getOut;
+	}
+
+
+
+	public void setGetOut(boolean getOut) {
+		this.getOut = getOut;
+	}
+
 }
 
 
@@ -647,6 +677,8 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 		 
 	        // When discovery finds a device
 	     if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+	    	 
+	    	 myActivy.setGetOut(true); 
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
@@ -667,6 +699,52 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 		
 	}
 	
-	
+}
 
+
+class MyRunnable implements Runnable{
+
+	ShowTasks appContext;
+	public MyRunnable(ShowTasks recvContext)
+	{
+		appContext = recvContext;
+
+	}
+	
+	@Override
+	public void run() {
+		while(true)
+		{
+			
+			try {
+				Thread.sleep(5000);
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("2.AM INTRAT AICI " + Thread.currentThread().getId());
+			appContext.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					
+            		System.out.println("3.AM INTRAT AICI " + Thread.currentThread().getId() + " " + Thread.activeCount());
+            		if(appContext.getDeviceInfo().size() == 0){
+            			System.out.println("RESETEZ adaptorul\n\n");
+            			appContext.makeAdapter();
+            		}
+            		else
+            			System.out.println("AU FOST DETECTATE DISPOZTIVE");
+            	
+				}
+			});
+		
+			if(appContext.isGetOut() == true){
+				System.out.println("AR TREBUI SA SE TERMINE< VARIABILA ESTE TRUE");
+				break;
+			}
+		}
+		
+	}
+	
 }
