@@ -1,6 +1,7 @@
 package DatabaseOperation;
 
 import com.example.meniu.MainActivity;
+import com.example.meniu.ShowAllTasks;
 import com.example.meniu.ShowTasks;
 
 import android.view.View;
@@ -17,11 +18,11 @@ public class EraseTask implements OnClickListener  {
 	/**
 	 * the activity containing the id of the tasks
 	 */
-	private ShowTasks show;
+	private ShowAllTasks show;
 
-	public EraseTask(ShowTasks showRecv)
+	public EraseTask(ShowAllTasks showAllTasks)
 	{
-		show = showRecv;
+		show = showAllTasks;
 			
 	}
 	
@@ -34,12 +35,6 @@ public class EraseTask implements OnClickListener  {
 		
 	}
 
-	public ShowTasks getShow() {
-		return show;
-	}
 
-	public void setShow(ShowTasks show) {
-		this.show = show;
-	}
 
 }

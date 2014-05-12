@@ -16,10 +16,10 @@
     <!-- My Location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        
-    <!--  for Bluetooth discovery devices -->
-     <uses-permission android:name="android.permission.BLUETOOTH" />
-     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!-- for Bluetooth discovery devices -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <!-- Maps API needs OpenGL ES 2.0. -->
     <uses-feature
@@ -58,6 +58,10 @@
         <activity
             android:name="com.example.meniu.AddDeviceActivity"
             android:label="@string/title_activity_add_device" >
+        </activity>
+        <activity
+            android:name="com.example.meniu.ShowAllTasks"
+            android:label="@string/title_activity_show_all_tasks" >
         </activity>
     </application>
 

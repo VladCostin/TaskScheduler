@@ -44,8 +44,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
+
 
 /**
  * shows the tasks the user has introduced
@@ -182,8 +181,6 @@ public class ShowTasks extends Activity
 	}
 	
 	
-
-
 
 	/**
 	 * called to show the tasks , at the beginning and after the erase of a task
@@ -386,7 +383,6 @@ public class ShowTasks extends Activity
 	
 		   TextView title,priority, distance, deadline,people, devices;
 		   TextView titleValue, priorityValue , distanceValue, deadlineValue, peopleValue, devicesValue;
-		   Button butonErase;
 		   
 		   
 		   View line;
@@ -439,15 +435,7 @@ public class ShowTasks extends Activity
 		    
 		    RelativeLayout.LayoutParams params_line = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
-		    
-		    RelativeLayout.LayoutParams params_erase = 
-		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
-				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-		    
-		    
-				   
-				   
-			
+		    			
 			
 			title  = new TextView(this);
 			priority = new TextView(this);
@@ -463,7 +451,6 @@ public class ShowTasks extends Activity
 			peopleValue =   new TextView(this);
 			devicesValue = new TextView(this);
 			
-			butonErase = new Button(this);
 			line = new View(this);
 			
 			title.setText(R.string.taskTitle);
@@ -585,14 +572,6 @@ public class ShowTasks extends Activity
 		
 
 			
-			butonErase.setText(R.string.ERASE);
-			butonErase.setId( ++ numberOfView);
-			butonErase.setOnClickListener(new EraseTask(this));
-			idTasks.put(numberOfView, task.getID());
-			
-			params_erase.addRule(RelativeLayout.BELOW, numberOfView - 1);
-			butonErase.setLayoutParams(params_erase);
-			
 			
 			line.setBackgroundColor(Color.BLUE);
 			line.setId( ++ numberOfView);
@@ -613,7 +592,6 @@ public class ShowTasks extends Activity
 			layout.addView(peopleValue);
 			layout.addView(devices);
 			layout.addView(devicesValue); 
-			layout.addView(butonErase);
 			layout.addView(line);
 			
 		
@@ -717,7 +695,7 @@ class MyRunnable implements Runnable{
 		{
 			
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(3000);
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

@@ -144,7 +144,7 @@ class MenuItemTouched implements OnItemClickListener{
 			
 			 
 		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0)
-			  intent = new Intent(mainActivity, ShowTasks.class);
+			  intent = new Intent(mainActivity, ShowAllTasks.class);
 		 
 		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.discoverDevice)) == 0)
 			  intent = new Intent(mainActivity, AddDeviceActivity.class);

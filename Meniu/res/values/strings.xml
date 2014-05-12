@@ -54,8 +54,8 @@
     <string name="addLocation">LOCATION</string>
     <string name="chooseObject">OBJECTS</string>
     <string name="setDeadline">Deadline</string>
-    <string name="choosePeople">People</string> 
-    <string name="chooseDevices">Devices</string> 
+    <string name="choosePeople">People</string>
+    <string name="chooseDevices">Devices</string>
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>
@@ -63,7 +63,6 @@
     <string name="Distance">Distance</string>
     <string name="ERASE">ERASE TASK</string>
     <string name="title_activity_add_device">AddDeviceActivity</string>
-    
     <string name="DeviceName">Device Name</string>
     <string name="MacAdress">Mac Address</string>
     <string name="addOwner">Add Owner</string>
@@ -72,8 +71,7 @@
     <string name="noDevice">No new Devices have been detected</string>
     <string name="Succes">The data has been inserted  </string>
     <string name="Error">Please insert the :</string>
-    
     <string name="notChoosed">Not Chosen</string>
-    
+    <string name="title_activity_show_all_tasks">ShowAllTasks</string>
 
 </resources>
