@@ -9,6 +9,8 @@
     <string name="schedule">Vizualizare taskuri</string>
     <string name="discoverDevice">Descopera dispozitive</string>
     <string name="title_activity_add_task">AddTask</string>
+ 	<string name="current_task">Taskul curent</string>
+    
     <string name="domain">Choose a domain</string>
     <string name="country_prompt">Choose a domain</string>
 
@@ -56,6 +58,7 @@
     <string name="setDeadline">Deadline</string>
     <string name="choosePeople">People</string>
     <string name="chooseDevices">Devices</string>
+    <string name="Duration">Duration</string>
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>
@@ -73,5 +76,12 @@
     <string name="Error">Please insert the :</string>
     <string name="notChoosed">Not Chosen</string>
     <string name="title_activity_show_all_tasks">ShowAllTasks</string>
+    <string name="title_activity_show_current_task">ShowCurrentTask</string>
+    
+    
+    
+    <string name="addMinutes"> Add 10 minutes</string>
+    <string name="addHours"> Add one hour</string>
+    <string name="finalizeTask"> Task finished</string>
 
 </resources>

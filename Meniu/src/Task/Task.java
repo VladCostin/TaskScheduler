@@ -44,9 +44,15 @@ public class Task {
 	private Context externalContext;
 	
 	/**
-	 * 
+	 * the context containing the internal details and the external details as well
 	 */
 	private Context scheduledContext;
+	
+	
+	/**
+	 * the state of the task, in what condition is the task
+	 */
+	private TaskState state;
 	
 	
 	public Task(){
@@ -128,6 +134,18 @@ public class Task {
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+
+
+	public TaskState getState() {
+		return state;
+	}
+
+
+
+	public void setState(TaskState state) {
+		this.state = state;
 	}
 	
 }

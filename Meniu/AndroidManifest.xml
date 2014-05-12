@@ -63,6 +63,10 @@
             android:name="com.example.meniu.ShowAllTasks"
             android:label="@string/title_activity_show_all_tasks" >
         </activity>
+        <activity
+            android:name="com.example.meniu.ShowCurrentTask"
+            android:label="@string/title_activity_show_current_task" >
+        </activity>
     </application>
 
 </manifest>
