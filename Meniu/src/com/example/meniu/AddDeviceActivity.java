@@ -2,8 +2,6 @@ package com.example.meniu;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 
@@ -51,6 +49,9 @@ public class AddDeviceActivity extends Activity {
 	private HashMap<String,String> deviceInfo;
 	
 	
+	/**
+	 * for each task it is associated a numberOfView
+	 */
 	int numberOfView;
 	
 	/**
@@ -124,30 +125,15 @@ public class AddDeviceActivity extends Activity {
 	
 	
 
-
-	
-	
-	public void makeAdapter()
-	{
-		unregisterReceiver(mReceiver);
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		startActivityForResult(enableBtIntent, 11);
-		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		registerReceiver(mReceiver, filter);
-		mBluetoothAdapter.startDiscovery();
-		
-	}
-
+	/**
+	 * for each device it is shown a set of GUI elements
+	 */
 	public void addInfoMethod() {
 		
-	//	System.out.println( "2. MOMENTAN SUNT " + Thread.activeCount());
+
     	numberOfView = 0;
     	layout.removeAllViews();
-    	
-    //	System.out.println("AM INTRAT AICI");
-    	
-		
+
     	if(getDeviceInfo().size() == 0)
     	{
     		addMessageNoDevice();
@@ -157,13 +143,13 @@ public class AddDeviceActivity extends Activity {
     	
     	for(String macAddress : getDeviceInfo().keySet())
     			addDevice(macAddress,  getDeviceInfo().get(macAddress));
-		  
-    	
-    	
-   // 	System.out.println("AM INTRAT AICI 2");
+
 		
 	}
 	
+	/**
+	 * message shown until a device is detected
+	 */
 	public void addMessageNoDevice() {
 		
 		TextView showNoDeviceMessage;
@@ -188,6 +174,10 @@ public class AddDeviceActivity extends Activity {
 	
 
 
+	/**shows the GUI elements for a task 
+	 * @param macAdress : the MAC of the detected device
+	 * @param nameDevice : the name received of the detected device
+	 */
 	public void addDevice(String macAdress, String nameDevice) {
 		
 		TextView showDeviceName, showMacAdress, addOwnerDevice;
@@ -405,7 +395,11 @@ class MyBroadCastRecv extends BroadcastReceiver{
 		
 	}
 	
-	 public boolean checkIfExists(String macAddress) {
+	 /**
+	 * @param macAddress :the address of the detected device
+	 * @return : if the device is in database
+	 */
+	public boolean checkIfExists(String macAddress) {
 			
 		 	System.out.println("Verific daca exista in baza de date");
 		 
