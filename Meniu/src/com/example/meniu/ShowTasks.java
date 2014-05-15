@@ -22,13 +22,16 @@ import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
+import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
 import DatabaseOperation.EraseTask;
+import DatabaseOperation.ExecuteTaskButton;
 import DeviceData.Device;
 import Task.Context;
 import Task.Task;
+import Task.TaskState;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
@@ -335,6 +338,9 @@ public class ShowTasks extends Activity
 		boolean isTaskCompatible = true;
 		for(Task task : tasks)
 		{
+			if(task.getState() == TaskState.CURRENT_TASK)
+				continue;
+			
 			isTaskCompatible = true;
 			
 			task.getScheduledContext().getContextElementsCollection().
@@ -373,8 +379,9 @@ public class ShowTasks extends Activity
 	{
 		  
 	
-		   TextView title,priority, distance, deadline,people, devices;
-		   TextView titleValue, priorityValue , distanceValue, deadlineValue, peopleValue, devicesValue;
+		   TextView title,priority, distance, deadline,people, devices, duration;
+		   TextView titleValue, priorityValue , distanceValue, deadlineValue, peopleValue, devicesValue, durationValue;
+		   Button buttonExecuteTask;
 		   
 		   
 		   View line;
@@ -425,24 +432,43 @@ public class ShowTasks extends Activity
 				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
 		    
+		    RelativeLayout.LayoutParams params_duration = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    RelativeLayout.LayoutParams params_duration_value = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
+		    RelativeLayout.LayoutParams params_execute = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
 		    RelativeLayout.LayoutParams params_line = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
+		    
+		    
+		    
 		    			
 			
-			title  = new TextView(this);
+			title    = new TextView(this);
 			priority = new TextView(this);
 			distance = new TextView(this);
 			deadline = new TextView(this);
-			people = new TextView(this);
-			devices = new TextView(this);
+			people   = new TextView(this);
+			devices  = new TextView(this);
+			duration = new TextView(this);
 			
-			titleValue  =   new TextView(this);
+			titleValue    = new TextView(this);
 			priorityValue = new TextView(this);
 			distanceValue = new TextView(this);
 			deadlineValue = new TextView(this);
-			peopleValue =   new TextView(this);
-			devicesValue = new TextView(this);
+			peopleValue   = new TextView(this);
+			devicesValue  = new TextView(this);
+			durationValue = new TextView(this);
 			
+			buttonExecuteTask = new Button(this);
 			line = new View(this);
 			
 			title.setText(R.string.taskTitle);
@@ -493,7 +519,6 @@ public class ShowTasks extends Activity
 			params_distance_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			params_distance_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			distanceValue.setLayoutParams(params_distance_value);
-			
 			
 			
 			
@@ -561,9 +586,37 @@ public class ShowTasks extends Activity
 			devicesValue.setLayoutParams(params_devices_value);
 			
 			
-		
-
 			
+			duration.setText(R.string.Duration);
+			duration.setPadding(20, 10, 0, 0);
+			duration.setTextSize(20);	
+			duration.setId( ++ numberOfView);
+			params_duration.addRule(RelativeLayout.BELOW, numberOfView - 1);
+			duration.setLayoutParams(params_duration);
+			
+			
+			DurationContext durationTask = (DurationContext)
+			task.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			
+			durationValue.setText(durationTask.getDuration());
+			durationValue.setPadding(20, 10, 0, 0);
+			durationValue.setTextSize(20);	
+			durationValue.setId( ++ numberOfView);
+			params_duration_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
+			params_duration_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
+			durationValue.setLayoutParams(params_duration_value);
+			
+			
+			buttonExecuteTask.setText(Constants.executeTask);
+			buttonExecuteTask.setOnClickListener(new ExecuteTaskButton(this));
+			buttonExecuteTask.setTextSize(20);	
+			buttonExecuteTask.setId( ++ numberOfView);
+			
+			params_execute.addRule(RelativeLayout.BELOW, numberOfView - 1);
+			buttonExecuteTask.setLayoutParams(params_execute);
+			params_execute.leftMargin = 10;
+			
+			idTasks.put(numberOfView, task.getID());
 			
 			line.setBackgroundColor(Color.BLUE);
 			line.setId( ++ numberOfView);
@@ -584,7 +637,11 @@ public class ShowTasks extends Activity
 			layout.addView(peopleValue);
 			layout.addView(devices);
 			layout.addView(devicesValue); 
+			layout.addView(duration);
+			layout.addView(durationValue);
+			layout.addView(buttonExecuteTask);
 			layout.addView(line);
+
 			
 		
 	}

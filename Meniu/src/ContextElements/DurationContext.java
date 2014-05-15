@@ -8,19 +8,22 @@ package ContextElements;
  */
 public class DurationContext extends ContextElement{
 	
+	private String duration;
 	
-	/**
-	 * the task's duration is calculatated in minutes
-	 */
-	private int minutes;
-
-	public int getMinutes() {
-		return minutes;
+	public DurationContext(String duration)
+	{
+		this.duration = duration;
 	}
 
-	public void setMinutes(int minutes) {
-		this.minutes = minutes;
+	public String getDuration() {
+		return duration;
 	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+
 
 	
 	

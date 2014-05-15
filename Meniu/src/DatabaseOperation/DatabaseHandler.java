@@ -9,14 +9,20 @@ import java.util.List;
 
 
 
+
+
+
+
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
+import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
 import DeviceData.Device;
 import Task.Task;
+import Task.TaskState;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -65,10 +71,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          		"(" + Tasks.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
          			+ Tasks.KEY_Title + " " + TypeAttribute.COLLUMN_STRING + ","
          		    + Tasks.KEY_Priority + " " + TypeAttribute.COLLUMN_STRING + ","
+         		    + Tasks.KEY_Status + " " + TypeAttribute.COLLUMN_STRING + ","
          		    + Tasks.KEY_Location + " " + TypeAttribute.COLLUMN_STRING + ","
                     + Tasks.KEY_Date + " " + TypeAttribute.COLLUMN_STRING + ","
-                    + Tasks.KEY_People + " " + TypeAttribute.COLLUMN_STRING + "," 
-                    + Tasks.KEY_Device + " " + TypeAttribute.COLLUMN_STRING + 
+                    + Tasks.KEY_People + " " + TypeAttribute.COLLUMN_STRING + ","  
+                    + Tasks.KEY_Device + " " + TypeAttribute.COLLUMN_STRING + ","
+                    + Tasks.KEY_Duration + " " + TypeAttribute.COLLUMN_STRING + ","
+                    + Tasks.KEY_Begin_Hour + " " + TypeAttribute.COLLUMN_STRING +
                 ")";
          
          String CREATE_DEVICE_TABLE = "CREATE TABLE " + TABLE_DEVICES + 
@@ -104,18 +113,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param date : task's date
      * @param people : the people needed to execute the task
      */
-    public void addTask(String name, String priority, String location, String date, String people , String devices) { 
+    public void addTask(String name, String priority, String location, String date,
+    					String people , String devices, String duration ) { 
  
     	ContentValues values = new ContentValues();
     	values.put(Tasks.KEY_Title, name);  
     	values.put(Tasks.KEY_Priority, priority);
+    	values.put(Tasks.KEY_Status, TaskState.AMONG_TO_DO_LIST.toString());
     	values.put(Tasks.KEY_Location, location);
     	values.put(Tasks.KEY_Date, date);
     	values.put(Tasks.KEY_People, people); 
     	values.put(Tasks.KEY_Device, devices);
+    	values.put(Tasks.KEY_Duration, duration); 
+    
+    	values.put(Tasks.KEY_Begin_Hour, "");
     	
 
-    	insertRegistreation(values, TABLE_TASKS);
+    	insertRegistration(values, TABLE_TASKS);
     	
     }
     
@@ -130,8 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	values.put(DeviceData.KEY_MAC, macAddress);
     	values.put(DeviceData.KEY_DEVICE, nameDevice);
     	values.put(DeviceData.KEY_OWNER, owner);
-    	
-    	insertRegistreation(values, TABLE_DEVICES);
+    	insertRegistration(values, TABLE_DEVICES); 
 
     }
     
@@ -140,7 +153,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param content : the data to be inserted
      * @param nameTable : the table the data will be inserted to
      */
-    public void insertRegistreation(ContentValues content, String nameTable)
+    public void insertRegistration(ContentValues content, String nameTable)
     {
     	  SQLiteDatabase db = this.getWritableDatabase();
     	  db.insert(nameTable, null, content);
@@ -162,7 +175,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         Cursor cursor = 
         db.query(TABLE_TASKS, new String[]
-        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date, Tasks.KEY_People, Tasks.KEY_Device },
+        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date, Tasks.KEY_People,
+          Tasks.KEY_Device, Tasks.KEY_Duration, Tasks.KEY_Status, Tasks.KEY_Begin_Hour },
         Tasks.KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -205,41 +219,50 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	
     	Task  oneTask = new Task();
     	ArrayList<String> peopleList;
-    	 ArrayList<String> deviceList;
+    	ArrayList<String> deviceList;
     	
     	System.out.println(cursor.getColumnCount());
     	int i,n = cursor.getColumnCount();
     	
-/*    	for(i=0; i < n; i++)
-    		System.out.print(cursor.getString(i) + " ");
+    	for(i=0; i < n; i++)
+    		System.out.print(cursor.getString(i) + " " + i);
     	
-    	System.out.println("\n\n");*/
+    	System.out.println("\n\n");
     	
     
     	oneTask.setID(Integer.parseInt(cursor.getString(0))); 
     	oneTask.setNameTask(cursor.getString(1));
         oneTask.setPriority(cursor.getString(2));
+        oneTask.setState(  TaskState.valueOf(cursor.getString(3)));
+        
         
         
           
         oneTask.getInternContext().getContextElementsCollection().
-        put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(cursor.getString(3)));
+        put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(cursor.getString(4)));
+        
           
         oneTask.getExternContext().getContextElementsCollection().
-        put(ContextElementType.DEADLINE_ELEMENT, new DeadlineContext(cursor.getString(4)));
+        put(ContextElementType.DEADLINE_ELEMENT, new DeadlineContext(cursor.getString(5)));
+        
+
         
         oneTask.getExternContext().getContextElementsCollection().
         put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext());
         
         
 
-        peopleList = new ArrayList( Arrays.asList(cursor.getString(5).split(","))   );
+        peopleList = new ArrayList( Arrays.asList(cursor.getString(6).split(","))   );
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.PEOPLE_ELEMENT, new PeopleContext(peopleList));
         
-        deviceList = new ArrayList( Arrays.asList(cursor.getString(6).split(","))   );
+        deviceList = new ArrayList( Arrays.asList(cursor.getString(7).split(","))   );
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.DEVICES_ELEMENT, new DeviceContext(deviceList));
+        
+        
+        oneTask.getInternContext().getContextElementsCollection().
+        put(ContextElementType.DURATION_ELEMENT, new DurationContext(cursor.getString(8)));
        
        
    //     System.out.println( "Oamenii necesari sunt " + peopleList.toString());
@@ -254,7 +277,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * @param id : the task's id to be deleted
      */
-    public void deleteContact(Integer id) {
+    public void deleteTask(Integer id) { 
     	
     	SQLiteDatabase db = this.getWritableDatabase();
     	
@@ -324,6 +347,55 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	return new Device( Integer.parseInt( cursor.getString(0)), 
         cursor.getString(1), cursor.getString(2), cursor.getString(3));
     	
+	}
+
+
+	/**
+	 * @param idTask : the task to be updated
+	 * @param attribute : the attribute whose value is going to be changed
+	 * @param stringKeyValue : the new value of the attribute
+	 */
+	public void updateTask(Integer idTask, String attribute,
+			String stringKeyValue) {
+		
+		  SQLiteDatabase db = this.getWritableDatabase();
+		  
+		  ContentValues values = new ContentValues();
+		  values.put(attribute, stringKeyValue);
+		 
+		    // updating row
+		   db.update(TABLE_TASKS, values, Tasks.KEY_ID + " = ?",
+		   new String[] { Integer.toString(idTask) });
+		
+		
+		
+		
+	}
+
+
+	/**
+	 * @param idTask : the task to be updated
+	 * @param attributes :  the attributes whose value is going to be changed
+	 * @param values :  the new values of the attribute
+	 */
+	public void updateTask(Integer idTask, ArrayList<String> attributes,
+			ArrayList<String> values) {
+		
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues newValues = new ContentValues();
+		int i;
+		
+		for(i= 0; i < attributes.size(); i++)
+			newValues.put(attributes.get(i), values.get(i));
+		
+		  
+		 
+		    // updating row
+		 db.update(TABLE_TASKS, newValues, Tasks.KEY_ID + " = ?",
+		 new String[] { Integer.toString(idTask) });
+		
+		
 	}
     
 }

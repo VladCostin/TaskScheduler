@@ -30,7 +30,7 @@ public class EraseTask implements OnClickListener  {
 	public void onClick(View arg0) {
 		
 		Integer idTask = show.getIdTasks().get(arg0.getId());
-		MainActivity.getDatabase().deleteContact(idTask);
+		MainActivity.getDatabase().deleteTask(idTask);
 		show.showUpdate();
 		
 	}

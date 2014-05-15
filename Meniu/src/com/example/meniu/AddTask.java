@@ -119,6 +119,12 @@ public class AddTask extends   FragmentActivity
 	 */
 	private TextView devices;
 	
+	
+	/**
+	 * to select the duration of the task
+	 */
+	private Spinner duration;
+	
 	/**
 	 *  used to set the location of the task
 	 */
@@ -161,7 +167,8 @@ public class AddTask extends   FragmentActivity
 		setContentView(R.layout.activity_add_task);
 		
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
-		priority = (Spinner)  findViewById(R.id.spinner2);	
+		priority = (Spinner)  findViewById(R.id.spinnerPriority);	
+		duration = (Spinner)  findViewById(R.id.spinnerDuration);
 		title    = (EditText) findViewById(R.id.title);
 		
 		
@@ -640,6 +647,20 @@ public TextView getMessageInsert() {
 
 public void setMessageInsert(TextView messageInsert) {
 	this.messageInsert = messageInsert;
+}
+
+
+
+
+public Spinner getDuration() {
+	return duration;
+}
+
+
+
+
+public void setDuration(Spinner duration) {
+	this.duration = duration;
 }
 
 

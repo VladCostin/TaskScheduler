@@ -174,17 +174,37 @@
     
     
     	<Spinner
-        	android:id="@+id/spinner2"
+        	android:id="@+id/spinnerPriority"
         	android:layout_below="@+id/priority"
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
         	android:entries="@array/priority_arrays"
         	android:prompt="@string/priority_prompt" />
+    	
+    	
+    	
+    	<TextView
+  	      	android:id="@+id/duration"
+    	  	android:layout_below="@+id/spinnerPriority"
+    	  	android:drawableLeft="@drawable/warning"
+        	android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+        	android:text="@string/duration_prompt" />
+    
+    
+    	<Spinner
+        	android:id="@+id/spinnerDuration"
+        	android:layout_below="@+id/duration"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:entries="@array/duration_arrays"
+        	android:paddingLeft="30dp"
+        	android:prompt="@string/duration_prompt" />
     
     
     	<TextView
         	android:id="@+id/repeatable"
-        	android:layout_below="@+id/spinner2"
+        	android:layout_below="@+id/spinnerDuration"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/Repeatable" />

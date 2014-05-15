@@ -33,6 +33,9 @@ public enum ContextElementType {
 	/**
 	 * devices needed to execute the task
 	 */
-	DEVICES_ELEMENT;
+	DEVICES_ELEMENT,
+	
+	
+	DURATION_ELEMENT;
 	
 }

@@ -39,6 +39,25 @@
         <item>Critical</item>
         <item>Unknown</item>
     </string-array>
+    
+    
+    <string name="duration_prompt">Choose a Duration</string>
+    <string-array name="duration_arrays">
+        <item>Unknown</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>30 minutes</item>
+        <item>one hour</item>
+        <item>2 hours</item>
+        <item>4 hours</item>
+        <item>8 hours</item>
+        <item>16 hours</item>
+        <item>one day</item>
+        <item>two days</item>
+        <item>four days</item>
+    </string-array>
+    
+    
 
     <string name="Repeatable">How often does it repeat</string>
     <string name="repeatable_prompt">Choose how often does it repeat</string>

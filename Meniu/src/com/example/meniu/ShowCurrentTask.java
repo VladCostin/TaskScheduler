@@ -1,16 +1,24 @@
 package com.example.meniu;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ContextElements.ContextElementType;
+import ContextElements.DurationContext;
+import Task.Task;
+import Task.TaskState;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ShowCurrentTask extends Activity {
+public class ShowCurrentTask extends Activity implements OnClickListener {
 
 	
 	/**
@@ -21,8 +29,8 @@ public class ShowCurrentTask extends Activity {
 	private int nrMinutes;
 	private int nrHours;
 	
-	private TextView secunde;
-	private TextView minute;
+	private TextView seconds;
+	private TextView minutes; 
 	private TextView hours; 
 	
 	
@@ -30,29 +38,80 @@ public class ShowCurrentTask extends Activity {
 	Button addHoursButton;
 	Button finalizeTask;
 	
+	
+
+	Task currentTask;
+	
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_current_task);
 		
+		
+		selectCurrentTasks();
+		
+		
 		RelativeLayout  rl = (RelativeLayout )  this.findViewById(R.id.currentTaskLayout);
-		secunde = (TextView) findViewById(R.id.seconds);
-		minute = (TextView) findViewById(R.id.minutes);
+		seconds = (TextView) findViewById(R.id.seconds);
+		minutes = (TextView) findViewById(R.id.minutes);
 		hours = (TextView) findViewById(R.id.hours);
 		
-		nrSeconds = 60;
-		nrMinutes = 34;
-		nrHours = 0;
+		addMinutesButton = (Button) findViewById(R.id.addMinutes);
+		addHoursButton = (Button) findViewById(R.id.addHours);
+		finalizeTask = (Button) findViewById(R.id.taskFinalizat);
 		
-		minute.setText(Integer.toString(nrMinutes));
-		hours.setText(Integer.toString(nrHours));
+		
+		addMinutesButton.setOnClickListener(this);
+		addHoursButton.setOnClickListener(this);
+		finalizeTask.setOnClickListener(this);
+		
+		
+
+		
+		
+		
 
 	}
 	
 	
+	/**
+	 * selects from all the tasks those who were chosen to be executed in the current Context
+	 */
+	public void selectCurrentTasks() {
+		List<Task> tasks = MainActivity.getDatabase().getAllTasks();
+		ArrayList<Task> chosenTasks = new ArrayList<Task>();
+		for(Task task :tasks)
+			if(task.getState() == TaskState.CURRENT_TASK){
+				chosenTasks.add(task);
+			}
+		
+		
+		
+		
+		
+		currentTask = chosenTasks.get(0);
+		
+		if(currentTask == null)
+			System.out.println("TASKUL CURRENT ESTE NULL");
+		else
+			System.out.println("TASKUL CURRENT NU ESTE NULL");
+		
+		
+		
+		
+		
+		
+	}
+
+
 	public void onResume()
 	{
 		super.onResume();
+		calculateTimeRemaining();
+		
 		isRunning = true;
 		
 		
@@ -62,6 +121,36 @@ public class ShowCurrentTask extends Activity {
 	}
 	
 	
+	/**
+	 * sets the initial values for hours and minutes remaining, depending
+	 * on the time when it started to be executed
+	 */
+	private void calculateTimeRemaining() {
+		
+		DurationContext durationTask = (DurationContext)
+		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		if(durationTask == null)
+			System.out.println("DURATION TASK ESTE NULL");
+		else{
+			System.out.println("DURATION TASK NU ESTE NULL");
+			System.out.println(durationTask.getDuration());
+		}
+		System.out.println(Core.getDurationMinutes());
+		
+		
+		nrMinutes = Core.getDurationMinutes().get(durationTask.getDuration()) - 1 ;
+		nrHours   = nrMinutes / 60; 
+		nrMinutes = nrMinutes % 60; 
+		nrSeconds = 59;
+		
+		hours.setText(Integer.toString( nrHours));
+		minutes.setText( Integer.toString(nrMinutes ));
+		seconds.setText(Integer.toString(nrSeconds));
+		
+	}
+
+
 	public void onPause()
 	{
 		super.onPause();
@@ -88,23 +177,23 @@ public class ShowCurrentTask extends Activity {
 	}
 
 
-	public int getNr() {
+	public int getNrSeconds() {
 		return nrSeconds;
 	}
 
 
-	public void setNr(int nr) {
+	public void setNrSeconds(int nr) {
 		this.nrSeconds = nr;
 	}
 
 
 	public TextView getSecunde() {
-		return secunde;
+		return seconds;
 	}
 
 
 	public void setSecunde(TextView secunde) {
-		this.secunde = secunde;
+		this.seconds = secunde;
 	}
 
 
@@ -129,12 +218,12 @@ public class ShowCurrentTask extends Activity {
 
 
 	public TextView getMinute() {
-		return minute;
+		return minutes;
 	}
 
 
 	public void setMinute(TextView minute) {
-		this.minute = minute;
+		this.minutes = minute;
 	}
 
 
@@ -145,6 +234,35 @@ public class ShowCurrentTask extends Activity {
 
 	public void setHours(TextView hours) {
 		this.hours = hours;
+	}
+
+
+	@Override
+	public void onClick(View arg0) {
+		
+		switch(arg0.getId())
+		{
+			case R.id.addHours : 
+					hours.setText(Integer.toString(nrHours++));
+					break;
+					
+			case R.id.addMinutes : System.out.println("ADAUGA 10 minute");
+					nrMinutes += 10;
+					if(nrMinutes >= 60){
+						nrMinutes -= 60;
+						minutes.setText(Integer.toString(nrMinutes));
+						hours.setText(Integer.toString(nrHours++));
+					}
+					else
+						minutes.setText(Integer.toString(nrMinutes));
+					break;
+					
+			case R.id.taskFinalizat : System.out.println("S-a terminat taskul");
+					break;
+		
+		}
+		
+		
 	}
 
 }
@@ -173,18 +291,20 @@ class MyTimer implements Runnable{
 			taskActivity.runOnUiThread( new Runnable()
 			{
 				public void run(){
+			
+					System.out.println(taskActivity.getNrSeconds());
 					
-					if(taskActivity.getNr() == 0 && taskActivity.getNrHours() == 0 && taskActivity.getNrMinutes() == 0)
+					if(taskActivity.getNrSeconds() == 0 && taskActivity.getNrHours() == 0 && taskActivity.getNrMinutes() == 0)
 						return;
 					
-					taskActivity.setNr(taskActivity.getNr() - 1);
-					if(taskActivity.getNr() == 0)
+					taskActivity.setNrSeconds(taskActivity.getNrSeconds() - 1); 
+					if(taskActivity.getNrSeconds() == 0)
 					{
-						taskActivity.setNr(60);
+						taskActivity.setNrSeconds(59);
 						taskActivity.setNrMinutes(taskActivity.getNrMinutes() - 1);
 						taskActivity.getMinute().setText(Integer.toString(taskActivity.getNrMinutes()));
 					}
-					taskActivity.getSecunde().setText(Integer.toString(taskActivity.getNr()));
+					taskActivity.getSecunde().setText(Integer.toString(taskActivity.getNrSeconds()));
 					
 					
 				}

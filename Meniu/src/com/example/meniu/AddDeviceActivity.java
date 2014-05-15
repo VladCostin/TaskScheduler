@@ -82,8 +82,7 @@ public class AddDeviceActivity extends Activity {
 		deviceInfo = new HashMap<String,String>();
 		System.out.println("1.AM INTRAT AICI " + Thread.currentThread().getId());
 	//	devices = MainActivity.getDatabase().getAllDevices();
-		
-		System.out.println("ACACAT");
+
 		
 		System.out.println( "1. MOMENTAN SUNT " + Thread.activeCount());
 		
