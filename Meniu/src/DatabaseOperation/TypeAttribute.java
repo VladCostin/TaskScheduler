@@ -2,7 +2,7 @@ package DatabaseOperation;
 
 public interface TypeAttribute {
 
-	String COLLUMN_STRING = "TEXT";
+	String COLUMN_STRING = "TEXT";
 	
 	String COLUMN_INTEGER = "INTEGER";
 	

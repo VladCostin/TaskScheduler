@@ -13,6 +13,7 @@ import java.util.List;
 
 
 
+
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
@@ -69,22 +70,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     {
     	 String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_TASKS + 
          		"(" + Tasks.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
-         			+ Tasks.KEY_Title + " " + TypeAttribute.COLLUMN_STRING + ","
-         		    + Tasks.KEY_Priority + " " + TypeAttribute.COLLUMN_STRING + ","
-         		    + Tasks.KEY_Status + " " + TypeAttribute.COLLUMN_STRING + ","
-         		    + Tasks.KEY_Location + " " + TypeAttribute.COLLUMN_STRING + ","
-                    + Tasks.KEY_Date + " " + TypeAttribute.COLLUMN_STRING + ","
-                    + Tasks.KEY_People + " " + TypeAttribute.COLLUMN_STRING + ","  
-                    + Tasks.KEY_Device + " " + TypeAttribute.COLLUMN_STRING + ","
-                    + Tasks.KEY_Duration + " " + TypeAttribute.COLLUMN_STRING + ","
-                    + Tasks.KEY_Begin_Hour + " " + TypeAttribute.COLLUMN_STRING +
+         			+ Tasks.KEY_Title + " " + TypeAttribute.COLUMN_STRING + ","
+         		    + Tasks.KEY_Priority + " " + TypeAttribute.COLUMN_STRING + ","
+         		    + Tasks.KEY_Status + " " + TypeAttribute.COLUMN_STRING + ","
+         		    + Tasks.KEY_Location + " " + TypeAttribute.COLUMN_STRING + ","
+                    + Tasks.KEY_Date + " " + TypeAttribute.COLUMN_STRING + "," 
+                    + Tasks.KEY_People + " " + TypeAttribute.COLUMN_STRING + ","  
+                    + Tasks.KEY_Device + " " + TypeAttribute.COLUMN_STRING + ","
+                    + Tasks.KEY_Duration + " " + TypeAttribute.COLUMN_STRING + ","
+                    + Tasks.KEY_Begin_Hour + " " + TypeAttribute.COLUMN_STRING +
                 ")";
          
          String CREATE_DEVICE_TABLE = "CREATE TABLE " + TABLE_DEVICES + 
          		"(" + DeviceData.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
-         			+ DeviceData.KEY_MAC + " " + TypeAttribute.COLLUMN_STRING + ","
-         			+ DeviceData.KEY_DEVICE + " " + TypeAttribute.COLLUMN_STRING + ","
-                    + DeviceData.KEY_OWNER + " " + TypeAttribute.COLLUMN_STRING +  ")";
+         			+ DeviceData.KEY_MAC + " " + TypeAttribute.COLUMN_STRING + ","
+         			+ DeviceData.KEY_DEVICE + " " + TypeAttribute.COLUMN_STRING + ","
+                    + DeviceData.KEY_OWNER + " " + TypeAttribute.COLUMN_STRING +  ")";
          
          db.execSQL(CREATE_CONTACTS_TABLE);
          db.execSQL(CREATE_DEVICE_TABLE);
@@ -228,12 +229,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     		System.out.print(cursor.getString(i) + " " + i);
     	
     	System.out.println("\n\n");
+    	System.out.println("2. Data de executie :" + cursor.getString(9));
     	
     
     	oneTask.setID(Integer.parseInt(cursor.getString(0))); 
     	oneTask.setNameTask(cursor.getString(1));
         oneTask.setPriority(cursor.getString(2));
         oneTask.setState(  TaskState.valueOf(cursor.getString(3)));
+        oneTask.setStartTime(cursor.getString(9));
         
         
         

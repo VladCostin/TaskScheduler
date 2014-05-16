@@ -8,18 +8,25 @@ package ContextElements;
  */
 public class DurationContext extends ContextElement{
 	
-	private String duration;
+	private Integer duration;
 	
-	public DurationContext(String duration)
+	public DurationContext(Integer duration)
 	{
 		this.duration = duration;
 	}
+	
+	public DurationContext(String duration)
+	{
+		this.duration = Integer.parseInt(duration);
+	}
+	
 
-	public String getDuration() {
+
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 

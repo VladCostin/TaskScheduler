@@ -598,7 +598,10 @@ public class ShowTasks extends Activity
 			DurationContext durationTask = (DurationContext)
 			task.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 			
-			durationValue.setText(durationTask.getDuration());
+			
+			
+			
+			durationValue.setText(durationTask.getDuration() / 60 + " : " +  durationTask.getDuration() % 60   );
 			durationValue.setPadding(20, 10, 0, 0);
 			durationValue.setTextSize(20);	
 			durationValue.setId( ++ numberOfView);

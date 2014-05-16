@@ -1,12 +1,16 @@
 package com.example.meniu;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
+import DatabaseOperation.Tasks;
 import Task.Task;
 import Task.TaskState;
 import android.os.Bundle;
@@ -25,25 +29,60 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	 * mentions whether the activity is running
 	 */
 	private boolean isRunning;
+	
+	/**
+	 * number of seconds needed for the task to be finished 
+	 */
 	private int nrSeconds;
+	/**
+	 * number of minutes needed for the task to be executed
+	 */
 	private int nrMinutes;
+	/**
+	 * number of hours needed for the task to be executed
+	 */
 	private int nrHours;
 	
+	/**
+	 * shos the number of seconds remained
+	 */
 	private TextView seconds;
+	/**
+	 * shows the number of minutes remained
+	 */
 	private TextView minutes; 
+	/**
+	 * shows the number of hours remained
+	 */
 	private TextView hours; 
 	
 	
+	/**
+	 * adds 10 minutes to the duration value
+	 */
 	Button addMinutesButton;
+	/**
+	 * adds one hour to the duration value
+	 */
 	Button addHoursButton;
+	
+	/**
+	 * the task goes from currentTask state to executed state 
+	 */
 	Button finalizeTask;
 	
 	
 
+	/**
+	 * contains the details about the chosen task 
+	 */
 	Task currentTask;
 	
 	
-	
+	/**
+	 * shows the task chosen to be executed or a message instead
+	 */
+	RelativeLayout  rl;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +93,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		selectCurrentTasks();
 		
 		
-		RelativeLayout  rl = (RelativeLayout )  this.findViewById(R.id.currentTaskLayout);
+		rl = (RelativeLayout )  this.findViewById(R.id.currentTaskLayout);
 		seconds = (TextView) findViewById(R.id.seconds);
 		minutes = (TextView) findViewById(R.id.minutes);
 		hours = (TextView) findViewById(R.id.hours);
@@ -67,12 +106,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		addMinutesButton.setOnClickListener(this);
 		addHoursButton.setOnClickListener(this);
 		finalizeTask.setOnClickListener(this);
-		
-		
 
-		
-		
-		
 
 	}
 	
@@ -93,15 +127,6 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		
 		currentTask = chosenTasks.get(0);
-		
-		if(currentTask == null)
-			System.out.println("TASKUL CURRENT ESTE NULL");
-		else
-			System.out.println("TASKUL CURRENT NU ESTE NULL");
-		
-		
-		
-		
 		
 		
 	}
@@ -127,34 +152,88 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	 */
 	private void calculateTimeRemaining() {
 		
+		long diff,  diffSeconds, diffMinutes, diffHours, diffDays;
+		
 		DurationContext durationTask = (DurationContext)
 		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 		
-		if(durationTask == null)
-			System.out.println("DURATION TASK ESTE NULL");
-		else{
-			System.out.println("DURATION TASK NU ESTE NULL");
-			System.out.println(durationTask.getDuration());
+		
+		System.out.println("DURATA ESTE :" + durationTask.getDuration());
+		
+		SimpleDateFormat format = new SimpleDateFormat(Constants.parseTime);
+		
+		
+		Date currentDateTime = new Date();
+		Date taskChosenTime;
+		
+		int nrMinutesFromHour;
+		
+		try {
+			taskChosenTime = format.parse(currentTask.getStartTime());
+			System.out.println(currentDateTime);
+			System.out.println(taskChosenTime);
+			
+			
+		//	nrMinutes = Core.getDurationMinutes().get(durationTask.getDuration()) - 1 ;
+		//	nrHours   = nrMinutes / 60; 
+		//	nrMinutes = nrMinutes % 60;
+			
+			diff = currentDateTime.getTime() - taskChosenTime.getTime();
+			 
+			diffSeconds = diff / 1000 % 60;
+			diffMinutes = diff / (60 * 1000) % 60;
+			diffHours = diff / (60 * 60 * 1000) % 24;
+			diffDays = diff / (24 * 60 * 60 * 1000);
+ 
+			System.out.println( diffDays + " days, ");
+			System.out.println( diffHours + " hours, ");
+			System.out.println(diffMinutes + " minutes, ");
+			System.out.println(diffSeconds + " seconds.");
+			
+			
+			
+			nrMinutesFromHour = durationTask.getDuration() % 60;
+			if(nrMinutesFromHour <   diffMinutes)
+			{
+				nrHours = ( durationTask.getDuration() / 60  -1 ) -  (int) diffHours ;
+				nrMinutes = (durationTask.getDuration() % 60 + 59)  - (int) diffMinutes;
+			}
+			else
+			{
+				nrHours = ( durationTask.getDuration() / 60   ) -  (int) diffHours ;
+				nrMinutes = (durationTask.getDuration() % 60 )  - (int) diffMinutes;
+			}
+			
+			
+		
+			nrSeconds = 60 - (int) diffSeconds;
+			
+			
+			hours.setText(Integer.toString( nrHours));
+			minutes.setText( Integer.toString(nrMinutes ));
+			seconds.setText(Integer.toString(nrSeconds));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println(Core.getDurationMinutes());
 		
-		
-		nrMinutes = Core.getDurationMinutes().get(durationTask.getDuration()) - 1 ;
-		nrHours   = nrMinutes / 60; 
-		nrMinutes = nrMinutes % 60; 
-		nrSeconds = 59;
-		
-		hours.setText(Integer.toString( nrHours));
-		minutes.setText( Integer.toString(nrMinutes ));
-		seconds.setText(Integer.toString(nrSeconds));
 		
 	}
+	
+	
 
 
 	public void onPause()
 	{
 		super.onPause();
 		isRunning = false;
+		
+		DurationContext durationTask = (DurationContext)
+		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		
+		MainActivity.getDatabase().updateTask
+		(currentTask.getID(),Tasks.KEY_Duration , Integer.toString( durationTask.getDuration() ));
 	}
 	
 	
@@ -243,25 +322,85 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		switch(arg0.getId())
 		{
 			case R.id.addHours : 
-					hours.setText(Integer.toString(nrHours++));
+					addHours();
 					break;
 					
-			case R.id.addMinutes : System.out.println("ADAUGA 10 minute");
-					nrMinutes += 10;
-					if(nrMinutes >= 60){
-						nrMinutes -= 60;
-						minutes.setText(Integer.toString(nrMinutes));
-						hours.setText(Integer.toString(nrHours++));
-					}
-					else
-						minutes.setText(Integer.toString(nrMinutes));
+			case R.id.addMinutes : 
+					addMinutes();
 					break;
 					
-			case R.id.taskFinalizat : System.out.println("S-a terminat taskul");
+			case R.id.taskFinalizat : 
+					taskFinalize();
 					break;
 		
 		}
 		
+		
+	}
+
+
+	/**
+	 * if the client has finished the task
+	 */
+	public void taskFinalize() {
+		
+		MainActivity.getDatabase().updateTask(currentTask.getID(),Tasks.KEY_Status, TaskState.EXECUTED.toString());
+		isRunning = false;
+		rl.removeAllViews();
+		
+		
+	}
+	
+	
+	
+	/**
+	 * adds minutes to the task's duration, both in GUI and database
+	 */
+	public void addMinutes()
+	{
+		
+		nrMinutes += 10;
+		if(nrMinutes >= 60){
+			nrMinutes -= 60;
+			hours.setText(Integer.toString(nrHours++));
+		}
+		
+		minutes.setText(Integer.toString(nrMinutes));
+		
+		
+		
+		DurationContext durationTask = (DurationContext)
+		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		
+		System.out.println("MINUTE DURATA " + durationTask.getDuration());
+		durationTask.setDuration( durationTask.getDuration() + 10);
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	/**
+	 * adds hours to the task's duration, both in GUI and database
+	 */
+	public void addHours()
+	{
+		hours.setText(Integer.toString(nrHours++));
+		
+		DurationContext durationTask = (DurationContext)
+		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		
+		durationTask.setDuration( durationTask.getDuration() + 60);
+		
+		
+		
+		System.out.println("ORE DURATA ESTE ACUM" + durationTask.getDuration());
 		
 	}
 
@@ -294,17 +433,35 @@ class MyTimer implements Runnable{
 			
 					System.out.println(taskActivity.getNrSeconds());
 					
-					if(taskActivity.getNrSeconds() == 0 && taskActivity.getNrHours() == 0 && taskActivity.getNrMinutes() == 0)
+					
+					
+					if(taskActivity.getNrSeconds() <= 0 && taskActivity.getNrHours() <= 0
+					&& taskActivity.getNrMinutes() <= 0)
 						return;
 					
+					
 					taskActivity.setNrSeconds(taskActivity.getNrSeconds() - 1); 
-					if(taskActivity.getNrSeconds() == 0)
+					
+					if(taskActivity.getNrSeconds()  < 0)
 					{
 						taskActivity.setNrSeconds(59);
-						taskActivity.setNrMinutes(taskActivity.getNrMinutes() - 1);
-						taskActivity.getMinute().setText(Integer.toString(taskActivity.getNrMinutes()));
+						
+						if(taskActivity.getNrMinutes() - 1 < 0 ){
+							taskActivity.setNrMinutes(59);
+							
+							if(taskActivity.getNrHours() > 0 )
+								taskActivity.setNrHours(taskActivity.getNrHours() - 1);
+							
+						}
+						else
+							taskActivity.setNrMinutes(taskActivity.getNrMinutes() - 1);
+						
 					}
 					taskActivity.getSecunde().setText(Integer.toString(taskActivity.getNrSeconds()));
+					taskActivity.getMinute().setText(Integer.toString(taskActivity.getNrMinutes()));
+					taskActivity.getHours().setText(Integer.toString(taskActivity.getNrHours())); 
+					
+					
 					
 					
 				}

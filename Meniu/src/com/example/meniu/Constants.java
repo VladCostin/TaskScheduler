@@ -6,6 +6,6 @@ public interface Constants {
 	String executeTask	= "ExecuteTask";
 	
 	
-	
+	String parseTime	= "dd/MM/yyyy/HH/mm";
 	
 }

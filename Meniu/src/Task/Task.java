@@ -55,6 +55,12 @@ public class Task {
 	private TaskState state;
 	
 	
+	/**
+	 * when has the task been chosen to be executed 
+	 */
+	private String	 startTime;
+	
+	
 	public Task(){
 		
 		internalContext = new Context();
@@ -146,6 +152,18 @@ public class Task {
 
 	public void setState(TaskState state) {
 		this.state = state;
+	}
+
+
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 	
 }

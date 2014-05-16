@@ -1,6 +1,7 @@
 package DatabaseOperation;
 
 import com.example.meniu.AddTask;
+import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
 import com.example.meniu.R;
 
@@ -61,10 +62,13 @@ public class AddTaskButton implements OnClickListener {
 		 String duration = task.getDuration().getSelectedItem().toString();
 		 
 		 
+		 
+		 
 		 Log.w("information",date + " " + location + " " + priority + " " + name + " " + people + " " + device);
 		
-		 MainActivity.getDatabase().addTask(name,priority,location,date, people, device,  duration);      
-		 
+		MainActivity.getDatabase().addTask
+		(name,priority,location,date, people, device,  Core.getDurationMinutes().get(duration).toString());      
+
 	}
 
 
