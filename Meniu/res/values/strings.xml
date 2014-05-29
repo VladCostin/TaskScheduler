@@ -29,7 +29,7 @@
         <item>Other</item>
     </string-array>
 
-    <string name="priority">Priority</string>
+    <string name="textPriority">Priority</string>
     <string name="priority_prompt">Choose a Priority</string>
 
     <string-array name="priority_arrays">
@@ -41,7 +41,7 @@
     </string-array>
     
     
-    <string name="duration_prompt">Choose a Duration</string>
+    <string name="textDuration_prompt">Choose a Duration</string>
     <string-array name="duration_arrays">
         <item>Unknown</item>
         <item>5 minutes</item>
@@ -70,14 +70,15 @@
         <item>Unknown</item>
     </string-array>
 
-    <string name="StartTime">The earliest time when the execution should have started</string>
-    <string name="EndTime">The latest time when the execution should have ended</string>
-    <string name="addLocation">LOCATION</string>
+    <string name="textStartTime">The earliest time when the execution should have started</string>
+    <string name="TextEndTime">The latest time when the execution should have ended</string>
+    <string name="textAddLocation">LOCATION</string>
     <string name="chooseObject">OBJECTS</string>
-    <string name="setDeadline">Deadline</string>
-    <string name="choosePeople">People</string>
-    <string name="chooseDevices">Devices</string>
+    <string name="buttonSetDeadline">Deadline</string>
+    <string name="buttonChoosePeople">People</string>
+    <string name="buttonChooseDevices">Devices</string>
     <string name="Duration">Duration</string>
+    <string name="buttonDuration">Calculate duration</string>
     <string name="saveButton">SAVE TASK</string>
     <string name="title_activity_show_tasks">ShowTasks</string>
     <string name="taskTitle">TITLE</string>
@@ -93,7 +94,7 @@
     <string name="noDevice">No new Devices have been detected</string>
     <string name="Succes">The data has been inserted  </string>
     <string name="Error">Please insert the :</string>
-    <string name="notChoosed">Not Chosen</string>
+    <string name="textNotChoosed">Not Chosen</string>
     <string name="title_activity_show_all_tasks">ShowAllTasks</string>
     <string name="title_activity_show_current_task">ShowCurrentTask</string>
     

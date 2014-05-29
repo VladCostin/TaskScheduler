@@ -67,7 +67,8 @@ public class AddTaskButton implements OnClickListener {
 		 Log.w("information",date + " " + location + " " + priority + " " + name + " " + people + " " + device);
 		
 		MainActivity.getDatabase().addTask
-		(name,priority,location,date, people, device,  Core.getDurationMinutes().get(duration).toString());      
+		(name,priority,location,date, people, device, 
+		Core.getDurationMinutes().get(duration).toString(), "");      
 
 	}
 

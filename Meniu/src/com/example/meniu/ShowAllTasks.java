@@ -271,7 +271,7 @@ public class ShowAllTasks extends Activity
 		    titleValue.setLayoutParams(params_title_value);
 			
 			
-			priority.setText(R.string.priority);
+			priority.setText(R.string.textPriority);
 			priority.setPadding(20, 10, 0, 0);
 			priority.setTextSize(20);	
 			priority.setId( ++ numberOfView);
@@ -288,7 +288,7 @@ public class ShowAllTasks extends Activity
 			
 			
 			
-			deadline.setText(R.string.setDeadline);
+			deadline.setText(R.string.buttonSetDeadline);
 			deadline.setPadding(20, 10, 0, 0);
 			deadline.setTextSize(20);
 			deadline.setId( ++ numberOfView);
@@ -310,7 +310,7 @@ public class ShowAllTasks extends Activity
 			deadlineValue.setLayoutParams(params_deadline_value);
 			
 			
-			people.setText(R.string.choosePeople);
+			people.setText(R.string.buttonChoosePeople);
 			people.setPadding(20, 10, 0, 0);
 			people.setTextSize(20);
 			people.setId( ++ numberOfView);
@@ -331,7 +331,7 @@ public class ShowAllTasks extends Activity
 			peopleValue.setLayoutParams(params_people_value);
 			
 			
-			devices.setText(R.string.chooseDevices);
+			devices.setText(R.string.buttonChooseDevices);
 			devices.setPadding(20, 10, 0, 0);
 			devices.setTextSize(20);
 			devices.setId( ++ numberOfView);

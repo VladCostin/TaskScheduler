@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:drawableLeft="@drawable/location"
-        	android:text="@string/addLocation" />
+        	android:text="@string/textAddLocation" />
         
         
        	<fragment 
@@ -65,7 +65,7 @@
             android:layout_below="@+id/drawLineLocation"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/chooseDevices" />
+			android:text="@string/buttonChooseDevices" />
          
          <TextView
             android:id="@+id/chooseDevices"
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:textAppearance="?android:attr/textAppearanceLarge"
-        	android:text="@string/notChoosed" />
+        	android:text="@string/textNotChoosed" />
         
 
         
@@ -94,7 +94,7 @@
             android:layout_below="@+id/drawLineObject"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/choosePeople" />
+			android:text="@string/buttonChoosePeople" />
          
          
         <TextView
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:textAppearance="?android:attr/textAppearanceLarge"
-        	android:text="@string/notChoosed" />
+        	android:text="@string/textNotChoosed" />
         
 
         
@@ -125,7 +125,7 @@
             android:layout_below="@+id/drawLinePeople"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/setDeadline" />	 
+			android:text="@string/buttonSetDeadline" />	 
 			
          
 		<TextView
@@ -136,7 +136,7 @@
        		android:layout_height="wrap_content"
        		android:layout_marginTop="20dp"
        		android:textAppearance="?android:attr/textAppearanceLarge"
-        	android:text="@string/notChoosed" />
+        	android:text="@string/textNotChoosed" />
 		
 		
 		 <View
@@ -170,7 +170,7 @@
     	  	android:drawableLeft="@drawable/warning"
         	android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
-        	android:text="@string/priority" />
+        	android:text="@string/textPriority" />
     
     
     	<Spinner
@@ -184,22 +184,30 @@
     	
     	
     	<TextView
-  	      	android:id="@+id/duration"
+  	      	android:id="@+id/textDuration"
     	  	android:layout_below="@+id/spinnerPriority"
     	  	android:drawableLeft="@drawable/warning"
         	android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
-        	android:text="@string/duration_prompt" />
-    
+        	android:text="@string/textDuration_prompt" />
     
     	<Spinner
         	android:id="@+id/spinnerDuration"
-        	android:layout_below="@+id/duration"
-        	android:layout_width="match_parent"
+        	android:layout_below="@+id/textDuration"
+        	android:layout_width="200dp"
         	android:layout_height="wrap_content"
         	android:entries="@array/duration_arrays"
         	android:paddingLeft="30dp"
-        	android:prompt="@string/duration_prompt" />
+        	android:prompt="@string/textDuration_prompt" />
+    	
+    	<Button
+    	    android:id="@+id/buttonCalculateDuration"
+      	    android:layout_width="wrap_content"
+      	    android:layout_height="wrap_content"
+      	    android:layout_below="@+id/textDuration"
+			android:layout_toRightOf="@+id/spinnerDuration"
+			android:layout_marginLeft="30dp"
+      	    android:text="@string/buttonDuration"/>
     
     
     	<TextView
@@ -207,6 +215,7 @@
         	android:layout_below="@+id/spinnerDuration"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
+        	android:layout_marginTop="50dp"
         	android:text="@string/Repeatable" />
  
     	 <Spinner
@@ -223,7 +232,7 @@
         	android:layout_below="@+id/spinner3"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/StartTime" />
+        	android:text="@string/textStartTime" />
      
       	<TimePicker
         	android:id="@+id/timePicker1"
@@ -236,7 +245,7 @@
         	android:layout_below="@+id/timePicker1"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/EndTime" />
+        	android:text="@string/TextEndTime" />
      
       	<TimePicker
         	android:id="@+id/timePicker2"

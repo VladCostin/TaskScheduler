@@ -4,6 +4,7 @@ package com.example.meniu;
 
 import java.util.List;
 
+import Clusters.KMeansDuration;
 import DatabaseOperation.DatabaseHandler;
 import DeviceData.Device;
 import android.os.Bundle;
@@ -66,6 +67,13 @@ public class MainActivity extends Activity {
 		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
 		
 		
+	//	addTasksforCheck();
+		KMeansDuration clustering = new KMeansDuration();
+		clustering.calculateKlusters();
+		
+
+		
+		
 	//	System.out.println("DIMENSIUNEA ESTE : " + database.getAllTasks().size());
 	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
 	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS devices");
@@ -80,6 +88,98 @@ public class MainActivity extends Activity {
 		
 		
 		 
+	}
+
+	private void addTasksforCheck() {
+		
+		
+		MainActivity.database.addTaskPriori
+		("ma duc sa imi fac abonament", "44.427 26.102", "45", "28/05/2014/17/21");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou lunar",  "44.428 26.103", "15", "28/05/2014/11/46");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05");
+		
+		
+		MainActivity.database.addTaskPriori
+		("ma duc sa imi fac abonament","44.427 26.102", "55", "28/05/2014/16/05");
+		
+		MainActivity.database.addTaskPriori
+		("abonament m luna", "44.43 26.101",  "65", "28/05/2014/09/10");
+		
+		
+		MainActivity.database.addTaskPriori
+		("metrou ab", "44.428 26.103", "60", "28/05/2014/8/30");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103", "6", "28/05/2014/14/35");
+		
+		
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21");
+		
+		MainActivity.database.addTaskPriori
+		("abonament",  "44.43 26.101", "20", "28/05/2014/13/35");
+		
+		
+		MainActivity.database.addTaskPriori
+		("metrou",  "44.428 26.103",  "10", "28/05/2014/14/23");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05");
+		
+		
+		MainActivity.database.addTaskPriori
+		("metro abonare", "44.427 26.102", "5", "28/05/2014/14/20");
+		
+		MainActivity.database.addTaskPriori
+		("abonament m luna",  "44.43 26.101", "43", "28/05/2014/10/55");
+		
+		
+		MainActivity.database.addTaskPriori
+		("metrou ab", "44.428 26.103",  "5", "28/05/2014/13/10");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103",  "30", "28/05/2014/16/35");
+		
+		
+	
+		
+		
+		MainActivity.database.addTaskPriori
+		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27");
+		
+		MainActivity.database.addTaskPriori
+		("abonament m luna",  "44.43 26.101", "43", "28/05/2014/10/05");
+		
+		
+		MainActivity.database.addTaskPriori
+		("metrou ab", "44.428 26.103",  "15", "28/05/2014/13/15");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103",  "35", "28/05/2014/16/15");
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	@Override

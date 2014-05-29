@@ -113,9 +113,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param location : tasks's location
      * @param date : task's date
      * @param people : the people needed to execute the task
+     * @param devices : the devices selected to execute the task
+     * @param duration : the duration selected by the user
+     * @param beginDurationEstimated : the duration estimated depending on the beginTimes
      */
     public void addTask(String name, String priority, String location, String date,
-    					String people , String devices, String duration ) { 
+    					String people , String devices, String duration, String beginDurationEstimated ) { 
+    	
+    	
+    	System.out.println( " LOCATION selected:  " +  location);
  
     	ContentValues values = new ContentValues();
     	values.put(Tasks.KEY_Title, name);  
@@ -126,13 +132,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	values.put(Tasks.KEY_People, people); 
     	values.put(Tasks.KEY_Device, devices);
     	values.put(Tasks.KEY_Duration, duration); 
-    
-    	values.put(Tasks.KEY_Begin_Hour, "");
+     	values.put(Tasks.KEY_Begin_Hour, "");
     	
 
     	insertRegistration(values, TABLE_TASKS);
     	
     }
+    
+    
+    
+    public void addTaskPriori(String name, String location, String duration, String beginHour  )
+    {
+    	ContentValues values = new ContentValues();
+    	values.put(Tasks.KEY_Title, name);  
+    	values.put(Tasks.KEY_Priority, "");
+    	values.put(Tasks.KEY_Status, TaskState.EXECUTED.toString());
+    	values.put(Tasks.KEY_Location, location);
+    	values.put(Tasks.KEY_Date, "");
+    	values.put(Tasks.KEY_People, ""); 
+    	values.put(Tasks.KEY_Device, "");
+    	values.put(Tasks.KEY_Duration, duration); 
+     	values.put(Tasks.KEY_Begin_Hour, beginHour);
+     	
+     	
+    	insertRegistration(values, TABLE_TASKS);
+    	
+    }
+    
     
     /**
      * @param macAddress : devices's mac adress
@@ -206,9 +232,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 contactList.add( takeTaskFromDataBase( cursor) );
             } while (cursor.moveToNext());
         }
- 
-        // return contact list
+
         return contactList;
+    }
+    
+    
+    /**
+     * @param state : the state used to filter the tasks from database
+     * @return	: the tasks having the state received as parameter
+     */
+    public List<Task> getFilteredTasks(TaskState state)
+    {
+    	
+    	 List<Task> contactList = new ArrayList<Task>();
+    	 String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
+    	 
+    	 
+    	 SQLiteDatabase db = this.getWritableDatabase();
+         Cursor cursor = db.rawQuery(selectQuery, null);
+    
+         System.out.println("SELECTEZ NUMAI UNELE TASKURI");
+         
+           // looping through all rows and adding to list
+         if (cursor.moveToFirst()) {
+             do {
+            	 
+            	 	System.out.println( "Cum este taskul  " + cursor.getString(3));
+            	 
+               		if( TaskState.valueOf(cursor.getString(3)) == state)
+               			contactList.add( takeTaskFromDataBase( cursor) );
+             } while (cursor.moveToNext());
+         }
+
+          return contactList;
+    	
+    	
     }
     
      
@@ -400,5 +458,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		
 	}
+	
+	
     
 }

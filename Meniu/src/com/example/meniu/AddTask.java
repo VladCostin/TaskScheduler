@@ -95,6 +95,12 @@ public class AddTask extends   FragmentActivity
 	 */
 	Button saveButton;
 	
+	
+	/**
+	 * button for showing the estimated duration after clustering
+	 */
+	private Button clusterise;
+	
 	/**
 	 * contains the deadline established by the user
 	 */
@@ -354,7 +360,7 @@ public class AddTask extends   FragmentActivity
             		peopleString = peopleString + items[itemsId.get(i)];
             	}
             	else
-            		peopleString = getResources().getString(R.string.notChoosed);
+            		peopleString = getResources().getString(R.string.textNotChoosed);
             	
             	people.setText(peopleString);
             	addPeopleNeeded.setFocusableInTouchMode(true);
@@ -416,7 +422,7 @@ public class AddTask extends   FragmentActivity
             		
             	}
             	else
-            		deviceString = getResources().getString(R.string.notChoosed);
+            		deviceString = getResources().getString(R.string.textNotChoosed);
             	
             	
             	devices.setText(deviceString);
@@ -661,6 +667,20 @@ public Spinner getDuration() {
 
 public void setDuration(Spinner duration) {
 	this.duration = duration;
+}
+
+
+
+
+public Button getClusterise() {
+	return clusterise;
+}
+
+
+
+
+public void setClusterise(Button clusterise) {
+	this.clusterise = clusterise;
 }
 
 

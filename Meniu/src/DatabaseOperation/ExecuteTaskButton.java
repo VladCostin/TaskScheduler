@@ -36,6 +36,9 @@ public class ExecuteTaskButton implements OnClickListener {
 		values.add( TaskState.CURRENT_TASK.toString() );
 		values.add(new  SimpleDateFormat(Constants.parseTime).format(new Date()));
 		
+		
+		System.out.println("ora de executie este  " +   new  SimpleDateFormat(Constants.parseTime).format(new Date()));
+		
 		System.out.println("1.DATA de executie " + values.get(1));
 		
 		
