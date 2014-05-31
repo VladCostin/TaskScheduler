@@ -5,6 +5,7 @@ import DeviceData.Device;
 import android.util.Log;
 import android.view.View.OnClickListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -19,7 +21,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -44,7 +50,8 @@ import android.support.v4.app.FragmentActivity;
 public class AddTask extends   FragmentActivity 
 					 implements OnMapClickListener,
 							GooglePlayServicesClient.ConnectionCallbacks,
-							GooglePlayServicesClient.OnConnectionFailedListener
+							GooglePlayServicesClient.OnConnectionFailedListener, 
+							com.google.android.gms.location.LocationListener
 {
 	
 	
@@ -141,6 +148,12 @@ public class AddTask extends   FragmentActivity
 	 * used to get the user's location
 	 */
 	LocationClient mLocationClient;
+	
+	
+	 /**
+	 * used to get updates about the user's location
+	 */
+	LocationRequest locationRequest;
 	
 	/**
 	 * used to determine which date to choose
@@ -245,6 +258,11 @@ public class AddTask extends   FragmentActivity
 		
 		
 		mLocationClient = new LocationClient(this, this, this);
+		locationRequest = new LocationRequest();
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		locationRequest.setInterval(5000);
+		locationRequest.setFastestInterval(1000);
+		locationRequest.setNumUpdates(1);
 
 
 		
@@ -509,21 +527,113 @@ public class AddTask extends   FragmentActivity
 	public void onConnected(Bundle arg0) {
 		  // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-        Location l =  mLocationClient.getLastLocation(); 
+        
+        LocationManager     manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+        
+        manager.requestLocationUpdates(
+         	    LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
+         	        @Override
+         	        public void onStatusChanged(String provider, int status, Bundle extras) {
+         	        }
+         	        @Override
+         	        public void onProviderEnabled(String provider) {
+         	        }
+         	        @Override
+         	        public void onProviderDisabled(String provider) {
+         	        }
+         	        @Override
+         	        public void onLocationChanged(final Location location) {
+         	        }
+         });
+        
+        
+        
+    //    Location l =  mLocationClient.getLastLocation(); 
         
        
-       
-        
-        LatLng position = new LatLng(l.getLatitude(), l.getLongitude());
-        
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+  /*      String searchPattern = "Politehnica Bucuresti";
+        List<Address> addresses = null;
+        try {
+			addresses = (new Geocoder(this)).getFromLocationName(searchPattern, Integer.MAX_VALUE);
+			Log.w("Pozitie", "Am extras pozitia adresei"); 
+			if (addresses == null) {
+		        // location service unavailable or incorrect address
+		        // so returns null
+		        Log.w("Pozitie", "Pozitia este nula");
+		    }
+			else
+			{
+				Address closest = addresses.get(0);
+				Log.w("Pozitie", closest.getLatitude() + " " + closest.getLongitude());
+				
+				LatLng position = new LatLng(closest.getLatitude(), closest.getLongitude());
+				map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
 
-        // Zoom in, animating the camera.
-        map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+		    	// Zoom in, animating the camera.
+		    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+		    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+			}
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  
+        
+        */
        
-		
+       
+     /*   if(l != null){
+      
+        	setPositionOnMap(l);
+       
+        }*/
+        mLocationClient.requestLocationUpdates(locationRequest, this);
+        
+        
+        
+        
 	}
+	
+
+	@Override
+	public void onLocationChanged(Location arg0) {
+		
+		
+		
+		LatLng position = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+        
+    	System.out.println("POZITIA ACTUALA" + position.latitude + " " + position.longitude);
+    	Log.w("Pozitie actuala", position.latitude + " " + position.longitude); 
+    
+    	map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+
+    	// Zoom in, animating the camera.
+    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+	
+	}
+	
+	
+	/**
+	 * @param l : the location detected from updating or from lastKnownlocation
+	 * it is then shown on the map
+	 */
+	/*public void setPositionOnMap(Location l)
+	{
+		LatLng position = new LatLng(l.getLatitude(), l.getLongitude());
+        
+    	System.out.println("POZITIA ACTUALA" + position.latitude + " " + position.longitude);
+    	Log.w("Pozitie actuala", position.latitude + " " + position.longitude); 
+    
+    	map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+
+    	// Zoom in, animating the camera.
+    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+	}
+	*/
 
 	@Override
 	public void onDisconnected() {
@@ -682,6 +792,10 @@ public Button getClusterise() {
 public void setClusterise(Button clusterise) {
 	this.clusterise = clusterise;
 }
+
+
+
+
 
 
 

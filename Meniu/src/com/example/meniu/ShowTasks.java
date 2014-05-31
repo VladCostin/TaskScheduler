@@ -11,6 +11,7 @@ import java.util.List;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.model.LatLng;
 
 import CheckCompatibility.Compatibility;
@@ -33,6 +34,8 @@ import Task.Context;
 import Task.Task;
 import Task.TaskState;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
@@ -56,7 +59,7 @@ import android.bluetooth.BluetoothAdapter;
  */
 public class ShowTasks extends Activity
 					   implements GooglePlayServicesClient.ConnectionCallbacks,
-					   			  GooglePlayServicesClient.OnConnectionFailedListener{
+					   			  GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
 	
 	/**
 	 * used to add dynamically data about each task from the database
@@ -68,6 +71,13 @@ public class ShowTasks extends Activity
 	 * used to get the user's location
 	 */
 	LocationClient mLocationClient;
+	
+	
+	
+	 /**
+	 * used to get updates about the user's location
+	 */
+	LocationRequest locationRequest;
 	
 	
 	/**
@@ -109,6 +119,13 @@ public class ShowTasks extends Activity
 	 * contains for each mac adress a name for the device to be recognized
 	 */
 	private HashMap<String,String> deviceInfo;
+	
+	
+	
+	/**
+	 * the current position detected by GPS
+	 */
+	LatLng currentPosition;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +145,11 @@ public class ShowTasks extends Activity
 		checkers.put(ContextElementType.PEOPLE_ELEMENT, new PeopleCompatibility());
 		
 		mLocationClient = new LocationClient(this,this,this);
+		locationRequest = new LocationRequest();
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		locationRequest.setInterval(5000);
+		locationRequest.setFastestInterval(1000);
+		locationRequest.setNumUpdates(1);
 		
 		
 		devices = MainActivity.getDatabase().getAllDevices();
@@ -149,7 +171,7 @@ public class ShowTasks extends Activity
 		registerReceiver(mReceiver, filter);
 		
 		mBluetoothAdapter.startDiscovery();
-		
+		currentPosition = null;
 		
 	}
 
@@ -172,8 +194,40 @@ public class ShowTasks extends Activity
 	public void onConnected(Bundle arg0) {
 		
 		
-		showUpdate();
 		
+		LocationManager     manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);    
+	    manager.requestLocationUpdates(
+	         	    LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
+	         	        @Override
+	         	        public void onStatusChanged(String provider, int status, Bundle extras) {
+	         	        }
+	         	        @Override
+	         	        public void onProviderEnabled(String provider) {
+	         	        }
+	         	        @Override
+	         	        public void onProviderDisabled(String provider) {
+	         	        }
+	         	        @Override
+	         	        public void onLocationChanged(final Location location) {
+	         	        }
+	    });
+	    
+	    
+	    mLocationClient.requestLocationUpdates(locationRequest, this);
+		
+		
+		
+	}
+	
+	
+	
+	@Override
+	public void onLocationChanged(Location arg0) {
+		
+		currentPosition = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+		Log.w("Pozitie actuala", arg0.getLatitude() + " " + arg0.getLongitude()); 
+		
+		showUpdate();
 	}
 	
 	
@@ -183,14 +237,21 @@ public class ShowTasks extends Activity
 	 */
 	public void showUpdate()
 	{
-	
-		 Location l =  mLocationClient.getLastLocation();    
-	     LatLng position = new LatLng(l.getLatitude(), l.getLongitude());
-
-	     layout.removeAllViews();
-	     numberOfView = 0;
-	     
-	     checkAllTasksCompatibility( createCurrentState(position));  
+		
+		
+		if(currentPosition == null)
+		{
+			 mLocationClient.requestLocationUpdates(locationRequest, this);
+			 
+		}
+		else
+		{
+		     layout.removeAllViews();
+		     numberOfView = 0;
+		     checkAllTasksCompatibility( createCurrentState()); 
+		}
+		
+ 
 		
 	}
 	
@@ -238,10 +299,9 @@ public class ShowTasks extends Activity
     
     /**
      * create a context regarding the current state of the user
-     * @param position : the position of the user
      * @return : the current context of the user
      */
-    private Context createCurrentState(LatLng position) {
+    private Context createCurrentState() {
 		
     	
     	ArrayList<String> myDevices = detectMyDevices();
@@ -249,7 +309,7 @@ public class ShowTasks extends Activity
     	
     	Context currentContext = new Context();
     	currentContext.getContextElementsCollection().
-    	put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(position));
+    	put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(currentPosition));
     	currentContext.getContextElementsCollection().
     	put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext() );
     	
@@ -330,9 +390,10 @@ public class ShowTasks extends Activity
 	private void checkAllTasksCompatibility(Context currentContext) {
 	
 		List<Task> tasks = MainActivity.getDatabase().getAllTasks();
+		System.out.println("AFISEAZA TASKURILE AICI");
+		System.out.println( "Dimensiune taskuri " + tasks.size());
 		
-		
-		Collections.sort(tasks, new PriorityComparator());
+	//	Collections.sort(tasks, new PriorityComparator());
 	
 		
 		boolean isTaskCompatible = true;
@@ -674,6 +735,10 @@ public class ShowTasks extends Activity
 	}
 
 
+
+
+
+
 }
 
 
@@ -713,6 +778,7 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 	        {
 	           System.out.println("A RECEPTAT un NOU DEVICE " + myActivy.getDeviceInfo().toString());
 	           myActivy.getDeviceInfo().put(device.getAddress(), device.getName());	
+	       //    myActivy.mLocationClient.requestLocationUpdates(myActivy.locationRequest, myActivy);
 	           myActivy.showUpdate();
 	           
 	        }
