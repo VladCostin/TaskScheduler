@@ -2,6 +2,9 @@ package com.example.meniu;
 
 import DatabaseOperation.AddTaskButton;
 import DeviceData.Device;
+import Task.Task;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View.OnClickListener;
 
@@ -33,6 +36,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -51,14 +56,14 @@ public class AddTask extends   FragmentActivity
 					 implements OnMapClickListener,
 							GooglePlayServicesClient.ConnectionCallbacks,
 							GooglePlayServicesClient.OnConnectionFailedListener, 
-							com.google.android.gms.location.LocationListener
+							com.google.android.gms.location.LocationListener, TextWatcher
 {
 	
 	
 	/** 
 	 * the title of the task
 	 */
-	private EditText title;
+	private AutoCompleteTextView title;
 	
 	/**
 	 * show list of domains
@@ -188,7 +193,7 @@ public class AddTask extends   FragmentActivity
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
 		priority = (Spinner)  findViewById(R.id.spinnerPriority);	
 		duration = (Spinner)  findViewById(R.id.spinnerDuration);
-		title    = (EditText) findViewById(R.id.title);
+		title    = (AutoCompleteTextView) findViewById(R.id.titleTextView);
 		
 		
 		scroll   = (ScrollView) findViewById(R.id.ScrollView01);
@@ -280,6 +285,25 @@ public class AddTask extends   FragmentActivity
         });
         
       
+        
+    	List<Task> tasks =  MainActivity.getDatabase().getAllTasks();
+		ArrayList<String>  allWords = new ArrayList<String>();
+		
+		
+		for(Task task : tasks)
+		{
+			String taskWords[]  = task.getNameTask().split(" ");
+			for(String word : taskWords)
+				if(allWords.contains(word) == false)
+					allWords.add(word);
+			
+			
+		}
+		String[] wordsList = new String[allWords.size()];
+		allWords.toArray(wordsList);
+		
+		title.addTextChangedListener(this);
+		title.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordsList));
 		
 	}
 	
@@ -706,13 +730,7 @@ public void setDate(TextView date) {
 	this.date = date;
 }
 
-public EditText getTitletask() {
-	return title;
-}
 
-public void setTitle(EditText title) {
-	this.title = title;
-}
 
 public GoogleMap getMap() {
 	return map;
@@ -791,6 +809,47 @@ public Button getClusterise() {
 
 public void setClusterise(Button clusterise) {
 	this.clusterise = clusterise;
+}
+
+
+
+
+public AutoCompleteTextView getTitleTask() {
+	return title;
+}
+
+
+
+
+public void setTitle(AutoCompleteTextView title) {
+	this.title = title;
+}
+
+
+
+
+@Override
+public void afterTextChanged(Editable s) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void onTextChanged(CharSequence s, int start, int before, int count) {
+	// TODO Auto-generated method stub
+	
 }
 
 

@@ -56,7 +56,7 @@ public class AddTaskButton implements OnClickListener {
 		 String date= task.getDate().getText().toString();
 		 String location = task.getLocation();
 		 String priority = task.getPriority().getSelectedItem().toString();
-		 String name = task.getTitletask().getText().toString();
+		 String name = task.getTitleTask().getText().toString();
 		 String people = task.getPeople().getText().toString();
 		 String device = task.getDevices().getText().toString();
 		 String duration = task.getDuration().getSelectedItem().toString();
@@ -79,14 +79,14 @@ public class AddTaskButton implements OnClickListener {
 	public boolean checkDatas() {
 		
 		if(task.getLocation() == null ||
-		   task.getTitletask().getText().toString().compareTo("") == 0 )
+		   task.getTitleTask().getText().toString().compareTo("") == 0 )
 		{
 			messageToShow = task.getResources().getString(R.string.Error) ;
 			
 			if(task.getLocation() == null)
 				messageToShow += "  LOCATION ";
 
-			if(task.getTitletask().getText().toString().compareTo("") == 0 )
+			if(task.getTitleTask().getText().toString().compareTo("") == 0 )
 				messageToShow += " TITLE ";
 			
 			return false;
