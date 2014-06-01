@@ -23,7 +23,7 @@ public interface KMeans {
 	
 	
 	/**
-	 * detect centroid by comparing the data introduced by the user with the data
+	 * detect center by comparing the data introduced by the user with the data
 	 * contained in database
 	 */
 	public void detectCentroid();

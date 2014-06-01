@@ -97,6 +97,7 @@
     <string name="textNotChoosed">Not Chosen</string>
     <string name="title_activity_show_all_tasks">ShowAllTasks</string>
     <string name="title_activity_show_current_task">ShowCurrentTask</string>
+    <string name="buttonSearch">Search</string>
     
     
     

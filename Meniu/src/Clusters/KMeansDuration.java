@@ -37,6 +37,21 @@ public class KMeansDuration implements KMeans{
 	 */
 	int sameNumitorStartTime;
 	
+	
+	/**
+	 *  the maximum distance between two words that is not taken into consideration
+	 */
+	int distanceStringError;
+	
+	
+	/**
+	 *  the maximum distance between two locations that is not taken into consideration
+	 */
+	int distanceLocationError;
+	
+	/**
+	 * inits the members
+	 */
 	public KMeansDuration() {
 		nrClusters = 3;
 		
@@ -48,6 +63,11 @@ public class KMeansDuration implements KMeans{
 		idCentroid = new ArrayList<Integer>();
 		centroizi = new ArrayList<Task>();
 		idNewCentroid = new ArrayList<Integer>();
+		
+		
+		distanceStringError = 5;
+		distanceLocationError = 300;
+		
 	}
 	
 
@@ -361,6 +381,9 @@ public class KMeansDuration implements KMeans{
 				                 location2.getLatitude(), location2.getLongitude(), results);
 		
 		
+		if( results[0] < distanceLocationError )
+			return 0;
+		
 		return  (int) results[0];
 	}
 
@@ -402,7 +425,7 @@ public class KMeansDuration implements KMeans{
 	/**
 	 * @param nameTask : the title of the first Task
 	 * @param nameTask2 : the titles of the second Task
-	 * return the Distance between the two titles
+	 * @return the Distance between the two titles
 	 */
 	private int calculateDistanceTitles(String nameTask, String nameTask2) {
 		
@@ -482,6 +505,10 @@ public class KMeansDuration implements KMeans{
                 costs[j] = cj;
             }
         }
+        
+        if( costs[b.length() ] < distanceStringError )
+        	return 0;
+        
         return costs[b.length()];
 		
 		

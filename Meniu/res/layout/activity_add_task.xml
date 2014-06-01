@@ -19,7 +19,7 @@
         
         
 		<AutoCompleteTextView 
-		    android:id="@+id/titleTextView"
+		    android:id="@+id/titleAutoComplete"
 		    android:layout_below="@+id/nameTask"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -28,13 +28,13 @@
         
         <View
             android:id="@+id/drawLineTitle"
-        	android:layout_below="@+id/titleTextView"
+        	android:layout_below="@+id/titleAutoComplete"
  			android:layout_width="match_parent"
  			android:layout_height="1dp"
  			android:background="@android:color/black" />
 	
         <TextView
-            android:id="@+id/addLocation"
+            android:id="@+id/addLocationTextView"
             android:layout_below="@+id/drawLineTitle"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
@@ -43,9 +43,31 @@
         	android:text="@string/textAddLocation" />
         
         
+        <AutoCompleteTextView 
+            android:id="@+id/locationAutoComplete"
+            android:layout_below="@+id/addLocationTextView"
+			android:layout_width="300dp"
+			android:layout_height="wrap_content"
+			android:completionThreshold="1"
+		/>
+        
+ 		<Button
+ 		    
+ 		    android:id="@+id/buttonSearchLocation"
+ 		    android:layout_toRightOf="@+id/locationAutoComplete"
+ 		    android:layout_below="@+id/addLocationTextView"
+ 		    android:layout_alignBottom="@+id/locationAutoComplete"
+ 		    android:layout_marginLeft="20dp"
+ 		    android:layout_width="wrap_content"
+ 		    android:layout_height="wrap_content"
+ 		    android:text="@string/buttonSearch"
+ 		/>
+        
+        
        	<fragment 
   			android:id="@+id/map"
-  			android:layout_below="@+id/addLocation"
+  			android:layout_below="@+id/locationAutoComplete"
+  			android:layout_marginTop="20dp"
  			android:layout_width="match_parent"
   			android:layout_height="500dp"
   			class="com.example.meniu.WorkaroundMapFragment"/>

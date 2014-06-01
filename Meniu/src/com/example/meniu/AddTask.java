@@ -54,9 +54,9 @@ import android.support.v4.app.FragmentActivity;
  */
 public class AddTask extends   FragmentActivity 
 					 implements OnMapClickListener,
-							GooglePlayServicesClient.ConnectionCallbacks,
-							GooglePlayServicesClient.OnConnectionFailedListener, 
-							com.google.android.gms.location.LocationListener, TextWatcher
+							    GooglePlayServicesClient.ConnectionCallbacks,
+							    GooglePlayServicesClient.OnConnectionFailedListener, 
+							    com.google.android.gms.location.LocationListener, TextWatcher, OnClickListener
 {
 	
 	
@@ -106,6 +106,7 @@ public class AddTask extends   FragmentActivity
 	 * button for saving the task in the database
 	 */
 	Button saveButton;
+	
 	
 	
 	/**
@@ -160,6 +161,34 @@ public class AddTask extends   FragmentActivity
 	 */
 	LocationRequest locationRequest;
 	
+	
+	/**
+	 * to cease motion on scroll when the map is touched
+	 */
+	ScrollView scroll;
+	
+	
+	/**
+	 * the user writes the name of the location with the help
+	 * of auto complete
+	 */
+	private AutoCompleteTextView autoLocationSearch;
+	
+
+	
+	/**
+	 * search the location taped 
+	 */
+	private Button buttonSearch;
+	
+	
+	
+	/**
+	 * the position detected bu the device
+	 */
+	LatLng  positionCurrent;
+	
+	
 	/**
 	 * used to determine which date to choose
 	 */
@@ -177,12 +206,7 @@ public class AddTask extends   FragmentActivity
 	static final int DEVICES_DIALOG_ID = 1001;
 	
 	
-	/**
-	 * to cease motion on scroll when the map is touched
-	 */
-	ScrollView scroll;
-	
-	
+
 	
 
 	@Override
@@ -193,7 +217,8 @@ public class AddTask extends   FragmentActivity
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
 		priority = (Spinner)  findViewById(R.id.spinnerPriority);	
 		duration = (Spinner)  findViewById(R.id.spinnerDuration);
-		title    = (AutoCompleteTextView) findViewById(R.id.titleTextView);
+		title    = (AutoCompleteTextView) findViewById(R.id.titleAutoComplete);
+		autoLocationSearch = (AutoCompleteTextView) findViewById(R.id.locationAutoComplete);
 		
 		
 		scroll   = (ScrollView) findViewById(R.id.ScrollView01);
@@ -257,6 +282,11 @@ public class AddTask extends   FragmentActivity
 		
 		saveButton = (Button) findViewById(R.id.saveButton);
 		saveButton.setOnClickListener(new AddTaskButton(this));
+		
+		
+		buttonSearch = (Button) findViewById(R.id.buttonSearchLocation);
+		buttonSearch.setOnClickListener( this);
+			
 		
 		
 	//	addDevicesNeeded.setFocusable(true); 
@@ -543,7 +573,24 @@ public class AddTask extends   FragmentActivity
 	public void onMapClick(LatLng locationMap) { 
 		
 		location = Double.toString( locationMap.latitude) + " " + Double.toString(locationMap.longitude);
-		map.addMarker(new MarkerOptions().position(locationMap).icon(BitmapDescriptorFactory.fromResource(R.drawable.location)));
+		map.clear();
+		map.addMarker(new MarkerOptions().position(positionCurrent).
+		icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+		map.addMarker(new MarkerOptions().position(locationMap).
+		icon(BitmapDescriptorFactory.fromResource(R.drawable.location)));
+		
+		
+		Geocoder geocoder = new Geocoder(this);
+		List<Address> addresses = null;
+		try {
+			addresses = geocoder.getFromLocation(locationMap.latitude ,locationMap.longitude, 1);
+			autoLocationSearch.setText(  addresses.get(0).getAddressLine(0) ) ;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -572,7 +619,7 @@ public class AddTask extends   FragmentActivity
         
         
         
-    //    Location l =  mLocationClient.getLastLocation(); 
+        Location l =  mLocationClient.getLastLocation(); 
         
        
   /*      String searchPattern = "Politehnica Bucuresti";
@@ -608,11 +655,11 @@ public class AddTask extends   FragmentActivity
         */
        
        
-     /*   if(l != null){
+        if(l != null){
       
         	setPositionOnMap(l);
        
-        }*/
+        }
         mLocationClient.requestLocationUpdates(locationRequest, this);
         
         
@@ -623,20 +670,21 @@ public class AddTask extends   FragmentActivity
 
 	@Override
 	public void onLocationChanged(Location arg0) {
+		setPositionOnMap(arg0);
+	}
+	
+	public void setPositionOnMap(Location location){
 		
-		
-		
-		LatLng position = new LatLng(arg0.getLatitude(), arg0.getLongitude());
-        
-    	System.out.println("POZITIA ACTUALA" + position.latitude + " " + position.longitude);
-    	Log.w("Pozitie actuala", position.latitude + " " + position.longitude); 
+		positionCurrent = new LatLng(location.getLatitude(), location.getLongitude());
+         
+    	System.out.println("POZITIA ACTUALA" + positionCurrent.latitude + " " + positionCurrent.longitude);
+    	Log.w("Pozitie actuala", positionCurrent.latitude + " " + positionCurrent.longitude); 
     
-    	map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+    	map.moveCamera(CameraUpdateFactory.newLatLngZoom(positionCurrent, 15));
 
     	// Zoom in, animating the camera.
     	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-	
+    	map.addMarker(new MarkerOptions().position(positionCurrent).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
 	}
 	
 	
@@ -690,6 +738,59 @@ public class AddTask extends   FragmentActivity
 	public void onConnectionFailed(ConnectionResult arg0) {
 		// TODO Auto-generated method stub
 		
+	}	
+
+	@Override
+	public void onClick(View v) {
+		
+		
+		
+		System.out.println(v.getId()+ " " + R.id.buttonSearchLocation);
+		if(v.getId() == R.id.buttonSearchLocation)
+		{
+			//autoLocationSearch.getText().toString();
+			String searchPattern = autoLocationSearch.getText().toString();
+			
+			
+			
+			List<Address> addresses = null;
+		        try {
+					addresses = (new Geocoder(this)).getFromLocationName(searchPattern, Integer.MAX_VALUE);
+					Log.w("Pozitie", "Am extras pozitia adresei"); 
+					if (addresses == null) {
+				        // location service unavailable or incorrect address
+				        // so returns null
+				        Log.w("Pozitie", "Pozitia este nula");
+				    }
+					else
+					{
+						map.clear();
+						Address closest = addresses.get(0);
+						
+						Log.w("Pozitie", closest.getLatitude() + " " + closest.getLongitude());
+						
+						LatLng position = new LatLng(closest.getLatitude(), closest.getLongitude());
+						location = Double.toString( position.latitude) + " " + Double.toString(position.longitude);
+						map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+
+				    	// Zoom in, animating the camera.
+				    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
+				    	map.addMarker(new MarkerOptions().position(positionCurrent).
+						icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+				    	map.addMarker(new MarkerOptions().position(position).
+				    	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location_place)));
+					}
+					
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		}
+		
+		
+	
 	}
 	
 	
@@ -851,6 +952,10 @@ public void onTextChanged(CharSequence s, int start, int before, int count) {
 	// TODO Auto-generated method stub
 	
 }
+
+
+
+
 
 
 
