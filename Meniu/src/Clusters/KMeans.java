@@ -48,15 +48,7 @@ public interface KMeans {
 	public boolean checkCentroiziNotChanged();
 	
 	
-	
-	
-	/**
-	 * calculates the string distance between titles
-	 * @param title1 : the first title used to calculate distance
-	 * @param title2 : the second title used to calculate distance
-	 * @return : the string distance between title1 and title2
-	 */
-	public int calcualteStringDistance(String title1, String title2);
+
 	
 	
 	/**

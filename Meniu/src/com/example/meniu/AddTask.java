@@ -787,8 +787,6 @@ public class AddTask extends   FragmentActivity
 	{
 
 		
-		
-		
 		location = Double.toString( position.latitude) + " " + Double.toString(position.longitude);
 		map.clear();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));

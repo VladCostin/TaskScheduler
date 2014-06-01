@@ -2,6 +2,8 @@ package com.example.meniu;
 
 import java.util.HashMap;
 
+import Clusters.KMeansDistances;
+
 /**
  * contains general information such as what does minor,major mean
  * @author ${Vlad Herescu}
@@ -16,11 +18,14 @@ public class Core {
 	
 	private static HashMap<String,Integer> durationMinutes;
 	
+	
+	private static KMeansDistances distancesCalculator;  
+	
 	Core(){
 		
-		prioritiesValues = new HashMap<String,Integer>();
-		durationMinutes  = new HashMap<String,Integer>();
-		
+		prioritiesValues    = new HashMap<String,Integer>();
+		durationMinutes     = new HashMap<String,Integer>();
+		distancesCalculator = new KMeansDistances();
 	}
 	
 	/**
