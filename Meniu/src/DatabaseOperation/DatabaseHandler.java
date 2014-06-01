@@ -260,7 +260,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             	 	System.out.println( "Cum este taskul  " + cursor.getString(3));
             	 
                		if( TaskState.valueOf(cursor.getString(3)) == state)
+               		{
                			contactList.add( takeTaskFromDataBase( cursor) );
+               		}
              } while (cursor.moveToNext());
          }
 

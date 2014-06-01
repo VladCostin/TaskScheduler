@@ -35,6 +35,19 @@ public interface KMeans {
 	public void chooseCentroid();
 	
 	
+	/**
+	 * calculates the new centers based on the abs of the points
+	 */
+	public void calculateNewCentroizi();
+	
+	
+	/**
+	 * checks whether the centers have changed their values
+	 * @return : if the centers have changed their values
+	 */
+	public boolean checkCentroiziNotChanged();
+	
+	
 	
 	
 	/**
@@ -51,8 +64,9 @@ public interface KMeans {
 	 * task name length, locations distance, time difference , etc
 	 * @param t1 : the first task to calcualte distance
 	 * @param t2 : the second task to calcualte distance
-	 */
-	public void calcualteDistance(Task t1, Task t2);
+	 * @return the distance between the 2 tasks
+ 	 */
+	public int calculateDistance(Task t1, Task t2);
 	
 	
 }
