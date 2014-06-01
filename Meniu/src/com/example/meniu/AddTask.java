@@ -572,12 +572,7 @@ public class AddTask extends   FragmentActivity
 		@Override
 	public void onMapClick(LatLng locationMap) { 
 		
-		location = Double.toString( locationMap.latitude) + " " + Double.toString(locationMap.longitude);
-		map.clear();
-		map.addMarker(new MarkerOptions().position(positionCurrent).
-		icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-		map.addMarker(new MarkerOptions().position(locationMap).
-		icon(BitmapDescriptorFactory.fromResource(R.drawable.location)));
+		changeMarkers(locationMap);
 		
 		
 		Geocoder geocoder = new Geocoder(this);
@@ -764,21 +759,12 @@ public class AddTask extends   FragmentActivity
 				    }
 					else
 					{
-						map.clear();
+					
 						Address closest = addresses.get(0);
-						
 						Log.w("Pozitie", closest.getLatitude() + " " + closest.getLongitude());
-						
 						LatLng position = new LatLng(closest.getLatitude(), closest.getLongitude());
-						location = Double.toString( position.latitude) + " " + Double.toString(position.longitude);
-						map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-
-				    	// Zoom in, animating the camera.
-				    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-				    	map.addMarker(new MarkerOptions().position(positionCurrent).
-						icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-				    	map.addMarker(new MarkerOptions().position(position).
-				    	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location_place)));
+						changeMarkers(position);
+						
 					}
 					
 					
@@ -791,6 +777,27 @@ public class AddTask extends   FragmentActivity
 		
 		
 	
+	}
+	
+	
+	/**
+	 * @param position : the position selected bu the user
+	 */
+	public void changeMarkers(LatLng position)
+	{
+
+		
+		
+		
+		location = Double.toString( position.latitude) + " " + Double.toString(position.longitude);
+		map.clear();
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+
+
+    	map.addMarker(new MarkerOptions().position(positionCurrent).
+		icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+    	map.addMarker(new MarkerOptions().position(position).
+    	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location_place)));
 	}
 	
 	
