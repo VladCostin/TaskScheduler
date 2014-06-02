@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 import ContextElements.ContextElementType;
+import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import Task.Task;
 import Task.TaskState;
@@ -85,7 +86,7 @@ public class KMeansDuration implements KMeans{
 		
 		
 		errorInit = 100000000;
-		fractionError = 3;
+		fractionError = 4;
 		
 	}
 	
@@ -213,9 +214,54 @@ public class KMeansDuration implements KMeans{
 		
 		System.out.println("NUMARUL DE CLUSTERE DETEMINAT ESTE " + nrClusters );
 		
+		
+		calculateDurationMedium();
+		
 	}
 	
 	
+
+	/**
+	 * calculates the average duration for the determined clusters
+	 */
+	public void calculateDurationMedium() {
+		
+		
+		System.out.println("AFISEZ DURATELE");
+		
+		int iCentroid, iTask, pointsSameCenter;
+		int durationAverage;
+		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
+		{
+			System.out.println("AFISEZ duratele pentru un centroid");
+			durationAverage = 0;
+			pointsSameCenter = 0;
+			
+			for(iTask = 0; iTask < idCentroid.size(); iTask++)
+			{
+				if(idCentroid.get(iTask) == iCentroid)
+				{
+					
+					DurationContext duration = (DurationContext)tasks.get(iTask).
+					getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+					durationAverage += duration.getDuration();
+					
+					System.out.println("DURATA " +  duration.getDuration() + " " + tasks.get(iTask).getStartTime() + " " + tasks.get(iTask).getNameTask());
+					pointsSameCenter++;
+				}
+			}
+			
+			if(pointsSameCenter != 0)
+				durationAverage = durationAverage / pointsSameCenter;
+			else
+				durationAverage = 120;
+			System.out.println("MEDIA ESTE " + durationAverage);
+			
+		}
+		
+		
+	}
+
 
 	/**
 	 * calculates the centers' titles
