@@ -2,6 +2,7 @@ package Clusters;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 
 import ContextElements.ContextElementType;
@@ -199,7 +200,7 @@ public class KMeansDuration implements KMeans{
 		
 			System.out.println("AFISEZ EROAREA PENTRU K = " + nrClusters);
 		
-			//	calculatesTitlesCenters();
+			
 			newError =	calculateError();
 		//	System.out.println("Diferenta este" + (errorInit - newError ) + "  " + (errorInit/4)   );
 			
@@ -214,7 +215,7 @@ public class KMeansDuration implements KMeans{
 		
 		System.out.println("NUMARUL DE CLUSTERE DETEMINAT ESTE " + nrClusters );
 		
-		
+	//	calculatesTitlesCenters();
 		calculateDurationMedium();
 		
 	}
@@ -231,25 +232,37 @@ public class KMeansDuration implements KMeans{
 		
 		int iCentroid, iTask, pointsSameCenter;
 		int durationAverage;
+		TreeMap<String, Integer> frequency;
+
+		
 		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
 		{
 			System.out.println("AFISEZ duratele pentru un centroid");
 			durationAverage = 0;
 			pointsSameCenter = 0;
+			frequency = new TreeMap<String,Integer>();
 			
 			for(iTask = 0; iTask < idCentroid.size(); iTask++)
 			{
 				if(idCentroid.get(iTask) == iCentroid)
 				{
 					
+				//	System.out.println("NUMELE TASKULUI ESTE " + tasks.get(iTask).getNameTask());
+					
+					frequency.putAll(calculateFrequencyWords(iTask, frequency.keySet()));
+					
+					
 					DurationContext duration = (DurationContext)tasks.get(iTask).
 					getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 					durationAverage += duration.getDuration();
 					
-					System.out.println("DURATA " +  duration.getDuration() + " " + tasks.get(iTask).getStartTime() + " " + tasks.get(iTask).getNameTask());
+					System.out.println("DURATA " +  duration.getDuration() + " " + tasks.get(iTask).getStartTime() + " " + tasks.get(iTask).getNameTask() );
 					pointsSameCenter++;
 				}
 			}
+			
+			
+			
 			
 			if(pointsSameCenter != 0)
 				durationAverage = durationAverage / pointsSameCenter;
@@ -257,7 +270,83 @@ public class KMeansDuration implements KMeans{
 				durationAverage = 120;
 			System.out.println("MEDIA ESTE " + durationAverage);
 			
+			System.out.println("----------------------");
+			System.out.println(frequency.keySet().toString());
+			System.out.println(frequency.values().toString());
+			System.out.println("-----------------------");
+			
 		}
+		
+		
+	}
+
+
+	
+	
+	
+	/**
+	 * @param taskTitle :
+	 * @param center
+	 * @param dictionary : the words known by now
+ 	 * @return : the new set of pairs : words and how many of them appear
+	 */ 
+	public TreeMap<String,Integer> calculateFrequencyWords(int iTask, Set<String> dictionary) {
+		
+		String taskTitle;
+		String words[];
+		TreeMap<String, Integer> frequency = new TreeMap<String,Integer>();
+		int iCenter, nrAppear, center;
+		boolean contained;
+		
+		taskTitle = tasks.get(iTask).getNameTask();
+		words = taskTitle.split(" ");
+		center = idCentroid.get(iTask);
+		
+		
+		for(String word : words)
+		{
+			contained = false;
+			
+			for(String wordDictionary : dictionary)
+				if(KMeansDistances.calcualteStringDistance(word, wordDictionary) == 0 )
+				{
+					contained = true;
+					break;
+				}
+			if(contained == true)
+				continue;
+			
+			nrAppear = 1;
+			
+			for(iCenter = 0; iCenter < tasks.size(); iCenter++)
+			{
+				if(idCentroid.get(iCenter) == center && iCenter != iTask)
+				{
+					
+					String wordsTitleTwo[] = tasks.get(iCenter).getNameTask().split(" ");
+					
+					for(String wordTitleTwo : wordsTitleTwo)
+					{
+						int rez =  KMeansDistances.calcualteStringDistance(word, wordTitleTwo);
+						
+						
+						
+						if(KMeansDistances.calcualteStringDistance(word, wordTitleTwo) == 0 )
+							nrAppear++;
+						
+						
+					
+					}
+					
+				}
+				
+				
+			}
+			frequency.put(word, nrAppear);
+			
+		}
+		
+		return frequency;
 		
 		
 	}

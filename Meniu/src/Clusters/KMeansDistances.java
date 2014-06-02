@@ -15,9 +15,15 @@ import android.location.Location;
 public class KMeansDistances {
 	
 	/**
-	 *  the maximum distance between two words that is not taken into consideration
+	 *  the maximum distance between two words to say if they are similar
 	 */
-	static int distanceStringError;
+	static float distanceStringError;
+	
+	
+	/**
+	 * the maximum distance between two titles to know if they refer to the same thing
+	 */
+	static float distanceTitleError;
 	
 	
 	/**
@@ -32,7 +38,9 @@ public class KMeansDistances {
 	public KMeansDistances() {
 		
 		
-		distanceStringError = 5;
+		distanceStringError = (float) 0.5;
+		distanceTitleError  = (float) 0.25;
+		
 		distanceLocationError = 300;
 	}
 
@@ -51,6 +59,7 @@ public class KMeansDistances {
 		int valueDistanceWords;
 		int i;
 		int distanceTotal = 0;
+		float maxLength = Math.max(nameTask.length(), nameTask2.length());
 		String wordsString1[];
 		String wordsString2[]; 
 		
@@ -98,6 +107,10 @@ public class KMeansDistances {
 				distanceTotal += wordsString2[i].length();
 		}
 		
+		if( (float)  distanceTotal / maxLength  < distanceTitleError   )
+			return 0;
+		
+		
 		return distanceTotal;
 	}
 	
@@ -108,6 +121,10 @@ public class KMeansDistances {
 	 * @return : the distance between them
 	 */
 	public static int calcualteStringDistance(String a, String b){
+		
+		
+		int maxLength = Math.max(a.length(), b.length());
+		float error;
 		
 	 	a = a.toLowerCase();
         b = b.toLowerCase();
@@ -126,10 +143,12 @@ public class KMeansDistances {
             }
         }
         
-        if( costs[b.length() ] < distanceStringError )
-        	return 0;
+        error = (float)  costs[b.length() ] / (float) maxLength;
         
-        return costs[b.length()];
+        if( error > distanceStringError )
+        	return costs[b.length()];
+        
+        return 0;
 		
 		
 	}
