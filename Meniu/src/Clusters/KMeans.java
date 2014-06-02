@@ -48,7 +48,10 @@ public interface KMeans {
 	public boolean checkCentroiziNotChanged();
 	
 	
-
+	/**
+	 * @return : the sum of sum of distances between all points from a cluster
+	 */
+	public float calculateError();
 	
 	
 	/**

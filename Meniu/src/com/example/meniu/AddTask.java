@@ -579,7 +579,10 @@ public class AddTask extends   FragmentActivity
 		List<Address> addresses = null;
 		try {
 			addresses = geocoder.getFromLocation(locationMap.latitude ,locationMap.longitude, 1);
-			autoLocationSearch.setText(  addresses.get(0).getAddressLine(0) ) ;
+		//	autoLocationSearch.setText(addresses.get(0).getAdminArea());
+		//	autoLocationSearch.setText(addresses.get(0).getPremises());
+			autoLocationSearch.setText(addresses.get(0).getFeatureName());
+		//	autoLocationSearch.setText(  addresses.get(0).getAddressLine(0) ) ;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
