@@ -10,8 +10,11 @@ import android.view.View.OnClickListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -30,10 +33,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -63,7 +69,7 @@ public class AddTask extends   FragmentActivity
 	/** 
 	 * the title of the task
 	 */
-	private AutoCompleteTextView title;
+	private AutoCompleteTextView autoTitle;
 	
 	/**
 	 * show list of domains
@@ -188,6 +194,23 @@ public class AddTask extends   FragmentActivity
 	 */
 	LatLng  positionCurrent;
 	
+	/**
+	 * the key to the list of locations tapped
+	 */
+	String keyLocationSharedPreferences;
+	
+	
+	/**
+	 * the locations tapped and searched
+	 */
+	String locationsString;
+	
+	
+	/**
+	 * the locationsSearched used for AutoComplete
+	 */
+	String locationsSearched[];
+	
 	
 	/**
 	 * used to determine which date to choose
@@ -214,10 +237,13 @@ public class AddTask extends   FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_task);
 		
+		
+		
+		
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
 		priority = (Spinner)  findViewById(R.id.spinnerPriority);	
 		duration = (Spinner)  findViewById(R.id.spinnerDuration);
-		title    = (AutoCompleteTextView) findViewById(R.id.titleAutoComplete);
+		autoTitle    = (AutoCompleteTextView) findViewById(R.id.titleAutoComplete);
 		autoLocationSearch = (AutoCompleteTextView) findViewById(R.id.locationAutoComplete);
 		
 		
@@ -332,13 +358,42 @@ public class AddTask extends   FragmentActivity
 		String[] wordsList = new String[allWords.size()];
 		allWords.toArray(wordsList);
 		
-		title.addTextChangedListener(this);
-		title.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordsList));
+		autoTitle.addTextChangedListener(this);
+		autoTitle.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordsList));
+		
+		
+		loadSharedPreferences();
 		
 	}
 	
 	
 	
+
+	/**
+	 * loads the strings search by the user
+	 */
+	public void loadSharedPreferences() {
+		keyLocationSharedPreferences = "LocationsStrings";
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		String defaultString="";
+		
+		locationsString  = sharedPreferences.getString(keyLocationSharedPreferences, defaultString);
+		locationsSearched  = locationsString.split("###");
+		
+		
+		autoLocationSearch.addTextChangedListener(this);
+		autoLocationSearch.setAdapter
+		(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, locationsSearched));
+		
+		
+		 
+		
+		
+	}
+
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -682,7 +737,8 @@ public class AddTask extends   FragmentActivity
 
     	// Zoom in, animating the camera.
     	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-    	map.addMarker(new MarkerOptions().position(positionCurrent).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
+    	map.addMarker(new MarkerOptions().position(positionCurrent).
+    	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
 	}
 	
 	
@@ -741,9 +797,6 @@ public class AddTask extends   FragmentActivity
 	@Override
 	public void onClick(View v) {
 		
-		
-		
-		System.out.println(v.getId()+ " " + R.id.buttonSearchLocation);
 		if(v.getId() == R.id.buttonSearchLocation)
 		{
 			//autoLocationSearch.getText().toString();
@@ -762,11 +815,19 @@ public class AddTask extends   FragmentActivity
 				    }
 					else
 					{
+						if(addresses.size()  == 0)
+						{
+							autoLocationSearch.setText("Not found");
+							return;
+						}
+						System.out.println("LOCATIA CAUTATA ESTE" + searchPattern + "---"+ addresses.toString()+"----");
 					
-						Address closest = addresses.get(0);
+						Address closest = determineClosestAddress(addresses);
+						
 						Log.w("Pozitie", closest.getLatitude() + " " + closest.getLongitude());
 						LatLng position = new LatLng(closest.getLatitude(), closest.getLongitude());
 						changeMarkers(position);
+						saveLocationNameToSharedPreferences(searchPattern);
 						
 					}
 					
@@ -783,6 +844,76 @@ public class AddTask extends   FragmentActivity
 	}
 	
 	
+	public Address determineClosestAddress(List<Address> addresses) {
+		
+		Address closestAdress = addresses.get(0);
+		double distanceMax = 10000;
+		double distance;
+		
+		System.out.println("Pozitia curenta este" + positionCurrent.latitude + "  " + positionCurrent.longitude);
+		
+		for(Address adresa : addresses)
+		{
+			System.out.println(adresa.getLatitude() + " " + adresa.getLongitude());
+			
+			
+			distance = (float) Math.pow(positionCurrent.latitude - adresa.getLatitude(), 2) +
+					           Math.pow(positionCurrent.longitude - adresa.getLongitude(), 2);
+			
+			if(distance < distanceMax){
+				closestAdress  = adresa;
+				distanceMax = distance;
+			}
+			
+			
+		}
+		
+		return closestAdress;
+		
+	}
+
+
+
+
+	/**
+	 * @param location : the location search by the user, to be included in sharedpreferences
+	 */
+	public void saveLocationNameToSharedPreferences(String location) {
+		
+		System.out.println( "LOCATIILE SUNT" + locationsString);
+		
+		Log.w("Location", locationsString);
+		
+		ArrayList<String> arrayLocations = new ArrayList<String>(Arrays.asList(locationsSearched));
+		if(arrayLocations.contains(location) == true)
+			return;
+		
+		
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor edit = sharedPreferences.edit();
+		
+		
+		locationsString = locationsString + "###" + location;
+		
+//		System.out.println( "LOCATIILE SUNT" + locationsString);
+	
+		Log.w("Location", locationsString);
+		
+		edit.putString(keyLocationSharedPreferences, locationsString);
+		
+		edit.commit();
+		
+		
+		locationsSearched  = locationsString.split("###");
+		autoLocationSearch.setAdapter
+		(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, locationsSearched));
+		
+		
+	}
+
+
+
+
 	/**
 	 * @param position : the position selected bu the user
 	 */
@@ -924,14 +1055,14 @@ public void setClusterise(Button clusterise) {
 
 
 public AutoCompleteTextView getTitleTask() {
-	return title;
+	return autoTitle;
 }
 
 
 
 
 public void setTitle(AutoCompleteTextView title) {
-	this.title = title;
+	this.autoTitle = title;
 }
 
 
