@@ -3,7 +3,9 @@ package Clusters;
 import java.util.ArrayList;
 
 import ContextElements.ContextElementType;
+import ContextElements.DeviceContext;
 import ContextElements.LocationContext;
+import ContextElements.PeopleContext;
 import Task.Task;
 import android.location.Location;
 
@@ -210,5 +212,43 @@ public class KMeansDistances {
 		
 		return  (int) results[0];
 	}
+	
+	
+	/**
+	 * @param t1 : one of the task whose people needed are taken into consideration to calculate the distance
+	 * @param t2 : one of the task whose people needed are taken into consideration to calculate the distance
+	 * @return : the distance between the lists of people
+	 */
+	public static int calculateDistancePeople(Task t1, Task t2)
+	{
+		PeopleContext peopleTask1 = (PeopleContext)
+		t1.getInternContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+		PeopleContext peopleTask2 = (PeopleContext)
+		t2.getInternContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+		
+		
+		
+		
+		
+		return 0;
+	}
+	
+	
+	/**
+	 * @param t1 : one of the task whose devices needed are taken into consideration to calculate the distance
+	 * @param t2 : one of the task whose devices needed are taken into consideration to calculate the distance
+	 * @return : the distance between the lists of devices
+	 */
+	public static int calculateDistanceDevices(Task t1, Task t2)
+	{
+		DeviceContext deviceTask1 = (DeviceContext)
+		t1.getInternContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+		DeviceContext deviceTask2 = (DeviceContext)
+		t2.getInternContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+		
+		
+		return 0;
+	}
+	
 	
 }

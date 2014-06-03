@@ -282,11 +282,8 @@ public class KMeansDuration implements KMeans{
 
 
 	
-	
-	
 	/**
-	 * @param taskTitle :
-	 * @param center
+	 * @param iTask : the tasks's id for which i calculate the frequency for the words from his title 
 	 * @param dictionary : the words known by now
  	 * @return : the new set of pairs : words and how many of them appear
 	 */ 
@@ -327,10 +324,7 @@ public class KMeansDuration implements KMeans{
 					
 					for(String wordTitleTwo : wordsTitleTwo)
 					{
-						int rez =  KMeansDistances.calcualteStringDistance(word, wordTitleTwo);
-						
-						
-						
+							
 						if(KMeansDistances.calcualteStringDistance(word, wordTitleTwo) == 0 )
 							nrAppear++;
 						
