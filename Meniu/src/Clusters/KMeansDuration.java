@@ -67,7 +67,13 @@ public class KMeansDuration implements KMeans{
 	float errorInit;
 	
 	
+	/**
+	 * if the fraction between the last distance calculated and the new distance calcualted
+	 * is bigger than the last distance calculated / fraction Error, I increase the number of clusters
+	 */
 	int fractionError;
+	
+	ArrayList<Integer> idCentroiziChosen;
 	
 	/**
 	 * initialize the members
@@ -76,7 +82,7 @@ public class KMeansDuration implements KMeans{
 		nrClusters = 0;
 		
 		
-		sameNumitorTitle = 200; // in case max LocationDistance = 20000 and title is 100
+		sameNumitorTitle = 700; // in case max LocationDistance = 21000 and title is 30
 		sameNumitorLocation = 1;
 		sameNumitorStartTime = 28; // in case max LocationDistance = 20000 and start time is 720
 	
@@ -84,10 +90,11 @@ public class KMeansDuration implements KMeans{
 		idCentroid = new ArrayList<Integer>();
 		centroizi = new ArrayList<Task>();
 		idNewCentroid = new ArrayList<Integer>();
+		idCentroiziChosen = new ArrayList<Integer>();
 		
 		
 		errorInit = 100000000;
-		fractionError = 4;
+		fractionError = 5;
 		
 	}
 	
@@ -123,6 +130,7 @@ public class KMeansDuration implements KMeans{
 			idCentroid.clear();
 			centroizi.clear();
 			idNewCentroid.clear();
+			idCentroiziChosen.clear();
 			
 			
 			chooseCentroid();
@@ -130,9 +138,20 @@ public class KMeansDuration implements KMeans{
 			
 			for(Task task : tasks)
 			{
+				
+				if(idCentroiziChosen.contains(tasks.indexOf(task)))
+				{
+					idCentroid.add( idCentroiziChosen.indexOf((tasks.indexOf(task)) )); 
+					
+					continue;
+				}
+				
+				
 				distanceMax = 1000000000;
 				for(Task taskCentroid : centroizi)
 				{
+					
+					
 					distance = calculateDistance(task, taskCentroid) ;
 					if(distance < distanceMax)
 					{
@@ -140,7 +159,7 @@ public class KMeansDuration implements KMeans{
 						centroidNearest = centroizi.indexOf(taskCentroid);
 					}
 				}
-			
+				
 			
 				idCentroid.add(centroidNearest);
 			
@@ -148,9 +167,18 @@ public class KMeansDuration implements KMeans{
 			while(true)
 			{
 				calculateNewCentroizi();
+				
 		
 				for(Task task : tasks)
 				{
+					if(idCentroiziChosen.contains(tasks.indexOf(task)))
+					{
+						idNewCentroid.add( idCentroiziChosen.indexOf((tasks.indexOf(task)) )); 
+						
+						continue;
+					}
+					
+					
 					distanceMax = 1000000000;
 					for(Task taskCentroid : centroizi)
 					{
@@ -202,7 +230,7 @@ public class KMeansDuration implements KMeans{
 		
 			
 			newError =	calculateError();
-		//	System.out.println("Diferenta este" + (errorInit - newError ) + "  " + (errorInit/4)   );
+			System.out.println("Diferenta este" + (errorInit - newError ) + "  " + (errorInit/fractionError)   );
 			
 			if( (errorInit - newError) < errorInit/fractionError)
 				break;
@@ -256,7 +284,12 @@ public class KMeansDuration implements KMeans{
 					getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 					durationAverage += duration.getDuration();
 					
-					System.out.println("DURATA " +  duration.getDuration() + " " + tasks.get(iTask).getStartTime() + " " + tasks.get(iTask).getNameTask() );
+					LocationContext location = (LocationContext) tasks.get(iTask).
+					getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+					
+					
+				//	System.out.println("DURATA " +  duration.getDuration() + " " + tasks.get(iTask).getStartTime() + " " + tasks.get(iTask).getNameTask() );
+					System.out.println("DURATA " +  duration.getDuration() + " " + tasks.get(iTask).getStartTime() + " " + tasks.get(iTask).getNameTask() + location.getLatitude() + " " + location.getLongitude());
 					pointsSameCenter++;
 				}
 			}
@@ -394,7 +427,8 @@ public class KMeansDuration implements KMeans{
 		int minutes;
 		int hours;
 		
-		System.out.println("Intra IAR AICI");
+
+		
 		
 		
 		for(i = 0 ; i < nrClusters; i++)
@@ -406,13 +440,20 @@ public class KMeansDuration implements KMeans{
 			System.out.println(i + " " + centroid.getNameTask() + " " + centroid.getStartTime() + " " + locationinainte.getLatitude() + " " + locationinainte.getLongitude()); 
 		*/	
 			
+	
+			
 			
 			nrPoints = 0;
 			latitude = 0;
 			longitude = 0;
 			minutes = 0;
+
+			
 			for(taskPos = 0; taskPos < tasks.size(); taskPos++)
 			{
+			//	System.out.println("Dimensiunea este " + idCentroid.size() + " " + idCentroid.toString() );
+				
+				
 				if(idCentroid.get(taskPos) == i)
 				{
 					nrPoints++;
@@ -427,6 +468,9 @@ public class KMeansDuration implements KMeans{
 					
 				}
 			}
+
+
+			
 			latitude = latitude / (double) nrPoints;
 			longitude = longitude / (double) nrPoints;
 			minutes = minutes / nrPoints;
@@ -488,7 +532,7 @@ public class KMeansDuration implements KMeans{
 	@Override
 	public void chooseCentroid() {
 		int iCentroid, idTask, iCentroidByNow;
-		ArrayList<Integer> idCentroiziChosen = new ArrayList<Integer>();
+		
 		int distanceMinim;
 		int distanceMaxim;
 		
