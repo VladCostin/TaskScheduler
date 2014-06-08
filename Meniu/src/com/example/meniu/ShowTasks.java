@@ -44,9 +44,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.bluetooth.BluetoothAdapter;
@@ -398,6 +400,27 @@ public class ShowTasks extends Activity
 		
 	//	Collections.sort(tasks, new PriorityComparator());
 	
+		
+		if(tasks.size() == 0)
+		{
+			TextView showMessageTask = new TextView(this);
+			
+			RelativeLayout.LayoutParams params_title = 
+			           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+			                                           RelativeLayout.LayoutParams.MATCH_PARENT);
+			
+			showMessageTask.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL); 
+			showMessageTask.setText(Constants.noExecutableTaskMessage);
+			showMessageTask.setTextColor(Color.BLUE);
+			showMessageTask.setTextSize(20);
+		    showMessageTask.setLayoutParams(params_title);
+		    
+		    
+			layout.addView(showMessageTask);
+			return;
+		}
+		
+		
 		
 		boolean isTaskCompatible = true;
 		for(Task task : tasks)

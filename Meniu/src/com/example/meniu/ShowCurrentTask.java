@@ -15,6 +15,8 @@ import Task.Task;
 import Task.TaskState;
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,7 +84,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	/**
 	 * shows the task chosen to be executed or a message instead
 	 */
-	RelativeLayout  rl;
+	RelativeLayout  layout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +92,10 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_show_current_task);
 		
 		
-		selectCurrentTasks();
+	
 		
 		
-		rl = (RelativeLayout )  this.findViewById(R.id.currentTaskLayout);
+		layout = (RelativeLayout )  this.findViewById(R.id.currentTaskLayout);
 		seconds = (TextView) findViewById(R.id.seconds);
 		minutes = (TextView) findViewById(R.id.minutes);
 		hours = (TextView) findViewById(R.id.hours);
@@ -106,6 +108,9 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		addMinutesButton.setOnClickListener(this);
 		addHoursButton.setOnClickListener(this);
 		finalizeTask.setOnClickListener(this);
+		
+		
+		selectCurrentTasks();
 
 
 	}
@@ -124,12 +129,30 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		
 		
-		if(chosenTasks.size() != 0)
-			currentTask = chosenTasks.get(0);
-		else
+		if(chosenTasks.size() == 0)
 		{
+			layout.removeAllViews();
+			TextView showMessageTask = new TextView(this);
+				
+			RelativeLayout.LayoutParams params_title = 
+				           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+				                                           RelativeLayout.LayoutParams.MATCH_PARENT);
+			showMessageTask.setGravity(Gravity.CENTER); 
+			showMessageTask.setText(Constants.noCurrentTaskMessage);
+			showMessageTask.setTextColor(Color.BLUE);
+			showMessageTask.setTextSize(20);
+			showMessageTask.setLayoutParams(params_title);
+			    
+			    
+			    
+			layout.addView(showMessageTask);	
+			return;
+				
+				
 			
 		}
+			currentTask = chosenTasks.get(0);
+		
 		
 		
 	}
@@ -138,6 +161,9 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	public void onResume()
 	{
 		super.onResume();
+		
+		if(currentTask == null)
+			return;
 		calculateTimeRemaining();
 		
 		isRunning = true;
@@ -230,6 +256,9 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	{
 		super.onPause();
 		isRunning = false;
+		
+		if(currentTask  == null)
+			return;
 		
 		DurationContext durationTask = (DurationContext)
 		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
@@ -349,7 +378,8 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		MainActivity.getDatabase().updateTask(currentTask.getID(),Tasks.KEY_Status, TaskState.EXECUTED.toString());
 		isRunning = false;
-		rl.removeAllViews();
+		layout.removeAllViews();
+		
 		
 		
 	}
@@ -378,12 +408,6 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		System.out.println("MINUTE DURATA " + durationTask.getDuration());
 		durationTask.setDuration( durationTask.getDuration() + 10);
-		
-		
-		
-		
-		
-		
 		
 	}
 	
