@@ -1,5 +1,7 @@
 package Clusters;
 
+import java.util.ArrayList;
+
 import Task.Task;
 
 /**
@@ -25,14 +27,17 @@ public interface KMeans {
 	/**
 	 * detect center by comparing the data introduced by the user with the data
 	 * contained in database
+	 * @param data : the data used to determine the most closest cluster
+ 	 * @return : the most similar task with the data specified by user
 	 */
-	public void detectCentroid();
+	public Task detectCentroid( ArrayList<String> data  );
 	
 	
 	/**
 	 * chooses clusters that are far one from each other
+
 	 */
-	public void chooseCentroid();
+	public void chooseCentroid( );
 	
 	
 	/**

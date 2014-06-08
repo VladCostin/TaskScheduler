@@ -1,5 +1,7 @@
 package Clusters;
 
+import java.util.ArrayList;
+
 import Task.Task;
 
 /**
@@ -22,8 +24,10 @@ public class KMeansPeople implements KMeans{
 	}
 
 	@Override
-	public void detectCentroid() {
-		// TODO Auto-generated method stub
+	public Task detectCentroid(ArrayList<String> data) {
+		
+		
+		return null;
 		
 	}
 

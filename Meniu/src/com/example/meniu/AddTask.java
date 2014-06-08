@@ -1,5 +1,6 @@
 package com.example.meniu;
 
+import Clusters.KMeansLocation;
 import DatabaseOperation.AddTaskButton;
 import DeviceData.Device;
 import Task.Task;
@@ -212,6 +213,12 @@ public class AddTask extends   FragmentActivity
 	String locationsSearched[];
 	
 	
+	
+	
+	KMeansLocation clustering ;
+	
+	
+	
 	/**
 	 * used to determine which date to choose
 	 */
@@ -363,11 +370,24 @@ public class AddTask extends   FragmentActivity
 		
 		
 		loadSharedPreferences();
+		loadClusters();
 		
 	}
 	
 	
 	
+
+	/**
+	 * calculates the centers for the clusters associated to location, devices, people
+	 */
+	public void loadClusters() {
+		clustering = new KMeansLocation();
+		clustering.calculateKlusters();
+		
+	}
+
+
+
 
 	/**
 	 * loads the strings search by the user
@@ -1070,7 +1090,16 @@ public void setTitle(AutoCompleteTextView title) {
 
 @Override
 public void afterTextChanged(Editable s) {
-	// TODO Auto-generated method stub
+	
+	
+	float similarity =(float) 0.7;
+
+	if(autoTitle.getEditableText()  == s)
+	{
+		//clustering.detectCentroid(s.toString());
+	}
+		
+	
 	
 }
 

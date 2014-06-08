@@ -200,17 +200,43 @@ public class KMeansDistances {
 		LocationContext location2 =(LocationContext) 
 		t2.getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
 		
+		
+		 double l1 = Math.toRadians(location1.getLatitude());
+		 double l2 = Math.toRadians(location2.getLatitude());
+		 double g1 = Math.toRadians(location1.getLongitude());
+		 double g2 = Math.toRadians(location2.getLongitude());
+
+		 double dist = Math.acos(Math.sin(l1) * Math.sin(l2) + Math.cos(l1) * Math.cos(l2) * Math.cos(g1 - g2));
+		 if(dist < 0) {
+		        dist = dist + Math.PI;
+		 }
+		 
+		 
+	//	 System.out.println("Distanta este " +  Math.round(dist * 6378100));
+		 
+		    return (int)  Math.round(dist * 6378100);
+		
 
 		
 		
-		Location.distanceBetween(location1.getLatitude(), location1.getLongitude(),
+	/*	Location.distanceBetween(location1.getLatitude(), location1.getLongitude(),
 				                 location2.getLatitude(), location2.getLongitude(), results);
+		
+		
+		System.out.println();
+		
+		System.out.println("DISTANTA CALCULATA ESTE " + location1.getLatitude() + " " + location1.getLongitude() + " " + location2.getLatitude() + " " + location2.getLongitude());
+		
+		for(int i = 0 ; i < results.length; i++)
+			System.out.print( results[i] + " " );
+		
+		System.out.println();
 		
 		
 		if( results[0] < distanceLocationError )
 			return 0;
 		
-		return  (int) results[0];
+		return  (int) results[0]; */
 	}
 	
 	
