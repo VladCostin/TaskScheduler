@@ -10,7 +10,7 @@
         android:layout_height="wrap_content" >
         
         <TextView
-            android:id="@+id/nameTask"
+            android:id="@+id/textViewLabelNameTask"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         
 		<AutoCompleteTextView 
 		    android:id="@+id/titleAutoComplete"
-		    android:layout_below="@+id/nameTask"
+		    android:layout_below="@+id/textViewLabelNameTask"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:completionThreshold="1" />
@@ -34,7 +34,7 @@
  			android:background="@android:color/black" />
 	
         <TextView
-            android:id="@+id/addLocationTextView"
+            android:id="@+id/textViewLabelAddLocation"
             android:layout_below="@+id/drawLineTitle"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         
         <AutoCompleteTextView 
             android:id="@+id/locationAutoComplete"
-            android:layout_below="@+id/addLocationTextView"
+            android:layout_below="@+id/textViewLabelAddLocation"
 			android:layout_width="300dp"
 			android:layout_height="wrap_content"
 			android:completionThreshold="1"
@@ -55,7 +55,7 @@
  		    
  		    android:id="@+id/buttonSearchLocation"
  		    android:layout_toRightOf="@+id/locationAutoComplete"
- 		    android:layout_below="@+id/addLocationTextView"
+ 		    android:layout_below="@+id/textViewLabelAddLocation"
  		    android:layout_alignBottom="@+id/locationAutoComplete"
  		    android:layout_marginLeft="20dp"
  		    android:layout_width="wrap_content"

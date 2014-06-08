@@ -137,12 +137,12 @@ public class KMeansLocation implements KMeans {
 			
 			
 			newError =	calculateError();
-			System.out.println("DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+		//	System.out.println("DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
 			
 			if( (errorInit - newError) <= errorInit/fractionError  || nrClusters == tasks.size()){
 				
-				System.out.println( "DIFERENTA este " + (errorInit - newError));
-				System.out.println( "Impartit la 3 este " + (errorInit/ fractionError));
+		//		System.out.println( "DIFERENTA este " + (errorInit - newError));
+		//		System.out.println( "Impartit la 3 este " + (errorInit/ fractionError));
 				
 				break;
 			}
@@ -170,7 +170,7 @@ public class KMeansLocation implements KMeans {
 		
 		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
 		{
-			System.out.println("AFISEZ duratele pentru un centroid");
+		//	System.out.println("AFISEZ duratele pentru un centroid");
 			frequency = new TreeMap<String,Integer>();
 			pointsSameCenter = 0;
 			latitude = 0;
@@ -198,13 +198,13 @@ public class KMeansLocation implements KMeans {
 			
 			latitude = latitude / (double) pointsSameCenter;
 			longitude = longitude / (double) pointsSameCenter;
-			System.out.println("MEDIA ESTE " + latitude + " " + longitude);
+		//	System.out.println("MEDIA ESTE " + latitude + " " + longitude);
 
 			
-			System.out.println("----------------------");
-			System.out.println(frequency.keySet().toString());
-			System.out.println(frequency.values().toString());
-			System.out.println("-----------------------");
+		//	System.out.println("----------------------");
+		//	System.out.println(frequency.keySet().toString());
+		//	System.out.println(frequency.values().toString());
+		//	System.out.println("-----------------------");
 			
 		}
 		
@@ -287,7 +287,7 @@ public class KMeansLocation implements KMeans {
 		
 		for(Task center : centroizi)
 		{
-			System.out.println(" Un centroid are numele" + center.getNameTask());
+		//	System.out.println(" Un centroid are numele" + center.getNameTask());
 			distance = calculateDistance(center, current);
 			
 			if( distance < distanceMaxim  )

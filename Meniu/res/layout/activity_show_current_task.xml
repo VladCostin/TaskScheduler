@@ -11,20 +11,32 @@
     
     
     <TextView
-            android:id="@+id/nameTask"
+            android:id="@+id/textViewLabelNameTask"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:drawableLeft="@drawable/title"
        		android:text="@string/taskTitle" />
+    
+    
+    
+    <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/textViewLabelNameTask"
+        	android:layout_toRightOf="@+id/textViewLabelNameTask"
+        	android:layout_marginLeft="20dp"
+     />
         
 
         
         
     <TextView
-            android:id="@+id/addLocationTextView"
+            android:id="@+id/textViewLabelAddLocation"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/nameTask"
+            android:layout_below="@+id/textViewLabelNameTask"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:drawableLeft="@drawable/location"
@@ -32,11 +44,25 @@
     
     
     
+    <TextView
+            android:id="@+id/textViewAddLocation"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+    		android:layout_alignBaseline="@+id/textViewLabelAddLocation"
+    		android:layout_toRightOf="@+id/textViewLabelAddLocation"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+     />
+    
+    
+    
+    
+    
      <TextView
             android:id="@+id/showDuration"
             android:layout_marginTop="10dp"
             
-            android:layout_below="@+id/addLocationTextView"
+            android:layout_below="@+id/textViewLabelAddLocation"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/Duration" />
@@ -47,7 +73,7 @@
          	android:layout_marginTop="10dp"
          	android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/showDuration"
-            android:layout_below="@+id/addLocationTextView"
+            android:layout_below="@+id/textViewLabelAddLocation"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/Duration"/>
@@ -58,7 +84,7 @@
          	android:layout_marginTop="10dp"
          	android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/hours"
-            android:layout_below="@+id/addLocationTextView"
+            android:layout_below="@+id/textViewLabelAddLocation"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/Duration"/>
@@ -69,7 +95,7 @@
          	android:layout_marginTop="10dp"
          	android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/minutes"
-            android:layout_below="@+id/addLocationTextView"
+            android:layout_below="@+id/textViewLabelAddLocation"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:text="@string/Duration"/>

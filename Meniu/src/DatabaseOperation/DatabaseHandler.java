@@ -186,7 +186,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	  db.insert(nameTable, null, content);
           db.close();
           
-          Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");
+       //   Log.w("am introdus niste date si nu a dat eroare", "e totul ok?");
     }
     
     
@@ -251,13 +251,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	 SQLiteDatabase db = this.getWritableDatabase();
          Cursor cursor = db.rawQuery(selectQuery, null);
     
-         System.out.println("SELECTEZ NUMAI UNELE TASKURI");
+    //     System.out.println("SELECTEZ NUMAI UNELE TASKURI");
          
            // looping through all rows and adding to list
          if (cursor.moveToFirst()) {
              do {
             	 
-            	 	System.out.println( "Cum este taskul  " + cursor.getString(3));
+            	 //	System.out.println( "Cum este taskul  " + cursor.getString(3));
             	 
                		if( states.contains( TaskState.valueOf(cursor.getString(3)) ))
                		{
@@ -282,14 +282,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	ArrayList<String> peopleList;
     	ArrayList<String> deviceList;
     	
-    	System.out.println(cursor.getColumnCount());
+  //  	System.out.println(cursor.getColumnCount());
     	int i,n = cursor.getColumnCount();
     	
-    	for(i=0; i < n; i++)
-    		System.out.print(cursor.getString(i) + " " + i);
+  //  	for(i=0; i < n; i++)
+   // 		System.out.print(cursor.getString(i) + " " + i);
     	
-    	System.out.println("\n\n");
-    	System.out.println("2. Data de executie :" + cursor.getString(9));
+  //  	System.out.println("\n\n");
+   // 	System.out.println("2. Data de executie :" + cursor.getString(9));
     	
     
     	oneTask.setID(Integer.parseInt(cursor.getString(0))); 
