@@ -50,7 +50,11 @@ public class KMeansLocation implements KMeans {
 	ArrayList<Integer> idCentroiziChosen;
 	
 	
-	
+	/**
+	 * if the fraction between the last distance calculated and the new distance calcualted
+	 * is bigger than the last distance calculated / fraction Error, I increase the number of clusters
+	 */
+	int fractionError;
 	
 
 	
@@ -68,7 +72,7 @@ public class KMeansLocation implements KMeans {
 		nrClusters = 0;
 		
 		
-		
+		fractionError = 3;
 		
 		
 	}
@@ -86,16 +90,18 @@ public class KMeansLocation implements KMeans {
 		int distanceMax; 
 		int distance;
 		int centroidNearest = 0;
-		
+		float newError;
+		float errorInit = 10000000;
 	
 		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(TaskState.EXECUTED);
 		
 		
-		for(nrClusters = 1; nrClusters < 4; nrClusters++)
+		while(true)
 		{
 			idCentroid.clear();
 			centroizi.clear();
 			idCentroiziChosen.clear();
+			nrClusters++;
 			
 			chooseCentroid();
 		
@@ -127,8 +133,25 @@ public class KMeansLocation implements KMeans {
 				idCentroid.add(centroidNearest);
 			}
 			
+			
+			newError =	calculateError();
+			System.out.println("DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+			
+			if( (errorInit - newError) <= errorInit/fractionError  || nrClusters == tasks.size()){
+				
+				System.out.println( "DIFERENTA este " + (errorInit - newError));
+				System.out.println( "Impartit la 3 este " + (errorInit/ fractionError));
+				
+				break;
+			}
+			
+			errorInit = newError;
+			
+			
 			calculatesTitlesCenters();
 		}
+		
+		System.out.println("DIMENSIUNEA FINALA ESTE " + nrClusters);
 		
 		
 
@@ -253,6 +276,29 @@ public class KMeansLocation implements KMeans {
 	@Override
 	public Task detectCentroid(ArrayList<String> data) {
 		
+		
+		Task current = new Task();
+		Task chosenTask = centroizi.get(0);
+		current.setNameTask(data.get(0));
+		float distanceMaxim = calculateDistance(current, centroizi.get(0));
+		float distance;
+		
+		for(Task center : centroizi)
+		{
+			System.out.println(" Un centroid are numele" + center.getNameTask());
+			distance = calculateDistance(center, current);
+			
+			if( distance < distanceMaxim  )
+			{
+				distanceMaxim = distance;
+				chosenTask = center;
+			}
+			
+		}
+		
+		
+		if(distanceMaxim == 0)
+			return chosenTask;
 		return null;
 
 	}
@@ -319,8 +365,6 @@ public class KMeansLocation implements KMeans {
 		System.out.println(idCentroiziChosen.toString());
 		for(iCentroid = 0; iCentroid< idCentroiziChosen.size(); iCentroid++)
 		{
-		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getStartTime() + "   ");
-		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getNameTask() + "   ");
 			
 			
 			Task t = new Task();
@@ -358,8 +402,40 @@ public class KMeansLocation implements KMeans {
 
 	@Override
 	public float calculateError() {
-		// TODO Auto-generated method stub
-		return 0;
+		int iCluster;
+		int taski, taskj;
+		float sumAll = 0, sumCluster = 0;
+		int nrPoints;
+		int medie= 0;
+
+
+		
+		for(iCluster = 0; iCluster < nrClusters ; iCluster++)
+		{
+			sumCluster = 0;
+			nrPoints = 0;
+			
+			for(taski = 0; taski < tasks.size(); taski++)
+			{
+				
+				
+				
+				if(idCentroid.get(taski) == iCluster )
+				{
+					for(taskj = 0; taskj < tasks.size();taskj++)
+						if(idCentroid.get(taskj) == iCluster )
+							sumCluster +=  calculateDistance( tasks.get( taski ), tasks.get( taskj ));	
+						
+					nrPoints++;
+				}
+			}
+			
+			
+			medie += (int) sumCluster / nrPoints;
+		}
+		
+		return medie / nrClusters;
+	
 	}
 
 	@Override

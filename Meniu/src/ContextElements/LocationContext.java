@@ -58,5 +58,10 @@ public class LocationContext extends ContextElement{
 		this.latitude = latitude;
 	}
 	
+	public LatLng getPositionLatLng(){
+		
+		return new LatLng(latitude, longitude);
+	}
+	
 
 }

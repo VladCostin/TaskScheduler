@@ -1,6 +1,8 @@
 package com.example.meniu;
 
 import Clusters.KMeansLocation;
+import ContextElements.ContextElementType;
+import ContextElements.LocationContext;
 import DatabaseOperation.AddTaskButton;
 import DeviceData.Device;
 import Task.Task;
@@ -215,7 +217,17 @@ public class AddTask extends   FragmentActivity
 	
 	
 	
-	KMeansLocation clustering ;
+	/**
+	 * used to detect the location associated to the title written
+	 */
+	KMeansLocation clusteringLocation ; 
+	
+	
+	/**
+	 * if a location has been detected, then don't try to move again
+	 * on map ( it's already moving)
+	 */
+	boolean booleanHasDetectedLocation;
 	
 	
 	
@@ -381,8 +393,10 @@ public class AddTask extends   FragmentActivity
 	 * calculates the centers for the clusters associated to location, devices, people
 	 */
 	public void loadClusters() {
-		clustering = new KMeansLocation();
-		clustering.calculateKlusters();
+		clusteringLocation = new KMeansLocation();
+		clusteringLocation.calculateKlusters();
+		
+		booleanHasDetectedLocation = false;
 		
 	}
 
@@ -1091,12 +1105,27 @@ public void setTitle(AutoCompleteTextView title) {
 @Override
 public void afterTextChanged(Editable s) {
 	
-	
-	float similarity =(float) 0.7;
 
 	if(autoTitle.getEditableText()  == s)
 	{
 		//clustering.detectCentroid(s.toString());
+		
+		ArrayList<String> data = new ArrayList<String>();
+		data.add(s.toString());
+		Task returnTask =  clusteringLocation.detectCentroid(data);
+		if(returnTask != null && booleanHasDetectedLocation == false)
+		{
+			booleanHasDetectedLocation = true;
+			LocationContext location = (LocationContext)returnTask.getInternContext().
+			getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+			
+
+			changeMarkers(location.getPositionLatLng());
+			
+		}
+		else
+			if(returnTask != null && booleanHasDetectedLocation == true )
+				booleanHasDetectedLocation = false;
 	}
 		
 	

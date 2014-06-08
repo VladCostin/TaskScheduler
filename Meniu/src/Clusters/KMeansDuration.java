@@ -231,7 +231,7 @@ public class KMeansDuration implements KMeans{
 			newError =	calculateError();
 			System.out.println("DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
 			
-			if( (errorInit - newError) < errorInit/fractionError  || nrClusters == 20){
+			if( (errorInit - newError) < errorInit/fractionError  || nrClusters == tasks.size()){
 				
 				System.out.println( "DIFERENTA este " + (errorInit - newError));
 				System.out.println( "Impartit la 5 este " + (errorInit/ fractionError));
