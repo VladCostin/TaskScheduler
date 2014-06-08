@@ -26,6 +26,7 @@ import DatabaseOperation.EraseTask;
 import DeviceData.Device;
 import Task.Context;
 import Task.Task;
+import Task.TaskState;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Activity;
@@ -152,7 +153,10 @@ public class ShowAllTasks extends Activity
 	 */
 	private void checkAllTasksCompatibility() {
 	
-		List<Task> tasks = MainActivity.getDatabase().getAllTasks();
+		ArrayList<TaskState> statesToShow = new ArrayList<TaskState>();
+		statesToShow.add(TaskState.AMONG_TO_DO_LIST);
+		
+		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
 		
 
 		for(Task task : tasks)

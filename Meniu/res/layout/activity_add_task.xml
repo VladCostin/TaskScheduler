@@ -222,14 +222,6 @@
         	android:paddingLeft="30dp"
         	android:prompt="@string/textDuration_prompt" />
     	
-    	<Button
-    	    android:id="@+id/buttonCalculateDuration"
-      	    android:layout_width="wrap_content"
-      	    android:layout_height="wrap_content"
-      	    android:layout_below="@+id/textDuration"
-			android:layout_toRightOf="@+id/spinnerDuration"
-			android:layout_marginLeft="30dp"
-      	    android:text="@string/buttonDuration"/>
     
     
     	<TextView

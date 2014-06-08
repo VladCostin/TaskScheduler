@@ -92,8 +92,10 @@ public class KMeansLocation implements KMeans {
 		int centroidNearest = 0;
 		float newError;
 		float errorInit = 10000000;
+		ArrayList<TaskState> states = new ArrayList<TaskState>();
+		states.add(TaskState.EXECUTED);
 	
-		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(TaskState.EXECUTED);
+		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(states);
 		
 		
 		while(true)

@@ -132,9 +132,10 @@ public class KMeansDuration implements KMeans{
 		int distance;
 		int centroidNearest = 0;
 		float newError;
-
+		ArrayList<TaskState> states = new ArrayList<TaskState>();
+		states.add(TaskState.EXECUTED);
 		
-		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(TaskState.EXECUTED);
+		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(states);
 
 		
 		System.out.println( "DIMENSIUNEA ESTE   " + tasks.size());

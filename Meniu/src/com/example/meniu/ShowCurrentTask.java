@@ -124,9 +124,12 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		
 		
-		
-		
-		currentTask = chosenTasks.get(0);
+		if(chosenTasks.size() != 0)
+			currentTask = chosenTasks.get(0);
+		else
+		{
+			
+		}
 		
 		
 	}

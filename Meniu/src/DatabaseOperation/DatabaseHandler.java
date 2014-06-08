@@ -241,7 +241,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param state : the state used to filter the tasks from database
      * @return	: the tasks having the state received as parameter
      */
-    public List<Task> getFilteredTasks(TaskState state)
+    public List<Task> getFilteredTasks(ArrayList<TaskState> states)
     {
     	
     	 List<Task> contactList = new ArrayList<Task>();
@@ -259,7 +259,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             	 
             	 	System.out.println( "Cum este taskul  " + cursor.getString(3));
             	 
-               		if( TaskState.valueOf(cursor.getString(3)) == state)
+               		if( states.contains( TaskState.valueOf(cursor.getString(3)) ))
                		{
                			contactList.add( takeTaskFromDataBase( cursor) );
                		}

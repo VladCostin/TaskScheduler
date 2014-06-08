@@ -389,7 +389,10 @@ public class ShowTasks extends Activity
 	 */
 	private void checkAllTasksCompatibility(Context currentContext) {
 	
-		List<Task> tasks = MainActivity.getDatabase().getAllTasks();
+		ArrayList<TaskState> statesToShow = new ArrayList<TaskState>();
+		statesToShow.add(TaskState.AMONG_TO_DO_LIST);
+		
+		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
 		System.out.println("AFISEAZA TASKURILE AICI");
 		System.out.println( "Dimensiune taskuri " + tasks.size());
 		
