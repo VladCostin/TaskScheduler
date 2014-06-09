@@ -217,26 +217,6 @@ public class KMeansDistances {
 		    return (int)  Math.round(dist * 6378100);
 		
 
-		
-		
-	/*	Location.distanceBetween(location1.getLatitude(), location1.getLongitude(),
-				                 location2.getLatitude(), location2.getLongitude(), results);
-		
-		
-		System.out.println();
-		
-		System.out.println("DISTANTA CALCULATA ESTE " + location1.getLatitude() + " " + location1.getLongitude() + " " + location2.getLatitude() + " " + location2.getLongitude());
-		
-		for(int i = 0 ; i < results.length; i++)
-			System.out.print( results[i] + " " );
-		
-		System.out.println();
-		
-		
-		if( results[0] < distanceLocationError )
-			return 0;
-		
-		return  (int) results[0]; */
 	}
 	
 	

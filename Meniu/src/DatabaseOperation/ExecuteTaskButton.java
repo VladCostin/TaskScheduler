@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.example.meniu.Constants;
+import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
 import com.example.meniu.ShowTasks;
 
@@ -34,10 +35,10 @@ public class ExecuteTaskButton implements OnClickListener {
 		
 		
 		values.add( TaskState.CURRENT_TASK.toString() );
-		values.add(new  SimpleDateFormat(Constants.parseTime).format(new Date()));
+		values.add( Core.currentTimeParseToString()); 
 		
 		
-		System.out.println("ora de executie este  " +   new  SimpleDateFormat(Constants.parseTime).format(new Date()));
+		System.out.println("ora de executie este  " +   Core.currentTimeParseToString());
 		
 		System.out.println("1.DATA de executie " + values.get(1));
 		

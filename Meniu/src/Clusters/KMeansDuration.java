@@ -310,6 +310,19 @@ public class KMeansDuration implements KMeans{
 			System.out.println(frequency.values().toString());
 			System.out.println("-----------------------");
 			
+			
+		//	DurationContext duration = (DurationContext) centroizi.get(iCentroid).
+		//	getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			
+			
+		//	duration.setDuration(durationAverage);
+			
+			
+			DurationContext duration = new DurationContext(durationAverage);
+			
+			centroizi.get(iCentroid).getInternContext().getContextElementsCollection()
+			.put(ContextElementType.DURATION_ELEMENT, duration);
+			
 		}
 		
 		
@@ -620,7 +633,7 @@ public class KMeansDuration implements KMeans{
 		int stringDistance =   KMeansDistances.calculateDistanceTitles(t1.getNameTask(), t2.getNameTask());
 		int timeDistance =    KMeansDistances.calculateDistanceStartTime(t1.getStartTime(), t2.getStartTime());
 		int locationDistance = KMeansDistances.calculateDistanceLocation(t1, t2); 
-		//System.out.println("distanta intre " + t1.getNameTask() + " ----  " + t2.getNameTask() + " : " +  stringDistance);
+	//    System.out.println("DISTANTA INTRE NUME " + t1.getNameTask() + " ----  " + t2.getNameTask() + " : " +  stringDistance);
 	//	System.out.println("distanta temporala intre " + t1.getStartTime() + " ----  " + t2.getStartTime() + " : " +  timeDistance * sameNumitorStartTime );
 	//	System.out.println("distanta intre locatii intre " + t1.getNameTask() + " ----  " + t2.getNameTask() + " : " +  locationDistance * sameNumitorLocation);
 		
@@ -713,10 +726,28 @@ public class KMeansDuration implements KMeans{
 
 
 	@Override
-	public Task detectCentroid(ArrayList<String> data) {
+	public Task detectCentroid(Task currentTask) {
 		
 		
-		return null;
+		Task chosenTask = centroizi.get(0);
+		float distanceMaxim = calculateDistance(currentTask, centroizi.get(0));
+		float distance;
+		
+		for(Task center : centroizi)
+		{
+		//	System.out.println(" Un centroid are numele" + center.getNameTask());
+			distance = calculateDistance(center, currentTask);
+			
+			if( distance < distanceMaxim  )
+			{
+				distanceMaxim = distance;
+				chosenTask = center;
+			}
+			
+		}
+		
+		
+		return chosenTask;
 		
 	}
 

@@ -1,5 +1,8 @@
 package com.example.meniu;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import Clusters.KMeansDistances;
@@ -73,6 +76,28 @@ public class Core {
 		durationMinutes.put("four days", 5760);
 		
 		
+		
+	}
+	
+	/**
+	 * @return : the current time in the format defined in Constants
+	 */
+	public static String currentTimeParseToString()
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat(Constants.parseTime);
+		return sdf.format(new Date()); 
+	}
+	
+	public static Date timeParseToDate(String StartTime)
+	{
+		SimpleDateFormat format = new SimpleDateFormat(Constants.parseTime);
+		try {
+			return format.parse(StartTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 		
 	}
 	

@@ -27,10 +27,11 @@ public interface KMeans {
 	/**
 	 * detect center by comparing the data introduced by the user with the data
 	 * contained in database
-	 * @param data : the data used to determine the most closest cluster
- 	 * @return : the most similar task with the data specified by user
+	 * @param currentTask : the task detected in current Time
+	 * @return : the most similar task with the data specified by user
 	 */
-	public Task detectCentroid( ArrayList<String> data  );
+	public Task detectCentroid( Task currentTask  );
+	
 	
 	
 	/**

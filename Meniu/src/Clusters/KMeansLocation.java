@@ -276,19 +276,17 @@ public class KMeansLocation implements KMeans {
 
 
 	@Override
-	public Task detectCentroid(ArrayList<String> data) {
+	public Task detectCentroid(Task currentTask) {
 		
 		
-		Task current = new Task();
 		Task chosenTask = centroizi.get(0);
-		current.setNameTask(data.get(0));
-		float distanceMaxim = calculateDistance(current, centroizi.get(0));
+		float distanceMaxim = calculateDistance(currentTask, centroizi.get(0));
 		float distance;
 		
 		for(Task center : centroizi)
 		{
 		//	System.out.println(" Un centroid are numele" + center.getNameTask());
-			distance = calculateDistance(center, current);
+			distance = calculateDistance(center, currentTask);
 			
 			if( distance < distanceMaxim  )
 			{

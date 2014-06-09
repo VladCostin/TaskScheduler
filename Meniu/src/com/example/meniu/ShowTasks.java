@@ -19,6 +19,7 @@ import CheckCompatibility.DeviceCompatibility;
 import CheckCompatibility.LocationCompatibility;
 import CheckCompatibility.PeopleCompatibility;
 import CheckCompatibility.TemporalCompatibility;
+import Clusters.KMeansDuration;
 import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
@@ -122,18 +123,30 @@ public class ShowTasks extends Activity
 	 */
 	private HashMap<String,String> deviceInfo;
 	
-	
+
 	
 	/**
 	 * the current position detected by GPS
 	 */
 	LatLng currentPosition;
+	
+	
+	/**
+	 * calculates the centers for the the clusters
+	 * determines which center is most similar to the current task
+	 */
+	KMeansDuration durationAlg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_tasks);
 		
+		
+		// daca las asta la urma in metoda onCreate, o sa dea eroare la broadcast receiver
+		// pentru ca probabil nu a avut timp sa faca ceva
+		durationAlg = new KMeansDuration();
+		durationAlg.calculateKlusters();
 
 		layout = (RelativeLayout) findViewById(R.id.RelativeLayoutShow);
 		
@@ -174,6 +187,9 @@ public class ShowTasks extends Activity
 		
 		mBluetoothAdapter.startDiscovery();
 		currentPosition = null;
+		
+		
+		
 		
 	}
 
@@ -393,36 +409,18 @@ public class ShowTasks extends Activity
 	
 		ArrayList<TaskState> statesToShow = new ArrayList<TaskState>();
 		statesToShow.add(TaskState.AMONG_TO_DO_LIST);
-		
+		boolean noCompatibleTask = true;
+		boolean isTaskCompatible = true;
 		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
-		System.out.println("AFISEAZA TASKURILE AICI");
-		System.out.println( "Dimensiune taskuri " + tasks.size());
+	//	System.out.println("AFISEAZA TASKURILE AICI");
+	//	System.out.println( "Dimensiune taskuri " + tasks.size());
+		
 		
 	//	Collections.sort(tasks, new PriorityComparator());
-	
+
 		
-		if(tasks.size() == 0)
-		{
-			TextView showMessageTask = new TextView(this);
-			
-			RelativeLayout.LayoutParams params_title = 
-			           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-			                                           RelativeLayout.LayoutParams.MATCH_PARENT);
-			
-			showMessageTask.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL); 
-			showMessageTask.setText(Constants.noExecutableTaskMessage);
-			showMessageTask.setTextColor(Color.BLUE);
-			showMessageTask.setTextSize(20);
-		    showMessageTask.setLayoutParams(params_title);
-		    
-		    
-			layout.addView(showMessageTask);
-			return;
-		}
+		System.out.println("INCEP SA AFISEZ TASKURILE!!!!!!!!!");
 		
-		
-		
-		boolean isTaskCompatible = true;
 		for(Task task : tasks)
 		{
 			if(task.getState() == TaskState.CURRENT_TASK)
@@ -430,11 +428,13 @@ public class ShowTasks extends Activity
 			
 			isTaskCompatible = true;
 			
-			task.getScheduledContext().getContextElementsCollection().
-			putAll(task.getExternContext().getContextElementsCollection());
+			System.out.println("INAINTE AVEA START TIME EGAL CU" + task.getStartTime());
 			
-			task.getScheduledContext().getContextElementsCollection().
-			putAll(task.getInternContext().getContextElementsCollection());
+			prepareTask(task); 
+			
+			
+			System.out.println("ACUM ARE START TIME EGAL CU" + task.getStartTime());
+			
 
 			
 			for(ContextElementType elementType: checkers.keySet())
@@ -453,11 +453,82 @@ public class ShowTasks extends Activity
 			
 			System.out.println( "Am verificat compatibilitatea pentru " + task.getNameTask() + " " + isTaskCompatible);
 			
-			if(isTaskCompatible == true)	
+			if(isTaskCompatible == true){
+				noCompatibleTask = false;
 				addTaskToInterface(task) ;
-		}	
+			}
+		}
+		
+		if(noCompatibleTask == true)
+		{
+			TextView showMessageTask = new TextView(this);
+			
+			RelativeLayout.LayoutParams params_title = 
+			           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+			                                           RelativeLayout.LayoutParams.MATCH_PARENT);
+			
+			showMessageTask.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL); 
+			showMessageTask.setText(Constants.noExecutableTaskMessage);
+			showMessageTask.setTextColor(Color.BLUE);
+			showMessageTask.setTextSize(20);
+		    showMessageTask.setLayoutParams(params_title);
+		    
+		    
+			layout.addView(showMessageTask);
+		}
+		
 		
 	}
+	
+	
+	
+	/**
+	 * @param task : one of task from to do list
+	 */
+	public void prepareTask(Task task){
+		
+		
+		task.getScheduledContext().getContextElementsCollection().
+		putAll(task.getExternContext().getContextElementsCollection());
+		
+		task.getScheduledContext().getContextElementsCollection().
+		putAll(task.getInternContext().getContextElementsCollection());
+		
+		
+		DurationContext duration = (DurationContext)
+		task.getScheduledContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		
+		task.setStartTime(Core.currentTimeParseToString());
+		
+		if(duration.getDuration() == Constants.noTimeSpecified)
+		{
+			
+			
+			Task centerTask = durationAlg.detectCentroid(task);
+			DurationContext durationCenterTask = (DurationContext)
+			centerTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			
+			
+			if(durationCenterTask == null)
+				System.out.println("DURATION CENTER TASK ESTE NULL");
+			
+			duration.setDuration( durationCenterTask.getDuration() );
+			
+			
+
+			
+
+		} 
+		
+		
+	
+		
+	}
+	
+	
+	
+	
 	/**
 	 * adding views to screen
 	 * @param task : the task which can be executed
@@ -619,7 +690,7 @@ public class ShowTasks extends Activity
 			
 			
 			DeadlineContext  deadlineTask = (DeadlineContext) 
-			task.getExternContext().getContextElementsCollection().get(ContextElementType.DEADLINE_ELEMENT);
+			task.getScheduledContext().getContextElementsCollection().get(ContextElementType.DEADLINE_ELEMENT);
 			
 			
 			deadlineValue.setText(deadlineTask.getDeadline());
@@ -640,7 +711,7 @@ public class ShowTasks extends Activity
 				
 			
 			PeopleContext  peopleTask = (PeopleContext) 
-			task.getInternContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+			task.getScheduledContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
 			
 
 			peopleValue.setText(peopleTask.getPeopleTaskString());
@@ -661,7 +732,7 @@ public class ShowTasks extends Activity
 				
 			
 			DeviceContext  deviceTask = (DeviceContext) 
-			task.getInternContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+			task.getScheduledContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
 			
 
 			devicesValue.setText(deviceTask.getDeviceTaskString());
@@ -683,7 +754,7 @@ public class ShowTasks extends Activity
 			
 			
 			DurationContext durationTask = (DurationContext)
-			task.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			task.getScheduledContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 			
 			
 			
@@ -798,7 +869,7 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 	            // Add the name and address to an array adapter to show in a ListView
 	           // mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 
-	            System.out.println("Sunt in noul broadcaster"  +" " +System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
+	      //      System.out.println("Sunt in noul broadcaster"  +" " +System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
 	            
 	        if(myActivy.getDeviceInfo().containsKey(device.getAddress()) == false)
 	        {

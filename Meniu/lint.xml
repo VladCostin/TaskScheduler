@@ -3,7 +3,7 @@
     <issue id="DefaultLocale" severity="ignore">
         <ignore path="src/Clusters/KMeansDuration.java" />
     </issue>
-    <issue id="SimpleDateFormat">
+    <issue id="SimpleDateFormat" severity="ignore">
         <ignore path="src/com/example/meniu/ShowCurrentTask.java" />
     </issue>
     <issue id="UseSparseArrays" severity="ignore" />

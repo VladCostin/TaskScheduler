@@ -17,4 +17,7 @@ public interface Constants {
 	
 	String noCurrentTaskMessage = "You have no current task to execute";
 	
+	
+	Integer noTimeSpecified = -1;
+	
 }

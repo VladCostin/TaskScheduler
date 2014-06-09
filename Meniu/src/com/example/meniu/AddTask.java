@@ -1110,9 +1110,12 @@ public void afterTextChanged(Editable s) {
 	{
 		//clustering.detectCentroid(s.toString());
 		
-		ArrayList<String> data = new ArrayList<String>();
-		data.add(s.toString());
-		Task returnTask =  clusteringLocation.detectCentroid(data);
+		
+		Task currentTask = new Task();
+		currentTask.setNameTask(s.toString());
+		
+		
+		Task returnTask =  clusteringLocation.detectCentroid(currentTask);
 		if(returnTask != null && booleanHasDetectedLocation == false)
 		{
 			booleanHasDetectedLocation = true;

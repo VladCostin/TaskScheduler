@@ -24,7 +24,7 @@ public class KMeansPeople implements KMeans{
 	}
 
 	@Override
-	public Task detectCentroid(ArrayList<String> data) {
+	public Task detectCentroid(Task currentTask) {
 		
 		
 		return null;

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Clusters.KMeansDuration;
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
 import ContextElements.LocationContext;
@@ -179,10 +180,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		try {
 			addresses = geocoder.getFromLocation(locationC.getLatitude() ,locationC.getLongitude(), 1);
-		//	autoLocationSearch.setText(addresses.get(0).getAdminArea());
-		//	autoLocationSearch.setText(addresses.get(0).getPremises());
 			location.setText(addresses.get(0).getAddressLine(0) ) ;
-		//	autoLocationSearch.setText(  addresses.get(0).getAddressLine(0) ) ;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -223,51 +221,69 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		int nrMinutesFromHour;
 		int deltaMinutesPast;
 		
+		
+		
+		
 		DurationContext durationTask = (DurationContext)
 		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 		
 		
+	/*	if(durationTask.getDuration() == -1 )
+		{
+			
+			
+			KMeansDuration durationAlg = new KMeansDuration();
+			durationAlg.calculateKlusters();
+			Task  centerDetected = durationAlg.detectCentroid(currentTask);
+			
+			DurationContext durationTaskCurrent = (DurationContext)
+			currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			
+			durationTask.setDuration(durationTaskCurrent.getDuration()); 
+			 
+		}*/
+		
+		
+		
 		System.out.println("DURATA ESTE :" + durationTask.getDuration());
 		
-		SimpleDateFormat format = new SimpleDateFormat(Constants.parseTime);
+		
 		
 		
 		Date currentDateTime = new Date();
 		Date taskChosenTime;
 		
 		
-		
-		try {
-			taskChosenTime = format.parse(currentTask.getStartTime());
-			System.out.println(currentDateTime);
-			System.out.println(taskChosenTime);
+		taskChosenTime = Core.timeParseToDate(currentTask.getStartTime());
+		System.out.println(currentDateTime);
+		System.out.println(taskChosenTime);
 			
 			
 		//	nrMinutes = Core.getDurationMinutes().get(durationTask.getDuration()) - 1 ;
 		//	nrHours   = nrMinutes / 60; 
 		//	nrMinutes = nrMinutes % 60;
 			
-			diff = currentDateTime.getTime() - taskChosenTime.getTime();
+		diff = currentDateTime.getTime() - taskChosenTime.getTime();
 			 
-			diffSeconds = diff / 1000 % 60;
-			diffMinutes = diff / (60 * 1000) % 60;
-			diffHours = diff / (60 * 60 * 1000) % 24;
-			diffDays = diff / (24 * 60 * 60 * 1000);
+		diffSeconds = diff / 1000 % 60;
+		diffMinutes = diff / (60 * 1000) % 60;
+		diffHours = diff / (60 * 60 * 1000) % 24;
+		diffDays = diff / (24 * 60 * 60 * 1000);
  
-			System.out.println("Numarul de zile trecute de cand am pornit aplicatia  " +  diffDays );
-			System.out.println("Numarul de ore trecute de cand am pornit aplicatia " + diffHours);
-			System.out.println("Numarul de minute trecute de cand am pornit aplicatia " + diffMinutes );
-			System.out.println("Numarul de secunde trecute de cand am pornit aplicatia " + diffSeconds);
+		System.out.println("Numarul de zile trecute de cand am pornit aplicatia  " +  diffDays );
+		System.out.println("Numarul de ore trecute de cand am pornit aplicatia " + diffHours);
+		System.out.println("Numarul de minute trecute de cand am pornit aplicatia " + diffMinutes );
+		System.out.println("Numarul de secunde trecute de cand am pornit aplicatia " + diffSeconds);
 			
 			
 			
-			nrMinutesFromHour = durationTask.getDuration() % 60; // nrMinutesFromHour = the number of minutes without
+		nrMinutesFromHour = durationTask.getDuration() % 60; // nrMinutesFromHour = the number of minutes without
 			// the number of full hours
 			
 			
-			System.out.println("Numarul de ore din durata " + durationTask.getDuration() / 60);
-			System.out.println("Numarul de minute din durata" +  durationTask.getDuration() % 60);
-			System.out.println("Numarul de minute ramase din task, fara ore" + nrMinutesFromHour);
+		System.out.println("Numarul de ore din durata " + durationTask.getDuration() / 60);
+		System.out.println("Numarul de minute din durata" +  durationTask.getDuration() % 60);
+		System.out.println("Numarul de minute ramase din task, fara ore" + nrMinutesFromHour);
 			
 			
 			
@@ -277,64 +293,59 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 			// adaug in baza de date la durata cat timp a trecut + 10 minute
 			// pe interfata adaug 10 minute
 			
-			totalTimePast = diffMinutes + diffHours * 60;
+		totalTimePast = diffMinutes + diffHours * 60;
 			
 			
-			System.out.println("Timpul total trecut este " + totalTimePast);
-			System.out.println("durata estimata este " + durationTask.getDuration());
+		System.out.println("Timpul total trecut este " + totalTimePast);
+		System.out.println("durata estimata este " + durationTask.getDuration());
 			
-			if(totalTimePast >= durationTask.getDuration())
-			{
-				deltaMinutesPast = (int) totalTimePast - durationTask.getDuration();
-				nrSeconds = 59;
-				nrMinutes   = 9;
-				nrHours   = 0;
+		if(totalTimePast >= durationTask.getDuration())
+		{
+			deltaMinutesPast = (int) totalTimePast - durationTask.getDuration();
+			nrSeconds = 59;
+			nrMinutes   = 9;
+			nrHours   = 0;
 				
 				
-				hours.setText(Integer.toString( nrHours));
-				minutes.setText( Integer.toString(nrMinutes ));
-				seconds.setText(Integer.toString(nrSeconds));
-				
-				durationTask.setDuration(durationTask.getDuration() + deltaMinutesPast + 10); 
-				return;
-				
-				
-			}
-			
-			
-			
-			
-			// daca de exemplu s-au dus 35 de minute, si durata avea 40 de minute, atunci intra pe else
-						// daca in schimb durata avea 30 de minute atunci inseamna ca trebuie sczut si numarul de ore, si la minute se porneste de la 59 - diffMinutes
-			if(nrMinutesFromHour <   diffMinutes)
-			{
-
-				
-				
-				// divide to 60 to get the number of hours then substract 1, which is given to minutes
-				// substract then diffHours, which represents how much time I stayed with the activity not opened
-				nrHours = ( durationTask.getDuration() / 60  -1 ) -  (int) diffHours ;
-				nrMinutes = (durationTask.getDuration() % 60)  - (int) diffMinutes;
-			}
-			else
-			{
-				nrHours = ( durationTask.getDuration() / 60   ) -  (int) diffHours ;
-				nrMinutes = (durationTask.getDuration() % 60 )  - (int) diffMinutes  - 1; // mai scad 1 minut de la minutul luat pentru a 
-				// scadea din secunde
-			}
-			
-			
-		
-			nrSeconds = 60 - (int) diffSeconds;
-			
-			
 			hours.setText(Integer.toString( nrHours));
 			minutes.setText( Integer.toString(nrMinutes ));
 			seconds.setText(Integer.toString(nrSeconds));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				
+			durationTask.setDuration(durationTask.getDuration() + deltaMinutesPast + 10); 
+			return;
+				
+				
 		}
+			
+	
+			// daca de exemplu s-au dus 35 de minute, si durata avea 40 de minute, atunci intra pe else
+						// daca in schimb durata avea 30 de minute atunci inseamna ca trebuie sczut si numarul de ore, si la minute se porneste de la 59 - diffMinutes
+		if(nrMinutesFromHour <   diffMinutes)
+		{
+
+				
+				
+			// divide to 60 to get the number of hours then substract 1, which is given to minutes
+			// substract then diffHours, which represents how much time I stayed with the activity not opened
+			nrHours = ( durationTask.getDuration() / 60  -1 ) -  (int) diffHours ;
+			nrMinutes = (durationTask.getDuration() % 60)  - (int) diffMinutes;
+		}
+		else
+		{
+			nrHours = ( durationTask.getDuration() / 60   ) -  (int) diffHours ;
+			nrMinutes = (durationTask.getDuration() % 60 )  - (int) diffMinutes  - 1; // mai scad 1 minut de la minutul luat pentru a 
+			// scadea din secunde
+		}
+			
+			
+		
+		nrSeconds = 60 - (int) diffSeconds;
+			
+			
+		hours.setText(Integer.toString( nrHours));
+		minutes.setText( Integer.toString(nrMinutes ));
+		seconds.setText(Integer.toString(nrSeconds));
+		
 		
 		
 	}
