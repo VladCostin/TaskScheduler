@@ -54,6 +54,12 @@ public class KMeansDuration implements KMeans{
 	
 	
 	/**
+	 * the final centers, when K-means detects the global minimum
+	 */
+	ArrayList<Task> finalCenters;
+	
+	
+	/**
 	 * the id-s of the tasks selected priori to be centers
 	 * used in order to keep the clusters without points
 	 */
@@ -110,6 +116,7 @@ public class KMeansDuration implements KMeans{
 		centroizi = new ArrayList<Task>();
 		idNewCentroid = new ArrayList<Integer>();
 		idCentroiziChosen = new ArrayList<Integer>();
+		finalCenters = new ArrayList<Task>();
 		
 		
 		errorInit = 100000000;
@@ -132,6 +139,11 @@ public class KMeansDuration implements KMeans{
 		int distance;
 		int centroidNearest = 0;
 		float newError;
+		float firstNegativeRatio = 10;
+		float secondNegativeRatio;
+		int negativeResult = 0;
+		
+		
 		ArrayList<TaskState> states = new ArrayList<TaskState>();
 		states.add(TaskState.EXECUTED);
 		
@@ -143,10 +155,10 @@ public class KMeansDuration implements KMeans{
 		
 		System.out.println("AFISEZ INDICII CENTROIZILOR");
 		
-	//	for(int i = 0; i < 11; i++)
-	//	{
-		while(true)
+		for(int i = 0; i < 11; i++)
 		{
+	//	while(true)
+	//	{
 			nrClusters++;
 			idCentroid.clear();
 			centroizi.clear();
@@ -230,15 +242,51 @@ public class KMeansDuration implements KMeans{
 		
 			
 			newError =	calculateError();
-			System.out.println("DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+			System.out.println((i + 1) +  " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
 			
-			if( (errorInit - newError) < errorInit/fractionError  || nrClusters == tasks.size()){
+			
+			if( (errorInit - newError) < errorInit/fractionError)
+			{
+					
+				
+				
+				if(negativeResult == 2){
+					
+					
+					System.out.println("A IESTE PENTR CAU AVEA negativeResult = 2 " + finalCenters.size() );
+					break;
+				}
+				
+				negativeResult++;
+				
+			/*	secondNegativeRatio = (errorInit/fractionError) / (errorInit - newError);
+				
+				if(secondNegativeRatio >  firstNegativeRatio ){
+					System.out.println("A IESTE PENTR CA AL DOILEA RAPORT ERA MAI MARE DECAT PRIMUL" + " " + finalCenters.size());
+					break;
+				}
+				
+				firstNegativeRatio = secondNegativeRatio;*/
+				
+				
+			}
+			else{
+				negativeResult = 0;
+				firstNegativeRatio = 10;
+				finalCenters.clear();
+				finalCenters.addAll(centroizi);
+				
+				System.out.println("ESTE REACTUALIZAT FINAL CENTERS");
+				
+			}
+			
+		/*	if( (errorInit - newError) < errorInit/fractionError  || nrClusters == tasks.size()){
 				
 				System.out.println( "DIFERENTA este " + (errorInit - newError));
 				System.out.println( "Impartit la 5 este " + (errorInit/ fractionError));
 				
 				break;
-			}
+			}*/
 			
 			errorInit = newError;
 			
@@ -246,7 +294,7 @@ public class KMeansDuration implements KMeans{
 		}
 		
 		
-		System.out.println("NUMARUL DE CLUSTERE DETEMINAT ESTE " + nrClusters );
+		System.out.println("NUMARUL DE CLUSTERE DETEMINAT ESTE " + finalCenters.size() );
 		
 	//	calculatesTitlesCenters();
 		calculateDurationMedium();
@@ -266,7 +314,7 @@ public class KMeansDuration implements KMeans{
 		int iCentroid, iTask, pointsSameCenter;
 		int durationAverage;
 		TreeMap<String, Integer> frequency;
-
+		nrClusters = finalCenters.size();
 		
 		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
 		{
@@ -320,7 +368,7 @@ public class KMeansDuration implements KMeans{
 			
 			DurationContext duration = new DurationContext(durationAverage);
 			
-			centroizi.get(iCentroid).getInternContext().getContextElementsCollection()
+			finalCenters.get(iCentroid).getInternContext().getContextElementsCollection()
 			.put(ContextElementType.DURATION_ELEMENT, duration);
 			
 		}
