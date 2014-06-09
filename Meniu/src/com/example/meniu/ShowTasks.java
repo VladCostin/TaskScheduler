@@ -67,7 +67,7 @@ public class ShowTasks extends Activity
 	/**
 	 * used to add dynamically data about each task from the database
 	 */	
-	RelativeLayout layout;
+	private RelativeLayout layout;
 	
 	
 	/**
@@ -759,13 +759,16 @@ public class ShowTasks extends Activity
 			
 			
 			
-			durationValue.setText(durationTask.getDuration() / 60 + " : " +  durationTask.getDuration() % 60   );
+			durationValue.setText(durationTask.getDuration() / 60 + ":" +  durationTask.getDuration() % 60   );
 			durationValue.setPadding(20, 10, 0, 0);
 			durationValue.setTextSize(20);	
 			durationValue.setId( ++ numberOfView);
 			params_duration_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			params_duration_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			durationValue.setLayoutParams(params_duration_value);
+			
+			
+		//	System.out.println("DURATA DETERMINATA ESTE " + durationValue.getText().toString());
 			
 			
 			buttonExecuteTask.setText(Constants.executeTask);
@@ -829,6 +832,18 @@ public class ShowTasks extends Activity
 
 	public void setDeviceInfo(HashMap<String,String> deviceInfo) {
 		this.deviceInfo = deviceInfo;
+	}
+
+
+
+	public RelativeLayout getLayout() {
+		return layout;
+	}
+
+
+
+	public void setLayout(RelativeLayout layout) {
+		this.layout = layout;
 	}
 
 
