@@ -36,11 +36,11 @@ public class KMeansDuration implements KMeans{
 	 */
 	int nrClusters;
 	/**
-	 * the new centers of the clusters
+	 * contains the new centers of the clusters associated to each point
 	 */
 	ArrayList<Integer> idNewCentroid;
 	/**
-	 * the old centers of the clusters
+	 * contains the old centers of the clusters associated to each point
 	 */
 	ArrayList<Integer> idCentroid;
 	/**
@@ -151,9 +151,15 @@ public class KMeansDuration implements KMeans{
 
 		
 		System.out.println( "DIMENSIUNEA ESTE   " + tasks.size());
-
-		
 		System.out.println("AFISEZ INDICII CENTROIZILOR");
+		
+		
+		
+		
+		Random r = new Random();
+		idCentroiziChosen.add( r.nextInt(tasks.size()));
+		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
+		
 		
 		for(int i = 0; i < 11; i++)
 		{
@@ -161,14 +167,13 @@ public class KMeansDuration implements KMeans{
 	//	{
 			nrClusters++;
 			idCentroid.clear();
-			centroizi.clear();
+	//		centroizi.clear();
 			idNewCentroid.clear();
-			idCentroiziChosen.clear();
+	//		idCentroiziChosen.clear();
 			
 			
-			chooseCentroid();
 			
-			
+			// calculez idCentroid, adica pentr
 			for(Task task : tasks)
 			{
 				
@@ -289,6 +294,7 @@ public class KMeansDuration implements KMeans{
 			}*/
 			
 			errorInit = newError;
+			chooseCentroid();
 			
 		
 		}
@@ -298,6 +304,18 @@ public class KMeansDuration implements KMeans{
 		
 	//	calculatesTitlesCenters();
 		calculateDurationMedium();
+		
+	}
+	
+	
+	/**
+	 * creating a center based on the information from the task selected to be a center 
+	 */
+	public void addTaskToCenterList(Task center)
+	{
+		
+		
+		
 		
 	}
 	
@@ -585,7 +603,77 @@ public class KMeansDuration implements KMeans{
 
 	@Override
 	public void chooseCentroid() {
+		
+		
 		int iCentroid, idTask, iCentroidByNow;
+		
+		int distanceMinim;
+		int distanceMaxim;
+		
+		int distanceCalculated;
+		int newCentroidIndex = 0;
+	//	Random r = new Random();
+	//	idCentroiziChosen.add( r.nextInt(tasks.size()));
+
+	
+		distanceMaxim = -1;
+			
+		for(idTask = 0; idTask < tasks.size(); idTask++)
+		{
+			distanceMinim =  2000000;
+				
+				
+			if(idCentroiziChosen.contains(idTask)  == false )
+			{				
+					
+				for(iCentroidByNow = 0; iCentroidByNow < idCentroiziChosen.size(); iCentroidByNow++)
+				{
+
+						
+						
+					distanceCalculated =
+					calculateDistance(tasks.get(idTask),tasks.get(idCentroiziChosen.get(iCentroidByNow))   );
+						
+						
+					if(distanceCalculated < distanceMinim)
+						distanceMinim = distanceCalculated;
+						
+				}				
+				if(distanceMinim  > distanceMaxim )
+				{
+					distanceMaxim = distanceMinim;
+					newCentroidIndex = idTask;
+				}
+					
+			}
+				
+				
+				
+		}
+			
+
+		idCentroiziChosen.add(newCentroidIndex);
+		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
+
+		
+		
+	//	System.out.println(idCentroiziChosen.toString());
+	//	for(iCentroid = 0; iCentroid< idCentroiziChosen.size(); iCentroid++)
+	//	{
+		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getStartTime() + "   ");
+		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getNameTask() + "   ");
+			
+			
+		
+			
+			
+	//	}
+		
+		
+		
+		
+		
+	/*	int iCentroid, idTask, iCentroidByNow;
 		
 		int distanceMinim;
 		int distanceMaxim;
@@ -668,7 +756,7 @@ public class KMeansDuration implements KMeans{
 			centroizi.add(t);
 			
 			
-		}
+		}*/
 		
 
 	}

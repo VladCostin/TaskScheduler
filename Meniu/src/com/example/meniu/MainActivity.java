@@ -77,8 +77,8 @@ public class MainActivity extends Activity {
 		
 		
 		
-	//	KMeansDuration clustering = new KMeansDuration();
-	//	clustering.calculateKlusters();
+		KMeansDuration clustering = new KMeansDuration();
+		clustering.calculateKlusters();
 		
 		
 	//	addTasksDifferentTitlesForLocation();
