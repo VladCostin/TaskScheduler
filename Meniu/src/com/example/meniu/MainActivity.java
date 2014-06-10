@@ -73,12 +73,12 @@ public class MainActivity extends Activity {
 	//	addTaskforCheckDurationDifferentTitle();
 	//	addTaskforCheckDurationDifferentTitle_2();
 	 //   addTaskforCheckDurationSameLocation();
-	//   addTaskforCheckDurationDifferentLocations();
+	//addTaskforCheckDurationDifferentLocations();
 		
 		
 		
-		KMeansDuration clustering = new KMeansDuration();
-		clustering.calculateKlusters();
+	//	KMeansDuration clustering = new KMeansDuration();
+	//	clustering.calculateKlusters();
 		
 		
 	//	addTasksDifferentTitlesForLocation();

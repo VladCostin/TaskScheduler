@@ -18,6 +18,9 @@ public interface Constants {
 	String noCurrentTaskMessage = "You have no current task to execute";
 	
 	
+	String curretTaskExists = "There is already a task to be executed ";
+	
+	
 	Integer noTimeSpecified = -1;
 	
 }

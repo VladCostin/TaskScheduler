@@ -8,14 +8,21 @@ import com.example.meniu.Constants;
 import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
 import com.example.meniu.ShowTasks;
+import com.google.android.gms.internal.s;
 
 import Task.TaskState;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ExecuteTaskButton implements OnClickListener {
 
+	/**
+	 * activity where the possible tasks are shown
+	 */
 	ShowTasks executableTasksActivity;
 	
 	public ExecuteTaskButton(ShowTasks activityTasks)
@@ -27,12 +34,26 @@ public class ExecuteTaskButton implements OnClickListener {
 	public void onClick(View v) 
 	{
 		
+		 if( checkCurrentTaskExist() == true )
+			 return;
+		 
+		 
+		 setTaskToBeExecuted(v);
+		
+		
+
+	}
+	
+	
+	public void setTaskToBeExecuted(View v){
 		ArrayList<String> attributes = new ArrayList<String>();
 		ArrayList<String> values	 = new ArrayList<String>();
 		Integer idTask;
 		TextView duration;
 		String time[];
 		String timeMinutes;
+		
+		
 		
 		
 		duration = (TextView)  executableTasksActivity.getLayout().getChildAt(v.getId() -2 );
@@ -50,8 +71,6 @@ public class ExecuteTaskButton implements OnClickListener {
 		values.add( TaskState.CURRENT_TASK.toString() );
 		values.add( Core.currentTimeParseToString()); 
 		values.add(timeMinutes);
-		
-			
 		
 		
 		System.out.println("ora de executie este  " +   Core.currentTimeParseToString());
@@ -71,7 +90,40 @@ public class ExecuteTaskButton implements OnClickListener {
 		MainActivity.getDatabase().updateTask(idTask,attributes, values);
 		
 		executableTasksActivity.showUpdate();
+	}
 
+	/**
+	 * @return : true if there is a task already running, false if it doesn't
+	 */
+	public boolean checkCurrentTaskExist() {
+		
+		ArrayList<TaskState> statesToShow = new ArrayList<TaskState>();
+		statesToShow.add(TaskState.CURRENT_TASK);
+		
+		if(statesToShow.size() != 0 )
+		{
+			RelativeLayout.LayoutParams params_message = 
+			new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 
+					                                   RelativeLayout.LayoutParams.WRAP_CONTENT);
+			
+			
+			TextView showMessageTask = new TextView(executableTasksActivity);
+			
+			
+			showMessageTask.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL); 
+			showMessageTask.setText(Constants.curretTaskExists);
+			showMessageTask.setTextColor(Color.BLUE);
+			showMessageTask.setTextSize(20);
+		    showMessageTask.setLayoutParams(params_message);
+		    
+		    
+			
+			executableTasksActivity.getLayout().addView(showMessageTask); 
+			return true;
+		}
+
+		return false;
+		
 	}
 
 }

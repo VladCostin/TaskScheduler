@@ -777,13 +777,19 @@ public class KMeansDuration implements KMeans{
 	public Task detectCentroid(Task currentTask) {
 		
 		
-		Task chosenTask = centroizi.get(0);
-		float distanceMaxim = calculateDistance(currentTask, centroizi.get(0));
+		Task chosenTask = finalCenters.get(0);
+		float distanceMaxim = calculateDistance(currentTask, finalCenters.get(0));
 		float distance;
 		
-		for(Task center : centroizi)
+		for(Task center : finalCenters)
 		{
 		//	System.out.println(" Un centroid are numele" + center.getNameTask());
+			
+			DurationContext duration = (DurationContext) center.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			
+		//	if(duration == null)
+		//		System.out.println("Durata este null" + center.getNameTask());
+			
 			distance = calculateDistance(center, currentTask);
 			
 			if( distance < distanceMaxim  )
