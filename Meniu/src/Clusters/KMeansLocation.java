@@ -44,6 +44,11 @@ public class KMeansLocation implements KMeans {
 	ArrayList<Task> centroizi;
 	
 	/**
+	 * the final centers, when K-means detects the global minimum
+	 */
+	ArrayList<Task> finalCenters;
+	
+	/**
 	 * the id-s of the tasks selected priori to be centers
 	 * used in order to keep the clusters without points
 	 */
@@ -68,6 +73,7 @@ public class KMeansLocation implements KMeans {
 		centroizi = new ArrayList<Task>();
 		idNewCentroid = new ArrayList<Integer>();
 		idCentroiziChosen = new ArrayList<Integer>();
+		finalCenters = new ArrayList<Task>();
 		
 		nrClusters = 0;
 		
@@ -145,6 +151,11 @@ public class KMeansLocation implements KMeans {
 		//		System.out.println( "Impartit la 3 este " + (errorInit/ fractionError));
 				
 				break;
+			}
+			else
+			{
+				finalCenters.clear();
+				finalCenters.addAll(centroizi);
 			}
 			
 			errorInit = newError;
@@ -279,11 +290,11 @@ public class KMeansLocation implements KMeans {
 	public Task detectCentroid(Task currentTask) {
 		
 		
-		Task chosenTask = centroizi.get(0);
-		float distanceMaxim = calculateDistance(currentTask, centroizi.get(0));
+		Task chosenTask = finalCenters.get(0);
+		float distanceMaxim = calculateDistance(currentTask, finalCenters.get(0));
 		float distance;
 		
-		for(Task center : centroizi)
+		for(Task center : finalCenters)
 		{
 		//	System.out.println(" Un centroid are numele" + center.getNameTask());
 			distance = calculateDistance(center, currentTask);
@@ -442,6 +453,25 @@ public class KMeansLocation implements KMeans {
 	public int calculateDistance(Task t1, Task t2) {
 		int stringDistance =   KMeansDistances.calculateDistanceTitles(t1.getNameTask(), t2.getNameTask());
 		return stringDistance;
+	}
+	
+	
+	/**
+	 * @return : the titles from the centers calculated
+	 */
+	public ArrayList<String> titlesOfCenters()
+	{
+		ArrayList<String> titles = new ArrayList<String>();
+		for(Task task : finalCenters)
+		{
+			System.out.println("CENTROID" + task.getNameTask());
+			titles.add(task.getNameTask());
+		}
+		
+		
+		return titles;
+		
+		
 	}
 
 }

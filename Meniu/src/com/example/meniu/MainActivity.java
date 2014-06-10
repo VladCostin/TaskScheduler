@@ -72,8 +72,8 @@ public class MainActivity extends Activity {
 	//	addTaskForCheckSameTitle();
 	//	addTaskforCheckDurationDifferentTitle();
 	//	addTaskforCheckDurationDifferentTitle_2();
-	 //   addTaskforCheckDurationSameLocation();
-	//addTaskforCheckDurationDifferentLocations();
+	 // addTaskforCheckDurationSameLocation();
+	//  addTaskforCheckDurationDifferentLocations();
 		
 		
 		
@@ -86,6 +86,7 @@ public class MainActivity extends Activity {
 	//	KMeansLocation clustering = new KMeansLocation();
 	//	clustering.calculateKlusters();
 		
+	//	clustering.titlesOfCenters();
 		
 	//	System.out.println("DIMENSIUNEA ESTE : " + database.getAllTasks().size());
 	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");

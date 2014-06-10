@@ -256,7 +256,7 @@ public class AddTask extends   FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_task);
 		
-		
+
 		
 		
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
@@ -360,9 +360,10 @@ public class AddTask extends   FragmentActivity
         });
         
       
-        
+        loadClusters();
     	List<Task> tasks =  MainActivity.getDatabase().getAllTasks();
 		ArrayList<String>  allWords = new ArrayList<String>();
+		allWords.addAll(clusteringLocation.titlesOfCenters());
 		
 		
 		for(Task task : tasks)
@@ -382,7 +383,7 @@ public class AddTask extends   FragmentActivity
 		
 		
 		loadSharedPreferences();
-		loadClusters();
+		
 		
 	}
 	
