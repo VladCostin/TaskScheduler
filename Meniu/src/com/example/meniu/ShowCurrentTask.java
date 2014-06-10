@@ -180,7 +180,13 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		try {
 			addresses = geocoder.getFromLocation(locationC.getLatitude() ,locationC.getLongitude(), 1);
-			location.setText(addresses.get(0).getAddressLine(0) ) ;
+			
+			System.out.println("LATLNG ESTE " + locationC.getLatitude() + " " + locationC.getLongitude());
+			
+			if(addresses == null)
+				System.out.println("NU A DETERMINAT NICIO ADRESA");
+			else
+				location.setText(addresses.get(0).getAddressLine(0) ) ;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -3,6 +3,7 @@ package DatabaseOperation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.example.meniu.Constants;
 import com.example.meniu.Core;
@@ -10,6 +11,7 @@ import com.example.meniu.MainActivity;
 import com.example.meniu.ShowTasks;
 import com.google.android.gms.internal.s;
 
+import Task.Task;
 import Task.TaskState;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -100,7 +102,9 @@ public class ExecuteTaskButton implements OnClickListener {
 		ArrayList<TaskState> statesToShow = new ArrayList<TaskState>();
 		statesToShow.add(TaskState.CURRENT_TASK);
 		
-		if(statesToShow.size() != 0 )
+		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
+		
+		if(tasks.size() != 0 )
 		{
 			RelativeLayout.LayoutParams params_message = 
 			new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 

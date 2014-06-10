@@ -62,6 +62,10 @@ public class AddTaskButton implements OnClickListener {
 		 String duration = task.getDuration().getSelectedItem().toString();
 		 
 		 
+		 System.out.println("INTRODUC PERSOANELE" + people);
+		 System.out.println("INTRODUC DISPOZITIVELE" + device);
+		 
+		 
 		 
 		 
 		 Log.w("information",date + " " + location + " " + priority + " " + name + " " + people + " " + device);
