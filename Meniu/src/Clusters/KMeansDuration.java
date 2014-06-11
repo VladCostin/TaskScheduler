@@ -1,17 +1,9 @@
 package Clusters;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
@@ -139,8 +131,6 @@ public class KMeansDuration implements KMeans{
 		int distance;
 		int centroidNearest = 0;
 		float newError;
-		float firstNegativeRatio = 10;
-		float secondNegativeRatio;
 		int negativeResult = 0;
 		
 		
@@ -167,13 +157,11 @@ public class KMeansDuration implements KMeans{
 	//	{
 			nrClusters++;
 			idCentroid.clear();
-	//		centroizi.clear();
 			idNewCentroid.clear();
-	//		idCentroiziChosen.clear();
 			
 			
 			
-			// calculez idCentroid, adica pentr
+			// calculating the center associated to each point, except if the point is a center
 			for(Task task : tasks)
 			{
 				
@@ -254,7 +242,6 @@ public class KMeansDuration implements KMeans{
 			{
 					
 				
-				
 				if(negativeResult == 2){
 					
 					
@@ -264,34 +251,17 @@ public class KMeansDuration implements KMeans{
 				
 				negativeResult++;
 				
-			/*	secondNegativeRatio = (errorInit/fractionError) / (errorInit - newError);
-				
-				if(secondNegativeRatio >  firstNegativeRatio ){
-					System.out.println("A IESTE PENTR CA AL DOILEA RAPORT ERA MAI MARE DECAT PRIMUL" + " " + finalCenters.size());
-					break;
-				}
-				
-				firstNegativeRatio = secondNegativeRatio;*/
-				
 				
 			}
 			else{
 				negativeResult = 0;
-				firstNegativeRatio = 10;
 				finalCenters.clear();
 				finalCenters.addAll(centroizi);
 				
 				System.out.println("ESTE REACTUALIZAT FINAL CENTERS");
 				
 			}
-			
-		/*	if( (errorInit - newError) < errorInit/fractionError  || nrClusters == tasks.size()){
-				
-				System.out.println( "DIFERENTA este " + (errorInit - newError));
-				System.out.println( "Impartit la 5 este " + (errorInit/ fractionError));
-				
-				break;
-			}*/
+
 			
 			errorInit = newError;
 			chooseCentroid();
@@ -302,22 +272,10 @@ public class KMeansDuration implements KMeans{
 		
 		System.out.println("NUMARUL DE CLUSTERE DETEMINAT ESTE " + finalCenters.size() );
 		
-	//	calculatesTitlesCenters();
 		calculateDurationMedium();
 		
 	}
 	
-	
-	/**
-	 * creating a center based on the information from the task selected to be a center 
-	 */
-	public void addTaskToCenterList(Task center)
-	{
-		
-		
-		
-		
-	}
 	
 	
 
@@ -655,108 +613,6 @@ public class KMeansDuration implements KMeans{
 		idCentroiziChosen.add(newCentroidIndex);
 		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
 
-		
-		
-	//	System.out.println(idCentroiziChosen.toString());
-	//	for(iCentroid = 0; iCentroid< idCentroiziChosen.size(); iCentroid++)
-	//	{
-		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getStartTime() + "   ");
-		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getNameTask() + "   ");
-			
-			
-		
-			
-			
-	//	}
-		
-		
-		
-		
-		
-	/*	int iCentroid, idTask, iCentroidByNow;
-		
-		int distanceMinim;
-		int distanceMaxim;
-		
-		int distanceCalculated;
-		int newCentroidIndex = 0;
-		Random r = new Random();
-		idCentroiziChosen.add( r.nextInt(tasks.size()));
-
-
-	  
-		
-		
-		for(iCentroid= 1; iCentroid < nrClusters; iCentroid++)
-		{
-			
-			distanceMaxim = -1;
-			
-			for(idTask = 0; idTask < tasks.size(); idTask++)
-			{
-				distanceMinim =  2000000;
-				
-				
-				if(idCentroiziChosen.contains(idTask)  == false )
-				{				
-					
-					for(iCentroidByNow = 0; iCentroidByNow < idCentroiziChosen.size(); iCentroidByNow++)
-					{
-
-						
-						
-						distanceCalculated =
-						calculateDistance(tasks.get(idTask),tasks.get(idCentroiziChosen.get(iCentroidByNow))   );
-						
-						
-						if(distanceCalculated < distanceMinim)
-							distanceMinim = distanceCalculated;
-						
-					}				
-					if(distanceMinim  > distanceMaxim )
-					{
-						distanceMaxim = distanceMinim;
-						newCentroidIndex = idTask;
-					}
-					
-				}
-				
-				
-				
-			}
-			
-
-			idCentroiziChosen.add(newCentroidIndex);
-
-					
-		}
-		
-		
-		System.out.println(idCentroiziChosen.toString());
-		for(iCentroid = 0; iCentroid< idCentroiziChosen.size(); iCentroid++)
-		{
-		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getStartTime() + "   ");
-		//	System.out.println(tasks.get(idCentroiziChosen.get(iCentroid)).getNameTask() + "   ");
-			
-			
-			Task t = new Task();
-			t.setNameTask(tasks.get(idCentroiziChosen.get(iCentroid)).getNameTask());
-			t.setStartTime(tasks.get(idCentroiziChosen.get(iCentroid)).getStartTime());
-			
-			
-			LocationContext location = (LocationContext)
-			tasks.get(idCentroiziChosen.get(iCentroid)).getInternContext().
-			getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-			
-			
-			t.getInternContext().getContextElementsCollection().
-			put(ContextElementType.LOCATION_CONTEXT_ELEMENT, location);
-			
-			
-			centroizi.add(t);
-			
-			
-		}*/
 		
 
 	}

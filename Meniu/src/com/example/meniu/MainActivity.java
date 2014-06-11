@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	/**
 	 * names of the menuItems
 	 */
-	static final String[] MenUApp = new String[5];
+	static final String[] MenUApp = new String[6];
 	
 	
 	/**
@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
 	    MenUApp[2] =	this.getString(R.string.schedule);
 	    MenUApp[3] =	this.getString(R.string.discoverDevice);
 	    MenUApp[4] =	this.getString(R.string.current_task);
+	    MenUApp[5] = 	this.getString(R.string.activity_fixed_Tasks);
 		
 		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
 		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,MenUApp));
@@ -77,8 +78,8 @@ public class MainActivity extends Activity {
 		
 		
 		
-		KMeansDuration clustering = new KMeansDuration();
-		clustering.calculateKlusters();
+	//	KMeansDuration clustering = new KMeansDuration();
+	//	clustering.calculateKlusters();
 		
 		
 	//	addTasksDifferentTitlesForLocation();
@@ -1225,6 +1226,10 @@ class MenuItemTouched implements OnItemClickListener{
 		 
 		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.current_task)) == 0)
 			  intent = new Intent(mainActivity, ShowCurrentTask.class);
+		 
+		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.activity_fixed_Tasks)) == 0)
+			  intent = new Intent(mainActivity, SetFixedTask.class);
+		 
 		 
 		 mainActivity.startActivity(intent);
 		 

@@ -67,6 +67,10 @@
             android:name="com.example.meniu.ShowCurrentTask"
             android:label="@string/title_activity_show_current_task" >
         </activity>
+        <activity
+            android:name="com.example.meniu.SetFixedTask"
+            android:label="@string/title_activity_set_fixed_task" >
+        </activity>
     </application>
 
 </manifest>
