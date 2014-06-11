@@ -42,7 +42,18 @@ public class FixedTaskInformation {
 		this.dayWeek     = day;
 		
 	}
+	
+	
+	public FixedTaskInformation(int idTask, int startHour, int startMinute, int endHour, int endMinute, String location){
+	
+		this.idTask      = idTask;
+		this.startHour   = startHour;
+		this.startMinute = startMinute;
+		this.endHour     = endHour;
+		this.endMinute   = endMinute;
+		this.location    = location; 
 
+	}
 
 	public int getStartHour() {
 		return startHour;

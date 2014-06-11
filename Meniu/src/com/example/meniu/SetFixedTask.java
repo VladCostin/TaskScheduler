@@ -11,13 +11,12 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
-public class SetFixedTask extends Activity implements OnClickListener, OnTimeChangedListener {
+public class SetFixedTask extends Activity implements OnClickListener {
 	
 	
 	/**
@@ -123,10 +122,11 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 	public void showFixedTasksForADay() {
 		
 		ArrayList<FixedTaskInformation> tasksFromDataBase;
+		
 	
 		if(layout.getChildCount() > 4 )
-			layout.removeViews(4, layout.getChildCount() - 1);
-		
+			layout.removeViews(4, layout.getChildCount() - 4);
+		tasksId.clear();
 		
 		numberOfView = idAddButton;
 		tasksFromDataBase = MainActivity.getDatabase().getFixedTasks(currentDayShown.toString());
@@ -176,7 +176,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 			
 			currentDayShown = week.get(position);
 			
-			
+			showFixedTasksForADay() ;
 			
 			
 			
@@ -193,6 +193,8 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 			textViewCurrentDay.setText(week.get(position).toString());
 			
 			currentDayShown = week.get(position);
+			
+			showFixedTasksForADay();
 			
 			
 			
@@ -215,8 +217,13 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 			numberOfView = v.getId() - 1;
 		
 			
+			System.out.println(tasksId.toString());
+			System.out.println(v.getId() + " " + tasksId.get(v.getId()));
 			
+			MainActivity.getDatabase().deleteFixedTask(tasksId.get(v.getId() ));
+			tasksId.remove(v.getId() );
 			
+			System.out.println(tasksId.toString());
 			
 			
 			while(nextPosition < layout.getChildCount())
@@ -225,8 +232,9 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 				TimePicker picker2 = (TimePicker) layout.getChildAt(nextPosition + 1);
 				
 				
-				tasks.add(new FixedTaskInformation(picker.getCurrentHour(), 
-				picker.getCurrentMinute(), picker2.getCurrentHour(), picker2.getCurrentMinute())); 
+				tasks.add(new FixedTaskInformation(  tasksId.remove(picker.getId() -1),   picker.getCurrentHour(), 
+				picker.getCurrentMinute(), picker2.getCurrentHour(), picker2.getCurrentMinute() , "" )); 
+				
 				
 				
 				nextPosition = nextPosition + 3;
@@ -254,10 +262,6 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		
 		}
 		
-		if(v instanceof TimePicker)
-		{
-			System.out.println("S-a modificat ceva");
-		}
 		
 		
 		
@@ -275,7 +279,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 			if(tasksId.get(taskId) == -1)
 			{
 				int position = taskId - this.idAddButton;
-				position = position + 4;
+				position = position + 3;
 				
 				TimePicker picker1 = (TimePicker) layout.getChildAt(position + 1);
 				TimePicker picker2 = (TimePicker) layout.getChildAt(position + 2);
@@ -293,7 +297,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 				ArrayList<String> attribute = new ArrayList<String>();
 				ArrayList<String> stringKeyValue = new ArrayList<String>();
 				int position = taskId - this.idAddButton;
-				position = position + 4;
+				position = position + 3;
 				
 				TimePicker picker1 = (TimePicker) layout.getChildAt(position + 1);
 				TimePicker picker2 = (TimePicker) layout.getChildAt(position + 2);
@@ -345,7 +349,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 						                           RelativeLayout.LayoutParams.WRAP_CONTENT);
 		
 		
-		tasksId.put(numberOfView, -1);
+		
 		
 		eraseTask = new Button(this);
 		eraseTask.setText(R.string.ERASE); 
@@ -355,6 +359,8 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		eraseTask.setLayoutParams(params_removeTask);
 		eraseTask.setOnClickListener(this); 
 		
+		tasksId.put(numberOfView, -1);
+		
 		
 		startTime = new TimePicker(this);
 		params_startTime.addRule(RelativeLayout.RIGHT_OF, numberOfView  );
@@ -362,7 +368,6 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		params_startTime.setMargins(50, 50, 0, 0); 
 	    startTime.setId(++numberOfView);
 		startTime.setLayoutParams(params_startTime);
-		startTime.setOnTimeChangedListener(this);
 		
 		
 		endTime = new TimePicker(this);
@@ -403,7 +408,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 						                           RelativeLayout.LayoutParams.WRAP_CONTENT);
 		
 		
-		tasksId.put(numberOfView, idTask);
+		
 		
 		eraseTask = new Button(this);
 		eraseTask.setText(R.string.ERASE); 
@@ -412,6 +417,8 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		params_removeTask.setMargins(0, 50, 0, 0); 
 		eraseTask.setLayoutParams(params_removeTask);
 		eraseTask.setOnClickListener(this); 
+		
+		tasksId.put(numberOfView, idTask);
 		
 		
 		startTime = new TimePicker(this);
@@ -439,12 +446,6 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		layout.addView(endTime);
 	}
 
-	@Override
-	public void onTimeChanged(TimePicker arg0, int arg1, int arg2) {
-		
-		
-		
-	}
 
 }
 

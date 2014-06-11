@@ -14,6 +14,7 @@ import java.util.List;
 
 
 
+
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
@@ -566,6 +567,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		    // updating row
 		 db.update(TABLE_FIXED_TASKS, newValues, Tasks.KEY_ID + " = ?",
 		 new String[] { Integer.toString(idTask) });
+		
+	}
+
+
+	/**
+	 * @param idTask : the task's id to be deleted
+	 */
+	public void deleteFixedTask(Integer idTask) {
+		SQLiteDatabase db = this.getWritableDatabase();
+    	
+    	//db.delete(TABLE_TASKS, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
+    	
+    	db.delete(TABLE_FIXED_TASKS, fixedTasks.KEY_ID + " = ?",new String[] { Integer.toString(idTask) });
+    	
+    	db.close();
 		
 	}
 	
