@@ -2,7 +2,7 @@ package DatabaseOperation;
 
 public class FixedTaskInformation {
 
-	int idTask;
+	private int idTask;
 	
 	private int startHour;
 	
@@ -11,6 +11,8 @@ public class FixedTaskInformation {
 	private int endHour;
 	
 	private int endMinute;
+	
+	private String dayWeek;
 	
 	
 	private String location;
@@ -29,7 +31,7 @@ public class FixedTaskInformation {
 		
 	}
 	
-	public FixedTaskInformation(int idTask, int startHour, int startMinute, int endHour, int endMinute, String location){
+	public FixedTaskInformation(int idTask, int startHour, int startMinute, int endHour, int endMinute,String day, String location){
 		
 		this.idTask      = idTask;
 		this.startHour   = startHour;
@@ -37,6 +39,7 @@ public class FixedTaskInformation {
 		this.endHour     = endHour;
 		this.endMinute   = endMinute;
 		this.location    = location; 
+		this.dayWeek     = day;
 		
 	}
 
@@ -88,6 +91,22 @@ public class FixedTaskInformation {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public int getIdTask() {
+		return idTask;
+	}
+
+	public void setIdTask(int idTask) {
+		this.idTask = idTask;
+	}
+
+	public String getDayWeek() {
+		return dayWeek;
+	}
+
+	public void setDayWeek(String dayWeek) {
+		this.dayWeek = dayWeek;
 	}
 	
 	

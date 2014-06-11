@@ -44,6 +44,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_TASKS = "tasks";
     
     private static final String TABLE_DEVICES = "devices";
+    
+    
+    private static final String TABLE_FIXED_TASKS = "fixedTasks";
  
 
  
@@ -87,8 +90,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          			+ DeviceData.KEY_DEVICE + " " + TypeAttribute.COLUMN_STRING + ","
                     + DeviceData.KEY_OWNER + " " + TypeAttribute.COLUMN_STRING +  ")";
          
+         
+         
+         String CREATE_FIXED_TASKS_TABLE = "CREATE TABLE " + TABLE_FIXED_TASKS + 
+        		 "(" + fixedTasks.KEY_ID + " " + TypeAttribute.COLUMN_INTEGER_PK + ","
+        		 	 + fixedTasks.KEY_DAY + " " + TypeAttribute.COLUMN_STRING + ","
+        		 	 + fixedTasks.KEY_Location + " " + TypeAttribute.COLUMN_STRING + ","
+        		 	 + fixedTasks.KEY_Start_Hour + " " + TypeAttribute.COLUMN_STRING + ","
+        		 	 + fixedTasks.KEY_Start_Minute + " " + TypeAttribute.COLUMN_STRING + ","
+        		 	 + fixedTasks.KEY_End_Hour + " " + TypeAttribute.COLUMN_STRING + ","
+        		 	 + fixedTasks.KEY_End_Minute + " " + TypeAttribute.COLUMN_STRING + 
+        		 ")";
+        		 
+         
          db.execSQL(CREATE_CONTACTS_TABLE);
          db.execSQL(CREATE_DEVICE_TABLE);
+         db.execSQL(CREATE_FIXED_TASKS_TABLE); 
     }
     
  
@@ -458,8 +475,100 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		 db.update(TABLE_TASKS, newValues, Tasks.KEY_ID + " = ?",
 		 new String[] { Integer.toString(idTask) });
 		
+	}
+	
+	
+	/**
+	 * @param dayWeek : the day of the week
+	 * @param startHour : the hour when the task starts
+	 * @param startMinute : the minute when the task starts
+	 * @param endHour : the hour when the task ends
+	 * @param endMinute : the minute when the task ends
+	 * @param location : the location where it must be executed
+	 */
+	public void addFixedTask(String dayWeek, String startHour, String startMinute, String endHour, String endMinute, String location)
+	{
+	
+		ContentValues values = new ContentValues();
+		values.put(fixedTasks.KEY_DAY, dayWeek);
+		values.put(fixedTasks.KEY_Start_Hour, startHour);
+		values.put(fixedTasks.KEY_Start_Minute, startMinute);
+		values.put(fixedTasks.KEY_End_Hour, endHour);
+		values.put(fixedTasks.KEY_End_Minute, endMinute);
+		values.put(fixedTasks.KEY_Location, location);
+		insertRegistration(values, TABLE_FIXED_TASKS); 
+	}
+	
+	
+	
+	public ArrayList<FixedTaskInformation> getFixedTasks(String dayWeek)
+	{
+		 ArrayList<FixedTaskInformation> tasksList = new ArrayList<FixedTaskInformation>(); 
+         // Select All Query
+         String selectQuery = "SELECT  * FROM " + TABLE_FIXED_TASKS;
+  
+         SQLiteDatabase db = this.getWritableDatabase();
+         Cursor cursor = db.rawQuery(selectQuery, null);
+  
+         // looping through all rows and adding to list
+         if (cursor.moveToFirst()) {
+             do {
+             		
+             		if(cursor.getString(1).equals(dayWeek))
+             			tasksList.add( createFixedTaskObject(cursor) );
+             } while (cursor.moveToNext());
+         }
+  
+         // return contact list
+         return tasksList;
+	}
+
+
+	/**
+	 * @param cursor : the object containing the values extracted from the database
+	 * @return : a fixed task
+	 */
+	public FixedTaskInformation createFixedTaskObject(Cursor cursor) {
+		FixedTaskInformation task = new FixedTaskInformation();
+		
+		task.setIdTask(Integer.parseInt( cursor.getString(0)));
+		task.setDayWeek(cursor.getString(1)); 
+		task.setLocation(cursor.getString(2));
+		task.setStartHour(Integer.parseInt(cursor.getString(3)));
+		task.setStartMinute(Integer.parseInt(cursor.getString(4)));
+		
+		task.setEndHour(Integer.parseInt(cursor.getString(5)));
+		task.setEndMinute(Integer.parseInt(cursor.getString(6)));
+		
+		
+		
+		return task;
+	}
+	
+
+	/**
+	 * @param idTask : the task to be updated
+	 * @param attributes :  the attributes whose value is going to be changed
+	 * @param values :  the new values of the attribute
+	 */
+	public void updateFixedTask(Integer idTask, ArrayList<String> attributes,
+			ArrayList<String> values) {
+		
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues newValues = new ContentValues();
+		int i;
+		
+		for(i= 0; i < attributes.size(); i++)
+			newValues.put(attributes.get(i), values.get(i));
+		
+		 
+		    // updating row
+		 db.update(TABLE_FIXED_TASKS, newValues, Tasks.KEY_ID + " = ?",
+		 new String[] { Integer.toString(idTask) });
 		
 	}
+	
 	
 	
     

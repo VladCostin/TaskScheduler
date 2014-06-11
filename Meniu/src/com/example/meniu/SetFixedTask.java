@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import DatabaseOperation.FixedTaskInformation;
+import DatabaseOperation.fixedTasks;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -70,6 +72,9 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 	int idAddButton;
 	
 	
+	HashMap<Integer,Integer>  tasksId;
+	
+	
 	
 	
 	
@@ -103,6 +108,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		week.add(DaysOfWeek.FRIDAY);
 		
 		
+		tasksId = new HashMap<Integer,Integer>();
 		
 		showFixedTasksForADay();
 		
@@ -116,17 +122,30 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 	 */
 	public void showFixedTasksForADay() {
 		
+		ArrayList<FixedTaskInformation> tasksFromDataBase;
 	
 		if(layout.getChildCount() > 4 )
 			layout.removeViews(4, layout.getChildCount() - 1);
 		
 		
 		numberOfView = idAddButton;
-		
-		  
-		 
+		tasksFromDataBase = MainActivity.getDatabase().getFixedTasks(currentDayShown.toString());
 		
 		
+		System.out.println("ARE DIMENSIUNEA " + tasksFromDataBase.size());
+		
+		for(FixedTaskInformation task : tasksFromDataBase)
+			addNewTaskEnt(task.getStartHour(), task.getStartMinute(),
+			task.getEndHour(), task.getEndMinute(), task.getIdTask());
+		
+
+		
+	}
+	
+	public void onPause()
+	{
+		super.onPause();
+		addTasksToDataBase();
 	}
 
 	
@@ -149,6 +168,8 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		
 		if(v.getId() == buttonNextDay.getId() )
 		{
+			addTasksToDataBase();
+			
 			int position = (week.indexOf(currentDayShown) + 1 ) % week.size() ;
 			
 			textViewCurrentDay.setText(week.get(position).toString());
@@ -157,15 +178,23 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 			
 			
 			
+			
+			
+			
 		}
 		
 		if(v.getId() == buttonPreviousDay.getId() )
 		{
+			
+			addTasksToDataBase();
+			
 			int position = (week.indexOf(currentDayShown) - 1 + week.size() ) % week.size() ;
 			
 			textViewCurrentDay.setText(week.get(position).toString());
 			
 			currentDayShown = week.get(position);
+			
+			
 			
 		}
 		
@@ -214,7 +243,8 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 				
 				
 				for(FixedTaskInformation task : tasks)
-					addNewTaskEnt(task.getStartHour(), task.getStartMinute(), task.getEndHour(), task.getEndMinute());
+					addNewTaskEnt(task.getStartHour(), task.getStartMinute(),
+					task.getEndHour(), task.getEndMinute(), task.getIdTask());
 				
 			}
 			
@@ -228,6 +258,65 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		{
 			System.out.println("S-a modificat ceva");
 		}
+		
+		
+		
+	}
+
+	/**
+	 * inserts the tasks into the database;
+	 */
+	public void addTasksToDataBase() {
+		
+		System.out.println("A INTRAT AICI, A ADAUGAT DATE IN BD");
+		
+		for(Integer taskId : tasksId.keySet())
+		{
+			if(tasksId.get(taskId) == -1)
+			{
+				int position = taskId - this.idAddButton;
+				position = position + 4;
+				
+				TimePicker picker1 = (TimePicker) layout.getChildAt(position + 1);
+				TimePicker picker2 = (TimePicker) layout.getChildAt(position + 2);
+				
+				
+				
+				MainActivity.getDatabase().addFixedTask(currentDayShown.toString(),
+				Integer.toString(picker1.getCurrentHour()),
+				Integer.toString(picker1.getCurrentMinute()), 
+				Integer.toString(picker2.getCurrentHour()),
+				Integer.toString(picker2.getCurrentMinute()), "");
+			}
+			else
+			{
+				ArrayList<String> attribute = new ArrayList<String>();
+				ArrayList<String> stringKeyValue = new ArrayList<String>();
+				int position = taskId - this.idAddButton;
+				position = position + 4;
+				
+				TimePicker picker1 = (TimePicker) layout.getChildAt(position + 1);
+				TimePicker picker2 = (TimePicker) layout.getChildAt(position + 2);
+				
+				
+				attribute.add(fixedTasks.KEY_Start_Hour);
+				attribute.add(fixedTasks.KEY_Start_Minute);
+				attribute.add(fixedTasks.KEY_End_Hour);
+				attribute.add(fixedTasks.KEY_End_Minute);
+				
+				
+				stringKeyValue.add(Integer.toString(picker1.getCurrentHour()));
+				stringKeyValue.add(Integer.toString(picker1.getCurrentMinute()));
+				
+				stringKeyValue.add(Integer.toString(picker2.getCurrentHour()));
+				stringKeyValue.add(Integer.toString(picker2.getCurrentMinute()));
+				
+				
+				MainActivity.getDatabase().updateFixedTask(tasksId.get(taskId), attribute, stringKeyValue);
+				
+			}
+		}
+		
 		
 		
 		
@@ -256,6 +345,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 						                           RelativeLayout.LayoutParams.WRAP_CONTENT);
 		
 		
+		tasksId.put(numberOfView, -1);
 		
 		eraseTask = new Button(this);
 		eraseTask.setText(R.string.ERASE); 
@@ -291,8 +381,10 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 	}
 	
 	
-	public void addNewTaskEnt(int startHour, int startMinute, int endHour, int endMinute)
+	public void addNewTaskEnt(int startHour, int startMinute, int endHour, int endMinute, int idTask)
 	{
+		System.out.println("ADAUGA IN INTERFATA UN NOU TASK");
+		
 		TimePicker startTime, endTime;
 		Button eraseTask;
 		
@@ -311,6 +403,7 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 						                           RelativeLayout.LayoutParams.WRAP_CONTENT);
 		
 		
+		tasksId.put(numberOfView, idTask);
 		
 		eraseTask = new Button(this);
 		eraseTask.setText(R.string.ERASE); 
@@ -336,8 +429,8 @@ public class SetFixedTask extends Activity implements OnClickListener, OnTimeCha
 		params_endTime.addRule(RelativeLayout.BELOW, numberOfView -3  );
 		params_endTime.setMargins(50, 50, 0, 0); 
 		endTime.setId(++numberOfView);
-	    endTime.setCurrentHour(startHour);
-	    endTime.setCurrentMinute(startMinute);
+	    endTime.setCurrentHour(endHour);
+	    endTime.setCurrentMinute(endMinute);
 		endTime.setLayoutParams(params_endTime); 
 		
 		

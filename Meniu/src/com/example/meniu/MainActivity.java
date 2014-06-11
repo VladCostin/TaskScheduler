@@ -90,10 +90,11 @@ public class MainActivity extends Activity {
 	//	clustering.titlesOfCenters();
 		
 	//	System.out.println("DIMENSIUNEA ESTE : " + database.getAllTasks().size());
-	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
-	//	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS devices");
-	//	database.createTable();
-		
+	/*	database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS tasks");
+		database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS devices");
+		database.getReadableDatabase().execSQL("DROP TABLE IF EXISTS fixedTasks");
+		database.createTable();
+	*/	
 		
 	/*	List<Device> devices = database.getAllDevices();
 		for(Device d : devices)
