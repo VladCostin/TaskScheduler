@@ -1,57 +1,60 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/layoutRelativeFixedSchedule"
-    tools:context=".SetFixedTask" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/textViewDay"
+	<RelativeLayout
+   	 	android:layout_width="fill_parent"
+   		android:layout_height="wrap_content"
+    	android:paddingBottom="@dimen/activity_vertical_margin"
+    	android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+    	android:id="@+id/layoutRelativeFixedSchedule" >
+
+    	<TextView
+        	android:id="@+id/textViewDay"
         
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp"
-        android:text="@string/dayMonday" />
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true"
+        	android:textSize="30sp"
+        	android:text="@string/dayMonday" />
     
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/textViewDay"
-        android:layout_marginRight="20dp"
-        android:layout_alignBaseline="@+id/textViewDay"
-        android:text="@string/buttonLeft"
-        android:textAlignment="center"
-        android:id="@+id/buttonPreviousDay"
-       ></Button>
+    	<Button
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+       		android:layout_toLeftOf="@+id/textViewDay"
+        	android:layout_marginRight="20dp"
+        	android:layout_alignBaseline="@+id/textViewDay"
+        	android:text="@string/buttonLeft"
+        	android:textAlignment="center"
+        	android:id="@+id/buttonPreviousDay"
+       	></Button>
     
     
-     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/textViewDay"
-        android:layout_alignBaseline="@+id/textViewDay"
-        android:textAlignment="center"
-        android:text="@string/buttonRight"
-        android:id="@+id/buttonNextDay"
-       ></Button>
+     	<Button
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="20dp"
+        	android:layout_toRightOf="@+id/textViewDay"
+        	android:layout_alignBaseline="@+id/textViewDay"
+        	android:textAlignment="center"
+        	android:text="@string/buttonRight"
+        	android:id="@+id/buttonNextDay"
+       	></Button>
      
      
-     <Button 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAddTask"
-        android:layout_marginLeft="20dp "
-        android:layout_below="@+id/buttonPreviousDay"
-        android:text="@string/addTask"
-         ></Button>
+     	<Button 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:id="@+id/buttonAddTask"
+        	android:layout_below="@+id/buttonPreviousDay"
+        	android:text="@string/addTask"
+         	></Button>
     
     
     
 
-</RelativeLayout>
+	</RelativeLayout>
+</ScrollView>
