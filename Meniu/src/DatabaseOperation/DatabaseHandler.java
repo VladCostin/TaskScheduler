@@ -159,6 +159,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     
     
     
+    /**
+     * used only to add hard coded tasks
+     * @param name
+     * @param location
+     * @param duration
+     * @param beginHour
+     */
     public void addTaskPriori(String name, String location, String duration, String beginHour  )
     {
     	ContentValues values = new ContentValues();
@@ -534,7 +541,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		task.setIdTask(Integer.parseInt( cursor.getString(0)));
 		task.setDayWeek(cursor.getString(1)); 
-		task.setLocation(cursor.getString(2));
+		task.setLocation("44.4384,26049");
+	//	task.setLocation(cursor.getString(2));
 		task.setStartHour(Integer.parseInt(cursor.getString(3)));
 		task.setStartMinute(Integer.parseInt(cursor.getString(4)));
 		

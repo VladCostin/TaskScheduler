@@ -30,6 +30,7 @@ import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
 import DatabaseOperation.EraseTask;
 import DatabaseOperation.ExecuteTaskButton;
+import DatabaseOperation.FixedTaskInformation;
 import DeviceData.Device;
 import Task.Context;
 import Task.Task;
@@ -68,6 +69,12 @@ public class ShowTasks extends Activity
 	 * used to add dynamically data about each task from the database
 	 */	
 	private RelativeLayout layout;
+	
+	
+	/**
+	 * calculates the current conditions such as devices, people, time
+	 */
+	CalculateCurrentContext currentConditions;
 	
 	
 	/**
@@ -136,6 +143,13 @@ public class ShowTasks extends Activity
 	 * determines which center is most similar to the current task
 	 */
 	KMeansDuration durationAlg;
+	
+	
+	/**
+	 * obtain all the fixed tasks required for today.
+	 */
+	ArrayList<FixedTaskInformation> fixedTasks;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +161,8 @@ public class ShowTasks extends Activity
 		// pentru ca probabil nu a avut timp sa faca ceva
 		durationAlg = new KMeansDuration();
 		durationAlg.calculateKlusters();
+		
+		currentConditions = new CalculateCurrentContext(this);
 
 		layout = (RelativeLayout) findViewById(R.id.RelativeLayoutShow);
 		
@@ -189,7 +205,28 @@ public class ShowTasks extends Activity
 		currentPosition = null;
 		
 		
+		getFixedTasksForToday();
 		
+		
+		
+		
+	}
+
+
+
+	/**
+	 * determines the tasks required for today
+	 */
+	public void getFixedTasksForToday() {
+		
+		
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		String dayString = Core.getDays().get(day).toString();
+		
+		fixedTasks = MainActivity.getDatabase().getFixedTasks(dayString);
+		
+		System.out.println("ACUM TREBUIE SA EXECUT" + fixedTasks.size());
 		
 	}
 
@@ -322,23 +359,20 @@ public class ShowTasks extends Activity
     private Context createCurrentState() {
 		
     	
-    	ArrayList<String> myDevices = detectMyDevices();
-    	ArrayList<String> peopleAround = detectPeople();
+    	ArrayList<String> myDevices = currentConditions.detectMyDevices();
+    	ArrayList<String> peopleAround = currentConditions.detectPeople();
+    	ArrayList<LocationInterval> intervals = currentConditions.obtainIntervals();
+    	
+    	
+   // 	System.out.println("AZI TREBUIE SA FAC " + intervals.size());
     	
     	Context currentContext = new Context();
     	currentContext.getContextElementsCollection().
     	put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(currentPosition));
     	currentContext.getContextElementsCollection().
-    	put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext() );
-    	
-    /*	SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-    	Date date = new Date();
-    	System.out.println(sdf.format(calendar.getTime()));
-    	
-    	Calendar cal = new GregorianCalendar();*/
+    	put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext(intervals) );
     	
     	
-
     	
     	
     	currentContext.getContextElementsCollection().
@@ -354,48 +388,7 @@ public class ShowTasks extends Activity
 		
 	}
     
-    /**
-     * comparing the people detected with the ones from database using the MAC
-     * addresses associated to the people's devices
-     * @return
-     */
-    private ArrayList<String> detectPeople() {
-		
-    	ArrayList<String> people = new ArrayList<String>();
-    	String myDevice = getResources().getString(R.string.myDeviceConstant);
-    	
-    	for(Device d : devices)
-    		if(deviceInfo.containsKey(d.getMacAddress()) && d.getOwnerDevice().compareTo(myDevice) != 0  )
-    				people.add(d.getOwnerDevice());
-    	
-    	
-    	System.out.println("Persoanele cunoscute sunt" + people);
-		return people;
-	}
     
-    
-    
-
-
-
-	/** comparing the devices detected with the ones from database to see which ones
-	 * belong to me
-	 * @return
-	 */
-	private ArrayList<String> detectMyDevices() {
-		
-		ArrayList<String> devicesDetected = new ArrayList<String>();
-		String myDevice = getResources().getString(R.string.myDeviceConstant);
-		
-    	for(Device d : devices)
-    		if(deviceInfo.containsKey(d.getMacAddress()) && d.getOwnerDevice().compareTo(myDevice) == 0  )
-    				devicesDetected.add(d.getNameDevice());
-    	
-    	
-    	System.out.println("Dispozitivele mele sunt" + devicesDetected);
-		return devicesDetected;
-		
-	}
 
 
 

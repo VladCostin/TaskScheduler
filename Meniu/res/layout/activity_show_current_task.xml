@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ShowCurrentTask" >
     
+
     
     <TextView
             android:id="@+id/textViewLabelNameTask"

@@ -102,7 +102,8 @@ public class KMeansLocation implements KMeans {
 		states.add(TaskState.EXECUTED);
 	
 		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(states);
-		
+		if(tasks.size() == 0)
+			return;
 		
 		while(true)
 		{
@@ -289,6 +290,8 @@ public class KMeansLocation implements KMeans {
 	@Override
 	public Task detectCentroid(Task currentTask) {
 		
+		if(finalCenters.size() == 0)
+			return null;
 		
 		Task chosenTask = finalCenters.get(0);
 		float distanceMaxim = calculateDistance(currentTask, finalCenters.get(0));

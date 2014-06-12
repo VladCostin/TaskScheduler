@@ -2,6 +2,7 @@ package com.example.meniu;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -22,13 +23,17 @@ public class Core {
 	private static HashMap<String,Integer> durationMinutes;
 	
 	
-	private static KMeansDistances distancesCalculator;  
+	private static KMeansDistances distancesCalculator; 
+	
+	
+	private static HashMap<Integer, DaysOfWeek> days;
 	
 	Core(){
 		
 		prioritiesValues    = new HashMap<String,Integer>();
 		durationMinutes     = new HashMap<String,Integer>();
 		distancesCalculator = new KMeansDistances();
+		days				= new HashMap<Integer, DaysOfWeek>();
 	}
 	
 	/**
@@ -39,10 +44,23 @@ public class Core {
 		
 		initPriorities();
 		initDuration();
+		initDays();
 		
 		  
 	}
 	
+	/**
+	 * for each day of the week there is a number associated to it
+	 */
+	public static void initDays() {
+		
+		days.put(Calendar.MONDAY, DaysOfWeek.MONDAY);
+		days.put(Calendar.TUESDAY, DaysOfWeek.TUESDAY);
+		days.put(Calendar.WEDNESDAY, DaysOfWeek.WEDNESDAY);
+		days.put(Calendar.THURSDAY, DaysOfWeek.THURSDAY);
+		days.put(Calendar.FRIDAY, DaysOfWeek.FRIDAY);
+	}
+
 	/**
 	 * shows the string in the interface
 	 * uses the numbers for ordering the tasks
@@ -116,6 +134,14 @@ public class Core {
 
 	public static void setDurationMinutes(HashMap<String,Integer> durationMinutes) {
 		Core.durationMinutes = durationMinutes;
+	}
+
+	public static HashMap<Integer, DaysOfWeek> getDays() {
+		return days;
+	}
+
+	public static void setDays(HashMap<Integer, DaysOfWeek> days) {
+		Core.days = days;
 	}
 	
 	

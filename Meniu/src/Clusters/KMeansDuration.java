@@ -143,7 +143,8 @@ public class KMeansDuration implements KMeans{
 		System.out.println( "DIMENSIUNEA ESTE   " + tasks.size());
 		System.out.println("AFISEZ INDICII CENTROIZILOR");
 		
-		
+		if(tasks.size() == 0)
+			return;
 		
 		
 		Random r = new Random();

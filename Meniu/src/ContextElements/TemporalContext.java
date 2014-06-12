@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.example.meniu.LocationInterval;
+
 /**
  * defines the time when the context can be executed
  * @author ${Vlad Herescu}
@@ -12,33 +14,23 @@ import java.util.Date;
  */
 public class TemporalContext extends ContextElement{
 
-//	ArrayList<Integer> startTime;
-//	ArrayList<Integer> endTime;
-	
-	Date startTime;
-	Date endTime;
+	/**
+	 * for each location there is associated a start time and an end time
+	 * the current context will have a start time with every retrieved from the tasks fixed
+	 * and the tasks will have the start time computed as 
+	 * current location -> location task duration +
+	 * duration +
+	 * location task - > fixed task location duration
+	 */
+	ArrayList<LocationInterval> intervals;
 	
 	public TemporalContext()
 	{
-		startTime = new Date();
-		endTime = new Date();
-		
+		intervals = new ArrayList<LocationInterval>();
 	}
-	
-	public TemporalContext(String date1, String date2)
-	{
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-		try {
-			startTime = sdf.parse(date1);
-			endTime = sdf.parse(date2);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
+
+	public TemporalContext(ArrayList<LocationInterval> intervals) {
+		this.intervals	= intervals;
 	}
 	
 	

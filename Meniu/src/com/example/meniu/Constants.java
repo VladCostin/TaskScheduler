@@ -8,6 +8,8 @@ public interface Constants {
 	
 	String parseTime	= "dd/MM/yyyy/HH/mm";
 	
+	String myDevice		= "My Device";
+	
 	
 	
 	String noTaskMessage = "You have no tasks to execute";
