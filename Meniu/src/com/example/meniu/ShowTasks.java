@@ -28,7 +28,6 @@ import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
-import DatabaseOperation.EraseTask;
 import DatabaseOperation.ExecuteTaskButton;
 import DatabaseOperation.FixedTaskInformation;
 import DeviceData.Device;
@@ -64,6 +63,9 @@ import android.bluetooth.BluetoothAdapter;
 public class ShowTasks extends Activity
 					   implements GooglePlayServicesClient.ConnectionCallbacks,
 					   			  GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+	
+	
+
 	
 	/**
 	 * used to add dynamically data about each task from the database

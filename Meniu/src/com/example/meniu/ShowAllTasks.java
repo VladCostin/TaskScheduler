@@ -22,7 +22,7 @@ import ContextElements.DeviceContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
-import DatabaseOperation.EraseTask;
+import DatabaseOperation.AlterateTask;
 import DeviceData.Device;
 import Task.Context;
 import Task.Task;
@@ -70,6 +70,11 @@ public class ShowAllTasks extends Activity
 	 */
 	int numberOfView;
 	
+	
+	/**
+	 * the tasks from to-do list retrieved from database
+	 */
+	private List<Task> tasks;
 	
 	/**
 	 * to each id from database it is associated the value of the erase buton
@@ -157,7 +162,7 @@ public class ShowAllTasks extends Activity
 		ArrayList<TaskState> statesToShow = new ArrayList<TaskState>();
 		statesToShow.add(TaskState.AMONG_TO_DO_LIST);
 		
-		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
+		tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
 		
 		
 		if(tasks.size() == 0)
@@ -209,7 +214,7 @@ public class ShowAllTasks extends Activity
 	
 		   TextView title,priority,  deadline,people, devices;
 		   TextView titleValue, priorityValue ,  deadlineValue, peopleValue, devicesValue;
-		   Button butonErase;
+		   Button butonErase, butonModifyData;
 		   
 		   
 		   View line;
@@ -262,6 +267,11 @@ public class ShowAllTasks extends Activity
 				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
 		    
+		    RelativeLayout.LayoutParams params_modify = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+						 				            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
 				   
 				   
 			
@@ -279,6 +289,7 @@ public class ShowAllTasks extends Activity
 			devicesValue = new TextView(this);
 			
 			butonErase = new Button(this);
+			butonModifyData	= new Button(this);
 			line = new View(this);
 			
 			title.setText(R.string.taskTitle);
@@ -385,11 +396,22 @@ public class ShowAllTasks extends Activity
 			
 			butonErase.setText(R.string.ERASE);
 			butonErase.setId( ++ numberOfView);
-			butonErase.setOnClickListener(new EraseTask(this));
+			butonErase.setOnClickListener(new AlterateTask(this));
 			idTasks.put(numberOfView, task.getID());
 			
 			params_erase.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			butonErase.setLayoutParams(params_erase);
+			
+			
+			butonModifyData.setText(R.string.Modify);
+			butonModifyData.setId( ++ numberOfView);
+			butonModifyData.setOnClickListener(new AlterateTask(this));
+			idTasks.put(numberOfView, task.getID());
+			
+			params_modify.addRule(RelativeLayout.BELOW, numberOfView - 1);
+			params_modify.setMargins(0, 10, 0, 0);
+			butonModifyData.setLayoutParams(params_modify);
+			
 			
 			
 			line.setBackgroundColor(Color.BLUE);
@@ -410,6 +432,7 @@ public class ShowAllTasks extends Activity
 			layout.addView(devices);
 			layout.addView(devicesValue); 
 			layout.addView(butonErase);
+			layout.addView(butonModifyData ); 
 			layout.addView(line);
 			
 		
@@ -421,6 +444,14 @@ public class ShowAllTasks extends Activity
 
 	public void setIdTasks(HashMap<Integer,Integer> idTasks) {
 		this.idTasks = idTasks;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 }

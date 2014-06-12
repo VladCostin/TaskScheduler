@@ -4,6 +4,7 @@ import Clusters.KMeansLocation;
 import ContextElements.ContextElementType;
 import ContextElements.LocationContext;
 import DatabaseOperation.AddTaskButton;
+import DatabaseOperation.AlterateTask;
 import DeviceData.Device;
 import Task.Task;
 import android.text.Editable;
@@ -41,6 +42,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.view.Menu;
@@ -126,13 +128,13 @@ public class AddTask extends   FragmentActivity
 	/**
 	 * contains the deadline established by the user
 	 */
-	private TextView date;
+	private TextView textViewDate;
 	
 	
 	/**
 	 * shows the people selected
 	 */
-	private TextView people;
+	private TextView textViewPeople;
 	
 	
 	
@@ -145,7 +147,7 @@ public class AddTask extends   FragmentActivity
 	/**
 	 * shows the devices selected by the user
 	 */
-	private TextView devices;
+	private TextView textViewDevices;
 	
 	
 	/**
@@ -248,6 +250,11 @@ public class AddTask extends   FragmentActivity
 	static final int DEVICES_DIALOG_ID = 1001;
 	
 	
+	boolean booleanGetFromTaskToModify;
+	
+	ParametersToModify   oldParamatersTask;
+	
+	
 
 	
 
@@ -257,6 +264,7 @@ public class AddTask extends   FragmentActivity
 		setContentView(R.layout.activity_add_task);
 		
 
+		
 		
 		
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
@@ -270,9 +278,9 @@ public class AddTask extends   FragmentActivity
 		scroll.requestDisallowInterceptTouchEvent(true);
 		
 		
-		people = (TextView)   findViewById(R.id.choosePeopleText);
-		date     = (TextView) findViewById(R.id.deadline);
-		devices = (TextView)  findViewById(R.id.chooseDevices);
+		textViewPeople = (TextView)   findViewById(R.id.choosePeopleText);
+		textViewDate     = (TextView) findViewById(R.id.deadline);
+		textViewDevices = (TextView)  findViewById(R.id.chooseDevices);
 		messageInsert = (TextView) this.findViewById(R.id.messageInsert);
 		
 		addPeopleNeeded = (Button) findViewById(R.id.choosePeopleButton);
@@ -383,12 +391,69 @@ public class AddTask extends   FragmentActivity
 		
 		
 		loadSharedPreferences();
+		checkIntentStarter();
 		
 		
 	}
 	
 	
 	
+
+	/**
+	 * checks who has started the ativity
+	 */
+	private void checkIntentStarter() {
+
+		Intent intent = getIntent();
+		Integer message = intent.getIntExtra(AlterateTask.ID_MESSAGE, -1);
+		
+		if(message == -1){
+			this.booleanGetFromTaskToModify = false;
+			return;
+		}
+		
+		String title,deadline, people[], devices[];
+		double locationDouble[]; 
+		LatLng position;
+		
+		title 	= intent.getStringExtra(AlterateTask.TITLE_MESSAGE);
+		people  = intent.getStringArrayExtra(AlterateTask.PEOPLE_MESSAGE);
+		devices = intent.getStringArrayExtra(AlterateTask.DEVICE_MESSAGE);
+		deadline = intent.getStringExtra(AlterateTask.DEADLINE_MESSAGE);
+		locationDouble = intent.getDoubleArrayExtra(AlterateTask.LOCATION_MESSAGE);
+		
+		
+		booleanGetFromTaskToModify = true;
+		
+		oldParamatersTask = new ParametersToModify();
+		oldParamatersTask.changeDeadline(deadline);
+		
+		
+		
+		
+		autoTitle.setText(title);
+	
+
+		textViewDate.setText(deadline);
+		
+
+		System.out.println("DEADLINE" + deadline);
+		
+		
+		location = Double.toString( locationDouble[0]) + " " + Double.toString(locationDouble[1]);
+		position = new LatLng(locationDouble[0], locationDouble[1]);
+		map.clear();
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+
+
+    	map.addMarker(new MarkerOptions().position(position).
+    	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location_place)));
+		
+		
+	}
+
+
+
 
 	/**
 	 * calculates the centers for the clusters associated to location, devices, people
@@ -463,10 +528,23 @@ public class AddTask extends   FragmentActivity
 	 */
 	public Dialog dateDialog()
 	{
-		final Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		int day = c.get(Calendar.DAY_OF_MONTH);
+		int year, month, day;
+		
+		if(booleanGetFromTaskToModify == true)
+		{
+			year = this.oldParamatersTask.year;
+			month = this.oldParamatersTask.month;
+			day = this.oldParamatersTask.day;
+		}
+		else
+		{
+		
+			final Calendar c = Calendar.getInstance();
+			year = c.get(Calendar.YEAR);
+			month = c.get(Calendar.MONTH);
+			day = c.get(Calendar.DAY_OF_MONTH);
+		}
+		
 		
 	   // set date picker as current date
 	   return new DatePickerDialog
@@ -484,6 +562,9 @@ public class AddTask extends   FragmentActivity
 		ArrayList<String> contacts = createContactList(devices);
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
 		final CharSequence[] items =  contacts.toArray( new CharSequence[contacts.size()]);
+		
+		
+
 
 		builder.setMultiChoiceItems(items, null,
                    new DialogInterface.OnMultiChoiceClickListener() {
@@ -524,7 +605,7 @@ public class AddTask extends   FragmentActivity
             	else
             		peopleString = getResources().getString(R.string.textNotChoosed);
             	
-            	people.setText(peopleString);
+            	textViewPeople.setText(peopleString);
             	addPeopleNeeded.setFocusableInTouchMode(true);
             	addPeopleNeeded.requestFocus();
             }
@@ -549,6 +630,10 @@ public class AddTask extends   FragmentActivity
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
 		final CharSequence[] items =  devicesMy.toArray( new CharSequence[devicesMy.size()]);
 
+	/*	boolean checkedItems[] = new boolean[2];
+		checkedItems[0] = true;
+		checkedItems[1] = false;*/
+		
 		builder.setMultiChoiceItems(items, null,
                    new DialogInterface.OnMultiChoiceClickListener() {
 
@@ -587,7 +672,7 @@ public class AddTask extends   FragmentActivity
             		deviceString = getResources().getString(R.string.textNotChoosed);
             	
             	
-            	devices.setText(deviceString);
+            	textViewDevices.setText(deviceString);
             	addDevicesNeeded.setFocusableInTouchMode(true);
             	addDevicesNeeded.requestFocus();
              
@@ -653,7 +738,7 @@ public class AddTask extends   FragmentActivity
 			public void onDateSet(DatePicker view, int selectedYear,
 								  int selectedMonth, int selectedDay) {
 				
-					date.setText(Integer.toString(selectedYear) + "-" + 
+					textViewDate.setText(Integer.toString(selectedYear) + "-" + 
 					Integer.toString(selectedMonth+ 1) +"-" + Integer.toString(selectedDay) );
 				
 			}
@@ -671,8 +756,8 @@ public class AddTask extends   FragmentActivity
 			addresses = geocoder.getFromLocation(locationMap.latitude ,locationMap.longitude, 1);
 		//	autoLocationSearch.setText(addresses.get(0).getAdminArea());
 		//	autoLocationSearch.setText(addresses.get(0).getPremises());
-			autoLocationSearch.setText(addresses.get(0).getFeatureName());
-		//	autoLocationSearch.setText(  addresses.get(0).getAddressLine(0) ) ;
+		//	autoLocationSearch.setText(addresses.get(0).getFeatureName());
+			autoLocationSearch.setText(  addresses.get(0).getAddressLine(0) ) ;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -708,39 +793,6 @@ public class AddTask extends   FragmentActivity
         
         
         Location l =  mLocationClient.getLastLocation(); 
-        
-       
-  /*      String searchPattern = "Politehnica Bucuresti";
-        List<Address> addresses = null;
-        try {
-			addresses = (new Geocoder(this)).getFromLocationName(searchPattern, Integer.MAX_VALUE);
-			Log.w("Pozitie", "Am extras pozitia adresei"); 
-			if (addresses == null) {
-		        // location service unavailable or incorrect address
-		        // so returns null
-		        Log.w("Pozitie", "Pozitia este nula");
-		    }
-			else
-			{
-				Address closest = addresses.get(0);
-				Log.w("Pozitie", closest.getLatitude() + " " + closest.getLongitude());
-				
-				LatLng position = new LatLng(closest.getLatitude(), closest.getLongitude());
-				map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-
-		    	// Zoom in, animating the camera.
-		    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-		    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-			}
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-  
-        
-        */
        
        
         if(l != null){
@@ -761,6 +813,10 @@ public class AddTask extends   FragmentActivity
 		setPositionOnMap(arg0);
 	}
 	
+	/**
+	 * @param l : the location detected from updating or from lastKnownlocation
+	 * it is then shown on the map
+	 */
 	public void setPositionOnMap(Location location){
 		
 		positionCurrent = new LatLng(location.getLatitude(), location.getLongitude());
@@ -777,24 +833,8 @@ public class AddTask extends   FragmentActivity
 	}
 	
 	
-	/**
-	 * @param l : the location detected from updating or from lastKnownlocation
-	 * it is then shown on the map
-	 */
-	/*public void setPositionOnMap(Location l)
-	{
-		LatLng position = new LatLng(l.getLatitude(), l.getLongitude());
-        
-    	System.out.println("POZITIA ACTUALA" + position.latitude + " " + position.longitude);
-    	Log.w("Pozitie actuala", position.latitude + " " + position.longitude); 
-    
-    	map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-
-    	// Zoom in, animating the camera.
-    	map.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
-    	map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
-	}
-	*/
+	
+	
 
 	@Override
 	public void onDisconnected() {
@@ -998,11 +1038,11 @@ public void setLocation(String location) {
 }
 
 public TextView getDate() {
-	return date;
+	return textViewDate;
 }
 
 public void setDate(TextView date) {
-	this.date = date;
+	this.textViewDate = date;
 }
 
 
@@ -1020,28 +1060,28 @@ public void setMap(GoogleMap map) {
 
 
 public TextView getPeople() {
-	return people;
+	return textViewPeople;
 }
 
 
 
 
 public void setPeople(TextView people) {
-	this.people = people;
+	this.textViewPeople = people;
 }
 
 
 
 
 public TextView getDevices() {
-	return devices;
+	return textViewDevices;
 }
 
 
 
 
 public void setDevices(TextView devices) {
-	this.devices = devices;
+	this.textViewDevices = devices;
 }
 
 
@@ -1155,20 +1195,30 @@ public void onTextChanged(CharSequence s, int start, int before, int count) {
 }
 
 
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+class ParametersToModify
+{
+	int year;
+	
+	int month;
+	
+	int day;
+	
+	
+	public void changeDeadline(String deadline )
+	{
+		String data[] = deadline.split("-");
+		
+		year = Integer.parseInt(data[0]);
+		
+		day = Integer.parseInt(data[2]);
+		
+		month = Integer.parseInt(data[1]);
+		
+	}
+	
 }
 
 

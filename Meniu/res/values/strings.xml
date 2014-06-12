@@ -85,6 +85,7 @@
     <string name="title_activity_incercare">INCERCARE</string>
     <string name="Distance">Distance</string>
     <string name="ERASE">ERASE TASK</string>
+    <string name="Modify">Modify Task</string>
     <string name="title_activity_add_device">AddDeviceActivity</string>
     <string name="DeviceName">Device Name</string>
     <string name="MacAdress">Mac Address</string>
