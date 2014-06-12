@@ -15,12 +15,29 @@ import com.example.meniu.LocationInterval;
 public class TemporalContext extends ContextElement{
 
 	/**
-	 * for each location there is associated a start time and an end time
-	 * the current context will have a start time with every retrieved from the tasks fixed
-	 * and the tasks will have the start time computed as 
-	 * current location -> location task duration +
-	 * duration +
-	 * location task - > fixed task location duration
+	 * the hour when the task would start
+	 */
+	private int startHour;
+	
+	/**
+	 * the minute when the task would start
+	 */
+	private int startMinute;
+	
+	/**
+	 * the hour when the task would stop
+	 */
+	private int endHour;
+	
+	/**
+	 * the minute when the task would stop
+	 */
+	private int endMinute;
+	
+	
+	/**
+	 * each fixed task has a location, a start time, end time
+	 *
 	 */
 	private ArrayList<LocationInterval> intervals;
 	
@@ -39,6 +56,38 @@ public class TemporalContext extends ContextElement{
 
 	public void setIntervals(ArrayList<LocationInterval> intervals) {
 		this.intervals = intervals;
+	}
+
+	public int getStartHour() {
+		return startHour;
+	}
+
+	public void setStartHour(int startHour) {
+		this.startHour = startHour;
+	}
+
+	public int getStartMinute() {
+		return startMinute;
+	}
+
+	public void setStartMinute(int startMinute) {
+		this.startMinute = startMinute;
+	}
+
+	public int getEndHour() {
+		return endHour;
+	}
+
+	public void setEndHour(int endHour) {
+		this.endHour = endHour;
+	}
+
+	public int getEndMinute() {
+		return endMinute;
+	}
+
+	public void setEndMinute(int endMinute) {
+		this.endMinute = endMinute;
 	}
 	
 	

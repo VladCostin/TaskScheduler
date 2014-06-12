@@ -541,7 +541,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		task.setIdTask(Integer.parseInt( cursor.getString(0)));
 		task.setDayWeek(cursor.getString(1)); 
-		task.setLocation("44.4384,26049");
+		task.setLocation("44.4384,26.049");
 	//	task.setLocation(cursor.getString(2));
 		task.setStartHour(Integer.parseInt(cursor.getString(3)));
 		task.setStartMinute(Integer.parseInt(cursor.getString(4)));

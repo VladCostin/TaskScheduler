@@ -12,8 +12,8 @@ import ContextElements.ContextElement;
 public interface Checker {
 
 	/**
-	 * @param task : the task's current time and location
-	 * @param current : the current time and location
+	 * @param task : the task's required conditions
+	 * @param current : the current conditions
 	 * @param taskDetails : object which contains details of the task such as the priority, duration
 	 * @return : if the task is suitable to be executed
 	 */

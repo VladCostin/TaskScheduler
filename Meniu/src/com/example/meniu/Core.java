@@ -119,6 +119,45 @@ public class Core {
 		
 	}
 	
+	
+	public static int calculateDistanceTravel(double lat1, double long1, double lat2, double long2)
+	{
+		double l1 = Math.toRadians(lat1);
+		double l2 = Math.toRadians(lat2);
+		double g1 = Math.toRadians(long1);
+		double g2 = Math.toRadians(long2);
+		double distanta;
+		double dist;
+		
+		
+		 dist = Math.acos(Math.sin(l1) * Math.sin(l2) + Math.cos(l1) * Math.cos(l2) * Math.cos(g1 - g2));
+		 if(dist < 0) {
+		        dist = dist + Math.PI;
+		 }
+		 
+		 
+		 distanta = Math.round(dist * 6378100);
+		 
+		 return (int) distanta;
+	}
+	
+	public static int calculateDurationTravel(double lat1, double long1, double lat2, double long2)
+	{
+		int distance = calculateDistanceTravel(lat1, long1, lat2, long2);
+		
+		System.out.println("DISTANTA ESTE AICI este" + distance);
+		System.out.println("Lat1 " + lat1);
+		System.out.println("Long1 " + long1);
+		System.out.println("Lat2 " + lat2);
+		System.out.println("Long2 " + long2);
+		
+		double durationTravel = distance * 1.5  /60;
+		
+		
+		return (int) durationTravel;
+		
+	}
+	
 
 	public static HashMap<String,Integer> getPrioritiesValues() {
 		return prioritiesValues;

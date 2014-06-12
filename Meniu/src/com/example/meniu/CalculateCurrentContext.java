@@ -179,7 +179,6 @@ public class CalculateCurrentContext {
 		getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
 		
 		
-		
 		nrFixedTasks = activityShowTask.fixedTasks.size();
 		
 		currentTime =  Core.currentTimeParseToString().split("/");
@@ -206,15 +205,12 @@ public class CalculateCurrentContext {
 		
 		
 		
-		for(i = 0; i < nrFixedTasks; i++)
-		{
-			
-			
-			
-		}
+		contextInterval.setStartHour(startHour);
+		contextInterval.setStartMinute(startMinute);
+		contextInterval.setEndHour(endHour);
+		contextInterval.setEndMinute(endMinute);
 		
-		
-		
+
 	}
 	
 }
