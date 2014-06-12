@@ -22,7 +22,7 @@ public class TemporalContext extends ContextElement{
 	 * duration +
 	 * location task - > fixed task location duration
 	 */
-	ArrayList<LocationInterval> intervals;
+	private ArrayList<LocationInterval> intervals;
 	
 	public TemporalContext()
 	{
@@ -31,6 +31,14 @@ public class TemporalContext extends ContextElement{
 
 	public TemporalContext(ArrayList<LocationInterval> intervals) {
 		this.intervals	= intervals;
+	}
+
+	public ArrayList<LocationInterval> getIntervals() {
+		return intervals;
+	}
+
+	public void setIntervals(ArrayList<LocationInterval> intervals) {
+		this.intervals = intervals;
 	}
 	
 	

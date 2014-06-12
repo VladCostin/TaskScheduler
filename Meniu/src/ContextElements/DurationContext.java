@@ -10,6 +10,8 @@ public class DurationContext extends ContextElement{
 	
 	private Integer duration;
 	
+	private Integer temporalDurationTravel;
+	
 	public DurationContext(Integer duration)
 	{
 		this.duration = duration;
@@ -28,6 +30,14 @@ public class DurationContext extends ContextElement{
 
 	public void setDuration(Integer duration) {
 		this.duration = duration;
+	}
+
+	public Integer getTemporalDurationTravel() {
+		return temporalDurationTravel;
+	}
+
+	public void setTemporalDurationTravel(Integer temporalDurationTravel) {
+		this.temporalDurationTravel = temporalDurationTravel;
 	}
 
 

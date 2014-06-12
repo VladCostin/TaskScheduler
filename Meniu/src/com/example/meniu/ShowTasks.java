@@ -135,7 +135,7 @@ public class ShowTasks extends Activity
 	/**
 	 * the current position detected by GPS
 	 */
-	LatLng currentPosition;
+	private LatLng currentPosition;
 	
 	
 	/**
@@ -358,14 +358,10 @@ public class ShowTasks extends Activity
      */
     private Context createCurrentState() {
 		
-    	
     	ArrayList<String> myDevices = currentConditions.detectMyDevices();
     	ArrayList<String> peopleAround = currentConditions.detectPeople();
     	ArrayList<LocationInterval> intervals = currentConditions.obtainIntervals();
-    	
-    	
-   // 	System.out.println("AZI TREBUIE SA FAC " + intervals.size());
-    	
+
     	Context currentContext = new Context();
     	currentContext.getContextElementsCollection().
     	put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(currentPosition));
@@ -380,16 +376,12 @@ public class ShowTasks extends Activity
     	currentContext.getContextElementsCollection().
     	put(ContextElementType.DEVICES_ELEMENT, new DeviceContext(myDevices));
     	
-    	
-    	
-    	
+
     	return currentContext;
     	
 		
 	}
     
-    
-
 
 
 	/**
@@ -488,31 +480,8 @@ public class ShowTasks extends Activity
 		putAll(task.getInternContext().getContextElementsCollection());
 		
 		
-		DurationContext duration = (DurationContext)
-		task.getScheduledContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
-		
-		
-		task.setStartTime(Core.currentTimeParseToString());
-		
-		if(duration.getDuration() == Constants.noTimeSpecified)
-		{
-			
-			
-			Task centerTask = durationAlg.detectCentroid(task);
-			DurationContext durationCenterTask = (DurationContext)
-			centerTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
-			
-			
-			if(durationCenterTask == null)
-				System.out.println("DURATION CENTER TASK ESTE NULL");
-			
-			duration.setDuration( durationCenterTask.getDuration() );
-			
-			
-
-			
-
-		} 
+		currentConditions.prepareDurationTask(task);
+		currentConditions.prepareIntervals(task);
 		
 		
 	
@@ -837,6 +806,18 @@ public class ShowTasks extends Activity
 
 	public void setLayout(RelativeLayout layout) {
 		this.layout = layout;
+	}
+
+
+
+	public LatLng getCurrentPosition() {
+		return currentPosition;
+	}
+
+
+
+	public void setCurrentPosition(LatLng currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 
 
