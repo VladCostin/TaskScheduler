@@ -69,7 +69,7 @@ public class AddTaskButton implements OnClickListener {
 		attributes.add(Tasks.KEY_Date);
 		attributes.add(Tasks.KEY_Title);
 		
-		values.add(task.getDate().getText().toString());
+		values.add(task.getLocation());
 		values.add(task.getDevices().getText().toString());
 		values.add(task.getDate().getText().toString());
 		values.add(task.getTitleTask().getText().toString());

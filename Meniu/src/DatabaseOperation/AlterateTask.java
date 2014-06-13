@@ -75,7 +75,6 @@ public class AlterateTask implements OnClickListener  {
 		
 		List<Task> tasks = show.getTasks();
 		Task taskToModify= null;
-		String nameTask;
 		Intent intentModify;
 		LocationContext location;
 		DeadlineContext deadline;
