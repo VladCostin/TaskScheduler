@@ -250,9 +250,9 @@ public class AddTask extends   FragmentActivity
 	static final int DEVICES_DIALOG_ID = 1001;
 	
 	
-	boolean booleanGetFromTaskToModify;
+	private boolean booleanGetFromTaskToModify;
 	
-	ParametersToModify   oldParamatersTask;
+	private ParametersToModify   oldParamatersTask;
 	
 	
 
@@ -405,16 +405,19 @@ public class AddTask extends   FragmentActivity
 	private void checkIntentStarter() {
 
 		Intent intent = getIntent();
-		Integer message = intent.getIntExtra(AlterateTask.ID_MESSAGE, -1);
+		Integer messageId = intent.getIntExtra(AlterateTask.ID_MESSAGE, -1);
 		
-		if(message == -1){
+		if(messageId == -1){
 			this.booleanGetFromTaskToModify = false;
 			return;
 		}
 		
 		String title,deadline, people[], devices[];
 		double locationDouble[]; 
+		String devicesString="";
 		LatLng position;
+		int i, id;
+		
 		
 		title 	= intent.getStringExtra(AlterateTask.TITLE_MESSAGE);
 		people  = intent.getStringArrayExtra(AlterateTask.PEOPLE_MESSAGE);
@@ -425,8 +428,9 @@ public class AddTask extends   FragmentActivity
 		
 		booleanGetFromTaskToModify = true;
 		
-		oldParamatersTask = new ParametersToModify();
+		oldParamatersTask = new ParametersToModify(messageId); 
 		oldParamatersTask.changeDeadline(deadline);
+		oldParamatersTask.changeDevices(devices);
 		
 		
 		
@@ -435,6 +439,11 @@ public class AddTask extends   FragmentActivity
 	
 
 		textViewDate.setText(deadline);
+		
+		for( i = 0; i < devices.length -1 ; i++)
+			devicesString += devices[i] + ",";
+		devicesString +=devices[i];
+		textViewDevices.setText(devicesString);
 		
 
 		System.out.println("DEADLINE" + deadline);
@@ -629,23 +638,33 @@ public class AddTask extends   FragmentActivity
 		ArrayList<String> devicesMy = createMyDevicesList(devicesDatabase);
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
 		final CharSequence[] items =  devicesMy.toArray( new CharSequence[devicesMy.size()]);
-
+		boolean checkedItems[];
+		
 	/*	boolean checkedItems[] = new boolean[2];
 		checkedItems[0] = true;
 		checkedItems[1] = false;*/
 		
-		builder.setMultiChoiceItems(items, null,
+		if(booleanGetFromTaskToModify == true)
+		checkedItems = oldParamatersTask.detectOldDevicesSelected( devicesMy, itemsId);
+		else
+			checkedItems = null;
+		
+		System.out.println("itemsId :" + itemsId.size() + " " + itemsId.toString());
+		
+		builder.setMultiChoiceItems(items, checkedItems,
                    new DialogInterface.OnMultiChoiceClickListener() {
 
 					@Override
 					public void onClick(DialogInterface arg0, int indexSelected,
 							boolean isChecked) {
 						
+						System.out.println("itemsId :" + itemsId.size() + " " + itemsId.toString());
 						
 						if(isChecked == true)
 							itemsId.add(indexSelected);
 						else
-							itemsId.remove(indexSelected);
+							//itemsId.remove(indexSelected);
+							itemsId.remove(new Integer(indexSelected));
 						
 					}
 					
@@ -1195,16 +1214,55 @@ public void onTextChanged(CharSequence s, int start, int before, int count) {
 }
 
 
+
+
+public boolean isBooleanGetFromTaskToModify() {
+	return booleanGetFromTaskToModify;
 }
 
 
-class ParametersToModify
+
+
+public void setBooleanGetFromTaskToModify(boolean booleanGetFromTaskToModify) {
+	this.booleanGetFromTaskToModify = booleanGetFromTaskToModify;
+}
+
+
+
+
+public ParametersToModify getOldParamatersTask() {
+	return oldParamatersTask;
+}
+
+
+
+
+public void setOldParamatersTask(ParametersToModify oldParamatersTask) {
+	this.oldParamatersTask = oldParamatersTask;
+}
+
+
+}
+
+
+public class ParametersToModify
 {
+	private int id;
+	
 	int year;
 	
 	int month;
 	
 	int day;
+	
+	String devices[];
+	
+	
+	boolean oldDevices[];
+	
+	public ParametersToModify(int id) {
+		this.id = id;
+	}
 	
 	
 	public void changeDeadline(String deadline )
@@ -1217,6 +1275,54 @@ class ParametersToModify
 		
 		month = Integer.parseInt(data[1]);
 		
+	}
+	
+	public void changeDevices(String devices[])
+	{
+		this.devices = devices;
+	}
+	
+	public boolean[] detectOldDevicesSelected(ArrayList<String> myDevicesAll, ArrayList<Integer> itemsId)
+	{
+		//
+		
+		if(devices == null)
+			return null;
+		
+		int i,j;
+		boolean isOld;
+		oldDevices = new boolean[myDevicesAll.size()];
+		
+		for(i= 0; i < myDevicesAll.size(); i++)
+		{
+			isOld = false;
+			for(j = 0; j < devices.length; j++)
+			{
+				if(devices[j].equals(myDevicesAll.get(i)))
+				{
+					isOld = true;
+					break;
+				}
+			}
+			
+			oldDevices[i] = isOld;
+			itemsId.add(i);
+		}
+		devices = null;
+		
+		return oldDevices;
+		
+		
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

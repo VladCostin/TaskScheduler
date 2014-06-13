@@ -1,5 +1,7 @@
 package DatabaseOperation;
 
+import java.util.ArrayList;
+
 import com.example.meniu.AddTask;
 import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
@@ -46,8 +48,37 @@ public class AddTaskButton implements OnClickListener {
 			 task.getMessageInsert().requestFocus();
 			 return;
 		 }
+		 if(task.isBooleanGetFromTaskToModify())
+				 updateTask();
+		 else
+			 saveTask();
 		 
 	
+		
+
+	}
+	
+	public void updateTask()
+	{
+		ArrayList<String> attributes = new ArrayList<String>();
+		ArrayList<String> values	 = new ArrayList<String>();
+		
+		
+		attributes.add(Tasks.KEY_Location);
+		attributes.add(Tasks.KEY_Device);
+		attributes.add(Tasks.KEY_Date);
+		attributes.add(Tasks.KEY_Title);
+		
+		values.add(task.getDate().getText().toString());
+		values.add(task.getDevices().getText().toString());
+		values.add(task.getDate().getText().toString());
+		values.add(task.getTitleTask().getText().toString());
+		
+		 MainActivity.getDatabase().updateTask(task.getOldParamatersTask().getId(), attributes, values);
+	}
+	
+	public void saveTask()
+	{
 		 task.getMessageInsert().setText( messageToShow );
 		 task.getMessageInsert().setFocusableInTouchMode(true);
 		 task.getMessageInsert().requestFocus(); 
@@ -70,10 +101,9 @@ public class AddTaskButton implements OnClickListener {
 		 
 		 Log.w("information",date + " " + location + " " + priority + " " + name + " " + people + " " + device);
 		
-		MainActivity.getDatabase().addTask
-		(name,priority,location,date, people, device, 
-		Core.getDurationMinutes().get(duration).toString(), "");      
-
+		 MainActivity.getDatabase().addTask
+		 (name,priority,location,date, people, device, 
+		 Core.getDurationMinutes().get(duration).toString(), "");      
 	}
 
 
