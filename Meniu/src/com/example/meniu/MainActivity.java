@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 	/**
 	 * names of the menuItems
 	 */
-	static final String[] MenUApp = new String[6];
+	static final String[] MenUApp = new String[7];
 	
 	
 	/**
@@ -63,6 +63,7 @@ public class MainActivity extends Activity {
 	    MenUApp[3] =	this.getString(R.string.discoverDevice);
 	    MenUApp[4] =	this.getString(R.string.current_task);
 	    MenUApp[5] = 	this.getString(R.string.activity_fixed_Tasks);
+	    MenUApp[6] =	this.getString(R.string.activity_Scheduler);
 		
 		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
 		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,MenUApp));
@@ -1230,6 +1231,9 @@ class MenuItemTouched implements OnItemClickListener{
 		 
 		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.activity_fixed_Tasks)) == 0)
 			  intent = new Intent(mainActivity, SetFixedTask.class);
+		 
+		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.activity_Scheduler)) == 0)
+			  intent = new Intent(mainActivity, ActivityScheduler.class);
 		 
 		 
 		 mainActivity.startActivity(intent);

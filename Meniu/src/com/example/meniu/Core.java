@@ -59,6 +59,8 @@ public class Core {
 		days.put(Calendar.WEDNESDAY, DaysOfWeek.WEDNESDAY);
 		days.put(Calendar.THURSDAY, DaysOfWeek.THURSDAY);
 		days.put(Calendar.FRIDAY, DaysOfWeek.FRIDAY);
+		days.put(Calendar.SATURDAY, DaysOfWeek.SATURDAY);
+		days.put(Calendar.SUNDAY, DaysOfWeek.SUNDAY);
 	}
 
 	/**
@@ -72,6 +74,18 @@ public class Core {
 		prioritiesValues.put("Average", 2);
 		prioritiesValues.put("Major", 3);
 		prioritiesValues.put("Critical", 4);
+	}
+	
+	
+	public static DaysOfWeek getDayOfWeek()
+	{
+		Calendar c = Calendar.getInstance();
+		return days.get(c.get(Calendar.DAY_OF_WEEK));
+	}
+	
+	public static String	getDayOfWeekString()
+	{
+		return getDayOfWeek().toString();
 	}
 	
 	/**
@@ -145,11 +159,6 @@ public class Core {
 	{
 		int distance = calculateDistanceTravel(lat1, long1, lat2, long2);
 		
-		System.out.println("DISTANTA ESTE AICI este" + distance);
-		System.out.println("Lat1 " + lat1);
-		System.out.println("Long1 " + long1);
-		System.out.println("Lat2 " + lat2);
-		System.out.println("Long2 " + long2);
 		
 		double durationTravel = distance * 1.5  /60;
 		

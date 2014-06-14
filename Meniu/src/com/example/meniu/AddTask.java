@@ -429,7 +429,9 @@ public class AddTask extends   FragmentActivity
 		booleanGetFromTaskToModify = true;
 		
 		oldParamatersTask = new ParametersToModify(messageId); 
-		oldParamatersTask.changeDeadline(deadline);
+		
+		if(deadline.equals(Constants.noChoose) == false)
+			oldParamatersTask.changeDeadline(deadline);
 		oldParamatersTask.changeDevices(devices);
 		
 		

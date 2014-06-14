@@ -11,6 +11,7 @@
     <string name="title_activity_add_task">AddTask</string>
     <string name="current_task">Taskul curent</string>
     <string name="activity_fixed_Tasks">Set fixed Schedule</string>
+    <string name="activity_Scheduler">Calculate Schedule</string>
     
     
     <string name="domain">Choose a domain</string>
@@ -105,15 +106,11 @@
     <string name="title_activity_set_fixed_task">SetFixedTask</string>
     <string name="buttonLeft">&lt;</string>
     <string name="buttonRight">&gt;</string>
-    
-    
     <string name="dayMonday">Monday</string>
     <string name="dayTuesday">Tuesday</string>
     <string name="dayWednesday">Wednesday</string>
     <string name="dayThursday">Thursday</string>
     <string name="dayFriday">Friday</string>
-    
-    
-    
+    <string name="title_activity_activity_scheduler">ActivityScheduler</string>
 
 </resources>

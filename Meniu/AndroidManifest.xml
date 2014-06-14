@@ -71,6 +71,10 @@
             android:name="com.example.meniu.SetFixedTask"
             android:label="@string/title_activity_set_fixed_task" >
         </activity>
+        <activity
+            android:name="com.example.meniu.ActivityScheduler"
+            android:label="@string/title_activity_activity_scheduler" >
+        </activity>
     </application>
 
 </manifest>
