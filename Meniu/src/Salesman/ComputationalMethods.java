@@ -13,10 +13,13 @@ import com.google.android.gms.maps.model.LatLng;
 public class ComputationalMethods {
 	
 	static HashMap<Integer,Integer> durations;
+	static HashMap<Integer,Integer> prioritiesValues;
+	
 	
 	public ComputationalMethods() {
 		
 		durations = new HashMap<Integer,Integer>();
+		prioritiesValues = new HashMap<Integer,Integer>();
 	}
 	
 
@@ -81,6 +84,18 @@ public class ComputationalMethods {
 		
 		}
 
+	}
+
+
+	public static void initPrioritiesValues() {
+		prioritiesValues.put(0, 625);
+		prioritiesValues.put(1, 250);
+		prioritiesValues.put(2, 500);
+		prioritiesValues.put(3, 750);
+		prioritiesValues.put(4, 1000);
+		
+		
+		
 	}
 
 

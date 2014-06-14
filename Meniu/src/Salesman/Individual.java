@@ -16,6 +16,8 @@ public class Individual {
 	
 	private float fitnessValue;
 	
+	private float duration;
+	
 	
 	Individual()
 	{
@@ -51,6 +53,16 @@ public class Individual {
 
 	public void setOrderTasks(ArrayList<Integer> orderTasks) {
 		this.orderTasks = orderTasks;
+	}
+
+
+	public float getDuration() {
+		return duration;
+	}
+
+
+	public void setDuration(float duration) {
+		this.duration = duration;
 	}
 	
 	

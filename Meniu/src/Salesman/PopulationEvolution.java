@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.example.meniu.Core;
+
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
 import ContextElements.LocationContext;
@@ -80,150 +82,35 @@ public class PopulationEvolution {
 	
 	public void startEvolution()
 	{
-		
+		int decade, nrDecades = 100;
 		
 		
 		initMembers();
 		
-		
-		selection();
-		crossOver();
-		
-
-		
-	}
-	
-	
-
-
-	/**
-	 * selects the best individuals in population
-	 */
-	public void selection()
-	{
-		float fitness;
-		int indexInd;
-		
-		for(Individual ind : population){
-			fitness = calculateFitnessValue(ind);
-			ind.setFitnessValue( fitness );
-		}
-		Collections.sort(population, new ComparatorFitness());
-		
-		
-		System.out.println("DIMENSIUNEA ESTE " + sizeSelection);
-		
-		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
-			System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime());
-			newPopulation.add(population.get(indexInd));
-		}
-	}
-	
-	
-	/**
-	 * selects random two individuals and calculates two children
-	 */
-	public void crossOver() {
-		
-		int indexChildren, iterations, taskId, duration1, duration2;
-		int position1, position2, position1Next, position2Next;
-		Random r = new Random();
-		LocationContext location, location1Next, location2Next;
-		
-		
-		iterations = sizeCrossover / 2;
-		
-		
-		
-		
-		for(indexChildren = 0; indexChildren < iterations; indexChildren++)
+		for(decade = 0; decade < nrDecades; decade++)
 		{
-			Individual ind1 = population.get(r.nextInt(population.size()));
-			Individual ind2 = population.get(r.nextInt(population.size()));
-			Individual child1, child2;
+			selection();
+			crossOver();
+			mutation();
 			
-			child1 = new Individual();
-			child2 = new Individual();
 			
-			while(true)
+			population.clear();
+			population.addAll(newPopulation);
+			newPopulation.clear();
+			
+		/*	for(Individual i : population)
 			{
-			
-				taskId = r.nextInt(shiftingTasks.size());
-				if(ind1.getOrderTasks().contains(taskId) &&
-				   ind2.getOrderTasks().contains(taskId) )
-					break;
-				
-				
-				
+				System.out.print(i.getOrderTasks().size() + " " );
 			}
 			
-			child1.getOrderTasks().add(taskId);
-			
-			System.out.println("INDIVIDUL 1 ESTE " + ind1.getOrderTasks().toString());
-			System.out.println("INDIVIDUL 2 ESTE " + ind2.getOrderTasks().toString());
-		//	System.out.println("PRIMUL TASK ESTE" + taskId);
-			
-			while(child1.getOrderTasks().size() != shiftingTasks.size() )
-			{
-				position1 = ind1.getOrderTasks().indexOf(taskId);  // determine the index of the task in individual 1
-				position2 = ind2.getOrderTasks().indexOf(taskId);  // determine the index of the task in individual 1
-				
-				position1Next =  (position1 + 1) % shiftingTasks.size();
-				position2Next =  (position2 + 1) % shiftingTasks.size();
-				
-				
-			//	System.out.println("Pozitiile viitoare sunt" + position1Next + " " + position2Next);
-				
-				location = (LocationContext) shiftingTasks.get(position1).
-				getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-				
-				location1Next = (LocationContext) shiftingTasks.get(position1Next).
-				getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-				
-				location2Next = (LocationContext) shiftingTasks.get(position2Next).
-				getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-				
-				
-				duration1 = ComputationalMethods.calculateDurationTravel
-				(location.getLatitude(), location.getLongitude(), location1Next.getLatitude(), location1Next.getLongitude());
-				
-				
-				duration2 = ComputationalMethods.calculateDurationTravel
-				(location.getLatitude(), location.getLongitude(), location2Next.getLatitude(), location2Next.getLongitude());
-				
-				
-				
-				
-				if(duration1 < duration2){
-					child1.getOrderTasks().add(ind1.getOrderTasks().get(position1Next));
-					taskId = ind1.getOrderTasks().get(position1Next);
-				}
-				else{
-					child1.getOrderTasks().add(ind2.getOrderTasks().get(position2Next));
-					taskId = ind2.getOrderTasks().get(position2Next);
-				}
-				
-			//	System.out.println("TASKUL ALES ESTE" + taskId);
-				
-				
-			}
-			
-			System.out.println(child1.getOrderTasks().toString());
-			
-			
+			System.out.println("-----------");*/
 		}
+			
 		
-		System.out.println("A IESIT");
 
 		
 	}
 	
-	
-	
-	
-	
-	
-
 	/**
 	 * initializes the individuals : for each individual a start time is assigned, when the tasks start to be executed
 	 * 
@@ -268,9 +155,372 @@ public class PopulationEvolution {
 		
 		
 		ComputationalMethods.initDurations();
+		ComputationalMethods.initPrioritiesValues();
 
 		
 	}
+	
+
+
+	/**
+	 * selects the best individuals in population
+	 */
+	public void selection()
+	{
+		float fitness;
+		int indexInd;
+		
+		for(Individual ind : population){
+			fitness = calculateFitnessValue(ind);
+			ind.setFitnessValue( fitness );
+		}
+		Collections.sort(population, new ComparatorFitness());
+
+		System.out.println("--------");
+		
+		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
+			System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
+			newPopulation.add(population.get(indexInd));
+		}
+	}
+	
+	
+	/**
+	 * selects random two individuals and calculates two children
+	 */
+	public void crossOver() {
+		
+		int indexChildren, iterations, taskId, duration1, duration2;
+		int position1, position2, position1Next, position2Next, indexTask;
+		int nrTasks;
+		Random r = new Random();
+		boolean contain1, contain2;
+		LocationContext location, location1Next, location2Next;
+		
+		ArrayList<Integer> tasksRemained = new ArrayList<Integer>();	// va aduga taskId, dupa care va da aleator
+																		// cate un task individului pentru executie
+
+		
+		iterations = sizeCrossover / 2;
+		
+		
+		
+		for(indexChildren = 0; indexChildren < iterations; indexChildren++)
+		{
+			Individual ind1 = new Individual(); 
+			Individual ind2 = new Individual();
+			Individual child1 = new Individual();
+			Individual child2 = new Individual();
+			
+			Individual extras1 =  population.get(r.nextInt(population.size()));
+			Individual extras2 = population.get(r.nextInt(population.size()));
+			
+			
+	/*		System.out.println("--------------");
+			System.out.println("Parintele 1 " + extras1.getOrderTasks());
+			System.out.println("Parintele 2 " + extras2.getOrderTasks());
+			System.out.println("--------------");
+	*/		
+			
+			prepareParentsForCrossOver(ind1, ind2, extras1, extras2);
+			
+			tasksRemained.clear();
+			nrTasks = ind1.getOrderTasks().size();
+			tasksRemained.addAll(ind1.getOrderTasks());
+
+		
+			
+			taskId = ind1.getOrderTasks().get( r.nextInt(nrTasks));			
+			child1.getOrderTasks().add(taskId);
+			tasksRemained.remove(new Integer( taskId));
+			
+	/*		System.out.println("--------------");
+			System.out.println("Parintele 1 " + extras1.getOrderTasks());
+			System.out.println("Parintele 2 " + extras2.getOrderTasks());
+			System.out.println("--------------");
+			
+	*/
+			
+			
+			while(child1.getOrderTasks().size() != nrTasks )
+			{
+				position1 = ind1.getOrderTasks().indexOf(taskId);  // determine the index of the task in individual 1
+				position2 = ind2.getOrderTasks().indexOf(taskId);  // determine the index of the task in individual 1 
+				
+				position1Next =  (position1 + 1) % ind1.getOrderTasks().size();
+				position2Next =  (position2 + 1) % ind2.getOrderTasks().size();
+				
+				contain1 = child1.getOrderTasks().contains((ind1.getOrderTasks().get(position1Next)));
+				contain2 = child1.getOrderTasks().contains((ind2.getOrderTasks().get(position2Next)));
+				
+				if(contain1 == true && contain2 == false)
+				{
+					taskId = ind2.getOrderTasks().get(position2Next);
+					child1.getOrderTasks().add(taskId);
+					tasksRemained.remove(new Integer( taskId));
+					continue;
+				}
+				
+				
+				if(contain2 == true && contain1 == false)
+				{
+					taskId = ind1.getOrderTasks().get(position1Next);
+					child1.getOrderTasks().add(taskId);
+					tasksRemained.remove(new Integer( taskId));
+					continue;
+
+				}
+				if(contain2 == true && contain1 == true)
+				{
+					taskId = tasksRemained.remove(r.nextInt(tasksRemained.size()));
+					child1.getOrderTasks().add(taskId);
+					tasksRemained.remove(new Integer( taskId));
+					continue;
+				}
+					
+				
+				
+				
+			//	System.out.println("Pozitiile viitoare sunt" + position1Next + " " + position2Next);
+				
+				location = (LocationContext) shiftingTasks.get(taskId).
+				getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+				
+				location1Next = (LocationContext) shiftingTasks.get(ind1.getOrderTasks().get(position1Next)).
+				getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+				
+				location2Next = (LocationContext) shiftingTasks.get(ind2.getOrderTasks().get(position2Next)).
+				getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+				
+				
+				duration1 = ComputationalMethods.calculateDurationTravel
+				(location.getLatitude(), location.getLongitude(), location1Next.getLatitude(), location1Next.getLongitude());
+				
+				
+				duration2 = ComputationalMethods.calculateDurationTravel
+				(location.getLatitude(), location.getLongitude(), location2Next.getLatitude(), location2Next.getLongitude());
+				
+				
+				
+				
+				if(duration1 < duration2)
+				{
+					taskId = ind1.getOrderTasks().get(position1Next);
+					child1.getOrderTasks().add(taskId);
+					
+				}
+				else
+				{
+					taskId = ind2.getOrderTasks().get(position2Next);
+					child1.getOrderTasks().add(taskId);
+					
+				}
+				
+			//	System.out.println("TASKUL ALES ESTE" + taskId);
+				
+				tasksRemained.remove(new Integer( taskId));
+			}
+			
+	//		System.out.println("Ce au in comun este" + child1.getOrderTasks().toString());
+			
+			child2.getOrderTasks().addAll(child1.getOrderTasks());
+			
+			if(child1.getOrderTasks().size() < extras1.getOrderTasks().size() )
+			{
+		/*		System.out.println("Radacina nu are dimensiunea parintelui 1");
+				System.out.println(child1.getOrderTasks().toString());
+				System.out.println(extras1.getOrderTasks().toString());
+				System.out.println("----------");
+		*/		
+				
+				for(Integer task : extras1.getOrderTasks())
+					if(!child1.getOrderTasks().contains(task))
+						child1.getOrderTasks().add(task);
+				
+		//		System.out.println(child1.getOrderTasks().toString());
+			}
+			
+			if(child2.getOrderTasks().size() < extras2.getOrderTasks().size() )
+			{
+				
+		/*		System.out.println("Radacina nu are dimensiunea parintelui 2");
+				System.out.println(child2.getOrderTasks().toString());
+				System.out.println(extras2.getOrderTasks().toString());
+				System.out.println("----------");
+		*/		
+				for(Integer task : extras2.getOrderTasks())
+					if(!child2.getOrderTasks().contains(task))
+						child2.getOrderTasks().add(task);
+				
+		//		System.out.println(child2.getOrderTasks().toString());
+			}
+			
+		//	System.out.println("Copil1 este " + child1.getOrderTasks().toString());
+		//	System.out.println("Copil2 este " + child1.getOrderTasks().toString());
+			
+			
+			child1.setStartTime(ind1.getStartTime() + (int) 
+			( ConstantsPopulation.sample1Alpha * (ind2.getStartTime() - ind1.getStartTime())  ) );
+			
+			child2.setStartTime(ind1.getStartTime() + (int) 
+			( ConstantsPopulation.sample2Alpha * (ind2.getStartTime() - ind1.getStartTime())  ) );
+			
+		//	System.out.println(child1.getStartTime() + " " + child2.getStartTime() + " " + ind1.getStartTime() + " " + ind2.getStartTime());
+			
+			
+			newPopulation.add(child1);
+			newPopulation.add(child2);
+			
+			
+		}
+		
+		System.out.println("A IESIT " +  newPopulation.size());
+
+		
+	}
+	
+	
+	/**
+	 * gets random parents from population, then removes the tasks they do not 
+	 * have in common
+	 * @param ind1 : one of the parents
+	 * @param ind2 : the second parent
+	 * @param extras2 
+	 * @param extras1 
+	 */
+	public void prepareParentsForCrossOver(Individual ind1 , Individual ind2, Individual extras1, Individual extras2)
+	{
+		Random r = new Random();
+		
+		ind1.getOrderTasks().addAll(extras1.getOrderTasks());
+		ind2.getOrderTasks().addAll(extras2.getOrderTasks());
+		
+		ind1.setStartTime(extras1.getStartTime());
+		ind2.setStartTime(extras2.getStartTime());
+		
+		
+		ArrayList<Integer> removeTasks1, removeTasks2;
+		removeTasks1 = new ArrayList<Integer>();
+		removeTasks2= new ArrayList<Integer>();
+
+		
+		
+		for(Integer idTask : ind1.getOrderTasks())
+			if( !ind2.getOrderTasks().contains(idTask) )
+				removeTasks1.add(idTask);
+		
+		for(Integer idTask : ind2.getOrderTasks())
+			if( !ind1.getOrderTasks().contains(idTask) )
+				removeTasks2.add(idTask);
+		
+		for(Integer idTask: removeTasks1)
+			ind1.getOrderTasks().remove(idTask);
+		
+		for(Integer idTask: removeTasks2)
+			ind2.getOrderTasks().remove(idTask);
+		
+		
+	}
+	
+	
+
+	/**
+	 * changes the individual's structure :
+	 * 0 : it changes its startTime by adding minutes
+	 * 1 : it changes its startTime by decreasing minutes
+	 * 2 : it adds a task
+	 * 3 : it removes a task
+	 */
+	private void mutation() {
+
+		Random r = new Random();
+		int mutationType;
+		int indexTask;
+		
+		
+		
+		for(Individual ind : population)
+		{
+			if(r.nextFloat() < ConstantsPopulation.mutationThreshold )
+			{
+				mutationType = r.nextInt(5);
+				
+		//		System.out.println("S-a produs o mutatie");
+				
+				switch(mutationType)
+				{
+					case 0 : 
+						
+					ind.setStartTime(ind.getStartTime() + ConstantsPopulation.minMutationMinutes 
+					+ r.nextInt(ConstantsPopulation.maxMutationMinutes - ConstantsPopulation.minMutationMinutes));
+					
+					break;
+					
+					case 1 : 
+						
+					ind.setStartTime(ind.getStartTime() - ConstantsPopulation.minMutationMinutes 
+					+ r.nextInt(ConstantsPopulation.maxMutationMinutes - ConstantsPopulation.minMutationMinutes));
+						
+					break; 
+					
+					
+					case 2 :
+						
+					
+					
+					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+						if(! ind.getOrderTasks().contains(indexTask))
+						{
+							ind.getOrderTasks().add(indexTask);
+							break;
+						}
+					
+					
+					break;
+					
+					
+					case 3 :
+						
+					
+						
+					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+						if(ind.getOrderTasks().contains(indexTask))
+						{
+							ind.getOrderTasks().remove(new Integer(indexTask));
+							break;
+						}
+						
+					break; 
+					
+					
+					case 4 :
+						
+						
+					Integer aux;
+					int position1, position2;
+					position1 = r.nextInt(ind.getOrderTasks().size());
+					position2 = r.nextInt(ind.getOrderTasks().size());
+					
+					aux = ind.getOrderTasks().get(position1);
+					ind.getOrderTasks().set(position1, ind.getOrderTasks().get(position2));
+					ind.getOrderTasks().set(position2, aux);
+					
+					System.out.println("Mutatie " + ind.getOrderTasks().toString());
+					
+				
+				}
+				
+		//		System.out.println("new Dim " + ind.getOrderTasks().size());
+				
+			}
+		}
+		
+		
+		
+		
+		
+	}
+	
 	
 	/**
 	 * the fitness represents the sum of each duration + the durations taken to travel between the locations
@@ -279,12 +529,21 @@ public class PopulationEvolution {
 	 */
 	public float calculateFitnessValue(Individual ind)
 	{
+
+		
 		float sumMinutes = 0;
 		int durationTravel;
 		int indexTask;
+		int priorityNumber;
 		ArrayList<Integer> tasks = ind.getOrderTasks();
 		
 		LocationContext location1, location2;
+		
+	//	System.out.println("------------");
+		
+		
+		if(tasks.size() == 0)
+			System.out.println("ARE DIMENSIUNEA 0");
 		
 		
 		for(indexTask = 0; indexTask < tasks.size() - 1 ; indexTask++)
@@ -302,6 +561,7 @@ public class PopulationEvolution {
 			durationTravel =	ComputationalMethods.calculateDurationTravel
 			(location1.getLatitude(), location1.getLongitude(), location2.getLatitude(), location2.getLongitude());
 			
+			
 			sumMinutes +=durationTravel;
 			
 			
@@ -310,16 +570,32 @@ public class PopulationEvolution {
 
 		sumMinutes +=  ComputationalMethods.durations.get(tasks.get(indexTask));
 		
+		ind.setDuration(sumMinutes);
 		
+	//	System.out.println("Inainte " + sumMinutes + " " + ind.getStartTime());
 		
 		
 		if(ind.getStartTime() < ConstantsPopulation.minimalStartTime)
-			return sumMinutes + ConstantsPopulation.penalty *
+			sumMinutes += ConstantsPopulation.penalty *
 			(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+		else
+			if( (sumMinutes + ind.getStartTime() ) > ConstantsPopulation.maximalEndTime)
+				sumMinutes +=
+				(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) * ConstantsPopulation.penalty;
 		
-		if( (sumMinutes + ind.getStartTime() ) > ConstantsPopulation.maximalEndTime)
-			return sumMinutes + 
-			(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) * ConstantsPopulation.penalty;
+		
+	//	System.out.println("Dupa " + sumMinutes);
+		
+		for(Integer idTask : ind.getOrderTasks())
+		{
+			priorityNumber = Core.getPrioritiesValues().get( shiftingTasks.get(idTask).getPriority());
+			
+			
+			sumMinutes -= ComputationalMethods.prioritiesValues.get(priorityNumber);  
+		}
+		
+		
+	//	System.out.println("DUpa 2 " + sumMinutes);
 		
 		
 		return sumMinutes;
