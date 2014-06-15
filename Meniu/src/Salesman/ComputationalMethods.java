@@ -88,11 +88,33 @@ public class ComputationalMethods {
 
 
 	public static void initPrioritiesValues() {
-		prioritiesValues.put(0, 625);
-		prioritiesValues.put(1, 250);
-		prioritiesValues.put(2, 500);
-		prioritiesValues.put(3, 750);
-		prioritiesValues.put(4, 1000);
+		
+	/*	prioritiesValues.put(0, 250);
+		prioritiesValues.put(1, 300);
+		prioritiesValues.put(2, 350);
+		prioritiesValues.put(3, 400);
+		prioritiesValues.put(4, 450);
+	*/	
+		
+	/*	prioritiesValues.put(0, 60);
+		prioritiesValues.put(1, 90);
+		prioritiesValues.put(2, 150);
+		prioritiesValues.put(3, 240);
+		prioritiesValues.put(4, 90);
+	*/
+		
+	/*	prioritiesValues.put(0, 64);
+		prioritiesValues.put(1,  128);
+		prioritiesValues.put(2, 256);
+		prioritiesValues.put(3, 512);
+		prioritiesValues.put(4, 90);
+	*/	
+		prioritiesValues.put(0, 50);
+		prioritiesValues.put(1,  150);
+		prioritiesValues.put(2, 600);
+		prioritiesValues.put(3, 3000);
+		prioritiesValues.put(4, 90);
+	
 		
 		
 		

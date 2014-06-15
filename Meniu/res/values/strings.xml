@@ -112,5 +112,11 @@
     <string name="dayThursday">Thursday</string>
     <string name="dayFriday">Friday</string>
     <string name="title_activity_activity_scheduler">ActivityScheduler</string>
+    
+    
+    <string name="messageCalculateSchedule">Please select the interval you want to calculate</string>
+    <string name="buttonCalculateSchedule">Calculate Schedule</string>
+    <string name="buttonNextInterval">Show nextInterval</string>
+    <string name="messagePatience">Please have patience. This may take up to 20 seconds</string>
 
 </resources>

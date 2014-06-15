@@ -69,11 +69,11 @@ public class Core {
 	 */
 	public static void initPriorities()
 	{
-		prioritiesValues.put("Unknown", 0);
-		prioritiesValues.put("Minor", 1);
-		prioritiesValues.put("Average", 2);
-		prioritiesValues.put("Major", 3);
-		prioritiesValues.put("Critical", 4);
+		prioritiesValues.put("Minor", 0);
+		prioritiesValues.put("Average", 1);
+		prioritiesValues.put("Major", 2);
+		prioritiesValues.put("Critical", 3);
+		prioritiesValues.put("Unknown", 4);
 	}
 	
 	

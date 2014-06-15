@@ -84,7 +84,7 @@ public class AddTask extends   FragmentActivity
 	/**
 	 * show list for choosing a domain
 	 */
-	private Spinner priority;
+	private Spinner spinnerPriority;
 	
 	
 	/**
@@ -268,7 +268,7 @@ public class AddTask extends   FragmentActivity
 		
 		
 		domain 	 = (Spinner)  findViewById(R.id.spinner1);
-		priority = (Spinner)  findViewById(R.id.spinnerPriority);	
+		spinnerPriority = (Spinner)  findViewById(R.id.spinnerPriority);	
 		duration = (Spinner)  findViewById(R.id.spinnerDuration);
 		autoTitle    = (AutoCompleteTextView) findViewById(R.id.titleAutoComplete);
 		autoLocationSearch = (AutoCompleteTextView) findViewById(R.id.locationAutoComplete);
@@ -412,7 +412,7 @@ public class AddTask extends   FragmentActivity
 			return;
 		}
 		
-		String title,deadline, people[], devices[];
+		String title,deadline,priorityString, people[], devices[];
 		double locationDouble[]; 
 		String devicesString="";
 		LatLng position;
@@ -424,7 +424,8 @@ public class AddTask extends   FragmentActivity
 		devices = intent.getStringArrayExtra(AlterateTask.DEVICE_MESSAGE);
 		deadline = intent.getStringExtra(AlterateTask.DEADLINE_MESSAGE);
 		locationDouble = intent.getDoubleArrayExtra(AlterateTask.LOCATION_MESSAGE);
-		
+		priorityString = intent.getStringExtra(AlterateTask.PRIORITY_MESSAGE);
+		 
 		
 		booleanGetFromTaskToModify = true;
 		
@@ -434,18 +435,19 @@ public class AddTask extends   FragmentActivity
 			oldParamatersTask.changeDeadline(deadline);
 		oldParamatersTask.changeDevices(devices);
 		
+		spinnerPriority.setSelection( Core.getPrioritiesValues().get(priorityString) ); 
 		
 		
 		
 		autoTitle.setText(title);
-	
-
 		textViewDate.setText(deadline);
 		
 		for( i = 0; i < devices.length -1 ; i++)
 			devicesString += devices[i] + ",";
 		devicesString +=devices[i];
 		textViewDevices.setText(devicesString);
+		
+		
 		
 
 		System.out.println("DEADLINE" + deadline);
@@ -1042,11 +1044,11 @@ public void setDomain(Spinner domain) {
 }
 
 public Spinner getPriority() {
-	return priority;
+	return spinnerPriority;
 }
 
 public void setPriority(Spinner priority) {
-	this.priority = priority;
+	this.spinnerPriority = priority;
 }
 
 

@@ -28,13 +28,13 @@ public class PopulationEvolution {
 	/**
 	 * the population before selection, crossover, mutation
 	 */
-	ArrayList<Individual> population;
+	private ArrayList<Individual> population;
 	
 	
 	/**
 	 * contains the new population after selection, crossover, mutation
 	 */
-	ArrayList<Individual> newPopulation;
+	private ArrayList<Individual> newPopulation;
 	
 	
 	/**
@@ -82,14 +82,24 @@ public class PopulationEvolution {
 	
 	public void startEvolution()
 	{
-		int decade, nrDecades = 100;
+		int decade= 0, nrDecades = 100;
 		
 		
 		initMembers();
 		
-		for(decade = 0; decade < nrDecades; decade++)
+		
+	//	for(Task task :shiftingTasks)
+	//		System.out.println(task.getNameTask() + " " + task.getPriority());
+		
+		
+		while(true)
 		{
 			selection();
+			
+			if(decade == nrDecades - 1)	
+				break;
+			
+			
 			crossOver();
 			mutation();
 			
@@ -98,15 +108,11 @@ public class PopulationEvolution {
 			population.addAll(newPopulation);
 			newPopulation.clear();
 			
-		/*	for(Individual i : population)
-			{
-				System.out.print(i.getOrderTasks().size() + " " );
-			}
+			decade++;
+
+		} 
 			
-			System.out.println("-----------");*/
-		}
-			
-		
+		System.out.println("INTRA AICI 2");
 
 		
 	}
@@ -176,12 +182,29 @@ public class PopulationEvolution {
 		}
 		Collections.sort(population, new ComparatorFitness());
 
-		System.out.println("--------");
+		System.out.println("%%%%%%%%%%%%%%%%%%");
+		System.out.println("%%%%%%%%%%%%%%%%%%");
 		
 		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
-			System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
+			
+		/*	if(indexInd == 0)
+			{
+				System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
+				System.out.println(population.get(indexInd).getOrderTasks().toString() );
+				System.out.println("##################");
+			}*/
+			
 			newPopulation.add(population.get(indexInd));
 		}
+		
+	/*	for(indexInd = 0; indexInd < newPopulation.size(); indexInd++)
+		{
+			System.out.print(newPopulation.get(indexInd).getFitnessValue() + " ");
+		}
+		
+		System.out.println(population.get(0).getOrderTasks().toString() );
+		*/
+		
 	}
 	
 	
@@ -214,6 +237,13 @@ public class PopulationEvolution {
 			
 			Individual extras1 =  population.get(r.nextInt(population.size()));
 			Individual extras2 = population.get(r.nextInt(population.size()));
+			
+			if(extras1.getOrderTasks().size() == 0 || extras2.getOrderTasks().size() == 0)
+			{	
+				newPopulation.add(child1);
+				newPopulation.add(child2);
+				continue;
+			}
 			
 			
 	/*		System.out.println("--------------");
@@ -374,7 +404,7 @@ public class PopulationEvolution {
 			
 		}
 		
-		System.out.println("A IESIT " +  newPopulation.size());
+		//System.out.println("A IESIT " +  newPopulation.size());
 
 		
 	}
@@ -443,7 +473,11 @@ public class PopulationEvolution {
 		{
 			if(r.nextFloat() < ConstantsPopulation.mutationThreshold )
 			{
-				mutationType = r.nextInt(5);
+				if(ind.getOrderTasks().size() == 0)
+					continue;
+				
+				
+				mutationType = r.nextInt(6);
 				
 		//		System.out.println("S-a produs o mutatie");
 				
@@ -505,7 +539,21 @@ public class PopulationEvolution {
 					ind.getOrderTasks().set(position1, ind.getOrderTasks().get(position2));
 					ind.getOrderTasks().set(position2, aux);
 					
-					System.out.println("Mutatie " + ind.getOrderTasks().toString());
+			//		System.out.println("Mutatie " + ind.getOrderTasks().toString());
+					
+					break;
+					
+					case 5 :
+						
+					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+							if(!ind.getOrderTasks().contains(indexTask))
+							{
+								ind.getOrderTasks().remove(r.nextInt(ind.getOrderTasks().size()));
+								ind.getOrderTasks().add(new Integer(indexTask));
+								break;
+							}
+							
+					break; 
 					
 				
 				}
@@ -535,6 +583,7 @@ public class PopulationEvolution {
 		int durationTravel;
 		int indexTask;
 		int priorityNumber;
+		float penaltyMorning = 0 , penaltyEvening = 0;
 		ArrayList<Integer> tasks = ind.getOrderTasks();
 		
 		LocationContext location1, location2;
@@ -543,7 +592,7 @@ public class PopulationEvolution {
 		
 		
 		if(tasks.size() == 0)
-			System.out.println("ARE DIMENSIUNEA 0");
+			return 0;
 		
 		
 		for(indexTask = 0; indexTask < tasks.size() - 1 ; indexTask++)
@@ -574,24 +623,22 @@ public class PopulationEvolution {
 		
 	//	System.out.println("Inainte " + sumMinutes + " " + ind.getStartTime());
 		
+		penaltyMorning = penaltyMorningCompute(ind);
+		penaltyEvening = penaltyEvening(ind,sumMinutes);
 		
-		if(ind.getStartTime() < ConstantsPopulation.minimalStartTime)
-			sumMinutes += ConstantsPopulation.penalty *
-			(ConstantsPopulation.minimalStartTime - ind.getStartTime());
-		else
-			if( (sumMinutes + ind.getStartTime() ) > ConstantsPopulation.maximalEndTime)
-				sumMinutes +=
-				(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) * ConstantsPopulation.penalty;
+	
+	//	System.out.println("PEdeapsa " +  penaltyEvening);
 		
+		
+		sumMinutes += penaltyEvening + penaltyMorning;
 		
 	//	System.out.println("Dupa " + sumMinutes);
 		
 		for(Integer idTask : ind.getOrderTasks())
 		{
 			priorityNumber = Core.getPrioritiesValues().get( shiftingTasks.get(idTask).getPriority());
-			
-			
-			sumMinutes -= ComputationalMethods.prioritiesValues.get(priorityNumber);  
+						
+			sumMinutes = sumMinutes - ComputationalMethods.durations.get(idTask) - ComputationalMethods.prioritiesValues.get(priorityNumber);  
 		}
 		
 		
@@ -602,5 +649,78 @@ public class PopulationEvolution {
 		
 		
 	}
+	
+	public float penaltyMorningCompute(Individual ind)
+	{
+		float penaltyMorning = 0;
+		
+		if(ind.getStartTime() < ConstantsPopulation.minimalStartTime){
+			
+			if( (ConstantsPopulation.minimalStartTime - ind.getStartTime()  )< 30)
+			{
+				penaltyMorning = ConstantsPopulation.penalty_one *
+							(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+			}
+			else{
+				if( (ConstantsPopulation.minimalStartTime - ind.getStartTime() ) < 60)
+				{
+					penaltyMorning = ConstantsPopulation.penalty_two *
+								(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+				}
+				else{
+						penaltyMorning = ConstantsPopulation.penalty_three *
+									(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+				}
+			}
+			
+		}
+		
+		return penaltyMorning;
+	}
+	
+	public float penaltyEvening(Individual ind, float sumMinutes)
+	{
+		float penaltyEvening= 0;
+		
+		if( (sumMinutes + ind.getStartTime() ) > ConstantsPopulation.maximalEndTime)
+		{
+		//	System.out.println("intra aici" +  ind.getStartTime() + " " + sumMinutes + " " + penaltyEvening);
+			
+			if((sumMinutes + ind.getStartTime()  - ConstantsPopulation.maximalEndTime ) < 30 )
+			{
+				penaltyEvening =(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) 
+				* ConstantsPopulation.penalty_one;
+			} 
+			else{
+				if((sumMinutes + ind.getStartTime()  - ConstantsPopulation.maximalEndTime ) < 60 )
+					penaltyEvening =(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) 
+					* ConstantsPopulation.penalty_two;
+				else{
+						penaltyEvening =(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) 
+						* ConstantsPopulation.penalty_three;
+				}
+			}
+		}
+	//	System.out.println("Datele sunt " + ind.getStartTime() + " " + sumMinutes + " " + penaltyEvening);
+		
+		return penaltyEvening;
+	}
+
+	public ArrayList<Individual> getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(ArrayList<Individual> population) {
+		this.population = population;
+	}
+
+	public ArrayList<Individual> getNewPopulation() {
+		return newPopulation;
+	}
+
+	public void setNewPopulation(ArrayList<Individual> newPopulation) {
+		this.newPopulation = newPopulation;
+	}
+	
 	
 }

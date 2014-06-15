@@ -33,6 +33,7 @@ public class AlterateTask implements OnClickListener  {
 	 public final static String DEVICE_MESSAGE  	= "DeviceName";
 	 public final static String LOCATION_MESSAGE 	= "LocationTask";
 	 public final static String DEADLINE_MESSAGE    = "DeadlineTask";
+	 public final static String PRIORITY_MESSAGE	= "PriorityTask";
 	
 	
 	/**
@@ -128,6 +129,7 @@ public class AlterateTask implements OnClickListener  {
 		intentModify.putExtra(DEVICE_MESSAGE, devicesArray);
 		intentModify.putExtra(DEADLINE_MESSAGE, deadline.getDeadline());
 		intentModify.putExtra(LOCATION_MESSAGE, locationArray);
+		intentModify.putExtra(PRIORITY_MESSAGE, taskToModify.getPriority());
 		
 		
 		System.out.println("DEADLINE_UL ESTE " +  deadline.getDeadline());
