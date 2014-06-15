@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.example.meniu.Core;
+import com.google.android.gms.maps.model.LatLng;
 
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
@@ -53,20 +54,43 @@ public class PopulationEvolution {
 	 */
 	int sizeCrossover;
 	
+	private LatLng currentPosition;
+	
+	private LatLng endPosition;	
+
+	
+	/**
+	 * the start time that must not be exceeded
+	 */
+	private int startTimeMinutes;
+	
+	
+	/**
+	 * the end time that must not be exceeded
+	 */
+	private int endTimeMinutes;
+	
 	
 
 	/**
 	 * @param fixedTasks : the tasks whose start time and end time cannot be changed for today from database
 	 * @param shiftingTasks : the tasks whose start time and end time can be changed from database
 	 */
-	public PopulationEvolution(ArrayList<FixedTaskInformation> fixedTasks, List<Task> shiftingTasks) 
+	public PopulationEvolution(ArrayList<FixedTaskInformation> fixedTasks, 
+			List<Task> shiftingTasks) 
 	{
 		this.fixedTasks = fixedTasks;
 		this.shiftingTasks = shiftingTasks;
+
+				
+				
 		
 		population = new ArrayList<Individual>();
 		newPopulation = new ArrayList<Individual>();
 		calculator = new ComputationalMethods();
+		
+		
+		
 	}
 	
 	/**
@@ -86,6 +110,8 @@ public class PopulationEvolution {
 		
 		
 		initMembers();
+		
+		System.out.println(startTimeMinutes + " " + endTimeMinutes);
 		
 		
 	//	for(Task task :shiftingTasks)
@@ -187,12 +213,12 @@ public class PopulationEvolution {
 		
 		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
 			
-		/*	if(indexInd == 0)
+			if(indexInd == 0)
 			{
 				System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
 				System.out.println(population.get(indexInd).getOrderTasks().toString() );
 				System.out.println("##################");
-			}*/
+			}
 			
 			newPopulation.add(population.get(indexInd));
 		}
@@ -587,12 +613,21 @@ public class PopulationEvolution {
 		ArrayList<Integer> tasks = ind.getOrderTasks();
 		
 		LocationContext location1, location2;
-		
-	//	System.out.println("------------");
+
 		
 		
 		if(tasks.size() == 0)
 			return 0;
+		
+		
+		location1 = (LocationContext) PopulationEvolution.shiftingTasks.get(tasks.get(0)).
+		getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+		
+		
+		durationTravel =	ComputationalMethods.calculateDurationTravel
+		(currentPosition.latitude, currentPosition.longitude, location1.getLatitude(), location1.getLongitude());
+		
+		sumMinutes +=durationTravel;
 		
 		
 		for(indexTask = 0; indexTask < tasks.size() - 1 ; indexTask++)
@@ -619,20 +654,25 @@ public class PopulationEvolution {
 
 		sumMinutes +=  ComputationalMethods.durations.get(tasks.get(indexTask));
 		
-		ind.setDuration(sumMinutes);
+		location1 = (LocationContext) PopulationEvolution.shiftingTasks.get(tasks.get(indexTask)).
+		getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
 		
-	//	System.out.println("Inainte " + sumMinutes + " " + ind.getStartTime());
+		
+		durationTravel =	ComputationalMethods.calculateDurationTravel
+		( location1.getLatitude(), location1.getLongitude(), endPosition.latitude, endPosition.longitude);
+		
+		sumMinutes +=durationTravel;
+		
+		ind.setDuration(sumMinutes);
+
 		
 		penaltyMorning = penaltyMorningCompute(ind);
 		penaltyEvening = penaltyEvening(ind,sumMinutes);
-		
-	
-	//	System.out.println("PEdeapsa " +  penaltyEvening);
+
 		
 		
 		sumMinutes += penaltyEvening + penaltyMorning;
-		
-	//	System.out.println("Dupa " + sumMinutes);
+
 		
 		for(Integer idTask : ind.getOrderTasks())
 		{
@@ -640,9 +680,7 @@ public class PopulationEvolution {
 						
 			sumMinutes = sumMinutes - ComputationalMethods.durations.get(idTask) - ComputationalMethods.prioritiesValues.get(priorityNumber);  
 		}
-		
-		
-	//	System.out.println("DUpa 2 " + sumMinutes);
+
 		
 		
 		return sumMinutes;
@@ -721,6 +759,40 @@ public class PopulationEvolution {
 	public void setNewPopulation(ArrayList<Individual> newPopulation) {
 		this.newPopulation = newPopulation;
 	}
+
+	public LatLng getCurrentPosition() {
+		return currentPosition;
+	}
+
+	public void setCurrentPosition(LatLng currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+
+	public LatLng getEndPosition() {
+		return endPosition;
+	}
+
+	public void setEndPosition(LatLng endPosition) {
+		this.endPosition = endPosition;
+	}
+
+	public int getStartTimeMinutes() {
+		return startTimeMinutes;
+	}
+
+	public void setStartTimeMinutes(int startTimeMinutes) {
+		this.startTimeMinutes = startTimeMinutes;
+	}
+
+	public int getEndTimeMinutes() {
+		return endTimeMinutes;
+	}
+
+	public void setEndTimeMinutes(int endTimeMinutes) {
+		this.endTimeMinutes = endTimeMinutes;
+	}
+
+
 	
 	
 }

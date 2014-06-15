@@ -1,5 +1,6 @@
 package com.example.meniu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +12,18 @@ import com.google.android.gms.maps.model.LatLng;
 
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
+import ContextElements.LocationContext;
 import DatabaseOperation.ExecuteTaskButton;
 import DatabaseOperation.FixedTaskInformation;
+import Salesman.ComputationalMethods;
 import Salesman.ConstantsPopulation;
 import Salesman.Individual;
 import Salesman.PopulationEvolution;
 import Task.Task;
 import Task.TaskState;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -95,6 +100,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	 */
 	LatLng currentPosition;
 	
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +130,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		idRoot = layout.getChildAt(0).getId();
 		idPicker = layout.getChildAt(2).getId();
 		idView = layout.getChildAt(2).getId();
-		numberViews = 2;
+		numberViews = 3;
 		
 		
 		if(fixedTasks.size() == 0)
@@ -261,8 +268,12 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	public void showTasks(Task task, LatLng positionBefore, int index)
 	{
 		
-		  TextView title,priority, distance, duration, durationBetween ;
-		  TextView titleValue, priorityValue , distanceValue, durationValue, durationBetweenValue;
+		  TextView title,priority, location , duration, durationBetween ;
+		  TextView titleValue, priorityValue , locationValue, durationValue, durationBetweenValue;
+		  int minutesBetween;
+		  List<Address> addresses = null;
+		  Geocoder geocoder = new Geocoder(this);
+		  String address="";
 		  
 
 		  
@@ -290,23 +301,40 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		  
 		  
+		  RelativeLayout.LayoutParams params_location = 
+		  new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		  RelativeLayout.LayoutParams params_location_value = 
+		  new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		  
+		  
+		  RelativeLayout.LayoutParams params_duration_travel = 
+		  new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		  RelativeLayout.LayoutParams params_duration_travel_value = 
+		  new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		  
+		  
 		  
 		  title    = new TextView(this);
 		  priority = new TextView(this);
-		  distance = new TextView(this);
+		  location = new TextView(this);
 		  duration = new TextView(this);
+		  durationBetween = new TextView(this);
 			
 		  titleValue    = new TextView(this);
 		  priorityValue = new TextView(this);
-		  distanceValue = new TextView(this);;
+		  locationValue = new TextView(this);;
 		  durationValue = new TextView(this);
-		
+		  durationBetweenValue = new TextView(this);
 
 		  title.setText(index + ". " + this.getResources().getString((R.string.taskTitle)) + " : "); 
 		  title.setTextSize(20);
 		  title.setId( ++idPicker);
 		  params_title.addRule(RelativeLayout.BELOW, idPicker - 1);
-		  params_title.setMargins(0, 10, 0, 0); 
+		  params_title.setMargins(0, 30, 0, 0); 
 		  title.setLayoutParams(params_title);
 		  
 		   
@@ -315,7 +343,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  titleValue.setId( ++ idPicker);
 		  params_title_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
 		  params_title_value.addRule(RelativeLayout.BELOW, idPicker - 2);
-		  params_title_value.setMargins(10, 10, 0, 0);
+		  params_title_value.setMargins(10, 30, 0, 0);
 		  titleValue.setLayoutParams(params_title_value);
 		  
 		  priority.setText(R.string.textPriority);
@@ -332,6 +360,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  params_priority_value.addRule(RelativeLayout.BELOW, idPicker - 2);
 		  params_priority_value.setMargins(20, 10, 0, 0);
 		  priorityValue.setLayoutParams(params_priority_value);
+		  
 		  
 		  
 		  duration.setText(R.string.Duration);
@@ -357,6 +386,65 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  durationValue.setLayoutParams(params_duration_value);
 		  
 		  
+		  LocationContext locationC = (LocationContext) task.getInternContext().
+		  getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+					
+				
+		 try {
+					addresses = geocoder.getFromLocation(locationC.getLatitude() ,locationC.getLongitude(), 1);
+					address = addresses.get(0).getAddressLine(0) ;
+						
+					
+		 } catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+		 }
+		  
+		  
+		  location.setText("Location : ");
+		  location.setTextSize(20);	
+		  location.setId( ++ idPicker);
+		  params_location.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  params_location.setMargins(0, 10, 0, 0);
+		  location.setLayoutParams(params_location);
+		  
+		  if(address == null)
+			  locationValue.setText("");
+		  else
+			  locationValue.setText(address); 
+		  locationValue.setTextSize(20);	
+		  locationValue.setId( ++ idPicker);
+		  params_location_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
+		  params_location_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  params_location_value.setMargins(20, 10, 0, 0);
+		  locationValue.setLayoutParams(params_location_value);
+		  
+		  
+		  
+		  
+		  minutesBetween = ComputationalMethods.calculateDurationTravel
+		  (positionBefore.latitude, positionBefore.longitude, locationC.getLatitude(), locationC.getLongitude());
+		  
+		  durationBetween.setText("Time to travel to this location: ");
+		  durationBetween.setTextSize(20);	
+		  durationBetween.setId( ++ idPicker);
+		  params_duration_travel.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  params_duration_travel.setMargins(0, 10, 0, 0);
+		  durationBetween.setLayoutParams(params_duration_travel);
+			
+			
+			
+			
+			
+		  durationBetweenValue.setText( minutesBetween/ 60 + ":" + minutesBetween  % 60   );
+		  durationBetweenValue.setTextSize(20);	
+		  durationBetweenValue.setId( ++ idPicker);
+		  params_duration_travel_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
+		  params_duration_travel_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  params_duration_travel_value.setMargins(20, 10, 0, 0);
+		  durationBetweenValue.setLayoutParams(params_duration_travel_value);
+		  
+		  
 		  
 		  layout.addView(title);
 		  layout.addView(titleValue);
@@ -364,6 +452,11 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  layout.addView(priorityValue);
 		  layout.addView(duration);
 		  layout.addView(durationValue);
+		  layout.addView(location);
+		  layout.addView(locationValue);
+		  layout.addView(durationBetween);
+		  layout.addView(durationBetweenValue);
+		  
 	}
 	
 	
@@ -501,8 +594,18 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 			LatLng startPosition;
 			int index = 1;
 			
-		//	 if(layout.getChildCount() - numberViews - 1 > 0)
-		//		layout.removeViews(numberViews + 1, layout.getChildCount() - numberViews);
+			System.out.println(timePickerStartTime.getCurrentHour() + "   " + timePickerEndTime.getCurrentHour());
+			
+			
+			population.setStartTimeMinutes(timePickerStartTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
+			population.setEndTimeMinutes(timePickerEndTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
+			
+			System.out.println("Numarul de view-uri : " + numberViews);
+			
+			 if(layout.getChildCount() - numberViews  > 0){
+				layout.removeViews(numberViews , layout.getChildCount() - numberViews);
+				idPicker = layout.getChildAt(2).getId();
+			 }
 
 		//	 initMessagePatience();
 			
@@ -536,6 +639,11 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	public void onLocationChanged(Location arg0) {
 		currentPosition = new LatLng(arg0.getLatitude(), arg0.getLongitude());
 		
+		System.out.println("A intrat aici");
+		
+		population.setCurrentPosition(currentPosition);
+		population.setEndPosition(currentPosition); 
+		
 	}
 
 	@Override
@@ -567,12 +675,11 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	    
 	    
 	    mLocationClient.requestLocationUpdates(locationRequest, this);
+
 		
 	}
 	
-	
-	
-	
+
 
 	@Override
 	public void onDisconnected() {
