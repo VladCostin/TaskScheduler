@@ -173,8 +173,8 @@ public class PopulationEvolution {
 			for(indexTask = 0; indexTask < sizeTasks; indexTask++)
 				ind.getOrderTasks().add( tasksRemained.remove(r.nextInt(tasksRemained.size())) ); 
 			
-			ind.setStartTime(ConstantsPopulation.minimalStartTime +
-			r.nextInt(ConstantsPopulation.maximalEndTime - ConstantsPopulation.minimalStartTime));
+			ind.setStartTime(startTimeMinutes +
+			r.nextInt(endTimeMinutes - startTimeMinutes));
 			
 			population.add(ind);
 			
@@ -610,6 +610,7 @@ public class PopulationEvolution {
 		int indexTask;
 		int priorityNumber;
 		float penaltyMorning = 0 , penaltyEvening = 0;
+		float penalty;
 		ArrayList<Integer> tasks = ind.getOrderTasks();
 		
 		LocationContext location1, location2;
@@ -666,12 +667,16 @@ public class PopulationEvolution {
 		ind.setDuration(sumMinutes);
 
 		
-		penaltyMorning = penaltyMorningCompute(ind);
-		penaltyEvening = penaltyEvening(ind,sumMinutes);
+		//penaltyMorning = penaltyMorningCompute(ind);
+		//penaltyEvening = penaltyEvening(ind,sumMinutes);
 
+		penalty = calculatePenalty(ind, sumMinutes);
+	
 		
 		
-		sumMinutes += penaltyEvening + penaltyMorning;
+	//	sumMinutes += penaltyEvening + penaltyMorning;
+		
+		sumMinutes += penalty;
 
 		
 		for(Integer idTask : ind.getOrderTasks())
@@ -688,26 +693,68 @@ public class PopulationEvolution {
 		
 	}
 	
+	private float calculatePenalty(Individual ind, float sumMinutes) {
+		
+		int durationOver = 0;
+		float penalty = 0;
+		
+		
+		if(ind.getStartTime() < startTimeMinutes)
+			durationOver += startTimeMinutes - ind.getStartTime();
+		if( (sumMinutes + ind.getStartTime() ) > endTimeMinutes)
+			durationOver += sumMinutes + ind.getStartTime() - endTimeMinutes;
+		
+		
+	//	System.out.println(durationOver + " " + ind.getStartTime() + " " + sumMinutes + " " + startTimeMinutes + " " + endTimeMinutes );
+		
+		if(durationOver <0)
+			return 0;
+		
+		if(durationOver < 15 )
+		{
+			penalty = ConstantsPopulation.penalty_one * durationOver;
+		}
+		if(durationOver >= 15 && durationOver < 30  )
+		{
+			penalty =  ConstantsPopulation.penalty_one * 15;
+			penalty += ConstantsPopulation.penalty_two *  (durationOver - 15);
+		}
+		if(durationOver >= 30)
+		{
+			penalty =  ConstantsPopulation.penalty_one * 15;
+			penalty += ConstantsPopulation.penalty_two *  (30 - 15);
+			penalty += ConstantsPopulation.penalty_three * (durationOver - 30);
+		}
+		
+		
+	//	System.out.println("Penalty :" + penalty);
+		
+		return penalty;
+		
+		
+		
+	}
+
 	public float penaltyMorningCompute(Individual ind)
 	{
 		float penaltyMorning = 0;
 		
-		if(ind.getStartTime() < ConstantsPopulation.minimalStartTime){
+		if(ind.getStartTime() < startTimeMinutes){
 			
-			if( (ConstantsPopulation.minimalStartTime - ind.getStartTime()  )< 30)
+			if( (startTimeMinutes - ind.getStartTime()  )< 30)
 			{
 				penaltyMorning = ConstantsPopulation.penalty_one *
-							(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+							(startTimeMinutes - ind.getStartTime());
 			}
 			else{
-				if( (ConstantsPopulation.minimalStartTime - ind.getStartTime() ) < 60)
+				if( (startTimeMinutes - ind.getStartTime() ) < 60)
 				{
 					penaltyMorning = ConstantsPopulation.penalty_two *
-								(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+								(startTimeMinutes - ind.getStartTime());
 				}
 				else{
 						penaltyMorning = ConstantsPopulation.penalty_three *
-									(ConstantsPopulation.minimalStartTime - ind.getStartTime());
+									(startTimeMinutes - ind.getStartTime());
 				}
 			}
 			
@@ -720,21 +767,21 @@ public class PopulationEvolution {
 	{
 		float penaltyEvening= 0;
 		
-		if( (sumMinutes + ind.getStartTime() ) > ConstantsPopulation.maximalEndTime)
+		if( (sumMinutes + ind.getStartTime() ) > endTimeMinutes)
 		{
 		//	System.out.println("intra aici" +  ind.getStartTime() + " " + sumMinutes + " " + penaltyEvening);
 			
-			if((sumMinutes + ind.getStartTime()  - ConstantsPopulation.maximalEndTime ) < 30 )
+			if((sumMinutes + ind.getStartTime()  - endTimeMinutes ) < 30 )
 			{
-				penaltyEvening =(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) 
+				penaltyEvening =(sumMinutes + ind.getStartTime() - endTimeMinutes  ) 
 				* ConstantsPopulation.penalty_one;
 			} 
 			else{
-				if((sumMinutes + ind.getStartTime()  - ConstantsPopulation.maximalEndTime ) < 60 )
-					penaltyEvening =(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) 
+				if((sumMinutes + ind.getStartTime()  - endTimeMinutes ) < 60 )
+					penaltyEvening =(sumMinutes + ind.getStartTime() - endTimeMinutes  ) 
 					* ConstantsPopulation.penalty_two;
 				else{
-						penaltyEvening =(sumMinutes + ind.getStartTime() - ConstantsPopulation.maximalEndTime  ) 
+						penaltyEvening =(sumMinutes + ind.getStartTime() - endTimeMinutes  ) 
 						* ConstantsPopulation.penalty_three;
 				}
 			}

@@ -96,9 +96,9 @@ public class ComputationalMethods {
 		prioritiesValues.put(4, 450);
 	*/	
 		
-	/*	prioritiesValues.put(0, 60);
-		prioritiesValues.put(1, 90);
-		prioritiesValues.put(2, 150);
+	/*	prioritiesValues.put(0, 30);
+		prioritiesValues.put(1, 60);
+		prioritiesValues.put(2, 180);
 		prioritiesValues.put(3, 240);
 		prioritiesValues.put(4, 90);
 	*/

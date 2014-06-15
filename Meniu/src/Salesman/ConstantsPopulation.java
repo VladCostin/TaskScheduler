@@ -5,11 +5,6 @@ public interface ConstantsPopulation
 	int nrIndRatio				= 20;
 	
 	
-	int minimalStartTime		= 420;
-	
-	
-	int maximalEndTime			= 1260;
-	
 	
 	float speedPase				= (float) 1.5; // the user needs 1.5 seconds to walk a meter
 	
