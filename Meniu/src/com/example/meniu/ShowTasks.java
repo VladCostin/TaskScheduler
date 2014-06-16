@@ -161,7 +161,7 @@ public class ShowTasks extends Activity
 		
 		// daca las asta la urma in metoda onCreate, o sa dea eroare la broadcast receiver
 		// pentru ca probabil nu a avut timp sa faca ceva
-	//	durationAlg = new KMeansDuration();
+		durationAlg = new KMeansDuration();
 	//	durationAlg.calculateKlusters();
 		
 		currentConditions = new CalculateCurrentContext(this);

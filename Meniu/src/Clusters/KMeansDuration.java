@@ -11,6 +11,7 @@ import ContextElements.LocationContext;
 import Task.Task;
 import Task.TaskState;
 
+import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -49,6 +50,9 @@ public class KMeansDuration implements KMeans{
 	 * the final centers, when K-means detects the global minimum
 	 */
 	ArrayList<Task> finalCenters;
+	
+	
+	ArrayList<Integer> finalIdCentroid;
 	
 	
 	/**
@@ -109,6 +113,7 @@ public class KMeansDuration implements KMeans{
 		idNewCentroid = new ArrayList<Integer>();
 		idCentroiziChosen = new ArrayList<Integer>();
 		finalCenters = new ArrayList<Task>();
+		finalIdCentroid = new ArrayList<Integer>();
 		
 		
 		errorInit = 100000000;
@@ -138,6 +143,7 @@ public class KMeansDuration implements KMeans{
 		states.add(TaskState.EXECUTED);
 		
 		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(states);
+
 
 		
 		System.out.println( "DIMENSIUNEA ESTE   " + tasks.size());
@@ -219,9 +225,10 @@ public class KMeansDuration implements KMeans{
 			
 			
 				idNewCentroid.add(centroidNearest);
+				
 			
 			}
-		
+
 		
 		
 				if(checkCentroiziNotChanged() == true)
@@ -257,7 +264,10 @@ public class KMeansDuration implements KMeans{
 			else{
 				negativeResult = 0;
 				finalCenters.clear();
+				finalIdCentroid.clear();
 				finalCenters.addAll(centroizi);
+				finalIdCentroid.addAll(idCentroid);
+				
 				
 				System.out.println("ESTE REACTUALIZAT FINAL CENTERS");
 				
@@ -275,16 +285,22 @@ public class KMeansDuration implements KMeans{
 		
 		calculateDurationMedium();
 		
+		Core.setCentersDuration(finalCenters);
+		
 	}
 	
 	
 	
 
+	
+	
+
+
 	/**
 	 * calculates the average duration for the determined clusters
 	 */
 	public void calculateDurationMedium() {
-		
+
 		
 		System.out.println("AFISEZ DURATELE");
 		
@@ -293,16 +309,21 @@ public class KMeansDuration implements KMeans{
 		TreeMap<String, Integer> frequency;
 		nrClusters = finalCenters.size();
 		
+		
+		System.out.println( "nrClusters este : " +   nrClusters);
+		System.out.println("idCentroid este : " + finalIdCentroid.size() + " " + finalIdCentroid);
+		
+		
 		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
 		{
-			System.out.println("AFISEZ duratele pentru un centroid");
+		//	System.out.println("AFISEZ duratele pentru un centroid " + idCentroid);
 			durationAverage = 0;
 			pointsSameCenter = 0;
 			frequency = new TreeMap<String,Integer>();
 			
-			for(iTask = 0; iTask < idCentroid.size(); iTask++)
+			for(iTask = 0; iTask < finalIdCentroid.size(); iTask++)
 			{
-				if(idCentroid.get(iTask) == iCentroid)
+				if(finalIdCentroid.get(iTask) == iCentroid)
 				{
 					
 				//	System.out.println("NUMELE TASKULUI ESTE " + tasks.get(iTask).getNameTask());
@@ -321,7 +342,7 @@ public class KMeansDuration implements KMeans{
 					
 					
 					
-					System.out.println(tasks.get(iTask).getNameTask() + " " + duration.getDuration()  + " " + location.getLatitude() + " " + location.getLongitude() + " " + tasks.get(iTask).getStartTime() );
+					System.out.println("CACAT " + tasks.get(iTask).getNameTask() + " " + duration.getDuration()  + " " + location.getLatitude() + " " + location.getLongitude() + " " + tasks.get(iTask).getStartTime() );
 				}
 			}
 			
@@ -467,8 +488,6 @@ public class KMeansDuration implements KMeans{
 		int minutes;
 		int hours;
 		
-
-		
 		
 		
 		for(i = 0 ; i < nrClusters; i++)
@@ -511,14 +530,41 @@ public class KMeansDuration implements KMeans{
 			minutes = minutes - hours * 60;
 			
 		
+			
 			Task centroid =  centroizi.get(i);
-			centroid.getInternContext().getContextElementsCollection().
+			String dataValues[] = centroid.getStartTime().split("/");
+			LocationContext location = (LocationContext)
+			centroid.getInternContext().
+			getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+			
+			
+			Task centroidNou = new Task();
+			
+			centroidNou.setNameTask(centroid.getNameTask());
+			centroidNou.setStartTime(dataValues[0]+"/"+dataValues[1]+"/"+dataValues[2]+"/"+hours+"/"+minutes);
+			
+			
+			
+			
+			
+			centroidNou.getInternContext().getContextElementsCollection().
+			put(ContextElementType.LOCATION_CONTEXT_ELEMENT, location);
+			
+			centroizi.set(i, centroidNou);
+			
+			
+		/*	centroid.getInternContext().getContextElementsCollection().
 			put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(new LatLng(latitude, longitude)));
 			
 			
 			String dataValues[] = centroizi.get(i).getStartTime().split("/");
 			centroid.setNameTask(centroizi.get(i).getNameTask()); 
-			centroid.setStartTime(dataValues[0]+"/"+dataValues[1]+"/"+dataValues[2]+"/"+hours+"/"+minutes);
+			centroid.setStartTime(dataValues[0]+"/"+dataValues[1]+"/"+dataValues[2]+"/"+hours+"/"+minutes);*/
+			
+			
+			
+			
+			
 			
 		/*System.out.println( i + "  " + nrPoints + " " + latitude + " " + longitude + " " + hours+"/"+minutes);
 			centroid =  centroizi.get(i);
@@ -622,6 +668,14 @@ public class KMeansDuration implements KMeans{
 	public int calculateDistance(Task t1, Task t2) {
 		
 		
+	/*	if(t1 == null || t2 == null)
+		{
+			System.out.println("2. UNUDL DINTRE EI ESTE NULL");
+		}*/
+		
+	//	System.out.println("START TIME t1 este " + t1.getStartTime());
+	//	System.out.println("START TIME t2 este " + t2.getStartTime());
+		
 		
 		int stringDistance =   KMeansDistances.calculateDistanceTitles(t1.getNameTask(), t2.getNameTask());
 		int timeDistance =    KMeansDistances.calculateDistanceStartTime(t1.getStartTime(), t2.getStartTime());
@@ -722,11 +776,18 @@ public class KMeansDuration implements KMeans{
 	public Task detectCentroid(Task currentTask) {
 		
 		
-		Task chosenTask = finalCenters.get(0);
-		float distanceMaxim = calculateDistance(currentTask, finalCenters.get(0));
+		Task chosenTask =  Core.getCentersDuration().get(0);
+		
+		if(chosenTask == null || currentTask == null)
+			System.out.println("UNUL DIN TASKURI ESTE NULL");
+		
+		float distanceMaxim = calculateDistance(currentTask, Core.getCentersDuration().get(0));
 		float distance;
 		
-		for(Task center : finalCenters)
+		
+		
+		
+		for(Task center : Core.getCentersDuration())
 		{
 		//	System.out.println(" Un centroid are numele" + center.getNameTask());
 			

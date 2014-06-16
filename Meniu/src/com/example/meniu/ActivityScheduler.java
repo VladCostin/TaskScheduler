@@ -70,7 +70,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	int idView; 
 	int idRoot;
 	int numberViews;
-	int idPicker;
+	int idButtonRecall;
 	
 	TextView textViewPatienceMessage;
 	
@@ -95,10 +95,35 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	Button buttonExecuteSchedule;
 	
 	
+	
+	/**
+	 * for selecting the interval to be shown in time pickers
+	 */
+	Button buttonNextInterval;
+	
+	
 	/**
 	 * contains the coordinates of the user's current location
 	 */
 	LatLng currentPosition;
+	
+	
+	/**
+	 * contains the start times of the intervals when it can execute shifting tasks
+	 */
+	ArrayList<Integer> startTimes;
+	
+	
+	/**
+	 * contains the end times of the intervals when it can execute shifting tasks
+	 */
+	ArrayList<Integer> endTimes;
+	
+	
+	/**
+	 * represents the free interval showed at the time by time pickers
+	 */
+	int freeInterval;
 	
 	
 	
@@ -128,19 +153,28 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		
 		
 		idRoot = layout.getChildAt(0).getId();
-		idPicker = layout.getChildAt(2).getId();
+		idView = layout.getChildAt(2).getId();
 		idView = layout.getChildAt(2).getId();
 		numberViews = 3;
 		
 		
-		if(fixedTasks.size() == 0)
+		if(fixedTasks.size() == 0){
 			initTimePickers(ConstantsPopulation.pickerCurrentStartHour, ConstantsPopulation.pickerCurrentStartMinute,
 							ConstantsPopulation.pickerCurrentEndHour, ConstantsPopulation.pickerCurrentEndMinute);
+			
+			buttonNextInterval = null;
+		}
 							
 		else
+		{
 			initNextInterval();
+			prepareIntervalTimes();
+			initTimePickers(startTimes.get(0) / 60, startTimes.get(0 ) % 60, 
+					endTimes.get(0) /60, endTimes.get(0) % 60);
+		}
 
 		initExecuteButton();
+		
 		
 		mLocationClient = new LocationClient(this,this,this);
 		locationRequest = new LocationRequest();
@@ -150,10 +184,52 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		locationRequest.setNumUpdates(1);
 		
 		
-	//	population.startEvolution();
+
 		
 	}
 	
+	/**
+	 * initializes an array containing the intervals when the user can execute shifting tasks
+	 */
+	public void prepareIntervalTimes() {
+		
+		startTimes = new ArrayList<Integer>();
+		endTimes   = new ArrayList<Integer>();
+		
+		int startTime = ConstantsPopulation.pickerCurrentStartHour * 60 + ConstantsPopulation.pickerCurrentStartMinute;
+		int endTime;
+		
+		
+		for(FixedTaskInformation task : fixedTasks)
+		{
+			endTime = task.getStartHour() * 60 + task.getStartMinute();
+			if(startTime  < endTime )
+			{
+				startTimes.add(startTime);
+				endTimes.add(endTime);
+			}
+			
+			startTime = task.getEndHour() * 60 + task.getEndMinute();
+			System.out.println(startTime);
+			
+		}
+		
+		endTime = ConstantsPopulation.pickerCurrentEndHour * 60 + ConstantsPopulation.pickerCurrentEndMinute;
+		if(startTime < endTime)
+		{
+			startTimes.add(startTime);
+			endTimes.add(endTime);
+		}
+		
+		this.freeInterval = 0;
+		
+		
+		System.out.println(startTimes.toString() + " " + endTimes.toString());
+		
+		
+		
+	}
+
 	/**
 	 * @param startHour : the hour to be set on picker when the task begins
 	 * @param startMinute : the minute to be set on picker when the task begins
@@ -174,7 +250,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	 */
 	public void initNextInterval() {
 		
-		 Button buttonNextInterval = new Button(this);
+		 buttonNextInterval = new Button(this);
 		 
 		 
 		 RelativeLayout.LayoutParams params_button_interval = 
@@ -191,7 +267,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 
 		 params_button_interval.addRule(RelativeLayout.BELOW, idRoot);
 		 params_button_interval.addRule(RelativeLayout.RIGHT_OF, idView -1);
-		 params_button_interval.setMargins(20, 50, 0, 0);
+		 params_button_interval.setMargins(20, 150, 0, 0);
 		 buttonNextInterval.setLayoutParams(params_button_interval);
 			
 			
@@ -219,11 +295,13 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 buttonExecuteSchedule.setText(getResources().getString(R.string.buttonCalculateSchedule)); 
 		 buttonExecuteSchedule.setOnClickListener(this);
 		 buttonExecuteSchedule.setTextSize(20);	
-		 buttonExecuteSchedule.setId( ++ idView);
+		 buttonExecuteSchedule.setId( ++idView  );
+		 
+		 idButtonRecall = idView;
 		 
 		 params_button_interval.addRule(RelativeLayout.BELOW, idRoot);
-		 params_button_interval.addRule(RelativeLayout.RIGHT_OF, idView -1);
-		 params_button_interval.setMargins(20, 50, 0, 0);
+		 params_button_interval.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		 params_button_interval.setMargins(20, 150, 0, 0);
 		 buttonExecuteSchedule.setLayoutParams(params_button_interval);
 			
 			
@@ -332,32 +410,32 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 
 		  title.setText(index + ". " + this.getResources().getString((R.string.taskTitle)) + " : "); 
 		  title.setTextSize(20);
-		  title.setId( ++idPicker);
-		  params_title.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  title.setId( ++idView); 
+		  params_title.addRule(RelativeLayout.BELOW, idView - 1);
 		  params_title.setMargins(0, 30, 0, 0); 
 		  title.setLayoutParams(params_title);
 		  
 		   
 		  titleValue.setText(task.getNameTask());
 		  titleValue.setTextSize(20);
-		  titleValue.setId( ++ idPicker);
-		  params_title_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		  params_title_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  titleValue.setId( ++ idView);
+		  params_title_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		  params_title_value.addRule(RelativeLayout.BELOW, idView - 2);
 		  params_title_value.setMargins(10, 30, 0, 0);
 		  titleValue.setLayoutParams(params_title_value);
 		  
 		  priority.setText(R.string.textPriority);
 		  priority.setTextSize(20);	
-		  priority.setId( ++ idPicker);
-		  params_priority.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  priority.setId( ++ idView);
+		  params_priority.addRule(RelativeLayout.BELOW, idView - 1);
 		  params_priority.setMargins(0, 10, 0, 0);
 		  priority.setLayoutParams(params_priority);
 			
 		  priorityValue.setText(task.getPriority());
 		  priorityValue.setTextSize(20);	
-		  priorityValue.setId( ++ idPicker);
-		  params_priority_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		  params_priority_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  priorityValue.setId( ++ idView);
+		  params_priority_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		  params_priority_value.addRule(RelativeLayout.BELOW, idView - 2);
 		  params_priority_value.setMargins(20, 10, 0, 0);
 		  priorityValue.setLayoutParams(params_priority_value);
 		  
@@ -365,8 +443,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  
 		  duration.setText(R.string.Duration);
 		  duration.setTextSize(20);	
-		  duration.setId( ++ idPicker);
-		  params_duration.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  duration.setId( ++ idView);
+		  params_duration.addRule(RelativeLayout.BELOW, idView - 1);
 		  params_duration.setMargins(0, 10, 0, 0);
 		  duration.setLayoutParams(params_duration);
 			
@@ -379,9 +457,9 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 			
 		  durationValue.setText(durationTask.getDuration() / 60 + ":" +  durationTask.getDuration() % 60   );
 		  durationValue.setTextSize(20);	
-		  durationValue.setId( ++ idPicker);
-		  params_duration_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		  params_duration_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  durationValue.setId( ++ idView);
+		  params_duration_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		  params_duration_value.addRule(RelativeLayout.BELOW, idView - 2);
 		  params_duration_value.setMargins(20, 10, 0, 0);
 		  durationValue.setLayoutParams(params_duration_value);
 		  
@@ -403,8 +481,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  
 		  location.setText("Location : ");
 		  location.setTextSize(20);	
-		  location.setId( ++ idPicker);
-		  params_location.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  location.setId( ++ idView);
+		  params_location.addRule(RelativeLayout.BELOW, idView - 1);
 		  params_location.setMargins(0, 10, 0, 0);
 		  location.setLayoutParams(params_location);
 		  
@@ -413,9 +491,9 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  else
 			  locationValue.setText(address); 
 		  locationValue.setTextSize(20);	
-		  locationValue.setId( ++ idPicker);
-		  params_location_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		  params_location_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  locationValue.setId( ++ idView);
+		  params_location_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		  params_location_value.addRule(RelativeLayout.BELOW, idView - 2);
 		  params_location_value.setMargins(20, 10, 0, 0);
 		  locationValue.setLayoutParams(params_location_value);
 		  
@@ -427,8 +505,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  
 		  durationBetween.setText("Time to travel to this location: ");
 		  durationBetween.setTextSize(20);	
-		  durationBetween.setId( ++ idPicker);
-		  params_duration_travel.addRule(RelativeLayout.BELOW, idPicker - 1);
+		  durationBetween.setId( ++ idView);
+		  params_duration_travel.addRule(RelativeLayout.BELOW, idView - 1);
 		  params_duration_travel.setMargins(0, 10, 0, 0);
 		  durationBetween.setLayoutParams(params_duration_travel);
 			
@@ -438,9 +516,9 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 			
 		  durationBetweenValue.setText( minutesBetween/ 60 + ":" + minutesBetween  % 60   );
 		  durationBetweenValue.setTextSize(20);	
-		  durationBetweenValue.setId( ++ idPicker);
-		  params_duration_travel_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		  params_duration_travel_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		  durationBetweenValue.setId( ++ idView);
+		  params_duration_travel_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		  params_duration_travel_value.addRule(RelativeLayout.BELOW, idView - 2);
 		  params_duration_travel_value.setMargins(20, 10, 0, 0);
 		  durationBetweenValue.setLayoutParams(params_duration_travel_value);
 		  
@@ -507,56 +585,56 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 duration.setText( "Total Duration : ");
 		 duration.setTextSize(20);
 		 duration.setTextColor(Color.BLUE);
-		 duration.setId( ++ idPicker);
-		 params_duration.addRule(RelativeLayout.BELOW, idPicker - 1);
+		 duration.setId( ++ idView);
+		 params_duration.addRule(RelativeLayout.BELOW, idView - 1);
 		 params_duration.setMargins(0, 10, 0, 0);
 		 duration.setLayoutParams(params_duration);
 			
 			
 		 durationValue.setText( ( (int) durationMinutes / 60) + ":" +  durationMinutes % 60   );
 		 durationValue.setTextSize(20);	
-		 durationValue.setId( ++ idPicker);
+		 durationValue.setId( ++ idView);
 		 durationValue.setTextColor(Color.BLUE);
-		 params_duration_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		 params_duration_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		 params_duration_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		 params_duration_value.addRule(RelativeLayout.BELOW, idView - 2);
 		 params_duration_value.setMargins(20, 10, 0, 0);
 		 durationValue.setLayoutParams(params_duration_value);
 		 
 		 
 		 startTime.setText( "Start time        : ");
 		 startTime.setTextSize(20);	
-		 startTime.setId( ++ idPicker);
+		 startTime.setId( ++ idView);
 		 startTime.setTextColor(Color.BLUE);
-		 params_startTime.addRule(RelativeLayout.BELOW, idPicker - 1);
+		 params_startTime.addRule(RelativeLayout.BELOW, idView - 1);
 		 params_startTime.setMargins(0, 10, 0, 0);
 		 startTime.setLayoutParams(params_startTime);
 			
 			
 		 startTimeValue.setText( ( (int) startTimeMinutes / 60) + ":" +  startTimeMinutes % 60   );
 		 startTimeValue.setTextSize(20);	
-		 startTimeValue.setId( ++ idPicker);
+		 startTimeValue.setId( ++ idView);
 		 startTimeValue.setTextColor(Color.BLUE);
-		 params_startTime_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		 params_startTime_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		 params_startTime_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		 params_startTime_value.addRule(RelativeLayout.BELOW, idView - 2);
 		 params_startTime_value.setMargins(20, 10, 0, 0);
 		 startTimeValue.setLayoutParams( params_startTime_value);
 		 
 		 
 		 endTime.setText( "End time          : ");
 		 endTime.setTextSize(20);	
-		 endTime.setId( ++ idPicker);
+		 endTime.setId( ++ idView);
 		 endTime.setTextColor(Color.BLUE);
-		 params_endTime.addRule(RelativeLayout.BELOW, idPicker - 1);
+		 params_endTime.addRule(RelativeLayout.BELOW, idView - 1);
 		 params_endTime.setMargins(0, 10, 0, 0);
 		 endTime.setLayoutParams(params_endTime);
 			
 			
 		 endTimeValue.setText( ( (int) endTimeMinutes / 60) + ":" +  endTimeMinutes % 60   );
 		 endTimeValue.setTextSize(20);	
-		 endTimeValue.setId( ++ idPicker);
+		 endTimeValue.setId( ++ idView);
 		 endTimeValue.setTextColor(Color.BLUE);
-		 params_endTime_value.addRule(RelativeLayout.RIGHT_OF, idPicker - 1);
-		 params_endTime_value.addRule(RelativeLayout.BELOW, idPicker - 2);
+		 params_endTime_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
+		 params_endTime_value.addRule(RelativeLayout.BELOW, idView - 2);
 		 params_endTime_value.setMargins(20, 10, 0, 0);
 		 endTimeValue.setLayoutParams( params_endTime_value);
 		 
@@ -586,49 +664,98 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View arg0) {
 		
+		if(layout.getChildCount() - numberViews  > 0){
+			layout.removeViews(numberViews , layout.getChildCount() - numberViews);
+			idView = layout.getChildAt(2).getId();
+		 }
+		idView = idButtonRecall;
+		
 		if(arg0.getId() == buttonExecuteSchedule.getId())
 		{
-
-			Individual chosenIndividual;
-			ArrayList<Individual> populationObtained;
-			LatLng startPosition;
-			int index = 1;
-			
-			System.out.println(timePickerStartTime.getCurrentHour() + "   " + timePickerEndTime.getCurrentHour());
-			
-			
-			population.setStartTimeMinutes(timePickerStartTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
-			population.setEndTimeMinutes(timePickerEndTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
-			
-			System.out.println("Numarul de view-uri : " + numberViews);
-			
-			 if(layout.getChildCount() - numberViews  > 0){
-				layout.removeViews(numberViews , layout.getChildCount() - numberViews);
-				idPicker = layout.getChildAt(2).getId();
-			 }
-
-		//	 initMessagePatience();
-			
-			 population.startEvolution();
-			
-			 populationObtained = population.getNewPopulation();
-			 chosenIndividual   = populationObtained.get(0);
-			 startPosition = this.currentPosition;
-			 
-		//	 System.out.println("INDIVIZII AICI SUNT " +  chosenIndividual.getOrderTasks() + " " + chosenIndividual.getFitnessValue() + " " + chosenIndividual.getDuration() + " " + chosenIndividual.getStartTime());
-			 
-			 addHeaderTime(chosenIndividual.getStartTime(), chosenIndividual.getDuration());
-			 
-			 for(Integer idTask : chosenIndividual.getOrderTasks())	
-			 {
-				 showTasks( shiftingTasks.get(idTask), startPosition , index ); 
-				 index++;
-			 }
-			 	
+			calculateSchedule();	 	
 		}
+		if(buttonNextInterval != null)
+			if(arg0.getId() ==  buttonNextInterval.getId())
+			{
+				idView = layout.getChildAt(2).getId();
+				setNextInterval();
+			}
+		
 	//	layout.removeView(textViewPatienceMessage);
 		
 		
+	}
+	
+	
+	/**
+	 * shows the next interval available for shifting tasks
+	 */
+	public void setNextInterval()
+	{
+		int startHour, startMinute, endHour, endMinute;
+		freeInterval = (freeInterval + 1) % startTimes.size();
+		
+		startHour 	= startTimes.get(freeInterval) / 60;
+		startMinute = startTimes.get(freeInterval) % 60;
+		
+		endHour 	= endTimes.get(freeInterval) / 60;
+		endMinute 	= endTimes.get(freeInterval) % 60;
+		
+		
+		
+		timePickerStartTime.setCurrentHour(startHour);
+		timePickerStartTime.setCurrentMinute(startMinute);
+		
+		
+		timePickerEndTime.setCurrentHour(endHour);
+		timePickerEndTime.setCurrentMinute(endMinute); 
+		
+		
+		
+		
+		
+	}
+	
+	/**
+	 * calculating the schedule for the interval selected
+	 */
+	public void calculateSchedule()
+	{
+		Individual chosenIndividual;
+		ArrayList<Individual> populationObtained;
+		LatLng startPosition;
+		int index = 1;
+		
+		System.out.println(timePickerStartTime.getCurrentHour() + "   " + timePickerEndTime.getCurrentHour());
+		
+		
+		population.setStartTimeMinutes(timePickerStartTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
+		population.setEndTimeMinutes(timePickerEndTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
+		
+		System.out.println("Numarul de view-uri : " + numberViews);
+		
+		 if(layout.getChildCount() - numberViews  > 0){
+			layout.removeViews(numberViews , layout.getChildCount() - numberViews);
+			idView = layout.getChildAt(2).getId();
+		 }
+
+	//	 initMessagePatience();
+		
+		 population.startEvolution();
+		
+		 populationObtained = population.getNewPopulation();
+		 chosenIndividual   = populationObtained.get(0);
+		 startPosition = this.currentPosition;
+		 
+	//	 System.out.println("INDIVIZII AICI SUNT " +  chosenIndividual.getOrderTasks() + " " + chosenIndividual.getFitnessValue() + " " + chosenIndividual.getDuration() + " " + chosenIndividual.getStartTime());
+		 
+		 addHeaderTime(chosenIndividual.getStartTime(), chosenIndividual.getDuration());
+		 
+		 for(Integer idTask : chosenIndividual.getOrderTasks())	
+		 {
+			 showTasks( shiftingTasks.get(idTask), startPosition , index ); 
+			 index++;
+		 }
 	}
 
 	
@@ -712,6 +839,4 @@ public class ActivityScheduler extends Activity implements OnClickListener,
         
     }
     
-   
-
 }

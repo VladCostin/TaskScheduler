@@ -166,4 +166,15 @@ public class Task {
 		this.startTime = startTime;
 	}
 	
+	public void setStartTimeFromInterger(Integer startTime)
+	{
+		String startTimeString="///";
+		String hour;
+		String minute;
+		hour = Integer.toString(startTime / 60);
+		minute = Integer.toString(startTime % 60);
+		
+		this.startTime = startTimeString+hour+"/"+minute;
+	}
+	
 }

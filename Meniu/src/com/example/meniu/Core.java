@@ -2,10 +2,12 @@ package com.example.meniu;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import Task.Task;
 import Clusters.KMeansDistances;
 
 /**
@@ -27,6 +29,12 @@ public class Core {
 	
 	
 	private static HashMap<Integer, DaysOfWeek> days;
+	
+	
+	/**
+	 * contains the center after clustering
+	 */
+	private static ArrayList<Task> centersDuration;
 	
 	Core(){
 		
@@ -190,6 +198,14 @@ public class Core {
 
 	public static void setDays(HashMap<Integer, DaysOfWeek> days) {
 		Core.days = days;
+	}
+
+	public static ArrayList<Task> getCentersDuration() {
+		return centersDuration;
+	}
+
+	public static void setCentersDuration(ArrayList<Task> centersDurationRecv) {
+		centersDuration = centersDurationRecv; 
 	}
 	
 	

@@ -2,24 +2,32 @@ package Salesman;
 
 import java.util.HashMap;
 
+import Clusters.KMeansDuration;
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import Task.Task;
 
 import com.example.meniu.Constants;
+import com.example.meniu.Core;
 import com.google.android.gms.maps.model.LatLng;
 
 public class ComputationalMethods {
 	
-	static HashMap<Integer,Integer> durations;
 	static HashMap<Integer,Integer> prioritiesValues;
+	static KMeansDuration kDurations;
 	
 	
 	public ComputationalMethods() {
 		
-		durations = new HashMap<Integer,Integer>();
+	//	durations = new HashMap<Integer,Integer>();
 		prioritiesValues = new HashMap<Integer,Integer>();
+		kDurations = new KMeansDuration();
+		
+		for(Task center : Core.getCentersDuration())
+		{
+			System.out.println(center.getStartTime());
+		}
 	}
 	
 
@@ -68,7 +76,7 @@ public class ComputationalMethods {
 	/**
 	 * saving the duration in a hashmap so that obtaining the context won't be necessary any longer
 	 */
-	public static void initDurations() {
+/*	public static void initDurations() {
 		
 		
 		for(Task task : PopulationEvolution.shiftingTasks)
@@ -84,7 +92,7 @@ public class ComputationalMethods {
 		
 		}
 
-	}
+	}*/
 
 
 	public static void initPrioritiesValues() {
@@ -119,6 +127,65 @@ public class ComputationalMethods {
 		
 		
 	}
+	
+	
+	public static int determineDurationTask(Task task)
+	{
+		DurationContext duration;
+		Task center;
+		
+		duration = (DurationContext) task.getInternContext().
+		getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		if(duration.getDuration() != Constants.noTimeSpecified)
+			return duration.getDuration();
+		
+		
+		duration = (DurationContext) kDurations.detectCentroid(task).getInternContext().
+		getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		return duration.getDuration();
+	
+		
+		
+	/*	LocationContext location = (LocationContext) task.getInternContext().
+		getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+		
+		
+		return determineDurationTask(task.getNameTask(), startTime, location);*/
+
+	}
+	
+	
+	/*public static int determineDurationTask(String title, int startTime, LocationContext location )
+	{
+		Task t = new Task();
+
+		String hour;
+		String minute;
+		DurationContext duration;
+		
+		t.setNameTask(title);
+		t.getInternContext().getContextElementsCollection().put
+		(ContextElementType.LOCATION_CONTEXT_ELEMENT, location);
+		
+		
+		hour = Integer.toString(startTime / 60);
+		minute = Integer.toString(startTime % 60); 
+		
+		
+		System.out.println("ETAPA DE INCEPUT ESTE " + startTimeString+hour+"/"+minute);
+		t.setStartTime(startTimeString+hour+"/"+minute);
+		
+		duration = (DurationContext) kDurations.detectCentroid(t).getInternContext().
+		getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		
+		
+		return duration.getDuration();
+		
+		
+		
+	}*/
 
 
 	

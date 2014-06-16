@@ -74,13 +74,18 @@ public class MainActivity extends Activity {
 	//	addTaskForCheckSameTitle();
 	//	addTaskforCheckDurationDifferentTitle();
 	//	addTaskforCheckDurationDifferentTitle_2();
-	 // addTaskforCheckDurationSameLocation();
+	//  addTaskforCheckDurationSameLocation();
 	//  addTaskforCheckDurationDifferentLocations();
 		
 		
 		
-	//	KMeansDuration clustering = new KMeansDuration();
-	//	clustering.calculateKlusters();
+		
+	//	addTasksDifferentNamesDifferentTimes_abonament_metrou();
+		
+		
+		
+		KMeansDuration clustering = new KMeansDuration();
+		clustering.calculateKlusters();
 		
 		
 	//	addTasksDifferentTitlesForLocation();
@@ -108,6 +113,104 @@ public class MainActivity extends Activity {
 	}
 	
 	
+	private void addTasksDifferentNamesDifferentTimes_abonament_metrou() {
+		
+		// metrou unirii
+		
+		
+		//
+		//  seara
+		/////
+				
+				
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46");
+				
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102","55", "28/05/2014/17/20");
+				
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30");
+				
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55");
+				
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102","20", "28/05/2014/18/45");	
+		
+		
+		// 
+		//	dimineata - pranz
+		//
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/30");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/33");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/45");
+		
+		
+		//
+		// pranz dupa amiaza
+		//
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102",  "10", "28/05/2014/14/01");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "7", "28/05/2014/14/35");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/15");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102",  "20", "28/05/2014/15/53");
+		
+		
+		
+		//
+		//	dimineata
+		//
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/9/00");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
+		
+	}
+
+
 	private void addTaskforCheckDurationDifferentLocations() {
 		// metrou unirii
 		
