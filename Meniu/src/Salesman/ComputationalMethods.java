@@ -15,6 +15,11 @@ import com.google.android.gms.maps.model.LatLng;
 public class ComputationalMethods {
 	
 	static HashMap<Integer,Integer> prioritiesValues;
+	
+	float speedHuman;
+	
+	float speedCar;
+	
 	static KMeansDuration kDurations;
 	
 	
@@ -28,6 +33,11 @@ public class ComputationalMethods {
 		{
 			System.out.println(center.getStartTime());
 		}
+		
+		// face un metru in 0.9 secunde
+		speedCar = (float) 0.9;
+		speedHuman = (float) 1.5;
+		
 	}
 	
 
@@ -63,9 +73,13 @@ public class ComputationalMethods {
 	public static int calculateDurationTravel(double lat1, double long1, double lat2, double long2)
 	{
 		int distance = calculateDistanceTravel(lat1, long1, lat2, long2);
-		
-		
-		double durationTravel = distance * 1.5  /60;
+		double durationTravel;
+		if(distance > 750)
+		// face un metru in 1.5 secunde
+		// transform in minute
+			durationTravel = distance * 0.6  /60;
+		else
+			durationTravel = distance * 1.5  /60;
 		
 		
 		return (int) durationTravel;
@@ -117,11 +131,19 @@ public class ComputationalMethods {
 		prioritiesValues.put(3, 512);
 		prioritiesValues.put(4, 90);
 	*/	
-		prioritiesValues.put(0, 50);
+	/*	prioritiesValues.put(0, 50);
 		prioritiesValues.put(1,  150);
 		prioritiesValues.put(2, 600);
 		prioritiesValues.put(3, 3000);
-		prioritiesValues.put(4, 90);
+		prioritiesValues.put(4, 90); 
+		
+	*/
+		
+		prioritiesValues.put(0, 60);
+		prioritiesValues.put(1, 150);
+		prioritiesValues.put(2, 480);
+		prioritiesValues.put(3, 3000);
+		prioritiesValues.put(4, 90); 
 	
 		
 		

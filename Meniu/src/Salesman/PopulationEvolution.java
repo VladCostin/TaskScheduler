@@ -106,7 +106,7 @@ public class PopulationEvolution {
 	
 	public void startEvolution()
 	{
-		int decade= 0, nrDecades = 20;
+		int decade= 0, nrDecades = 10;
 		this.population.clear();
 		this.newPopulation.clear();
 		
@@ -117,8 +117,29 @@ public class PopulationEvolution {
 		System.out.println(startTimeMinutes + " " + endTimeMinutes);
 		
 		
-	//	for(Task task :shiftingTasks)
-	//		System.out.println(task.getNameTask() + " " + task.getPriority());
+		for(Task task :shiftingTasks)
+			System.out.println(task.getNameTask() + " " + task.getPriority());
+		
+		
+	//	Individual ind = new Individual();
+	//	ArrayList<Integer> tasksId = new ArrayList<Integer>();
+	/*	tasksId.add(4);
+		tasksId.add(1);
+		tasksId.add(3);
+		tasksId.add(2);
+		tasksId.add(0);*/
+		
+	//	tasksId.add(1);
+	//	tasksId.add(2);
+	//	tasksId.add(0);
+		
+		//tasksId.add(0);
+		//tasksId.add(1);
+		
+//		ind.setOrderTasks(tasksId);
+//		ind.setStartTime(420);
+		
+	//	this.calculateFitnessValue(ind); 
 		
 		
 		while(true)
@@ -140,8 +161,7 @@ public class PopulationEvolution {
 			decade++;
 
 		} 
-			
-		System.out.println("INTRA AICI 2");
+
 
 		
 	}
@@ -165,7 +185,7 @@ public class PopulationEvolution {
 		}
 		
 		
-		sizePopulation = Math.max(10,  factorial / ConstantsPopulation.nrIndRatio);
+		sizePopulation = Math.max(20,  factorial / ConstantsPopulation.nrIndRatio);
 		sizeTasks = shiftingTasks.size();
 		
 		for(indexIndivid = 0; indexIndivid < sizePopulation; indexIndivid++  )
@@ -175,6 +195,10 @@ public class PopulationEvolution {
 			
 			for(indexTask = 0; indexTask < sizeTasks; indexTask++)
 				ind.getOrderTasks().add( tasksRemained.remove(r.nextInt(tasksRemained.size())) ); 
+			
+			System.out.println("Terminare " + endTimeMinutes);
+			System.out.println("Inceput " + startTimeMinutes);
+			
 			
 			ind.setStartTime(startTimeMinutes +
 			r.nextInt(endTimeMinutes - startTimeMinutes));
@@ -217,12 +241,12 @@ public class PopulationEvolution {
 		
 		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
 			
-			if(indexInd == 0)
-			{
-				System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
-				System.out.println(population.get(indexInd).getOrderTasks().toString() );
-				System.out.println("##################");
-			}
+		//	if(indexInd == 0)
+		//	{
+		//		System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
+		//		System.out.println(population.get(indexInd).getOrderTasks().toString() );
+		//		System.out.println("##################");
+		//	}
 			
 			newPopulation.add(population.get(indexInd));
 		}
@@ -609,16 +633,15 @@ public class PopulationEvolution {
 	 */
 	public float calculateFitnessValue(Individual ind)
 	{
-
 		
 		float sumMinutes = 0;
 		int durationTravel;
 		int indexTask;
 		int priorityNumber;
 		int durationTask;
-		float penaltyMorning = 0 , penaltyEvening = 0;
 		float penalty;
 		int startTime;
+		int sumRecompensa = 0;
 		
 		ArrayList<Integer> tasks = ind.getOrderTasks();
 		
@@ -640,6 +663,9 @@ public class PopulationEvolution {
 		(currentPosition.latitude, currentPosition.longitude, location1.getLatitude(), location1.getLongitude());
 		
 		sumMinutes +=durationTravel;
+		
+		
+	// chestia asta am pus-o ca sa calculez startTime
 		startTime = ind.getStartTime();
 	//	System.out.println("1.ORA LA CARE PLEC" + startTime);
 		
@@ -648,11 +674,12 @@ public class PopulationEvolution {
 		
 		for(indexTask = 0; indexTask < tasks.size() - 1 ; indexTask++)
 		{
+			System.out.println("1.Ora de incepere : " + startTime);
+			shiftingTasks.get(tasks.get(indexTask)).setStartTimeFromInterger(startTime);
+			durationTask = ComputationalMethods.determineDurationTask(shiftingTasks.get(tasks.get(indexTask)));
+			startTime += durationTask;
 			
-			shiftingTasks.get(indexTask).setStartTimeFromInterger(startTime);
-			durationTask = ComputationalMethods.determineDurationTask(shiftingTasks.get(indexTask));
-			
-			System.out.println("DURATA INTOARSA ESTE " + durationTask);
+		//	System.out.println("Durata este " + durationTask + " " + shiftingTasks.get(tasks.get(indexTask)).getNameTask()); 
 			
 			sumMinutes += durationTask;
 			
@@ -672,18 +699,17 @@ public class PopulationEvolution {
 			
 			
 			sumMinutes +=durationTravel;
+			startTime += durationTravel;
 			
 			
 		}
-		
-		
-		
-		shiftingTasks.get(indexTask).setStartTimeFromInterger(startTime);
-		durationTask = ComputationalMethods.determineDurationTask(shiftingTasks.get(indexTask));
-	//	System.out.println("3.DURATA propriu zisa ESTE " + durationTask);
-		System.out.println("");
+		System.out.println("2.Ora de incepere : " + startTime);
+		shiftingTasks.get(tasks.get(indexTask)).setStartTimeFromInterger(startTime);
+		durationTask = ComputationalMethods.determineDurationTask(shiftingTasks.get(tasks.get(indexTask)));
+		System.out.println("DURATA TASK " + durationTask);
 		sumMinutes += durationTask;
 		
+	//   pentru cazul in care duratele erau fixe	
 	//	sumMinutes +=  ComputationalMethods.durations.get(tasks.get(indexTask));
 		
 		location1 = (LocationContext) PopulationEvolution.shiftingTasks.get(tasks.get(indexTask)).
@@ -692,33 +718,34 @@ public class PopulationEvolution {
 		
 		durationTravel =	ComputationalMethods.calculateDurationTravel
 		( location1.getLatitude(), location1.getLongitude(), endPosition.latitude, endPosition.longitude);
-	//	System.out.println("4.DRUMUL DE INTOARCERE " + durationTravel);
 		sumMinutes +=durationTravel;
-	//	System.out.println("5.TOTALUL ESTE " + sumMinutes );
-		System.out.println("");
+
 		
 		ind.setDuration(sumMinutes);
 
-		
-		//penaltyMorning = penaltyMorningCompute(ind);
-		//penaltyEvening = penaltyEvening(ind,sumMinutes);
 
 		penalty = calculatePenalty(ind, sumMinutes);
 	
-		
-		
-	//	sumMinutes += penaltyEvening + penaltyMorning;
+
 		
 		sumMinutes += penalty;
-		System.out.println("4.DURATA totala zisa ESTE " + sumMinutes);
+	//	System.out.println("4.DURATA totala zisa ESTE " + sumMinutes);
 		
 		for(Integer idTask : ind.getOrderTasks())
 		{
-			priorityNumber = Core.getPrioritiesValues().get( shiftingTasks.get(idTask).getPriority());
+		  	priorityNumber = Core.getPrioritiesValues().get( shiftingTasks.get(idTask).getPriority());
+		  	int cucu =  ComputationalMethods.prioritiesValues.get(priorityNumber);
+		  	
+		  //	System.out.println("Recompensa este" + cucu);
+		  	
+		  	 sumMinutes -= cucu;
+			//sumMinutes -= ComputationalMethods.prioritiesValues.get(priorityNumber);
 			
 			
 			
-			//sa modific asta daca vreau sa folosec un hashmap cu durata pentru fiecare task al individului
+			
+			
+		/*	//sa modific asta daca vreau sa folosec un hashmap cu durata pentru fiecare task al individului
 			System.out.println("5.TASKUL INCEPE LA" + shiftingTasks.get(idTask).getStartTime());
 		//	durationTask = 	ComputationalMethods.determineDurationTask(shiftingTasks.get(idTask));
 			System.out.println("DURATA INTOARSA ESTE :" + durationTask);
@@ -728,10 +755,10 @@ public class PopulationEvolution {
 			
 			//sumMinutes = sumMinutes - durationTask - cucu;  
 			 sumMinutes -= cucu;
-			//sumMinutes = sumMinutes - ComputationalMethods.durations.get(idTask) - ComputationalMethods.prioritiesValues.get(priorityNumber);  
+			//sumMinutes = sumMinutes - ComputationalMethods.durations.get(idTask) - ComputationalMethods.prioritiesValues.get(priorityNumber);  */
 		}
 
-		System.out.println("6.FITNESSUL ESTE " + sumMinutes);
+	//	System.out.println("6.FITNESSUL ESTE " + sumMinutes);
 		
 		return sumMinutes;
 		

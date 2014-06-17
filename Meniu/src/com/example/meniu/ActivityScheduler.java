@@ -10,6 +10,7 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.model.LatLng;
 
+import Clusters.KMeansDuration;
 import ContextElements.ContextElementType;
 import ContextElements.DurationContext;
 import ContextElements.LocationContext;
@@ -31,6 +32,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.view.KeyCharacterMap.KeyData;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -124,7 +126,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	 * represents the free interval showed at the time by time pickers
 	 */
 	int freeInterval;
-	
+		
 	
 	
 
@@ -341,10 +343,13 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	
 	/**
 	 * @param index 
+	 * @param index2 
 	 * 
 	 */
-	public void showTasks(Task task, LatLng positionBefore, int index)
+	public int showTasks(Task task, LatLng positionBefore, int startTime, int index )
 	{
+		
+			System.out.println("START time pentru acest task este " + startTime);
 		
 		  TextView title,priority, location , duration, durationBetween ;
 		  TextView titleValue, priorityValue , locationValue, durationValue, durationBetweenValue;
@@ -352,6 +357,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  List<Address> addresses = null;
 		  Geocoder geocoder = new Geocoder(this);
 		  String address="";
+		 
+		  int durationTaskInt;
 		  
 
 		  
@@ -451,11 +458,36 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 			
 		  DurationContext durationTask = (DurationContext)
 		  task.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		  
+		  LocationContext locationC = (LocationContext) task.getInternContext().
+		  getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+		  
+		  
+		  minutesBetween = ComputationalMethods.calculateDurationTravel
+				  (positionBefore.latitude, positionBefore.longitude, locationC.getLatitude(), locationC.getLongitude());
+			
+		  if(durationTask.getDuration() == Constants.noTimeSpecified)
+		  {
+			 startTime +=minutesBetween;
+			 task.setStartTimeFromInterger(startTime);
+			 
+			 durationTaskInt = ComputationalMethods.determineDurationTask(task);
+			
+			  
+		  }
+		  else
+			  durationTaskInt = durationTask.getDuration();
+		  
+		  
+		  System.out.println("DURATA ESTE " + durationTaskInt);
+		  
+		  
+		 
 			
 			
-			
-			
-		  durationValue.setText(durationTask.getDuration() / 60 + ":" +  durationTask.getDuration() % 60   );
+		  durationValue.setText
+		  (durationTaskInt / 60 + ":" +  durationTaskInt % 60  + " ( " + startTime / 60 + ":" +  startTime % 60 + " ) " );
+		  startTime += durationTaskInt;
 		  durationValue.setTextSize(20);	
 		  durationValue.setId( ++ idView);
 		  params_duration_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
@@ -464,8 +496,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  durationValue.setLayoutParams(params_duration_value);
 		  
 		  
-		  LocationContext locationC = (LocationContext) task.getInternContext().
-		  getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+		 
 					
 				
 		 try {
@@ -499,10 +530,6 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  
 		  
 		  
-		  
-		  minutesBetween = ComputationalMethods.calculateDurationTravel
-		  (positionBefore.latitude, positionBefore.longitude, locationC.getLatitude(), locationC.getLongitude());
-		  
 		  durationBetween.setText("Time to travel to this location: ");
 		  durationBetween.setTextSize(20);	
 		  durationBetween.setId( ++ idView);
@@ -534,6 +561,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  layout.addView(locationValue);
 		  layout.addView(durationBetween);
 		  layout.addView(durationBetweenValue);
+		  
+		  return startTime;
 		  
 	}
 	
@@ -723,14 +752,16 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	{
 		Individual chosenIndividual;
 		ArrayList<Individual> populationObtained;
+		LocationContext locationC;
 		LatLng startPosition;
+		int startTime;
 		int index = 1;
 		
 		System.out.println(timePickerStartTime.getCurrentHour() + "   " + timePickerEndTime.getCurrentHour());
 		
 		
 		population.setStartTimeMinutes(timePickerStartTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
-		population.setEndTimeMinutes(timePickerEndTime.getCurrentHour() * 60 + timePickerStartTime.getCurrentMinute() % 60);
+		population.setEndTimeMinutes(timePickerEndTime.getCurrentHour() * 60 + timePickerEndTime.getCurrentMinute() % 60);
 		
 		System.out.println("Numarul de view-uri : " + numberViews);
 		
@@ -746,14 +777,20 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 populationObtained = population.getNewPopulation();
 		 chosenIndividual   = populationObtained.get(0);
 		 startPosition = this.currentPosition;
+		 startTime = chosenIndividual.getStartTime();
 		 
-	//	 System.out.println("INDIVIZII AICI SUNT " +  chosenIndividual.getOrderTasks() + " " + chosenIndividual.getFitnessValue() + " " + chosenIndividual.getDuration() + " " + chosenIndividual.getStartTime());
+		 System.out.println("INDIVIZII AICI SUNT " +  chosenIndividual.getOrderTasks() + " " + chosenIndividual.getFitnessValue() + " " + chosenIndividual.getDuration() + " " + chosenIndividual.getStartTime());
 		 
 		 addHeaderTime(chosenIndividual.getStartTime(), chosenIndividual.getDuration());
 		 
 		 for(Integer idTask : chosenIndividual.getOrderTasks())	
 		 {
-			 showTasks( shiftingTasks.get(idTask), startPosition , index ); 
+			 startTime = showTasks( shiftingTasks.get(idTask), startPosition ,startTime, index ); 
+			 locationC = (LocationContext) shiftingTasks.get(idTask).getInternContext().
+			 getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+			 
+			 startPosition = locationC.getPositionLatLng();
+			 
 			 index++;
 		 }
 	}

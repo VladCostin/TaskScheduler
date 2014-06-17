@@ -391,7 +391,7 @@ public class AddTask extends   FragmentActivity
 		
 		
 		loadSharedPreferences();
-		checkIntentStarter();
+		
 		
 		
 	}
@@ -437,9 +437,10 @@ public class AddTask extends   FragmentActivity
 		
 		spinnerPriority.setSelection( Core.getPrioritiesValues().get(priorityString) ); 
 		
+		System.out.println("TITLUL ESTE " + title);
 		
 		
-		autoTitle.setText(title);
+		autoTitle.setText(title); 
 		textViewDate.setText(deadline);
 		
 		for( i = 0; i < devices.length -1 ; i++)
@@ -834,6 +835,7 @@ public class AddTask extends   FragmentActivity
 	@Override
 	public void onLocationChanged(Location arg0) {
 		setPositionOnMap(arg0);
+		checkIntentStarter();
 	}
 	
 	/**

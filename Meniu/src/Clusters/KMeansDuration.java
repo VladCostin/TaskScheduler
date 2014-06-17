@@ -342,7 +342,7 @@ public class KMeansDuration implements KMeans{
 					
 					
 					
-					System.out.println("CACAT " + tasks.get(iTask).getNameTask() + " " + duration.getDuration()  + " " + location.getLatitude() + " " + location.getLongitude() + " " + tasks.get(iTask).getStartTime() );
+					System.out.println(tasks.get(iTask).getNameTask() + " " + duration.getDuration()  + " " + location.getLatitude() + " " + location.getLongitude() + " " + tasks.get(iTask).getStartTime() );
 				}
 			}
 			
@@ -356,18 +356,16 @@ public class KMeansDuration implements KMeans{
 			System.out.println(frequency.values().toString());
 			System.out.println("-----------------------");
 			
-			
-		//	DurationContext duration = (DurationContext) centroizi.get(iCentroid).
-		//	getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
-			
-			
-		//	duration.setDuration(durationAverage);
+
 			
 			
 			DurationContext duration = new DurationContext(durationAverage);
 			
 			finalCenters.get(iCentroid).getInternContext().getContextElementsCollection()
 			.put(ContextElementType.DURATION_ELEMENT, duration);
+			
+			System.out.println("START TIME Mediu este " + finalCenters.get(iCentroid).getStartTime());
+			
 			
 		}
 		

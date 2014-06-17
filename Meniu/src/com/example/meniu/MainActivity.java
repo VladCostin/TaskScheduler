@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
 		
 		
 	//	addTasksDifferentNamesDifferentTimes_abonament_metrou();
-		
+	//	addTasksFrizerie();
 		
 		
 		KMeansDuration clustering = new KMeansDuration();
@@ -208,6 +208,114 @@ public class MainActivity extends Activity {
 		MainActivity.database.addTaskPriori
 		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
 		
+		
+
+		
+		
+	}
+	
+	
+	
+	private void addTasksFrizerie()
+	{
+		// 	tuns
+		
+		// dimineata
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "15", "28/05/2014/7/20");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/7/50");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "25", "28/05/2014/8/15");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/8/55");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/9/20");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "25", "28/05/2014/9/50");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/10/15");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/10/40");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/11/0");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "35", "28/05/2014/11/35");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/12/15");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "30", "28/05/2014/12/40");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/13/10");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "35", "28/05/2014/13/55");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/14/25");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "30", "28/05/2014/14/57");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "55", "28/05/2014/15/17");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "45", "28/05/2014/15/55");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/16/28");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "53", "28/05/2014/16/57");
+	}
+	
+	
+	
+	public void addTasksDispensar()
+	{
+		// dispensar
+		
+		
+		MainActivity.database.addTaskPriori
+		("la medicul de familie",  "44.4137 26.1057", "55", "28/05/2014/15/17");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "45", "28/05/2014/15/55");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/16/28");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "53", "28/05/2014/16/57");
 	}
 
 
