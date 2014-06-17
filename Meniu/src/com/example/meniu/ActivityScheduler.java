@@ -501,7 +501,10 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 				
 		 try {
 					addresses = geocoder.getFromLocation(locationC.getLatitude() ,locationC.getLongitude(), 1);
-					address = addresses.get(0).getAddressLine(0) ;
+					if(addresses == null)
+						address = "";
+					else
+						address = addresses.get(0).getAddressLine(0) ;
 						
 					
 		 } catch (IOException e) {
@@ -740,9 +743,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		timePickerEndTime.setCurrentMinute(endMinute); 
 		
 		
-		
-		
-		
+
 	}
 	
 	/**
@@ -750,12 +751,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 	 */
 	public void calculateSchedule()
 	{
-		Individual chosenIndividual;
-		ArrayList<Individual> populationObtained;
-		LocationContext locationC;
-		LatLng startPosition;
-		int startTime;
-		int index = 1;
+
+
 		
 		System.out.println(timePickerStartTime.getCurrentHour() + "   " + timePickerEndTime.getCurrentHour());
 		
@@ -770,9 +767,32 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 			idView = layout.getChildAt(2).getId();
 		 }
 
-	//	 initMessagePatience();
+		 initMessagePatience();
 		
-		 population.startEvolution();
+		 PopulationThread  populationCompute = new PopulationThread(this);
+		 
+		 populationCompute.start();
+		
+		 
+		// layout.removeView( textViewPatienceMessage);
+ 		 
+		 
+		// population.startEvolution();
+		
+		
+	}
+	
+	public void showBestIndividual()
+	{
+		Individual chosenIndividual;
+		ArrayList<Individual> populationObtained;
+		LocationContext locationC;
+		LatLng startPosition;
+		int startTime;
+		int index = 1;
+		
+		layout.removeView(textViewPatienceMessage);
+		this.idView--;
 		
 		 populationObtained = population.getNewPopulation();
 		 chosenIndividual   = populationObtained.get(0);
@@ -877,3 +897,29 @@ public class ActivityScheduler extends Activity implements OnClickListener,
     }
     
 }
+
+
+class PopulationThread extends Thread
+{
+	ActivityScheduler activityScheduler;
+	
+	
+	public PopulationThread(ActivityScheduler activityScheduler) {
+		
+		this.activityScheduler = activityScheduler;
+	}
+
+	public void run()
+	{
+		activityScheduler.population.startEvolution();
+		activityScheduler.runOnUiThread(new Runnable() {
+		    public void run() {
+		        activityScheduler.showBestIndividual();
+		    }
+		});
+		
+	}
+	
+}
+
+

@@ -106,7 +106,7 @@ public class PopulationEvolution {
 	
 	public void startEvolution()
 	{
-		int decade= 0, nrDecades = 10;
+		int decade= 0, nrDecades = 45;
 		this.population.clear();
 		this.newPopulation.clear();
 		
@@ -241,12 +241,12 @@ public class PopulationEvolution {
 		
 		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
 			
-		//	if(indexInd == 0)
-		//	{
-		//		System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
-		//		System.out.println(population.get(indexInd).getOrderTasks().toString() );
-		//		System.out.println("##################");
-		//	}
+			if(indexInd == 0)
+			{
+				System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
+				System.out.println(population.get(indexInd).getOrderTasks().toString() );
+				System.out.println("##################");
+			}
 			
 			newPopulation.add(population.get(indexInd));
 		}
@@ -525,12 +525,19 @@ public class PopulationEvolution {
 		
 		
 		
+		
+		
 		for(Individual ind : population)
 		{
 			if(r.nextFloat() < ConstantsPopulation.mutationThreshold )
 			{
 				if(ind.getOrderTasks().size() == 0)
+				{
+					ind.getOrderTasks().add(r.nextInt( shiftingTasks.size()));
+					ind.setStartTime(startTimeMinutes + r.nextInt(endTimeMinutes - startTimeMinutes));
+					System.out.println("Mutatie " + ind.getOrderTasks().toString() + " " + ind.getStartTime());
 					continue;
+				}
 				
 				
 				mutationType = r.nextInt(6);
@@ -601,13 +608,14 @@ public class PopulationEvolution {
 					
 					case 5 :
 						
+					
 					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
-							if(!ind.getOrderTasks().contains(indexTask))
-							{
+					if(!ind.getOrderTasks().contains(indexTask))
+					{
 								ind.getOrderTasks().remove(r.nextInt(ind.getOrderTasks().size()));
 								ind.getOrderTasks().add(new Integer(indexTask));
 								break;
-							}
+					}
 							
 					break; 
 					
@@ -674,7 +682,7 @@ public class PopulationEvolution {
 		
 		for(indexTask = 0; indexTask < tasks.size() - 1 ; indexTask++)
 		{
-			System.out.println("1.Ora de incepere : " + startTime);
+	//		System.out.println("1.Ora de incepere : " + startTime);
 			shiftingTasks.get(tasks.get(indexTask)).setStartTimeFromInterger(startTime);
 			durationTask = ComputationalMethods.determineDurationTask(shiftingTasks.get(tasks.get(indexTask)));
 			startTime += durationTask;
@@ -703,10 +711,10 @@ public class PopulationEvolution {
 			
 			
 		}
-		System.out.println("2.Ora de incepere : " + startTime);
+	//	System.out.println("2.Ora de incepere : " + startTime);
 		shiftingTasks.get(tasks.get(indexTask)).setStartTimeFromInterger(startTime);
 		durationTask = ComputationalMethods.determineDurationTask(shiftingTasks.get(tasks.get(indexTask)));
-		System.out.println("DURATA TASK " + durationTask);
+	//	System.out.println("DURATA TASK " + durationTask);
 		sumMinutes += durationTask;
 		
 	//   pentru cazul in care duratele erau fixe	

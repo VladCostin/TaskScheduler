@@ -140,7 +140,7 @@ public class ComputationalMethods {
 	*/
 		
 		prioritiesValues.put(0, 60);
-		prioritiesValues.put(1, 150);
+		prioritiesValues.put(1, 135);
 		prioritiesValues.put(2, 480);
 		prioritiesValues.put(3, 3000);
 		prioritiesValues.put(4, 90); 

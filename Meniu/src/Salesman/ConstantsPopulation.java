@@ -13,17 +13,17 @@ public interface ConstantsPopulation
 	 *  for each minute the duration of the individual exceeds the limits of the interval when the tasks
 	 *  can be executed, the fitness is increased
 	 */
-	int penalty_one			= 1;
+	int penalty_one			= 5;
 	
-	int penalty_two			= 2;
+	int penalty_two			= 10;
 	
-	int penalty_three		= 3;
+	int penalty_three		= 15;
 	
 	
 	/**
 	 * 1/5 representing the best individuals will be selected for the next population
 	 */
-	float selectionRatio		= (float)  0.60; // the ratio from population which will be selected based on the fitness
+	float selectionRatio		= (float)  0.50; // the ratio from population which will be selected based on the fitness
 	
 	float sample1Alpha			= (float)  -0.25;
 	
