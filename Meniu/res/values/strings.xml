@@ -4,14 +4,16 @@
     <string name="app_name">Meniu</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Welcome!</string>
-    <string name="getTask">Sugereaza Task</string>
-    <string name="addTask">Adauga Task</string>
-    <string name="schedule">Vizualizare taskuri</string>
-    <string name="discoverDevice">Descopera dispozitive</string>
     <string name="title_activity_add_task">AddTask</string>
-    <string name="current_task">Taskul curent</string>
-    <string name="activity_fixed_Tasks">Set fixed Schedule</string>
-    <string name="activity_Scheduler">Calculate Schedule</string>
+    
+    
+    <string name="buttonAddTask">Add a new task</string>
+    <string name="buttonViewAllTasks">View all tasks</string>
+    <string name="buttonViewCompatibleTasks">View compatible tasks</string>
+    <string name="buttonRunningTask">View current TO DO Task</string>
+    <string name="buttonSetSchedule">Set fixed Schedule</string>
+	<string name="buttonSuggestSchedule">Suggest Schedule</string>
+	<string name="buttonDetectDevices">Detect devices</string>
     
     
     <string name="domain">Choose a domain</string>
@@ -117,6 +119,6 @@
     <string name="messageCalculateSchedule">Please select the interval you want to calculate</string>
     <string name="buttonCalculateSchedule">Calculate Schedule</string>
     <string name="buttonNextInterval">Show nextInterval</string>
-    <string name="messagePatience">Please be patience. This may take several days</string>
+    <string name="messagePatience">Please be patient. This may take several days</string>
 
 </resources>

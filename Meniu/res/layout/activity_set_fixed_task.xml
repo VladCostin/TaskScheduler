@@ -54,7 +54,7 @@
         	android:layout_height="wrap_content"
         	android:id="@+id/buttonAddTask"
         	android:layout_below="@+id/buttonPreviousDay"
-        	android:text="@string/addTask"
+        	android:text="@string/buttonAddTask"
          	></Button>
     
     

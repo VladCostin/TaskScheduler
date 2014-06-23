@@ -14,7 +14,7 @@ public enum ContextElementType {
 	LOCATION_CONTEXT_ELEMENT,
 
 	/**
-	 * defines the object temporal object
+	 * defines the object temporal context
 	 */
 	TIME_CONTEXT_ELEMENT,
 	
@@ -36,6 +36,9 @@ public enum ContextElementType {
 	DEVICES_ELEMENT,
 	
 	
+	/**
+	 * defines the task's duration and duration travel
+	 */
 	DURATION_ELEMENT;
 	
 }

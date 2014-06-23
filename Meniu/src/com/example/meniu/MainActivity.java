@@ -13,8 +13,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -22,18 +24,8 @@ import android.widget.AdapterView.OnItemClickListener;
  * @author ${Vlad Herescu}
  *
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener {
 	
-	/**
-	 * represents the menu and its menuItem to view 
-	 * schedule, add a task or suggest a task
-	 */
-	ListView listaMeniu;
-	
-	/**
-	 * names of the menuItems
-	 */
-	static final String[] MenUApp = new String[7];
 	
 	
 	/**
@@ -46,7 +38,28 @@ public class MainActivity extends Activity {
 	 * obtaining the general information of the application
 	 */
 	private static Core core;
+	
+	
+	Button buttonAddTaskActivity;
+	
+	
+	Button buttonViewTasksActivity;
+	
+	
+	Button buttonViewCompatibleTasksActivity;
+	
+	
+	Button buttonViewCurrentTaskActivity;
+	
+	
+	Button buttonSetScheduleActivity;
 
+	
+	Button buttonSuggestScheduleActivity;
+	
+	
+	Button buttonDetectDevicesActivity;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,18 +69,8 @@ public class MainActivity extends Activity {
 		core = new Core();
 		Core.init();
 		
+		initButtons();
 		
-	    MenUApp[0] =	this.getString(R.string.getTask);
-	    MenUApp[1] =	this.getString(R.string.addTask);
-	    MenUApp[2] =	this.getString(R.string.schedule);
-	    MenUApp[3] =	this.getString(R.string.discoverDevice);
-	    MenUApp[4] =	this.getString(R.string.current_task);
-	    MenUApp[5] = 	this.getString(R.string.activity_fixed_Tasks);
-	    MenUApp[6] =	this.getString(R.string.activity_Scheduler);
-		
-		listaMeniu = (ListView) this.findViewById(R.id.ListView1);
-		listaMeniu.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1 ,MenUApp));
-		listaMeniu.setOnItemClickListener( new MenuItemTouched(this) );
 		
 		
 	//	addTasksforCheckDuration(); 
@@ -113,6 +116,37 @@ public class MainActivity extends Activity {
 	}
 	
 	
+	private void initButtons() {
+		
+		
+		buttonAddTaskActivity = (Button)  findViewById(R.id.buttonActivityAddTask);
+		buttonAddTaskActivity.setOnClickListener(this);
+		
+		
+		buttonViewTasksActivity = (Button)  findViewById(R.id.buttonActivityViewTasks);
+		buttonViewTasksActivity.setOnClickListener(this);
+		
+		
+		buttonViewCompatibleTasksActivity = (Button)  findViewById(R.id.buttonActivityViewCompatibleTasks);
+		buttonViewCompatibleTasksActivity.setOnClickListener(this);
+		
+		
+		buttonViewCurrentTaskActivity =  (Button)  findViewById(R.id.buttonActivityRunningTask);
+		buttonViewCurrentTaskActivity.setOnClickListener(this);
+		
+		
+		buttonSetScheduleActivity  =  (Button)  findViewById(R.id.buttonActivityFixedSchedule);
+		buttonSetScheduleActivity.setOnClickListener(this);
+		
+		
+		buttonSuggestScheduleActivity = (Button)  findViewById(R.id.buttonActivitySuggestSchedule);
+		buttonSuggestScheduleActivity.setOnClickListener(this);
+		
+		buttonDetectDevicesActivity = (Button)  findViewById(R.id.buttonActivityDetectDevices);
+		buttonDetectDevicesActivity.setOnClickListener(this);
+	}
+
+
 	private void addTasksDifferentNamesDifferentTimes_abonament_metrou() {
 		
 		// metrou unirii
@@ -1392,66 +1426,62 @@ public class MainActivity extends Activity {
 		MainActivity.core = core;
 	}
 
-}
-
-
-/**
- * @author ${Vlad Herescu}
- *
- */
-class MenuItemTouched implements OnItemClickListener{
-	
-	/**
-	 *  instance of the main activity class to gain access to its
-	 *  members 
-	 */
-	MainActivity mainActivity;
-	
-	/**
-	 * @param received : the mainActivity of the app
-	 */
-	MenuItemTouched(MainActivity received){
-		mainActivity = received;
-	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onClick(View v) {
+		
+		Button b = (Button) v;
+		Intent intentStartActivity;
+		
+		if( b == this.buttonAddTaskActivity){
+			intentStartActivity = new Intent(this, AddTask.class);
+			startActivity(intentStartActivity);
+		}
+
+		if( b == this.buttonViewTasksActivity){
+			intentStartActivity = new Intent(this, ShowAllTasks.class);
+			startActivity(intentStartActivity);
+		}
+		
+		if( b == this.buttonViewCompatibleTasksActivity){
+			intentStartActivity = new Intent(this, ShowTasks.class);
+			startActivity(intentStartActivity);
+		}
+		
+		if( b == this.buttonViewCurrentTaskActivity){
+			intentStartActivity = new Intent(this, ShowCurrentTask.class);
+			startActivity(intentStartActivity);
+		}
+		
+		if( b == this.buttonDetectDevicesActivity)
+		{
+			intentStartActivity = new Intent(this, AddDeviceActivity.class);
+			startActivity(intentStartActivity);
+		}
+		
+		if( b == this.buttonSetScheduleActivity)
+		{
+			intentStartActivity = new Intent(this, SetFixedTask.class);
+			startActivity(intentStartActivity);
+		}
+		
+		if( b == this.buttonSuggestScheduleActivity)
+		{
+			intentStartActivity = new Intent(this, ActivityScheduler.class);
+			startActivity(intentStartActivity);
+		}
+		
+		 
 		
 		
-		// Log.w("apasare meniu", "am apasat un meniu" + mainActivity.FRUITS[arg2]);
 		
-		 Intent intent = null;
 		
-		 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.getTask)) == 0)	 
-			  intent = new Intent(mainActivity, ShowTasks.class); 
-			
-		 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.addTask)) == 0)
-			intent = new Intent(mainActivity, AddTask.class);
-			
-			 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.schedule)) == 0)
-			  intent = new Intent(mainActivity, ShowAllTasks.class);
-		 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.discoverDevice)) == 0)
-			  intent = new Intent(mainActivity, AddDeviceActivity.class);
-		 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.current_task)) == 0)
-			  intent = new Intent(mainActivity, ShowCurrentTask.class);
-		 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.activity_fixed_Tasks)) == 0)
-			  intent = new Intent(mainActivity, SetFixedTask.class);
-		 
-		 if(mainActivity.MenUApp[arg2].compareTo(mainActivity.getString(R.string.activity_Scheduler)) == 0)
-			  intent = new Intent(mainActivity, ActivityScheduler.class);
-		 
-		 
-		 mainActivity.startActivity(intent);
-		 
 		
 	}
-	
+
 }
+
+
+
 
 

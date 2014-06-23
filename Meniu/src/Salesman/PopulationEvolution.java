@@ -535,7 +535,7 @@ public class PopulationEvolution {
 				{
 					ind.getOrderTasks().add(r.nextInt( shiftingTasks.size()));
 					ind.setStartTime(startTimeMinutes + r.nextInt(endTimeMinutes - startTimeMinutes));
-					System.out.println("Mutatie " + ind.getOrderTasks().toString() + " " + ind.getStartTime());
+				//	System.out.println("Mutatie " + ind.getOrderTasks().toString() + " " + ind.getStartTime());
 					continue;
 				}
 				
@@ -584,6 +584,8 @@ public class PopulationEvolution {
 						if(ind.getOrderTasks().contains(indexTask))
 						{
 							ind.getOrderTasks().remove(new Integer(indexTask));
+							calculateFitnessValue(ind);
+							System.out.println("A INTRAT AICI " + ind.getOrderTasks() + " " + ind.getFitnessValue() );
 							break;
 						}
 						

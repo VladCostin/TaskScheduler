@@ -8,17 +8,135 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-     <ListView
-         android:id="@+id/ListView1"
-         android:layout_below="@+id/textView1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content" />
+ 		<Button
+ 		    
+ 		   android:id="@+id/buttonActivityAddTask"
+ 		   android:layout_marginTop="40dp"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonAddTask"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
+	
+	
+	<Button
+ 		    
+ 		   android:id="@+id/buttonActivityViewTasks"
+ 		   android:layout_marginTop="20dp"
+ 		   android:layout_below="@+id/buttonActivityAddTask"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonViewAllTasks"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
+	
+	
+	<Button
+ 		    
+ 		   android:id="@+id/buttonActivityViewCompatibleTasks"
+ 		   android:layout_marginTop="20dp"
+ 		   android:layout_below="@+id/buttonActivityViewTasks"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonViewCompatibleTasks"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
+	
+	<Button
+ 		    
+ 		   android:id="@+id/buttonActivityRunningTask"
+ 		   android:layout_marginTop="20dp"
+ 		   android:layout_below="@+id/buttonActivityViewCompatibleTasks"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonRunningTask"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
+	
+	
+	<Button
+ 		    
+ 		   android:id="@+id/buttonActivityFixedSchedule"
+ 		   android:layout_marginTop="20dp"
+ 		   android:layout_below="@+id/buttonActivityRunningTask"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonSetSchedule"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
+	
+	
+	<Button
+ 		    
+ 		   android:id="@+id/buttonActivitySuggestSchedule"
+ 		   android:layout_marginTop="20dp"
+ 		   android:layout_below="@+id/buttonActivityFixedSchedule"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonSuggestSchedule"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
+	
+	
+	<Button
+ 		    
+ 		   android:id="@+id/buttonActivityDetectDevices"
+ 		   android:layout_marginTop="20dp"
+ 		   android:layout_below="@+id/buttonActivitySuggestSchedule"
+ 		   android:layout_centerHorizontal="true"
+ 		   android:paddingLeft="20dp"
+ 		   android:paddingRight="20dp"
+ 		   android:paddingTop="10dp"
+ 		   android:paddingBottom="10dp"
+ 		   android:layout_width="wrap_content"
+ 		   android:layout_height="wrap_content"
+ 		   android:text="@string/buttonDetectDevices"
+ 		   android:textSize="20sp"
+ 		   android:textColor="#0000FF"
+ 		   android:background="@drawable/buttoncolors"
+ 	/>
      
      
      
