@@ -76,10 +76,6 @@ public class AddTask extends   FragmentActivity
 	 */
 	private AutoCompleteTextView autoTitle;
 	
-	/**
-	 * show list of domains
-	 */
-	private Spinner domain;
 	
 	/**
 	 * show list for choosing a domain
@@ -265,9 +261,6 @@ public class AddTask extends   FragmentActivity
 		
 
 		
-		
-		
-		domain 	 = (Spinner)  findViewById(R.id.spinner1);
 		spinnerPriority = (Spinner)  findViewById(R.id.spinnerPriority);	
 		duration = (Spinner)  findViewById(R.id.spinnerDuration);
 		autoTitle    = (AutoCompleteTextView) findViewById(R.id.titleAutoComplete);
@@ -1033,17 +1026,6 @@ public class AddTask extends   FragmentActivity
 	}
 	
 	
-	
-
-
-
-public Spinner getDomain() {
-	return domain;
-}
-
-public void setDomain(Spinner domain) {
-	this.domain = domain;
-}
 
 public Spinner getPriority() {
 	return spinnerPriority;

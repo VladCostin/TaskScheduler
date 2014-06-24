@@ -75,7 +75,8 @@
 
     <string name="textStartTime">The earliest time when the execution should have started</string>
     <string name="TextEndTime">The latest time when the execution should have ended</string>
-    <string name="textAddLocation">LOCATION</string>
+    <string name="textViewTitle">Title</string>
+    <string name="textAddLocation">Location</string>
     <string name="chooseObject">OBJECTS</string>
     <string name="buttonSetDeadline">Deadline</string>
     <string name="buttonChoosePeople">People</string>

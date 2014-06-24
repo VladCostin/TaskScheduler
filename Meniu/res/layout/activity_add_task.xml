@@ -11,32 +11,32 @@
         
         <TextView
             android:id="@+id/textViewLabelNameTask"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:drawableLeft="@drawable/title"
-        	android:text="@string/taskTitle" />
+        	android:textSize="20sp"
+        	android:text="@string/textViewTitle" />
         
         
 		<AutoCompleteTextView 
 		    android:id="@+id/titleAutoComplete"
+		    android:layout_marginTop="10dp"
+		    android:layout_marginLeft="30dp"
+		    android:layout_marginRight="30dp"
 		    android:layout_below="@+id/textViewLabelNameTask"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:completionThreshold="1" />
         
-        
-        <View
-            android:id="@+id/drawLineTitle"
-        	android:layout_below="@+id/titleAutoComplete"
- 			android:layout_width="match_parent"
- 			android:layout_height="1dp"
- 			android:background="@android:color/black" />
 	
         <TextView
             android:id="@+id/textViewLabelAddLocation"
-            android:layout_below="@+id/drawLineTitle"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/titleAutoComplete"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:drawableLeft="@drawable/location"
@@ -47,6 +47,7 @@
             android:id="@+id/locationAutoComplete"
             android:layout_below="@+id/textViewLabelAddLocation"
 			android:layout_width="300dp"
+			android:layout_marginLeft="30dp"
 			android:layout_height="wrap_content"
 			android:completionThreshold="1"
 		/>
@@ -54,10 +55,10 @@
  		<Button
  		    
  		    android:id="@+id/buttonSearchLocation"
+ 		    android:layout_marginLeft="30dp"
  		    android:layout_toRightOf="@+id/locationAutoComplete"
  		    android:layout_below="@+id/textViewLabelAddLocation"
  		    android:layout_alignBottom="@+id/locationAutoComplete"
- 		    android:layout_marginLeft="20dp"
  		    android:layout_width="wrap_content"
  		    android:layout_height="wrap_content"
  		    android:text="@string/buttonSearch"
@@ -72,21 +73,16 @@
   			android:layout_height="500dp"
   			android:layout_centerHorizontal="true"
   			class="com.example.meniu.WorkaroundMapFragment"/>
-        
-        
-         <View
-            android:id="@+id/drawLineLocation"
-        	android:layout_below="@+id/map"
- 			android:layout_width="match_parent"
- 			android:layout_height="1dp"
- 			android:layout_marginTop="10dp"
- 			android:background="@android:color/black" />
+
          
          <Button
             android:id="@+id/chooseDevicesButton"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="30dp"
+            android:paddingRight="35dp"
+            android:textSize="20sp"
             android:drawableLeft="@drawable/device"
-            android:layout_below="@+id/drawLineLocation"
+            android:layout_below="@+id/map"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonChooseDevices" />
@@ -94,28 +90,25 @@
          <TextView
             android:id="@+id/chooseDevices"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/drawLineLocation"
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/chooseDevicesButton"
+            android:layout_alignBaseline="@+id/chooseDevicesButton"
+            android:layout_below="@+id/map"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:textAppearance="?android:attr/textAppearanceLarge"
         	android:text="@string/textNotChoosed" />
         
-
-        
-        <View
-            android:id="@+id/drawLineObject"
-        	android:layout_below="@+id/chooseDevicesButton"
- 			android:layout_width="match_parent"
- 			android:layout_height="1dp"
- 			android:background="@android:color/black" />
          
          
 	    <Button
             android:id="@+id/choosePeopleButton"
             android:layout_marginTop="20dp"
-            android:drawableLeft="@drawable/date"
-            android:layout_below="@+id/drawLineObject"
+            android:layout_marginLeft="30dp"
+            android:paddingRight="45dp"
+            android:textSize="20sp"
+            android:layout_below="@+id/chooseDevicesButton"
+            android:drawableLeft="@drawable/persoane"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonChoosePeople" />
@@ -124,29 +117,25 @@
         <TextView
             android:id="@+id/choosePeopleText"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/drawLineObject"
+            android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/choosePeopleButton"
+            android:layout_alignBaseline="@+id/choosePeopleButton"
+            android:layout_below="@+id/chooseDevicesButton"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:textAppearance="?android:attr/textAppearanceLarge"
         	android:text="@string/textNotChoosed" />
         
 
-        
-         <View
-            android:id="@+id/drawLinePeople"
-        	android:layout_below="@+id/choosePeopleButton"
- 			android:layout_width="match_parent"
- 			android:layout_height="1dp"
- 			android:background="@android:color/black" />
-         
-
  
 		<Button
             android:id="@+id/setDeadline"
             android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:paddingRight="30dp"
+            android:textSize="20sp"
             android:drawableLeft="@drawable/date"
-            android:layout_below="@+id/drawLinePeople"
+            android:layout_below="@+id/choosePeopleButton"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/buttonSetDeadline" />	 
@@ -154,43 +143,23 @@
          
 		<TextView
 		    android:id="@+id/deadline"
-		    android:layout_below="@+id/drawLinePeople"
 		    android:layout_toRightOf="@+id/setDeadline"
+		    android:layout_alignBaseline="@+id/setDeadline"
+		    android:layout_below="@+id/choosePeopleButton"
        	    android:layout_width="wrap_content"
        		android:layout_height="wrap_content"
        		android:layout_marginTop="20dp"
+       		android:layout_marginLeft="30dp"
        		android:textAppearance="?android:attr/textAppearanceLarge"
         	android:text="@string/textNotChoosed" />
 		
-		
-		 <View
-            android:id="@+id/drawLineDeadline"
-        	android:layout_below="@+id/setDeadline"
- 			android:layout_width="match_parent"
- 			android:layout_height="1dp"
- 			android:background="@android:color/black" />
-		
-	
-    	<TextView
-        	android:id="@+id/domain"
-        	android:layout_marginTop="20dp"
-        	android:layout_below="@+id/drawLineDeadline"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/domain" />
-    
-   		<Spinner
-        	android:id="@+id/spinner1"
-        	android:layout_below="@+id/domain"
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:entries="@array/country_arrays"
-        	android:prompt="@string/country_prompt" />
-    
     
     	<TextView
   	      	android:id="@+id/priority"
-    	  	android:layout_below="@+id/spinner1"
+  	      	android:layout_marginLeft="30dp"
+  	      	android:layout_marginTop="40dp"
+  	      	android:textSize="20sp"
+    	  	android:layout_below="@+id/deadline"
     	  	android:drawableLeft="@drawable/warning"
         	android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
@@ -199,8 +168,11 @@
     
     	<Spinner
         	android:id="@+id/spinnerPriority"
-        	android:layout_below="@+id/priority"
-        	android:layout_width="match_parent"
+        	android:layout_toRightOf="@+id/priority"
+        	android:layout_alignBaseline="@+id/priority"
+        	android:layout_below="@+id/deadline"
+        	android:layout_width="200dp"
+        	android:layout_marginLeft="120dp"
         	android:layout_height="wrap_content"
         	android:entries="@array/priority_arrays"
         	android:prompt="@string/priority_prompt" />
@@ -209,73 +181,35 @@
     	
     	<TextView
   	      	android:id="@+id/textDuration"
-    	  	android:layout_below="@+id/spinnerPriority"
-    	  	android:drawableLeft="@drawable/warning"
+  	      	android:layout_marginLeft="30dp"
+  	      	android:layout_marginTop="40dp"
+  	      	android:textSize="20sp"
+    	  	android:layout_below="@+id/priority"
+    	  	android:drawableLeft="@drawable/duration"
         	android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
         	android:text="@string/textDuration_prompt" />
     
     	<Spinner
         	android:id="@+id/spinnerDuration"
-        	android:layout_below="@+id/textDuration"
+        	android:layout_toRightOf="@+id/textDuration"
+        	android:layout_marginLeft="20dp"
+        	android:layout_alignBaseline="@+id/textDuration"
+        	android:layout_below="@+id/spinnerPriority"
         	android:layout_width="200dp"
         	android:layout_height="wrap_content"
+        	android:gravity="center"
         	android:entries="@array/duration_arrays"
-        	android:paddingLeft="30dp"
         	android:prompt="@string/textDuration_prompt" />
-    	
-    
-    
-    	<TextView
-        	android:id="@+id/repeatable"
-        	android:layout_below="@+id/spinnerDuration"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_marginTop="50dp"
-        	android:text="@string/Repeatable" />
- 
-    	 <Spinner
-        	android:id="@+id/spinner3"
-        	android:layout_below="@+id/repeatable"
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:entries="@array/repeatable_arrays"
-        	android:prompt="@string/repeatable_prompt" />
      
-     
-     	<TextView
-        	android:id="@+id/startTime"
-        	android:layout_below="@+id/spinner3"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/textStartTime" />
-     
-      	<TimePicker
-        	android:id="@+id/timePicker1"
-        	android:layout_below="@+id/startTime"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content" />
-      
-       <TextView
-        	android:id="@+id/endTime"
-        	android:layout_below="@+id/timePicker1"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/TextEndTime" />
-     
-      	<TimePicker
-        	android:id="@+id/timePicker2"
-        	android:layout_below="@+id/endTime"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content" />
       	
       	<Button
       	    android:id="@+id/saveButton"
       	    android:layout_width="wrap_content"
       	    android:layout_height="wrap_content"
       	    android:layout_centerHorizontal="true"
-      	    android:layout_below="@+id/timePicker2"
-      	    android:layout_marginTop="20dp"
+      	    android:layout_below="@+id/textDuration"
+      	    android:layout_marginTop="40dp"
       	    android:text="@string/saveButton" />
       	
       	
