@@ -11,33 +11,36 @@
     
 
     
-    <TextView
-            android:id="@+id/textViewLabelNameTask"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:drawableLeft="@drawable/title"
-       		android:text="@string/taskTitle" />
-    
     
     
     <TextView
             android:id="@+id/textViewTitle"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="100dp"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:layout_alignBaseline="@+id/textViewLabelNameTask"
-        	android:layout_toRightOf="@+id/textViewLabelNameTask"
-        	android:layout_marginLeft="20dp"
+        	android:layout_centerHorizontal="true"
+        	android:textSize="35sp"
+        	android:textColor="#0000FF"
      />
+          
+    <TextView 
         
-
+        	android:id="@+id/textViewTimeRemaining"
+        	android:layout_marginTop="50dp"
+        	android:layout_centerHorizontal="true"
+        	android:layout_below="@+id/textViewTitle"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:textSize="35sp"
         
-        
+    />
+    
+    
     <TextView
             android:id="@+id/textViewLabelAddLocation"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/textViewLabelNameTask"
+            android:layout_marginTop="50dp"
+            android:textSize="20sp"
+            android:layout_below="@+id/textViewTimeRemaining"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:drawableLeft="@drawable/location"
@@ -49,89 +52,73 @@
             android:id="@+id/textViewAddLocation"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
+            android:textSize="20sp"
     		android:layout_alignBaseline="@+id/textViewLabelAddLocation"
     		android:layout_toRightOf="@+id/textViewLabelAddLocation"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
      />
     
-    
-    
-    
-    
-     <TextView
-            android:id="@+id/showDuration"
+    <TextView
+            android:id="@+id/textViewLabelAddPriority"
             android:layout_marginTop="10dp"
-            
+            android:textSize="20sp"
             android:layout_below="@+id/textViewLabelAddLocation"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/Duration" />
-     
-     
-     <TextView 
-         	android:id="@+id/hours"
-         	android:layout_marginTop="10dp"
-         	android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/showDuration"
-            android:layout_below="@+id/textViewLabelAddLocation"
+        	android:drawableLeft="@drawable/warning"
+        	android:text="@string/textPriority" />
+    
+    
+    
+    <TextView
+            android:id="@+id/textViewAddPriority"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:textSize="20sp"
+    		android:layout_alignBaseline="@+id/textViewLabelAddPriority"
+    		android:layout_toRightOf="@+id/textViewLabelAddPriority"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/Duration"/>
-     
-     
-     <TextView 
-         	android:id="@+id/minutes"
-         	android:layout_marginTop="10dp"
-         	android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/hours"
-            android:layout_below="@+id/textViewLabelAddLocation"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/Duration"/>
-     
-     
-      <TextView 
-         	android:id="@+id/seconds"
-         	android:layout_marginTop="10dp"
-         	android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/minutes"
-            android:layout_below="@+id/textViewLabelAddLocation"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/Duration"/>
-      
-      
-      <Button
+     />
+    
+    
+    
+     <Button
           android:id="@+id/addMinutes"
           android:text="@string/addMinutes"
-          android:layout_marginTop="10dp"
-          android:layout_below="@+id/showDuration"
+          android:layout_marginTop="40dp"
+          android:layout_below="@+id/textViewLabelAddPriority"
           android:layout_width="wrap_content"
-       	  android:layout_height="wrap_content" />
+       	  android:layout_height="wrap_content" 
+     />
       
       
-       <Button
+     <Button
           android:id="@+id/addHours"
           android:text="@string/addHours"
-          android:layout_marginTop="10dp"
           android:layout_marginLeft="10dp"
-          android:layout_below="@+id/showDuration"
+          android:layout_alignBaseline="@+id/addMinutes"
           android:layout_toRightOf="@+id/addMinutes"
           android:layout_width="wrap_content"
-       	  android:layout_height="wrap_content" />
+       	  android:layout_height="wrap_content" 
+       	  
+      />
        
        
        
-       <Button
+      <Button
           android:id="@+id/taskFinalizat"
           android:text="@string/finalizeTask"
           android:layout_marginTop="10dp"
           android:layout_below="@+id/addMinutes"
           android:layout_width="wrap_content"
-       	  android:layout_height="wrap_content" />
+       	  android:layout_height="wrap_content" 
+       />
+    
+ 
       
-         	
+  
      
      
      

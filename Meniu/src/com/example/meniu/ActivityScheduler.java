@@ -301,9 +301,8 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 
 		 idButtonRecall = idView;
 		 
-		 params_button_interval.addRule(RelativeLayout.BELOW, idRoot);
-		 params_button_interval.addRule(RelativeLayout.RIGHT_OF, idView - 1);
-		 params_button_interval.setMargins(20, 150, 0, 0);
+		 params_button_interval.addRule(RelativeLayout.BELOW, idView - 1);
+		 params_button_interval.setMargins(20, 15, 0, 0);
 		 buttonExecuteSchedule.setLayoutParams(params_button_interval);
 			
 			
@@ -334,7 +333,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 
 		 
 		 params_button_interval.addRule(RelativeLayout.BELOW, idView - 2);
-		 params_button_interval.setMargins(0, 10, 0, 0);
+		 params_button_interval.setMargins(15, 75, 0, 0);
 		 textViewPatienceMessage.setLayoutParams(params_button_interval);
 			
 			
@@ -419,7 +418,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  title.setTextSize(20);
 		  title.setId( ++idView); 
 		  params_title.addRule(RelativeLayout.BELOW, idView - 1);
-		  params_title.setMargins(0, 30, 0, 0); 
+		  params_title.setMargins(15, 30, 0, 0); 
 		  title.setLayoutParams(params_title);
 		  
 		   
@@ -435,7 +434,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  priority.setTextSize(20);	
 		  priority.setId( ++ idView);
 		  params_priority.addRule(RelativeLayout.BELOW, idView - 1);
-		  params_priority.setMargins(0, 10, 0, 0);
+		  params_priority.setMargins(15, 10, 0, 0);
 		  priority.setLayoutParams(params_priority);
 			
 		  priorityValue.setText(task.getPriority());
@@ -452,7 +451,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  duration.setTextSize(20);	
 		  duration.setId( ++ idView);
 		  params_duration.addRule(RelativeLayout.BELOW, idView - 1);
-		  params_duration.setMargins(0, 10, 0, 0);
+		  params_duration.setMargins(15, 10, 0, 0);
 		  duration.setLayoutParams(params_duration);
 			
 			
@@ -517,7 +516,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  location.setTextSize(20);	
 		  location.setId( ++ idView);
 		  params_location.addRule(RelativeLayout.BELOW, idView - 1);
-		  params_location.setMargins(0, 10, 0, 0);
+		  params_location.setMargins(15, 10, 0, 0);
 		  location.setLayoutParams(params_location);
 		  
 		  if(address == null)
@@ -537,7 +536,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		  durationBetween.setTextSize(20);	
 		  durationBetween.setId( ++ idView);
 		  params_duration_travel.addRule(RelativeLayout.BELOW, idView - 1);
-		  params_duration_travel.setMargins(0, 10, 0, 0);
+		  params_duration_travel.setMargins(15, 10, 0, 0);
 		  durationBetween.setLayoutParams(params_duration_travel);
 			
 			
@@ -619,7 +618,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 duration.setTextColor(Color.BLUE);
 		 duration.setId( ++ idView);
 		 params_duration.addRule(RelativeLayout.BELOW, idView - 1);
-		 params_duration.setMargins(0, 10, 0, 0);
+		 params_duration.setMargins(15, 25, 0, 0);
 		 duration.setLayoutParams(params_duration);
 			
 			
@@ -629,7 +628,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 durationValue.setTextColor(Color.BLUE);
 		 params_duration_value.addRule(RelativeLayout.RIGHT_OF, idView - 1);
 		 params_duration_value.addRule(RelativeLayout.BELOW, idView - 2);
-		 params_duration_value.setMargins(20, 10, 0, 0);
+		 params_duration_value.setMargins(20, 25, 0, 0);
 		 durationValue.setLayoutParams(params_duration_value);
 		 
 		 
@@ -638,7 +637,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 startTime.setId( ++ idView);
 		 startTime.setTextColor(Color.BLUE);
 		 params_startTime.addRule(RelativeLayout.BELOW, idView - 1);
-		 params_startTime.setMargins(0, 10, 0, 0);
+		 params_startTime.setMargins(15, 10, 0, 0);
 		 startTime.setLayoutParams(params_startTime);
 			
 			
@@ -657,7 +656,7 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 endTime.setId( ++ idView);
 		 endTime.setTextColor(Color.BLUE);
 		 params_endTime.addRule(RelativeLayout.BELOW, idView - 1);
-		 params_endTime.setMargins(0, 10, 0, 0);
+		 params_endTime.setMargins(15, 10, 0, 0);
 		 endTime.setLayoutParams(params_endTime);
 			
 			

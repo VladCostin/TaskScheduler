@@ -183,6 +183,7 @@ public class AddDeviceActivity extends Activity {
 		TextView DeviceName, MacAdress;
 		EditText writeOwner; 
 		Button addDeviceOwnerButton;
+		Button addMyDeviceButton;
 		View line;
 		
 		RelativeLayout.LayoutParams params_name = 
@@ -208,13 +209,24 @@ public class AddDeviceActivity extends Activity {
 		new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 
 						                                   RelativeLayout.LayoutParams.WRAP_CONTENT);
 		
+		ownerGet.setMargins(50, 0, 0, 0); 
+		
 		RelativeLayout.LayoutParams params_buton = 
 		new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 						                                   RelativeLayout.LayoutParams.WRAP_CONTENT);
 		
+		params_buton.setMargins(0, 10, 0, 0);
+		
+		RelativeLayout.LayoutParams params_buton_mine = 
+		new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+						                                   RelativeLayout.LayoutParams.WRAP_CONTENT);
+		
+		params_buton_mine.setMargins(20, 10, 0, 0);
 		
 	    RelativeLayout.LayoutParams params_line = 
 	    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
+	    
+	    params_line.setMargins(0, 10, 0, 0); 
 		
 		
 		showDeviceName = new TextView(this);
@@ -224,6 +236,7 @@ public class AddDeviceActivity extends Activity {
 		DeviceName = new TextView(this);
 		writeOwner = new EditText(this);
 		addDeviceOwnerButton = new Button(this);
+		addMyDeviceButton = new Button(this);
 		line = new View(this);
 		
 		
@@ -266,13 +279,12 @@ public class AddDeviceActivity extends Activity {
 		addOwnerDevice.setLayoutParams(params_Owner);
 		
 		writeOwner.setTextSize(20);
-		writeOwner.setText(R.string.myDeviceConstant);
 		writeOwner.setId( ++ numberOfView);
 		ownerGet.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 		ownerGet.addRule(RelativeLayout.BELOW, numberOfView - 2);
 		writeOwner.setLayoutParams( ownerGet);
 		
-		addDeviceOwnerButton.setText(R.string.addOwnerDevice);
+		addDeviceOwnerButton.setText(R.string.buttonAddOwnerDevice);
 		addDeviceOwnerButton.setTextSize(20);	
 		addDeviceOwnerButton.setId( ++ numberOfView);
 		params_buton.addRule(RelativeLayout.BELOW, numberOfView - 1);
@@ -280,6 +292,15 @@ public class AddDeviceActivity extends Activity {
 		
 		addDeviceOwnerButton.setOnClickListener(addDevice);
 		
+		
+		addMyDeviceButton.setText(R.string.buttonAddMyDevice);
+		addMyDeviceButton.setTextSize(20);	
+		addMyDeviceButton.setId( ++ numberOfView);
+		params_buton_mine.addRule(RelativeLayout.BELOW, numberOfView - 2);
+		params_buton_mine.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1); 
+		addMyDeviceButton.setLayoutParams(params_buton_mine);
+		
+		addMyDeviceButton.setOnClickListener(addDevice);
 
 		
 		line.setBackgroundColor(Color.BLUE);
@@ -295,6 +316,7 @@ public class AddDeviceActivity extends Activity {
 		layout.addView(addOwnerDevice);
 		layout.addView(writeOwner);
 		layout.addView(addDeviceOwnerButton);
+		layout.addView(addMyDeviceButton);
 		layout.addView(line);
 		
 

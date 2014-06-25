@@ -64,6 +64,9 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	private TextView hours; 
 	
 	
+	private TextView durationRemained;
+	
+	
 	/**
 	 * adds 10 minutes to the duration value
 	 */
@@ -103,6 +106,12 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	 */
 	TextView location;
 	
+	
+	/**
+	 * the priority of the current task
+	 */
+	TextView priority; 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,11 +119,14 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		title = (TextView) findViewById(R.id.textViewTitle);
 		location = (TextView) findViewById(R.id.textViewAddLocation);
+		priority = (TextView) findViewById(R.id.textViewAddPriority);
+		
 		
 		layout = (RelativeLayout )  this.findViewById(R.id.currentTaskLayout);
-		seconds = (TextView) findViewById(R.id.seconds);
-		minutes = (TextView) findViewById(R.id.minutes);
-		hours = (TextView) findViewById(R.id.hours);
+		durationRemained = (TextView) this.findViewById(R.id.textViewTimeRemaining);
+	//	seconds = (TextView) findViewById(R.id.seconds);
+	//	minutes = (TextView) findViewById(R.id.minutes);
+	//	hours = (TextView) findViewById(R.id.hours);
 		
 		addMinutesButton = (Button) findViewById(R.id.addMinutes);
 		addHoursButton = (Button) findViewById(R.id.addHours);
@@ -173,6 +185,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		currentTask = chosenTasks.get(0);
 		title.setText(currentTask.getNameTask());
+		priority.setText(currentTask.getPriority());
 		LocationContext locationC = (LocationContext) currentTask.getInternContext().
 		getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
 		
@@ -289,7 +302,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 			
 		System.out.println("Numarul de ore din durata " + durationTask.getDuration() / 60);
 		System.out.println("Numarul de minute din durata" +  durationTask.getDuration() % 60);
-		System.out.println("Numarul de minute ramase din task, fara ore" + nrMinutesFromHour);
+	//	System.out.println("Numarul de minute ramase din task, fara ore" + nrMinutesFromHour);
 			
 			
 			
@@ -313,10 +326,13 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 			nrHours   = 0;
 				
 				
-			hours.setText(Integer.toString( nrHours));
+		/*	hours.setText(Integer.toString( nrHours));
 			minutes.setText( Integer.toString(nrMinutes ));
 			seconds.setText(Integer.toString(nrSeconds));
-				
+		*/
+			
+			durationRemained.setText(Integer.toString( nrHours) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
+			
 			durationTask.setDuration(durationTask.getDuration() + deltaMinutesPast + 10); 
 			return;
 				
@@ -326,15 +342,22 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	
 			// daca de exemplu s-au dus 35 de minute, si durata avea 40 de minute, atunci intra pe else
 						// daca in schimb durata avea 30 de minute atunci inseamna ca trebuie sczut si numarul de ore, si la minute se porneste de la 59 - diffMinutes
-		if(nrMinutesFromHour <   diffMinutes)
+		if(nrMinutesFromHour <=   diffMinutes)
 		{
 
 				
 				
 			// divide to 60 to get the number of hours then substract 1, which is given to minutes
 			// substract then diffHours, which represents how much time I stayed with the activity not opened
+			//nrMinutes = (durationTask.getDuration() % 60)  - (int) diffMinutes;
 			nrHours = ( durationTask.getDuration() / 60  -1 ) -  (int) diffHours ;
-			nrMinutes = (durationTask.getDuration() % 60)  - (int) diffMinutes;
+			nrMinutes = 59  - (int) diffMinutes;
+			
+			
+			System.out.println("NUMARUL DE MINUTE CALCULAT IN IF-UL ASTA ESTE " + nrMinutes);
+			System.out.println("NUMARUL DE ORE CALCULAT IN IF-UL ASTA ESTE " + nrHours);
+			
+			
 		}
 		else
 		{
@@ -348,12 +371,13 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		nrSeconds = 60 - (int) diffSeconds;
 			
 			
-		hours.setText(Integer.toString( nrHours));
+	/*	hours.setText(Integer.toString( nrHours));
 		minutes.setText( Integer.toString(nrMinutes ));
 		seconds.setText(Integer.toString(nrSeconds));
+	*/	
 		
-		
-		
+		durationRemained.setText
+		(Integer.toString( nrHours) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
 	}
 	
 	
@@ -515,11 +539,12 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		nrMinutes += 10;
 		if(nrMinutes >= 60){
 			nrMinutes -= 60;
-			hours.setText(Integer.toString(nrHours++));
+			nrHours++;
 		}
 		
-		minutes.setText(Integer.toString(nrMinutes));
-		
+	//	minutes.setText(Integer.toString(nrMinutes));
+		durationRemained.setText
+		(Integer.toString( nrHours) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
 		
 		
 		DurationContext durationTask = (DurationContext)
@@ -537,7 +562,11 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	 */
 	public void addHours()
 	{
-		hours.setText(Integer.toString(nrHours++));
+	//	hours.setText(Integer.toString(nrHours++));
+		
+		durationRemained.setText
+		(Integer.toString( nrHours) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
+		
 		
 		DurationContext durationTask = (DurationContext)
 		currentTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
@@ -549,6 +578,16 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 	//	System.out.println("ORE DURATA ESTE ACUM" + durationTask.getDuration());
 		
+	}
+
+
+	public TextView getDurationRemained() {
+		return durationRemained;
+	}
+
+
+	public void setDurationRemained(TextView durationRemained) {
+		this.durationRemained = durationRemained;
 	}
 
 }
@@ -606,11 +645,14 @@ class MyTimer implements Runnable{
 							taskActivity.setNrMinutes(taskActivity.getNrMinutes() - 1);
 						
 					}
-					taskActivity.getSecunde().setText(Integer.toString(taskActivity.getNrSeconds()));
+				/*	taskActivity.getSecunde().setText(Integer.toString(taskActivity.getNrSeconds()));
 					taskActivity.getMinute().setText(Integer.toString(taskActivity.getNrMinutes()));
 					taskActivity.getHours().setText(Integer.toString(taskActivity.getNrHours())); 
-					
-					
+				*/	
+					taskActivity.getDurationRemained().setText
+					(Integer.toString(taskActivity.getNrHours()) + " : "+
+					Integer.toString(taskActivity.getNrMinutes()) + " : " + 
+					Integer.toString(taskActivity.getNrSeconds()) );
 					
 					
 				}

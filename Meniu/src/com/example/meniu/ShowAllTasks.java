@@ -172,10 +172,11 @@ public class ShowAllTasks extends Activity
 			RelativeLayout.LayoutParams params_title = 
 			           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 			                                           RelativeLayout.LayoutParams.MATCH_PARENT);
-			showMessageTask.setGravity(Gravity.CENTER); 
+			params_title.setMargins(0, 100, 0, 0);
+			showMessageTask.setGravity(Gravity.CENTER);
 			showMessageTask.setText(Constants.noTaskMessage);
 			showMessageTask.setTextColor(Color.BLUE);
-			showMessageTask.setTextSize(20);
+			showMessageTask.setTextSize(25);
 		    showMessageTask.setLayoutParams(params_title);
 		    
 		    
@@ -217,66 +218,88 @@ public class ShowAllTasks extends Activity
 		   Button butonErase, butonModifyData;
 		   
 		   
-		   View line;
-		   RelativeLayout.LayoutParams params_title = 
-           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
-                                           RelativeLayout.LayoutParams.WRAP_CONTENT);
+		   View line;		   
+		   
 		   RelativeLayout.LayoutParams params_title_value = 
-		   new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+		   new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 
 		                                   RelativeLayout.LayoutParams.WRAP_CONTENT);
+		   
+		   params_title_value.setMargins(100, 30, 100, 0);
 		   
 		   
 		   RelativeLayout.LayoutParams params_priority = 
 		   new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		                                   RelativeLayout.LayoutParams.WRAP_CONTENT);
+		   
+		   params_priority.setMargins(20, 20, 0, 0);
+		   
+		   
 		    RelativeLayout.LayoutParams params_priority_value = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 				                            RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
-		    
+		    params_priority_value.setMargins(30, 20, 0, 0);
 		 		   
 		 		   
 		    RelativeLayout.LayoutParams params_deadline = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    params_deadline.setMargins(20, 10, 0, 0);
+		    
 		    RelativeLayout.LayoutParams params_deadline_value = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
+		    params_deadline_value.setMargins(19, 10, 0, 0);
 		    
 		    RelativeLayout.LayoutParams params_people = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    params_people.setMargins(20, 10, 0, 0);
+		    
 		    RelativeLayout.LayoutParams params_people_value = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 		 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
+		    params_people_value.setMargins(35, 10, 0, 0);
+		    
 		    RelativeLayout.LayoutParams params_devices = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 				 		                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
+		    params_devices.setMargins(20, 10, 0, 0);
+		    
 		    RelativeLayout.LayoutParams params_devices_value = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
+		    params_devices_value.setMargins(25, 10, 0, 0);
+		    
 		    
 		    RelativeLayout.LayoutParams params_line = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 2);
+		    
+		    
+		    params_line.setMargins(20, 10, 20, 0);
 		    
 		    RelativeLayout.LayoutParams params_erase = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
 		    
+		    params_erase.setMargins(20, 10, 0, 0);
+		    
+		    
 		    RelativeLayout.LayoutParams params_modify = 
 		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
 						 				            RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
-		    
-				   
+		    params_modify.setMargins(20, 10, 0, 0);
 				   
 			
-			
-			title  = new TextView(this);
+
 			priority = new TextView(this);
 			deadline = new TextView(this);
 			people = new TextView(this);
@@ -292,33 +315,26 @@ public class ShowAllTasks extends Activity
 			butonModifyData	= new Button(this);
 			line = new View(this);
 			
-			title.setText(R.string.taskTitle);
-			title.setPadding(20, 30, 0, 0);
-			title.setTextSize(20);
-			title.setId(++ numberOfView);  // devine 1
-		    params_title.addRule(RelativeLayout.BELOW, numberOfView - 1 );  // fata de 0
-		    title.setLayoutParams(params_title);
-		    
-    
+
 			
 			titleValue.setText(task.getNameTask());
-			titleValue.setPadding(40, 30, 0, 0);
-			titleValue.setTextSize(20);
+			titleValue.setTextSize(30);
+			titleValue.setBackgroundColor(Color.rgb(193, 215, 222));
 			titleValue.setId( ++ numberOfView);
-		    params_title_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
+			titleValue.setPadding(0, 5, 0, 5);
+			titleValue.setTextColor(Color.BLUE);
+			titleValue.setGravity(Gravity.CENTER); 
 			params_title_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 		    titleValue.setLayoutParams(params_title_value);
 			
 			
 			priority.setText(R.string.textPriority);
-			priority.setPadding(20, 10, 0, 0);
 			priority.setTextSize(20);	
 			priority.setId( ++ numberOfView);
 			params_priority.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			priority.setLayoutParams(params_priority);
 			
 			priorityValue.setText(task.getPriority());
-			priorityValue.setPadding(30, 10, 0, 0);
 			priorityValue.setTextSize(20);	
 			priorityValue.setId( ++ numberOfView);
 			params_priority_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
@@ -328,7 +344,6 @@ public class ShowAllTasks extends Activity
 			
 			
 			deadline.setText(R.string.buttonSetDeadline);
-			deadline.setPadding(20, 10, 0, 0);
 			deadline.setTextSize(20);
 			deadline.setId( ++ numberOfView);
 			params_deadline.addRule(RelativeLayout.BELOW, numberOfView - 1);
@@ -341,7 +356,6 @@ public class ShowAllTasks extends Activity
 			
 			
 			deadlineValue.setText(deadlineTask.getDeadline());
-			deadlineValue.setPadding(20, 10, 0, 0);
 			deadlineValue.setTextSize(20);
 			deadlineValue.setId( ++ numberOfView);
 			params_deadline_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -350,7 +364,6 @@ public class ShowAllTasks extends Activity
 			
 			
 			people.setText(R.string.buttonChoosePeople);
-			people.setPadding(20, 10, 0, 0);
 			people.setTextSize(20);
 			people.setId( ++ numberOfView);
 			params_people.addRule(RelativeLayout.BELOW, numberOfView - 1);
@@ -362,7 +375,6 @@ public class ShowAllTasks extends Activity
 			
 
 			peopleValue.setText(peopleTask.getPeopleTaskString());
-			peopleValue.setPadding(20, 10, 0, 0);
 			peopleValue.setTextSize(20);
 			peopleValue.setId( ++ numberOfView);
 			params_people_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -371,7 +383,6 @@ public class ShowAllTasks extends Activity
 			
 			
 			devices.setText(R.string.buttonChooseDevices);
-			devices.setPadding(20, 10, 0, 0);
 			devices.setTextSize(20);
 			devices.setId( ++ numberOfView);
 			params_devices.addRule(RelativeLayout.BELOW, numberOfView - 1);
@@ -383,7 +394,6 @@ public class ShowAllTasks extends Activity
 			
 
 			devicesValue.setText(deviceTask.getDeviceTaskString());
-			devicesValue.setPadding(20, 10, 0, 0);
 			devicesValue.setTextSize(20);
 			devicesValue.setId( ++ numberOfView);
 			params_devices_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -409,7 +419,6 @@ public class ShowAllTasks extends Activity
 			idTasks.put(numberOfView, task.getID());
 			
 			params_modify.addRule(RelativeLayout.BELOW, numberOfView - 1);
-			params_modify.setMargins(0, 10, 0, 0);
 			butonModifyData.setLayoutParams(params_modify);
 			
 			
@@ -421,7 +430,6 @@ public class ShowAllTasks extends Activity
 			line.setLayoutParams(params_line);
 			
 			
-			layout.addView(title);
 			layout.addView(titleValue);
 			layout.addView(priority);
 			layout.addView(priorityValue);

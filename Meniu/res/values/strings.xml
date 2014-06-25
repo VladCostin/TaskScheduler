@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Meniu</string>
+    <string name="app_name">Task Scheduler</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Welcome!</string>
     <string name="title_activity_add_task">AddTask</string>
@@ -84,7 +84,7 @@
     <string name="Duration">Duration</string>
     <string name="buttonDuration">Calculate duration</string>
     <string name="saveButton">SAVE TASK</string>
-    <string name="title_activity_show_tasks">ShowTasks</string>
+    <string name="title_activity_show_tasks">View compatible tasks</string>
     <string name="taskTitle">TITLE</string>
     <string name="title_activity_incercare">INCERCARE</string>
     <string name="Distance">Distance</string>
@@ -94,14 +94,15 @@
     <string name="DeviceName">Device Name</string>
     <string name="MacAdress">Mac Address</string>
     <string name="addOwner">Add Owner</string>
-    <string name="addOwnerDevice">Add Owner Device</string>
+    <string name="buttonAddOwnerDevice">Add Device with the added owner</string>
+    <string name="buttonAddMyDevice">Add Device as mine</string>
     <string name="myDeviceConstant">My Device</string>
     <string name="noDevice">No new Devices have been detected</string>
     <string name="Succes">The data has been inserted  </string>
     <string name="Error">Please insert the :</string>
     <string name="textNotChoosed">Not Chosen</string>
-    <string name="title_activity_show_all_tasks">ShowAllTasks</string>
-    <string name="title_activity_show_current_task">ShowCurrentTask</string>
+    <string name="title_activity_show_all_tasks">View all tasks</string>
+    <string name="title_activity_show_current_task">View Current tasks</string>
     <string name="buttonSearch">Search</string>
     <string name="addMinutes"> Add 10 minutes</string>
     <string name="addHours"> Add one hour</string>

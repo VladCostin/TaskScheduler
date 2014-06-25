@@ -93,8 +93,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 	//	addTasksDifferentTitlesForLocation();
 		
-	//	KMeansLocation clustering = new KMeansLocation();
-	//	clustering.calculateKlusters();
+		KMeansLocation clusteringLocation = new KMeansLocation();
+		clusteringLocation.calculateKlusters();
 		
 	//	clustering.titlesOfCenters();
 		

@@ -163,7 +163,7 @@
     	  	android:drawableLeft="@drawable/warning"
         	android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
-        	android:text="@string/textPriority" />
+        	android:text="@string/priority_prompt" />
     
     
     	<Spinner
@@ -172,7 +172,7 @@
         	android:layout_alignBaseline="@+id/priority"
         	android:layout_below="@+id/deadline"
         	android:layout_width="200dp"
-        	android:layout_marginLeft="120dp"
+        	android:layout_marginLeft="30dp"
         	android:layout_height="wrap_content"
         	android:entries="@array/priority_arrays"
         	android:prompt="@string/priority_prompt" />
