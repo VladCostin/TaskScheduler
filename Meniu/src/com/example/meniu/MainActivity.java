@@ -78,7 +78,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	//	addTaskforCheckDurationDifferentTitle();
 	//	addTaskforCheckDurationDifferentTitle_2();
 	//  addTaskforCheckDurationSameLocation();
-	//  addTaskforCheckDurationDifferentLocations();
+	//	addTaskforCheckDurationDifferentLocations();
 		
 		
 		
@@ -93,8 +93,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 	//	addTasksDifferentTitlesForLocation();
 		
-		KMeansLocation clusteringLocation = new KMeansLocation();
-		clusteringLocation.calculateKlusters();
+	//	KMeansLocation clusteringLocation = new KMeansLocation();
+	//	clusteringLocation.calculateKlusters();
 		
 	//	clustering.titlesOfCenters();
 		

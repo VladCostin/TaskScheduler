@@ -103,11 +103,15 @@ public class KMeansDuration implements KMeans{
 		
 		
 		
-		sameNumitorTitle = 500; // in case max LocationDistance = 21000 and title is 30
+		sameNumitorTitle = 250; // in case max LocationDistance = 21000 and title is 30
 		sameNumitorLocation = 1;
-		sameNumitorStartTime = 14; // in case max LocationDistance = 20000 and start time maxim is 720
-	
+		sameNumitorStartTime = 10; // in case max LocationDistance = 20000 and start time maxim is 720
 		
+		
+/*		sameNumitorTitle = 500; // in case max LocationDistance = 21000 and title is 30
+		sameNumitorLocation = 1;
+		sameNumitorStartTime = 5; // in case max LocationDistance = 20000 and start time maxim is 720
+*/	
 		idCentroid = new ArrayList<Integer>();
 		centroizi = new ArrayList<Task>();
 		idNewCentroid = new ArrayList<Integer>();
@@ -158,10 +162,10 @@ public class KMeansDuration implements KMeans{
 		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
 		
 		
-		for(int i = 0; i < 11; i++)
-		{
-	//	while(true)
+	//	for(int i = 0; i < 11; i++)
 	//	{
+		while(true)
+		{
 			nrClusters++;
 			idCentroid.clear();
 			idNewCentroid.clear();
@@ -243,8 +247,8 @@ public class KMeansDuration implements KMeans{
 		
 			
 			newError =	calculateError();
-			System.out.println((i + 1) +  " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
-			
+		//	System.out.println((i + 1) +  " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+			System.out.println( " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
 			
 			if( (errorInit - newError) < errorInit/fractionError)
 			{
@@ -665,11 +669,7 @@ public class KMeansDuration implements KMeans{
 	@Override
 	public int calculateDistance(Task t1, Task t2) {
 		
-		
-	/*	if(t1 == null || t2 == null)
-		{
-			System.out.println("2. UNUDL DINTRE EI ESTE NULL");
-		}*/
+
 		
 	//	System.out.println("START TIME t1 este " + t1.getStartTime());
 	//	System.out.println("START TIME t2 este " + t2.getStartTime());
@@ -685,6 +685,31 @@ public class KMeansDuration implements KMeans{
 		return timeDistance * sameNumitorStartTime + 
 		stringDistance * sameNumitorTitle + locationDistance *sameNumitorLocation  ;
 	}
+	
+	
+/*	@Override
+	public int calculateDistance(Task t1, Task t2) {
+		
+
+		
+	//	System.out.println("START TIME t1 este " + t1.getStartTime());
+	//	System.out.println("START TIME t2 este " + t2.getStartTime());
+		
+		
+		int stringDistance =   KMeansDistances.calculateDistanceTitles(t1.getNameTask(), t2.getNameTask());
+		int timeDistance =    KMeansDistances.calculateDistanceStartTime(t1.getStartTime(), t2.getStartTime());
+		int locationDistance = KMeansDistances.calculateDistanceLocation(t1, t2); 
+		
+		
+		return (int) Math.sqrt( timeDistance * timeDistance * sameNumitorStartTime * sameNumitorStartTime +
+			    stringDistance * stringDistance * sameNumitorTitle * sameNumitorTitle +
+			    locationDistance * locationDistance * sameNumitorLocation * sameNumitorLocation);
+
+		
+	//	return timeDistance * sameNumitorStartTime + 
+	//	stringDistance * sameNumitorTitle + locationDistance *sameNumitorLocation  ;
+	}*/
+	
 	
 	
 	@Override
@@ -714,20 +739,20 @@ public class KMeansDuration implements KMeans{
 					{
 						if(idCentroid.get(taskj) == iCluster )
 						{
-							//int distanceC = calculateDistance(tasks.get(taskj), tasks.get(taski) );
+							int distanceC = calculateDistance(tasks.get(taskj), tasks.get(taski) );
 							
 							 
-							int stringDistance =   KMeansDistances.calculateDistanceTitles(tasks.get(taskj).getNameTask(), tasks.get(taski).getNameTask());
-							int timeDistance =    KMeansDistances.calculateDistanceStartTime(tasks.get(taskj).getStartTime(), tasks.get(taski).getStartTime());
-							int locationDistance = KMeansDistances.calculateDistanceLocation(tasks.get(taskj), tasks.get(taski)); 
+					//		int stringDistance =   KMeansDistances.calculateDistanceTitles(tasks.get(taskj).getNameTask(), tasks.get(taski).getNameTask());
+					//		int timeDistance =    KMeansDistances.calculateDistanceStartTime(tasks.get(taskj).getStartTime(), tasks.get(taski).getStartTime());
+					//		int locationDistance = KMeansDistances.calculateDistanceLocation(tasks.get(taskj), tasks.get(taski)); 
+						
 							
-							
-							int distanceC = stringDistance * this.sameNumitorTitle  +   timeDistance * sameNumitorStartTime  + locationDistance ;
-							
+					//		int distanceC = stringDistance * this.sameNumitorTitle  +   timeDistance * sameNumitorStartTime  + locationDistance ;
+						
 					//		System.out.println("Distantele intre " + taski + " " + taskj + " sunt  " + " " + stringDistance + " " + timeDistance * sameNumitorStartTime + " " + locationDistance  + " " + distanceC + " " + sumCluster );
-							
+						
 							sumCluster +=  distanceC;
-
+						
 							
 						}
 						
@@ -739,7 +764,14 @@ public class KMeansDuration implements KMeans{
 			
 	//		System.out.println("SUMA ESTE " + sumCluster + " " + nrPoints);
 			
-			medie += (int) sumCluster / nrPoints;
+			medie += (int) sumCluster / (nrPoints * 2);			
+			
+			
+
+			
+		//	sumCluster = sumCluster / nrPoints;
+		//	sumAll +=sumCluster;
+		//	sumAll += (sumCluster / (nrPoints * 2))  ;
 	
 		}
 		
@@ -755,8 +787,8 @@ public class KMeansDuration implements KMeans{
 		
 		
 	//	return sumAll;
-		return medie / nrClusters;
-	//	return maxim;
+		return medie / nrClusters;			
+	//	return medie;
 		
 		
 		
@@ -764,6 +796,50 @@ public class KMeansDuration implements KMeans{
 		
 		
 	}
+	
+	
+	
+/*	@Override
+	public float calculateError() {
+		
+		int iCluster;
+		int taski, taskj;
+		float sumAll = 0, sumCluster = 0;
+		int nrPoints;
+		int medie= 0;
+
+		
+		
+		for(iCluster = 0; iCluster < nrClusters ; iCluster++)
+		{
+			sumCluster = 0;
+			nrPoints = 0;
+			
+			for(taski = 0; taski < tasks.size(); taski++)
+			{
+				
+				
+				if(idCentroid.get(taski) == iCluster )
+				{
+							
+						int distanceC = calculateDistance(centroizi.get(iCluster), tasks.get(taski) );
+					
+
+								
+						sumCluster +=  distanceC;
+
+				}
+			}
+			
+
+			sumAll += sumCluster;
+	
+		}
+		
+		
+		return sumAll/nrClusters ;
+		
+	}*/
 	
 
 	
