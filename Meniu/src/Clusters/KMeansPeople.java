@@ -11,11 +11,7 @@ import Task.Task;
  */
 public class KMeansPeople implements KMeans{
 
-	@Override
-	public void receiveData() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void calculateKlusters() {

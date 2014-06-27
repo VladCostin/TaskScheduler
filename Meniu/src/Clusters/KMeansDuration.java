@@ -47,11 +47,14 @@ public class KMeansDuration implements KMeans{
 	
 	
 	/**
-	 * the final centers, when K-means detects the global minimum
+	 * the final centers as Tasks, when K-means detects the global minimum
 	 */
 	ArrayList<Task> finalCenters;
 	
 	
+	/**
+	 * the id's of the tasks calculated as centers
+	 */
 	ArrayList<Integer> finalIdCentroid;
 	
 	
@@ -128,12 +131,6 @@ public class KMeansDuration implements KMeans{
 	
 
 	@Override
-	public void receiveData() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void calculateKlusters() {
 		
 		int distanceMax; 
@@ -149,10 +146,6 @@ public class KMeansDuration implements KMeans{
 		
 		tasks =  (ArrayList<Task>)  MainActivity.getDatabase().getFilteredTasks(states);
 
-
-		
-		System.out.println( "DIMENSIUNEA ESTE   " + tasks.size());
-		System.out.println("AFISEZ INDICII CENTROIZILOR");
 		
 		if(tasks.size() == 0)
 			return;
@@ -625,8 +618,6 @@ public class KMeansDuration implements KMeans{
 		
 		int distanceCalculated;
 		int newCentroidIndex = 0;
-	//	Random r = new Random();
-	//	idCentroiziChosen.add( r.nextInt(tasks.size()));
 
 	
 		distanceMaxim = -1;

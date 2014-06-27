@@ -5,7 +5,7 @@ package com.example.meniu;
 import java.util.List;
 
 import Clusters.KMeansDuration;
-import Clusters.KMeansLocation;
+import Clusters.KMeansTitle;
 import DatabaseOperation.DatabaseHandler;
 import DeviceData.Device;
 import android.os.Bundle;
@@ -69,6 +69,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		core = new Core();
 		Core.init();
 		
+		
 		initButtons();
 		
 		
@@ -90,12 +91,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 	//	KMeansDuration clustering = new KMeansDuration();
 	//	clustering.calculateKlusters();
-		
+		Core.calculateClusters();
 		
 	//	addTasksDifferentTitlesForLocation();
 		
-	//	KMeansLocation clusteringLocation = new KMeansLocation();
-	//	clusteringLocation.calculateKlusters();
+
 		
 	//	clustering.titlesOfCenters();
 		

@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import Task.Task;
 import Clusters.KMeansDistances;
+import Clusters.KMeansTitle;
 
 /**
  * contains general information such as what does minor,major mean
@@ -36,12 +37,25 @@ public class Core {
 	 */
 	private static ArrayList<Task> centersDuration;
 	
+	
+	/**
+	 * contains the center task after clustering tasks after their titles
+	 */
+	private static ArrayList<Task> centersTitles;
+	
+	
+	/**
+	 * class that clusters the tasks to determine the main titles
+	 */
+	private static KMeansTitle clusteringLocation; 
+	
 	Core(){
 		
 		prioritiesValues    = new HashMap<String,Integer>();
 		durationMinutes     = new HashMap<String,Integer>();
 		distancesCalculator = new KMeansDistances();
 		days				= new HashMap<Integer, DaysOfWeek>();
+		clusteringLocation = new KMeansTitle();
 	}
 	
 	/**
@@ -175,6 +189,30 @@ public class Core {
 		
 	}
 	
+	
+	/**
+	 * @return : the titles from the centers calculated
+	 */
+	public static ArrayList<String> titlesOfCenters()
+	{
+		ArrayList<String> titles = new ArrayList<String>();
+		for(Task task : centersTitles) 
+		{
+			System.out.println("CENTROID" + task.getNameTask());
+			titles.add(task.getNameTask());
+		}
+
+		return titles;
+
+	}
+	
+	
+	public static void calculateClusters()
+	{
+		clusteringLocation.calculateKlusters();
+		Core.setCentersTitle(clusteringLocation.getFinalCenters()); 
+	}
+	
 
 	public static HashMap<String,Integer> getPrioritiesValues() {
 		return prioritiesValues;
@@ -206,6 +244,22 @@ public class Core {
 
 	public static void setCentersDuration(ArrayList<Task> centersDurationRecv) {
 		centersDuration = centersDurationRecv; 
+	}
+
+	public static ArrayList<Task> getCentersTitle() {
+		return centersTitles;
+	}
+
+	public static void setCentersTitle(ArrayList<Task> centersTitle) {
+		Core.centersTitles = centersTitle;
+	}
+
+	public static KMeansTitle getClusteringLocation() {
+		return clusteringLocation;
+	}
+
+	public static void setClusteringLocation(KMeansTitle clusteringLocation) {
+		Core.clusteringLocation = clusteringLocation;
 	}
 	
 	

@@ -12,11 +12,6 @@ import Task.Task;
  */
 public interface KMeans {
 
-	/**
-	 * receive data from Adding a new Task and getting the clusters
-	 * from database
-	 */
-	public void receiveData();
 	
 	/**
 	 * calculates the centroids based on the executed tasks data

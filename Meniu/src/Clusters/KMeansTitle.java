@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
 
 import ContextElements.ContextElementType;
@@ -20,7 +21,7 @@ import Task.TaskState;
  * @author ${Vlad Herescu}
  *
  */
-public class KMeansLocation implements KMeans {
+public class KMeansTitle implements KMeans { 
 	
 	/**
 	 * the number of clusters to be calculated
@@ -46,7 +47,13 @@ public class KMeansLocation implements KMeans {
 	/**
 	 * the final centers, when K-means detects the global minimum
 	 */
-	ArrayList<Task> finalCenters;
+	private ArrayList<Task> finalCenters;
+	
+	
+	/**
+	 * the id's of the tasks calculated as centers
+	 */
+	ArrayList<Integer> finalIdCentroid;
 	
 	/**
 	 * the id-s of the tasks selected priori to be centers
@@ -61,12 +68,9 @@ public class KMeansLocation implements KMeans {
 	 */
 	int fractionError;
 	
-
-	
-
 	
 	
-	public KMeansLocation() {
+	public KMeansTitle() {
 		
 		
 		idCentroid = new ArrayList<Integer>();
@@ -74,6 +78,7 @@ public class KMeansLocation implements KMeans {
 		idNewCentroid = new ArrayList<Integer>();
 		idCentroiziChosen = new ArrayList<Integer>();
 		finalCenters = new ArrayList<Task>();
+		finalIdCentroid = new ArrayList<Integer>();
 		
 		nrClusters = 0;
 		
@@ -83,12 +88,6 @@ public class KMeansLocation implements KMeans {
 		
 	}
 	
-
-	@Override
-	public void receiveData() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void calculateKlusters() {
@@ -105,14 +104,14 @@ public class KMeansLocation implements KMeans {
 		if(tasks.size() == 0)
 			return;
 		
+		Random r = new Random();
+		idCentroiziChosen.add( r.nextInt(tasks.size()));
+		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
+		
 		while(true)
 		{
 			idCentroid.clear();
-			centroizi.clear();
-			idCentroiziChosen.clear();
-			nrClusters++;
-			
-			chooseCentroid();
+			nrClusters++;		
 		
 			for(Task task : tasks)
 			{
@@ -144,28 +143,24 @@ public class KMeansLocation implements KMeans {
 			
 			
 			newError =	calculateError();
-		//	System.out.println("DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+	
 			
-			if( (errorInit - newError) <= errorInit/fractionError  || nrClusters == tasks.size()){
-				
-		//		System.out.println( "DIFERENTA este " + (errorInit - newError));
-		//		System.out.println( "Impartit la 3 este " + (errorInit/ fractionError));
-				
+			if( (errorInit - newError) <= errorInit/fractionError  || nrClusters == tasks.size())
 				break;
-			}
 			else
 			{
 				finalCenters.clear();
+				finalIdCentroid.clear();
 				finalCenters.addAll(centroizi);
+				finalIdCentroid.addAll(idCentroid);
 			}
 			
 			errorInit = newError;
 			
 			
-			calculatesTitlesCenters();
+			
+			chooseCentroid();
 		}
-		
-		System.out.println("DIMENSIUNEA FINALA ESTE " + nrClusters);
 		
 		
 
@@ -173,52 +168,9 @@ public class KMeansLocation implements KMeans {
 
 	/**
 	 * calculates the average location and title
+	 * method overridden by the subclasses
 	 */
-	private void calculatesTitlesCenters() {
-		
-		TreeMap<String, Integer> frequency;
-		int iCentroid, iTask, pointsSameCenter;
-		double latitude, longitude;
-		
-		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
-		{
-		//	System.out.println("AFISEZ duratele pentru un centroid");
-			frequency = new TreeMap<String,Integer>();
-			pointsSameCenter = 0;
-			latitude = 0;
-			longitude = 0;
-			
-			for(iTask = 0; iTask < idCentroid.size(); iTask++)
-			{
-				if(idCentroid.get(iTask) == iCentroid)
-				{
-					
-				//	System.out.println("NUMELE TASKULUI ESTE " + tasks.get(iTask).getNameTask());
-					
-					frequency.putAll(calculateFrequencyWords(iTask, frequency.keySet()));
-
-					
-					LocationContext location = (LocationContext) tasks.get(iTask).
-					getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-
-					
-					latitude += location.getLatitude();
-					longitude += location.getLongitude();
-					pointsSameCenter++;
-				}
-			}
-			
-			latitude = latitude / (double) pointsSameCenter;
-			longitude = longitude / (double) pointsSameCenter;
-		//	System.out.println("MEDIA ESTE " + latitude + " " + longitude);
-
-			
-		//	System.out.println("----------------------");
-		//	System.out.println(frequency.keySet().toString());
-		//	System.out.println(frequency.values().toString());
-		//	System.out.println("-----------------------");
-			
-		}
+	public void calculatesTitlesCenters() {
 		
 	}
 	
@@ -327,17 +279,11 @@ public class KMeansLocation implements KMeans {
 		
 		int distanceCalculated;
 		int newCentroidIndex = 0;
-		Random r = new Random();
-		idCentroiziChosen.add( r.nextInt(tasks.size()));
 		
-		
-		for(iCentroid= 1; iCentroid < nrClusters; iCentroid++)
+		distanceMaxim = -1;
+			
+		for(idTask = 0; idTask < tasks.size(); idTask++)
 		{
-			
-			distanceMaxim = -1;
-			
-			for(idTask = 0; idTask < tasks.size(); idTask++)
-			{
 				distanceMinim =  2000000;
 				
 				
@@ -364,19 +310,16 @@ public class KMeansLocation implements KMeans {
 					}
 					
 				}
-				
-				
-				
-			}
+
+		}
 			
 
-			idCentroiziChosen.add(newCentroidIndex);
+		idCentroiziChosen.add(newCentroidIndex);
 
-					
-		}
+		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
 		
 		
-		System.out.println(idCentroiziChosen.toString());
+	/*	System.out.println(idCentroiziChosen.toString());
 		for(iCentroid = 0; iCentroid< idCentroiziChosen.size(); iCentroid++)
 		{
 			
@@ -398,7 +341,7 @@ public class KMeansLocation implements KMeans {
 			centroizi.add(t);
 			
 			
-		}
+		}*/
 
 	}
 
@@ -422,7 +365,6 @@ public class KMeansLocation implements KMeans {
 		int nrPoints;
 		int medie= 0;
 
-
 		
 		for(iCluster = 0; iCluster < nrClusters ; iCluster++)
 		{
@@ -431,9 +373,7 @@ public class KMeansLocation implements KMeans {
 			
 			for(taski = 0; taski < tasks.size(); taski++)
 			{
-				
-				
-				
+
 				if(idCentroid.get(taski) == iCluster )
 				{
 					for(taskj = 0; taskj < tasks.size();taskj++)
@@ -458,23 +398,15 @@ public class KMeansLocation implements KMeans {
 		return stringDistance;
 	}
 	
-	
-	/**
-	 * @return : the titles from the centers calculated
-	 */
-	public ArrayList<String> titlesOfCenters()
-	{
-		ArrayList<String> titles = new ArrayList<String>();
-		for(Task task : finalCenters)
-		{
-			System.out.println("CENTROID" + task.getNameTask());
-			titles.add(task.getNameTask());
-		}
-		
-		
-		return titles;
-		
-		
+
+
+	public ArrayList<Task> getFinalCenters() {
+		return finalCenters;
+	}
+
+
+	public void setFinalCenters(ArrayList<Task> finalCenters) {
+		this.finalCenters = finalCenters;
 	}
 
 }

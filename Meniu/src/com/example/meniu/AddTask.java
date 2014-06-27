@@ -1,6 +1,7 @@
 package com.example.meniu;
 
-import Clusters.KMeansLocation;
+
+import Clusters.KMeansTitle;
 import ContextElements.ContextElementType;
 import ContextElements.LocationContext;
 import DatabaseOperation.AddTaskButton;
@@ -212,13 +213,8 @@ public class AddTask extends   FragmentActivity
 	 */
 	String locationsSearched[];
 	
+
 	
-	
-	
-	/**
-	 * used to detect the location associated to the title written
-	 */
-	KMeansLocation clusteringLocation ; 
 	
 	
 	/**
@@ -333,8 +329,7 @@ public class AddTask extends   FragmentActivity
 		buttonSearch = (Button) findViewById(R.id.buttonSearchLocation);
 		buttonSearch.setOnClickListener( this);
 			
-		
-		
+
 	//	addDevicesNeeded.setFocusable(true); 
 		
 		
@@ -360,11 +355,10 @@ public class AddTask extends   FragmentActivity
             }
         });
         
-      
-        loadClusters();
+
     	List<Task> tasks =  MainActivity.getDatabase().getAllTasks();
 		ArrayList<String>  allWords = new ArrayList<String>();
-		allWords.addAll(clusteringLocation.titlesOfCenters());
+		allWords.addAll(Core.titlesOfCenters());
 		
 		
 		for(Task task : tasks)
@@ -456,20 +450,6 @@ public class AddTask extends   FragmentActivity
     	map.addMarker(new MarkerOptions().position(position).
     	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location_place)));
 		
-		
-	}
-
-
-
-
-	/**
-	 * calculates the centers for the clusters associated to location, devices, people
-	 */
-	public void loadClusters() {
-		clusteringLocation = new KMeansLocation();
-		clusteringLocation.calculateKlusters();
-		
-		booleanHasDetectedLocation = false;
 		
 	}
 
@@ -1158,7 +1138,7 @@ public void afterTextChanged(Editable s) {
 		currentTask.setNameTask(s.toString());
 		
 		
-		Task returnTask =  clusteringLocation.detectCentroid(currentTask);
+		Task returnTask =  Core.getClusteringLocation().detectCentroid(currentTask);
 		if(returnTask != null && booleanHasDetectedLocation == false)
 		{
 			booleanHasDetectedLocation = true;
