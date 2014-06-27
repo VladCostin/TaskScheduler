@@ -12,10 +12,29 @@ public class ParametersToModify
 	
 	int day;
 	
+	/**
+	 * the old devices received as parameter from the intent that started this activity
+	 */
 	String devices[];
 	
 	
+	/**
+	 * the old people received as a parameter from the intent that started this activity
+	 */
+	String people[];
+	
+	
+	/**
+	 * for every item in the list of devices, true if it was in the string received 
+	 * from modify task
+	 */
 	boolean oldDevices[];
+	
+	/**
+	 * for every item in the list of people, true if it was in the string received 
+	 * from modify task
+	 */
+	boolean oldPeople[];
 	
 	public ParametersToModify(int id) {
 		this.id = id;
@@ -39,15 +58,20 @@ public class ParametersToModify
 		this.devices = devices;
 	}
 	
+	public void changePeople(String people[])
+	{
+		this.people = people;
+	}
+	
 	public boolean[] detectOldDevicesSelected(ArrayList<String> myDevicesAll, ArrayList<Integer> itemsId)
 	{
-		//
+		int i,j;
+		boolean isOld;
 		
 		if(devices == null)
 			return null;
 		
-		int i,j;
-		boolean isOld;
+		
 		oldDevices = new boolean[myDevicesAll.size()];
 		
 		for(i= 0; i < myDevicesAll.size(); i++)
@@ -69,6 +93,40 @@ public class ParametersToModify
 		
 		return oldDevices;
 		
+		
+	}
+	
+	
+	public boolean[] detectOldPeopleSelected(ArrayList<String> peopleDatabase, ArrayList<Integer> itemsId)
+	{
+		int i,j;
+		boolean isOld;
+		
+		if(people == null)
+			return null;
+		
+		
+		
+		oldPeople = new boolean[peopleDatabase.size()];
+		
+		for(i= 0; i < peopleDatabase.size(); i++)
+		{
+			isOld = false;
+			for(j = 0; j < people.length; j++)
+			{
+				if(people[j].equals(peopleDatabase.get(i)))
+				{
+					isOld = true;
+					break;
+				}
+			}
+			
+			oldPeople[i] = isOld;
+			itemsId.add(i);
+		}
+		people = null;
+		
+		return oldPeople;
 		
 	}
 

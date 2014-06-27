@@ -709,7 +709,7 @@ public class KMeansDuration implements KMeans{
 	
 	
 	
-	@Override
+/*	@Override
 	public float calculateError() {
 		
 		int iCluster;
@@ -792,11 +792,11 @@ public class KMeansDuration implements KMeans{
 		
 		
 		
-	}
+	}*/
 	
 	
 	
-/*	@Override
+	@Override
 	public float calculateError() {
 		
 		int iCluster;
@@ -836,7 +836,7 @@ public class KMeansDuration implements KMeans{
 		
 		return sumAll/nrClusters ;
 		
-	}*/
+	}
 	
 
 	

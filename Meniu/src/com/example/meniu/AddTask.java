@@ -1,7 +1,5 @@
 package com.example.meniu;
 
-
-import Clusters.KMeansTitle;
 import ContextElements.ContextElementType;
 import ContextElements.LocationContext;
 import DatabaseOperation.AddTaskButton;
@@ -17,9 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -52,7 +48,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -242,8 +237,14 @@ public class AddTask extends   FragmentActivity
 	static final int DEVICES_DIALOG_ID = 1001;
 	
 	
+	/**
+	 * true if the activity has been started from Modify Task Activity
+	 */
 	private boolean booleanGetFromTaskToModify;
 	
+	/**
+	 * contains the parameters obtained from Modify Task Activity
+	 */
 	private ParametersToModify   oldParamatersTask;
 	
 	
@@ -401,7 +402,8 @@ public class AddTask extends   FragmentActivity
 		
 		String title,deadline,priorityString, people[], devices[];
 		double locationDouble[]; 
-		String devicesString="";
+		String devicesString = "";
+		String peopleString  = "";
 		LatLng position;
 		int i, id;
 		
@@ -421,6 +423,7 @@ public class AddTask extends   FragmentActivity
 		if(deadline.equals(Constants.noChoose) == false)
 			oldParamatersTask.changeDeadline(deadline);
 		oldParamatersTask.changeDevices(devices);
+		oldParamatersTask.changePeople(people);
 		
 		spinnerPriority.setSelection( Core.getPrioritiesValues().get(priorityString) ); 
 		
@@ -432,8 +435,16 @@ public class AddTask extends   FragmentActivity
 		
 		for( i = 0; i < devices.length -1 ; i++)
 			devicesString += devices[i] + ",";
+		
 		devicesString +=devices[i];
+		
+		for(i = 0; i < people.length -1 ; i++)
+			peopleString += people[i] + ",";
+		
+		
+		peopleString += people[i];
 		textViewDevices.setText(devicesString);
+		textViewPeople.setText(peopleString);
 		
 		
 		
@@ -473,9 +484,7 @@ public class AddTask extends   FragmentActivity
 		autoLocationSearch.setAdapter
 		(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, locationsSearched));
 		
-		
-		 
-		
+
 		
 	}
 
@@ -550,10 +559,16 @@ public class AddTask extends   FragmentActivity
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
 		final CharSequence[] items =  contacts.toArray( new CharSequence[contacts.size()]);
 		
+		boolean checkedItems[];
 		
+		
+		if(booleanGetFromTaskToModify == true)
+			checkedItems = oldParamatersTask.detectOldPeopleSelected( contacts, itemsId);
+		else
+			checkedItems = null;
 
 
-		builder.setMultiChoiceItems(items, null,
+		builder.setMultiChoiceItems(items, checkedItems,
                    new DialogInterface.OnMultiChoiceClickListener() {
 
 					@Override
@@ -618,12 +633,9 @@ public class AddTask extends   FragmentActivity
 		final CharSequence[] items =  devicesMy.toArray( new CharSequence[devicesMy.size()]);
 		boolean checkedItems[];
 		
-	/*	boolean checkedItems[] = new boolean[2];
-		checkedItems[0] = true;
-		checkedItems[1] = false;*/
 		
 		if(booleanGetFromTaskToModify == true)
-		checkedItems = oldParamatersTask.detectOldDevicesSelected( devicesMy, itemsId);
+			checkedItems = oldParamatersTask.detectOldDevicesSelected( devicesMy, itemsId);
 		else
 			checkedItems = null;
 		
