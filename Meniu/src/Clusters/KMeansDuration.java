@@ -103,9 +103,9 @@ public class KMeansDuration implements KMeans{
 		
 		
 		
-		sameNumitorTitle = 250; // in case max LocationDistance = 21000 and title is 30
+		sameNumitorTitle = 400; // in case max LocationDistance = 21000 and title is 30
 		sameNumitorLocation = 1;
-		sameNumitorStartTime = 10; // in case max LocationDistance = 20000 and start time maxim is 720
+		sameNumitorStartTime = 20; // in case max LocationDistance = 20000 and start time maxim is 720
 		
 		
 /*		sameNumitorTitle = 500; // in case max LocationDistance = 21000 and title is 30
@@ -121,7 +121,7 @@ public class KMeansDuration implements KMeans{
 		
 		
 		errorInit = 100000000;
-		fractionError = 3;
+		fractionError = 4;
 		distanceErrorMaxim = 5000; 
 		
 	}
@@ -141,6 +141,7 @@ public class KMeansDuration implements KMeans{
 		int centroidNearest = 0;
 		float newError;
 		int negativeResult = 0;
+		int i=0;
 		
 		
 		ArrayList<TaskState> states = new ArrayList<TaskState>();
@@ -169,7 +170,7 @@ public class KMeansDuration implements KMeans{
 			nrClusters++;
 			idCentroid.clear();
 			idNewCentroid.clear();
-			
+			i++;
 			
 			
 			// calculating the center associated to each point, except if the point is a center
@@ -247,8 +248,12 @@ public class KMeansDuration implements KMeans{
 		
 			
 			newError =	calculateError();
-		//	System.out.println((i + 1) +  " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
-			System.out.println( " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+			System.out.println((i + 1) +  " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+		//	System.out.println( " DIFERENTA este" + (errorInit - newError ) + "  " + (errorInit/fractionError)  + " " + newError + " " + errorInit  );
+			
+			if(i == tasks.size())
+				break;
+			
 			
 			if( (errorInit - newError) < errorInit/fractionError)
 			{
@@ -264,7 +269,8 @@ public class KMeansDuration implements KMeans{
 				negativeResult++;
 				
 				
-			}
+			}			
+			
 			else{
 				negativeResult = 0;
 				finalCenters.clear();
@@ -666,7 +672,7 @@ public class KMeansDuration implements KMeans{
 
 	}
 
-	@Override
+/*	@Override
 	public int calculateDistance(Task t1, Task t2) {
 		
 
@@ -684,10 +690,10 @@ public class KMeansDuration implements KMeans{
 		
 		return timeDistance * sameNumitorStartTime + 
 		stringDistance * sameNumitorTitle + locationDistance *sameNumitorLocation  ;
-	}
+	}*/
 	
 	
-/*	@Override
+	@Override
 	public int calculateDistance(Task t1, Task t2) {
 		
 
@@ -708,7 +714,7 @@ public class KMeansDuration implements KMeans{
 		
 	//	return timeDistance * sameNumitorStartTime + 
 	//	stringDistance * sameNumitorTitle + locationDistance *sameNumitorLocation  ;
-	}*/
+	}
 	
 	
 	

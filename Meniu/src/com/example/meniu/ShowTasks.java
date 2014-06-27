@@ -410,8 +410,6 @@ public class ShowTasks extends Activity
 		
 		for(Task task : tasks)
 		{
-			if(task.getState() == TaskState.CURRENT_TASK)
-				continue;
 			
 			isTaskCompatible = true;
 			

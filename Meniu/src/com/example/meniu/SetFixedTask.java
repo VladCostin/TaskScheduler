@@ -71,9 +71,14 @@ public class SetFixedTask extends Activity implements OnClickListener {
 	int idAddButton;
 	
 	
+	/**
+	 * contains list of id's for each task in the activity
+	 * as key : the id of the view
+	 * as value : the position of the view or -1 in case the task is newly added
+	 */
 	HashMap<Integer,Integer>  tasksId;
 	
-	
+
 	
 	
 	
@@ -105,6 +110,8 @@ public class SetFixedTask extends Activity implements OnClickListener {
 		week.add(DaysOfWeek.WEDNESDAY);
 		week.add(DaysOfWeek.THURSDAY);
 		week.add(DaysOfWeek.FRIDAY);
+
+		
 		
 		
 		tasksId = new HashMap<Integer,Integer>();
@@ -217,7 +224,7 @@ public class SetFixedTask extends Activity implements OnClickListener {
 			numberOfView = v.getId() - 1;
 		
 			
-			System.out.println(tasksId.toString());
+			System.out.println("HAshMap-ul asta este " +  tasksId.toString());
 			System.out.println(v.getId() + " " + tasksId.get(v.getId()));
 			
 			MainActivity.getDatabase().deleteFixedTask(tasksId.get(v.getId() ));
@@ -331,6 +338,9 @@ public class SetFixedTask extends Activity implements OnClickListener {
 	 */
 	public void addNewTaskEnt() {
 		
+		
+		System.out.println("CUCU INTRA AICI IAR");
+		
 		TimePicker startTime, endTime;
 		Button eraseTask;
 		
@@ -359,6 +369,7 @@ public class SetFixedTask extends Activity implements OnClickListener {
 		eraseTask.setLayoutParams(params_removeTask);
 		eraseTask.setOnClickListener(this); 
 		
+		System.out.println("NUMBEROFVIEW ESTE " + numberOfView);
 		tasksId.put(numberOfView, -1);
 		
 		
@@ -377,10 +388,33 @@ public class SetFixedTask extends Activity implements OnClickListener {
 		endTime.setId(++numberOfView);
 		endTime.setLayoutParams(params_endTime); 
 		
+		if(layout.getChildCount() > 4)
+		{
+			
+			TimePicker lastPicker = (TimePicker) layout.getChildAt(layout.getChildCount() - 1);
+			
+			startTime.setCurrentHour(lastPicker.getCurrentHour());
+			startTime.setCurrentMinute(lastPicker.getCurrentMinute());
+			
+			endTime.setCurrentHour(lastPicker.getCurrentHour());
+			endTime.setCurrentMinute(lastPicker.getCurrentMinute());
+			
+		}
+		if(layout.getChildCount() == 4)
+		{
+			startTime.setCurrentHour(Constants.startHour);
+			startTime.setCurrentMinute(Constants.startMinute);
+			
+			endTime.setCurrentHour(Constants.startHour);
+			endTime.setCurrentMinute(Constants.startMinute);
+		}
+	
+		
 		
 		layout.addView(eraseTask);
 		layout.addView(startTime);
 		layout.addView(endTime);
+
 		
 
 	}
@@ -444,6 +478,7 @@ public class SetFixedTask extends Activity implements OnClickListener {
 		layout.addView(eraseTask);
 		layout.addView(startTime);
 		layout.addView(endTime);
+
 	}
 
 

@@ -783,8 +783,6 @@ public class AddTask extends   FragmentActivity
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		  // Display the connection status
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         
         LocationManager     manager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
         

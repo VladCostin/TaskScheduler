@@ -83,12 +83,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		
-	//	addTasksDifferentNamesDifferentTimes_abonament_metrou();
-	//	addTasksFrizerie();
+	/*	addTasksDifferentNamesDifferentTimes_abonament_metrou();
+		addTasksFrizerie();
+		addTasksCumparaturi();
+	*/	
 		
-		
-		KMeansDuration clustering = new KMeansDuration();
-		clustering.calculateKlusters();
+	//	KMeansDuration clustering = new KMeansDuration();
+	//	clustering.calculateKlusters();
 		
 		
 	//	addTasksDifferentTitlesForLocation();
@@ -115,7 +116,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		 
 	}
 	
-	
+
+
+
 	private void initButtons() {
 		
 		
@@ -333,23 +336,309 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	
 	
-	public void addTasksDispensar()
-	{
-		// dispensar
+	
+/*	private void addTasksCumparaturi() {
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrout","44.4131 26.114", "55", "28/05/2014/17/00");
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.4131 26.114",  "40", "28/05/2014/17/25");
+		
+	
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "45", "28/05/2014/17/35");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "35", "28/05/2014/18/05");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114","35", "28/05/2014/18/25");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114","40", "28/05/2014/17/46");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114","20", "28/05/2014/17/20");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114","40", "28/05/2014/18/30");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114","37", "28/05/2014/17/55");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114","32", "28/05/2014/17/10");
+		
+		
+		
+		
+		// intre dimineata 
+		// si pranz
+		
+
 		
 		
 		MainActivity.database.addTaskPriori
-		("la medicul de familie",  "44.4137 26.1057", "55", "28/05/2014/15/17");
+		("abonament metrou",  "44.4131 26.114",  "25", "28/05/2014/10/45");
+
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "45", "28/05/2014/15/55");
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/11/15");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/16/28");
+		("abonament metrou",  "44.4131 26.114", "25", "28/05/2014/11/30");
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "53", "28/05/2014/16/57");
+		("abonament metrou",  "44.4131 26.114", "15", "28/05/2014/11/46");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "12", "28/05/2014/12/01");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "24", "28/05/2014/12/01");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/11/11");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "17", "28/05/2014/11/22");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/12/05");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "14", "28/05/2014/10/55");
+		
+
+		
+		///////	
+		// dimineata
+		////////
+				
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "43", "28/05/2014/9/30");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "60", "28/05/2014/8/00");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "55", "28/05/2014/8/10");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "45", "28/05/2014/8/45");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "60", "28/05/2014/8/30");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114",  "35", "28/05/2014/9/10");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "66", "28/05/2014/7/55");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "47", "28/05/2014/8/25");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "72", "28/05/2014/9/23");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114",  "42", "28/05/2014/9/5");
+		
+		
+		
+		
+		/////////
+		// pranz
+		////////////////
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114",  "15", "28/05/2014/14/01");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/14/05");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "6", "28/05/2014/15/05");
+		
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "5", "28/05/2014/14/50");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114",  "7", "28/05/2014/14/53");
+		
+
+		
+		MainActivity.database.addTaskPriori
+		("metrou aonament", "44.4131 26.114", "5", "28/05/2014/14/57");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "15", "28/05/2014/15/25");
+		
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114", "1", "28/05/2014/14/10");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114",  "2", "28/05/2014/14/22");
+		
+
+		
+		MainActivity.database.addTaskPriori
+		("metrou aonament", "44.4131 26.114", "5", "28/05/2014/14/33");
+		
+		
+		
+		
+	}*/
+	
+	
+	private void addTasksCumparaturi() {
+		
+
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114",  "40", "28/05/2014/17/25");
+		
+	
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "45", "28/05/2014/17/35");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114","35", "28/05/2014/18/25");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114","20", "28/05/2014/17/20");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114","37", "28/05/2014/17/55");
+		
+
+		
+		// intre dimineata 
+		// si pranz
+		
+
+
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114", "20", "28/05/2014/11/15");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114", "15", "28/05/2014/11/46");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114", "24", "28/05/2014/12/01");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114", "17", "28/05/2014/11/22");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114", "14", "28/05/2014/10/55");
+		
+
+		
+		///////	
+		// dimineata
+		////////
+				
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "60", "28/05/2014/8/00");
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "55", "28/05/2014/8/10");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "60", "28/05/2014/8/30");
+		
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "47", "28/05/2014/8/25");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "72", "28/05/2014/9/23");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114",  "42", "28/05/2014/9/5");
+		
+		
+		
+		
+		/////////
+		// pranz
+		////////////////
+		
+
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114", "20", "28/05/2014/14/05");
+
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "5", "28/05/2014/14/50");
+		
+
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "5", "28/05/2014/14/57");
+		
+
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "1", "28/05/2014/14/10");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi",  "44.4131 26.114",  "2", "28/05/2014/14/22");
+		
+		
+
+		
+		
 	}
 
 

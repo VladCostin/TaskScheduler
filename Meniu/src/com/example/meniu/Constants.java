@@ -25,4 +25,9 @@ public interface Constants {
 	
 	Integer noTimeSpecified = -1;
 	
+	
+	Integer startHour	= 8;
+	
+	Integer startMinute = 0;
+	
 }
