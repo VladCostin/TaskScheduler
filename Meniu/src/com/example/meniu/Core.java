@@ -56,6 +56,7 @@ public class Core {
 		distancesCalculator = new KMeansDistances();
 		days				= new HashMap<Integer, DaysOfWeek>();
 		clusteringLocation = new KMeansTitle();
+		centersDuration	   = new ArrayList<Task>();
 	}
 	
 	/**

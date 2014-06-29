@@ -80,17 +80,45 @@ public class ShowAllTasks extends Activity
 	 * to each id from database it is associated the value of the erase buton
 	 */
 	private HashMap<Integer,Integer> idTasks;
+	
+	
+	private HashMap<String,String> MAP_Device_owner;
+	
+	
+	private HashMap<String,String> MAP_My_Device;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_all_tasks);
+		
+		MAP_Device_owner = new HashMap<String, String>();
+		MAP_My_Device = new HashMap<String, String>();
 
 
 		layout = (RelativeLayout) findViewById(R.id.RelativeLayoutShowAllTasks);
 		idTasks = new HashMap<Integer,Integer>();
 		mLocationClient = new LocationClient(this,this,this);
 		devices = MainActivity.getDatabase().getAllDevices();
+		
+		
+		loadDevicesData();
+		
+	}
+
+	/**
+	 * populates the MAP_DEVICE_OWNER with data about each device obtained from database
+	 */
+	public void loadDevicesData() {
+		
+		List<Device> devices = MainActivity.getDatabase().getAllDevices();
+		for(Device device : devices)
+			if(device.getOwnerDevice().equals(getResources().getString(R.string.myDeviceConstant)))
+				MAP_My_Device.put(device.getMacAddress(), device.getNameDevice());
+			else
+				MAP_Device_owner.put(device.getMacAddress(), device.getOwnerDevice());
+		
+		
 		
 	}
 
@@ -374,7 +402,7 @@ public class ShowAllTasks extends Activity
 			task.getInternContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
 			
 
-			peopleValue.setText(peopleTask.getPeopleTaskString());
+			peopleValue.setText(detectPeopleNames(peopleTask));
 			peopleValue.setTextSize(20);
 			peopleValue.setId( ++ numberOfView);
 			params_people_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -393,7 +421,8 @@ public class ShowAllTasks extends Activity
 			task.getInternContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
 			
 
-			devicesValue.setText(deviceTask.getDeviceTaskString());
+			
+			devicesValue.setText(detectDevicesNames(deviceTask));
 			devicesValue.setTextSize(20);
 			devicesValue.setId( ++ numberOfView);
 			params_devices_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -444,6 +473,41 @@ public class ShowAllTasks extends Activity
 			layout.addView(line);
 			
 		
+	}
+
+	public String detectDevicesNames(DeviceContext deviceTask) {
+		
+		String devicesNames= "";
+		
+		if(deviceTask.getDeviceTask().size() == 0)
+			return Constants.noChoose;
+		
+		for(String device : deviceTask.getDeviceTask())
+			devicesNames = devicesNames + "," +  MAP_My_Device.get(device);
+		
+		devicesNames = devicesNames.substring(1);
+		
+		
+		return devicesNames;
+		
+		
+	}
+	
+	
+	public String detectPeopleNames(PeopleContext people)
+	{
+		String peopleNames= ""; 
+	
+		if(people.getPeopleTask().size() == 0)
+			return Constants.noChoose;
+		
+		for(String device : people.getPeopleTask())
+			peopleNames = peopleNames + "," +  MAP_Device_owner.get(device);
+		
+		peopleNames = peopleNames.substring(1);
+		
+		
+		return peopleNames;
 	}
 
 	public HashMap<Integer,Integer> getIdTasks() {

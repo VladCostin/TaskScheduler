@@ -1,6 +1,7 @@
 package com.example.meniu;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import Task.Task;
 
@@ -42,11 +43,10 @@ public class CalculateCurrentContext {
 		
     	ArrayList<String> people = new ArrayList<String>();
     	
-    	for(Device d : activityShowTask.devices)
-    		if(activityShowTask.getDeviceInfo().containsKey(d.getMacAddress()) 
-    			&& d.getOwnerDevice().compareTo(Constants.myDevice) != 0  )
-    				people.add(d.getOwnerDevice());
-    	
+		
+    	for(Entry<String,String> devices : activityShowTask.getMAP_people_devices_name_Mac().entrySet())
+    		if(activityShowTask.getDeviceInfo().containsKey(devices.getKey())   )
+    				people.add(devices.getKey());
     	
     	System.out.println("Persoanele cunoscute sunt" + people);
 		return people;
@@ -60,12 +60,11 @@ public class CalculateCurrentContext {
 	public static ArrayList<String> detectMyDevices() {
 		
 		ArrayList<String> devicesDetected = new ArrayList<String>();
+
 		
-    	for(Device d : activityShowTask.devices)
-    		if(activityShowTask.getDeviceInfo().containsKey(d.getMacAddress()) && 
-    			d.getOwnerDevice().compareTo(Constants.myDevice) == 0  )
-    				devicesDetected.add(d.getNameDevice());
-    	
+    	for(Entry<String,String> devices : activityShowTask.getMAP_myDevices_name_Mac().entrySet())
+    		if(activityShowTask.getDeviceInfo().containsKey(devices.getKey())   )
+    				devicesDetected.add(devices.getKey());	
     	
     	System.out.println("Dispozitivele mele sunt" + devicesDetected);
 		return devicesDetected;

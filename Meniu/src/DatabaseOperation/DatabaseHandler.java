@@ -15,6 +15,9 @@ import java.util.List;
 
 
 
+
+import com.example.meniu.Constants;
+
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
@@ -79,7 +82,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
          		    + Tasks.KEY_Status + " " + TypeAttribute.COLUMN_STRING + ","
          		    + Tasks.KEY_Location + " " + TypeAttribute.COLUMN_STRING + ","
                     + Tasks.KEY_Date + " " + TypeAttribute.COLUMN_STRING + "," 
-                    + Tasks.KEY_People + " " + TypeAttribute.COLUMN_STRING + ","  
                     + Tasks.KEY_Device + " " + TypeAttribute.COLUMN_STRING + ","
                     + Tasks.KEY_Duration + " " + TypeAttribute.COLUMN_STRING + ","
                     + Tasks.KEY_Begin_Hour + " " + TypeAttribute.COLUMN_STRING +
@@ -136,7 +138,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param beginDurationEstimated : the duration estimated depending on the beginTimes
      */
     public void addTask(String name, String priority, String location, String date,
-    					String people , String devices, String duration, String beginDurationEstimated ) { 
+    				    String devices, String duration, String beginDurationEstimated ) { 
     	
     	
     	System.out.println( " LOCATION selected:  " +  location);
@@ -147,7 +149,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	values.put(Tasks.KEY_Status, TaskState.AMONG_TO_DO_LIST.toString());
     	values.put(Tasks.KEY_Location, location);
     	values.put(Tasks.KEY_Date, date);
-    	values.put(Tasks.KEY_People, people); 
     	values.put(Tasks.KEY_Device, devices);
     	values.put(Tasks.KEY_Duration, duration); 
      	values.put(Tasks.KEY_Begin_Hour, "");
@@ -174,7 +175,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	values.put(Tasks.KEY_Status, TaskState.EXECUTED.toString());
     	values.put(Tasks.KEY_Location, location);
     	values.put(Tasks.KEY_Date, "");
-    	values.put(Tasks.KEY_People, ""); 
     	values.put(Tasks.KEY_Device, "");
     	values.put(Tasks.KEY_Duration, duration); 
      	values.put(Tasks.KEY_Begin_Hour, beginHour);
@@ -227,7 +227,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
  
         Cursor cursor = 
         db.query(TABLE_TASKS, new String[]
-        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date, Tasks.KEY_People,
+        { Tasks.KEY_ID, Tasks.KEY_Title, Tasks.KEY_Priority,Tasks.KEY_Location, Tasks.KEY_Date,
           Tasks.KEY_Device, Tasks.KEY_Duration, Tasks.KEY_Status, Tasks.KEY_Begin_Hour },
         Tasks.KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -304,7 +304,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Task  takeTaskFromDataBase( Cursor cursor){
     	
     	Task  oneTask = new Task();
-    	ArrayList<String> peopleList;
+    	ArrayList<String> peopleList = new ArrayList<String>();
     	ArrayList<String> deviceList;
     	
   //  	System.out.println(cursor.getColumnCount());
@@ -321,7 +321,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	oneTask.setNameTask(cursor.getString(1));
         oneTask.setPriority(cursor.getString(2));
         oneTask.setState(  TaskState.valueOf(cursor.getString(3)));
-        oneTask.setStartTime(cursor.getString(9));
+        oneTask.setStartTime(cursor.getString(8));
         
         
         
@@ -339,26 +339,77 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext());
         
         
-
-        peopleList = new ArrayList( Arrays.asList(cursor.getString(6).split(","))   );
-        oneTask.getInternContext().getContextElementsCollection().
-        put(ContextElementType.PEOPLE_ELEMENT, new PeopleContext(peopleList));
         
-        deviceList = new ArrayList( Arrays.asList(cursor.getString(7).split(","))   );
+        // ???????????????????????????????????///
+        if(cursor.getString(6).equals(""))
+        	deviceList = new ArrayList<String>();
+        else
+        	deviceList = new ArrayList( Arrays.asList(cursor.getString(6).split(","))   );
+        peopleList = determinePeople(deviceList);
+        
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.DEVICES_ELEMENT, new DeviceContext(deviceList));
         
         
         oneTask.getInternContext().getContextElementsCollection().
-        put(ContextElementType.DURATION_ELEMENT, new DurationContext(cursor.getString(8)));
+        put(ContextElementType.PEOPLE_ELEMENT, new PeopleContext(peopleList));
+        
+        
+        
+        oneTask.getInternContext().getContextElementsCollection().
+        put(ContextElementType.DURATION_ELEMENT, new DurationContext(cursor.getString(7)));
        
        
    //     System.out.println( "Oamenii necesari sunt " + peopleList.toString());
     //    System.out.println("Dispozitivele necesare sunt" + deviceList.toString());
+        
+        
+        System.out.println("Pozitia 0 " + cursor.getString(0));
+        System.out.println("Pozitia 1 " + cursor.getString(1));
 
+        
+        System.out.println("Pozitia 2 " + cursor.getString(2));
+        System.out.println("Pozitia 3 " + cursor.getString(3));
+        
+        System.out.println("Pozitia 4 " + cursor.getString(4));
+        System.out.println("Pozitia 5 " + cursor.getString(5));
+        
+        
+        System.out.println("Pozitia 6 " + cursor.getString(6));
+        System.out.println("Pozitia 7 " + cursor.getString(7));
+        
         
         return oneTask;
     	   	
+    }
+    
+    /**
+     * the record containing the task's information
+     * has a list of MAC addresses, without knowing if it is the user's device or 
+     * or another's persons
+     * @param devicesMac : the list of MAC addresses in the task information
+     * @return : the Arraylist of the MAC addresses which belong to other people
+     */
+    public ArrayList<String> determinePeople(ArrayList<String> devicesMac)
+    {
+    	ArrayList<String> people = new ArrayList<String>();
+    	List<Device> devices = getAllDevices();
+    	int position;
+    	for(Device device : devices)
+    	{
+    		if(devicesMac.contains(device.getMacAddress()) &&
+    		   device.getOwnerDevice().equals(Constants.myDevice) == false)
+    		{
+    			position = devicesMac.indexOf(device.getMacAddress());
+    			people.add(devicesMac.remove(position));
+    		}
+    	}
+    	
+    	System.out.println("Devices Mac este " +devicesMac);
+    	System.out.println("Persoanele selectate " + people);
+    	
+    	return people;
+    	
     }
   
   

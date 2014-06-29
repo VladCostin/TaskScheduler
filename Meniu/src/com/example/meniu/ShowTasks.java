@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -113,12 +114,6 @@ public class ShowTasks extends Activity
 	 */
 	private MyBroadCastRecvShow mReceiver;
 	
-	
-	/**
-	 * devices taken from database
-	 */
-	List<Device> devices;
-	
 
 	
 	/**
@@ -151,6 +146,20 @@ public class ShowTasks extends Activity
 	 * obtain all the fixed tasks required for today.
 	 */
 	ArrayList<FixedTaskInformation> fixedTasks;
+	
+	
+	/**
+	 * array of pairs key -value, with the key = MAC address, and the value = name of the device
+	 * contains all the devices belonging to the user
+	 */
+	private LinkedHashMap<String,String> MAP_myDevices_name_Mac;
+	
+	
+	/**
+	 * array of pairs key -value, with the key = MAC address, and the value = name of the people
+	 * contains all the devices belonging to the user
+	 */
+	private LinkedHashMap<String,String> MAP_people_devices_name_Mac;
 	
 
 	@Override
@@ -185,8 +194,6 @@ public class ShowTasks extends Activity
 		locationRequest.setNumUpdates(1);
 		
 		
-		devices = MainActivity.getDatabase().getAllDevices();
-		
 		mReceiver = new MyBroadCastRecvShow(this);
 		
 		
@@ -208,10 +215,30 @@ public class ShowTasks extends Activity
 		
 		
 		getFixedTasksForToday();
+		loadDevices();
 		
 		
 		
+	}
+	
+	/**
+	 * loads the devices contained in the databse
+	 */
+	public void loadDevices() {
 		
+		MAP_myDevices_name_Mac = new LinkedHashMap<String, String>();
+		MAP_people_devices_name_Mac = new LinkedHashMap<String, String>();
+		
+		List<Device> devices = MainActivity.getDatabase().getAllDevices();
+		
+
+		for(Device device : devices)
+			if(device.getOwnerDevice().equals(this.getResources().getString(R.string.myDeviceConstant)))
+				MAP_myDevices_name_Mac.put(device.getMacAddress(), device.getNameDevice());
+			else
+				MAP_people_devices_name_Mac.put(device.getMacAddress(), device.getOwnerDevice());
+		
+
 	}
 
 
@@ -483,9 +510,7 @@ public class ShowTasks extends Activity
 		
 		currentConditions.prepareDurationTask(task);
 		currentConditions.prepareIntervals(task);
-		
-		
-	
+
 		
 	}
 	
@@ -688,7 +713,7 @@ public class ShowTasks extends Activity
 			task.getScheduledContext().getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
 			
 
-			peopleValue.setText(peopleTask.getPeopleTaskString());
+			peopleValue.setText(detectPeopleNames(peopleTask));
 			peopleValue.setTextSize(20);
 			peopleValue.setId( ++ numberOfView);
 			params_people_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -707,7 +732,7 @@ public class ShowTasks extends Activity
 			task.getScheduledContext().getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
 			
 
-			devicesValue.setText(deviceTask.getDeviceTaskString());
+			devicesValue.setText(detectDevicesNames(deviceTask));
 			devicesValue.setTextSize(20);
 			devicesValue.setId( ++ numberOfView);
 			params_devices_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
@@ -776,6 +801,41 @@ public class ShowTasks extends Activity
 			
 		
 	}
+	
+	public String detectDevicesNames(DeviceContext deviceTask) {
+		
+		String devicesNames= "";
+		
+		if(deviceTask.getDeviceTask().size() == 0)
+			return Constants.noChoose;
+		
+		for(String device : deviceTask.getDeviceTask())
+			devicesNames = devicesNames + "," + MAP_myDevices_name_Mac.get(device);
+		
+		devicesNames = devicesNames.substring(1);
+		
+		
+		return devicesNames;
+		
+		
+	}
+	
+	
+	public String detectPeopleNames(PeopleContext people)
+	{
+		String peopleNames= ""; 
+	
+		if(people.getPeopleTask().size() == 0)
+			return Constants.noChoose;
+		
+		for(String device : people.getPeopleTask())
+			peopleNames = peopleNames + "," +  MAP_people_devices_name_Mac.get(device);
+		
+		peopleNames = peopleNames.substring(1);
+		
+		
+		return peopleNames;
+	}
 
 
 
@@ -823,6 +883,23 @@ public class ShowTasks extends Activity
 
 	public void setCurrentPosition(LatLng currentPosition) {
 		this.currentPosition = currentPosition;
+	}
+
+	public LinkedHashMap<String,String> getMAP_myDevices_name_Mac() {
+		return MAP_myDevices_name_Mac;
+	}
+
+	public void setMAP_myDevices_name_Mac(LinkedHashMap<String,String> mAP_myDevices_name_Mac) {
+		MAP_myDevices_name_Mac = mAP_myDevices_name_Mac;
+	}
+
+	public LinkedHashMap<String,String> getMAP_people_devices_name_Mac() {
+		return MAP_people_devices_name_Mac;
+	}
+
+	public void setMAP_people_devices_name_Mac(
+			LinkedHashMap<String,String> mAP_people_devices_name_Mac) {
+		MAP_people_devices_name_Mac = mAP_people_devices_name_Mac;
 	}
 
 

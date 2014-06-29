@@ -6,8 +6,12 @@ import java.util.List;
 
 import Clusters.KMeansDuration;
 import Clusters.KMeansTitle;
+import ContextElements.ContextElementType;
+import ContextElements.DeviceContext;
+import ContextElements.PeopleContext;
 import DatabaseOperation.DatabaseHandler;
 import DeviceData.Device;
+import Task.Task;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -111,6 +115,19 @@ public class MainActivity extends Activity implements OnClickListener {
 		{
 			System.out.println(d.getNameDevice() + " " + d.getOwnerDevice() + " " +d.getMacAddress());
 		}*/
+		
+		List<Task> tasks = database.getAllTasks();
+		for(Task task : tasks)
+		{
+			DeviceContext devices = (DeviceContext) task.getInternContext().
+			getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+			
+			PeopleContext people = (PeopleContext) task.getInternContext().
+			getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+			
+			System.out.println("Dispozitivele sunt " +  devices.getDeviceTask().toString());
+			System.out.println("Persoanele sunt" +   people.getPeopleTask().toString());
+		}
 		
 		
 		 

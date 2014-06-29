@@ -35,7 +35,7 @@ public class PeopleCompatibility extends Compatibility{
 		
 		
 		
-		if(peopleNeeded.get(0).compareTo(Constants.noChoose) == 0)
+		if(peopleNeeded.size() == 0)
 		{
 			System.out.println(nrRan + "Nu am ales persoane, deci nu este nicio pretentie aici ");
 			return true;

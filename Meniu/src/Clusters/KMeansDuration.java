@@ -847,6 +847,9 @@ public class KMeansDuration implements KMeans{
 	public Task detectCentroid(Task currentTask) {
 		
 		
+		if(Core.getCentersDuration().size() == 0)
+			return currentTask;
+			
 		Task chosenTask =  Core.getCentersDuration().get(0);
 		
 		if(chosenTask == null || currentTask == null)

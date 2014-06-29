@@ -2,6 +2,8 @@ package ContextElements;
 
 import java.util.ArrayList;
 
+import com.example.meniu.Constants;
+
 public class DeviceContext extends ContextElement{
 
 	/**
@@ -32,6 +34,10 @@ public class DeviceContext extends ContextElement{
 		
 		String deviceString="";
 		int i;
+		
+		if(deviceTask.size() == 0)
+			return Constants.noChoose;
+		
 		for(i = 0; i < deviceTask.size() -1 ; i++)
 			deviceString += deviceTask.get(i) + " ,";
 		deviceString += deviceTask.get(i);

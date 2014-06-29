@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -248,7 +250,31 @@ public class AddTask extends   FragmentActivity
 	private ParametersToModify   oldParamatersTask;
 	
 	
-
+	/**
+	 * array of pairs key -value, with the key = MAC address, and the value = name of the device
+	 * contains all the devices belonging to the user
+	 */
+	private LinkedHashMap<String,String> MAP_myDevices_name_Mac;
+	
+	
+	/**
+	 * array of pairs key -value, with the key = MAC address, and the value = name of the people
+	 * contains all the devices belonging to the user
+	 */
+	private LinkedHashMap<String,String> MAP_people_devices_name_Mac;
+	
+	
+	/**
+	 * contains the devices selected by the user when saving the task
+	 * automatically changed when closing the choose Device dialog
+	 */
+	private ArrayList<Integer> IntegerDevicesCheckedItems;
+	
+	/**
+	 * contains the people selected by the user when saving the task
+	 * automatically changed when closing the choose People dialog
+	 */
+	private ArrayList<Integer> IntegerPeopleCheckeditems; 
 	
 
 	@Override
@@ -357,7 +383,7 @@ public class AddTask extends   FragmentActivity
         });
         
 
-    	List<Task> tasks =  MainActivity.getDatabase().getAllTasks();
+   /* 	List<Task> tasks =  MainActivity.getDatabase().getAllTasks();
 		ArrayList<String>  allWords = new ArrayList<String>();
 		allWords.addAll(Core.titlesOfCenters());
 		
@@ -375,10 +401,15 @@ public class AddTask extends   FragmentActivity
 		allWords.toArray(wordsList);
 		
 		autoTitle.addTextChangedListener(this);
-		autoTitle.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordsList));
+		autoTitle.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordsList));*/
+        
+        
+        IntegerDevicesCheckedItems = new ArrayList<Integer>();
+        IntegerPeopleCheckeditems = new ArrayList<Integer>();
 		
 		
 		loadSharedPreferences();
+		loadDevices();
 		
 		
 		
@@ -386,6 +417,31 @@ public class AddTask extends   FragmentActivity
 	
 	
 	
+
+	/**
+	 * loads the devices contained in the databse
+	 */
+	public void loadDevices() {
+		
+		MAP_myDevices_name_Mac = new LinkedHashMap<String, String>();
+		MAP_people_devices_name_Mac = new LinkedHashMap<String, String>();
+		
+		List<Device> devices = MainActivity.getDatabase().getAllDevices();
+		
+
+		for(Device device : devices)
+			if(device.getOwnerDevice().equals(this.getResources().getString(R.string.myDeviceConstant)))
+				MAP_myDevices_name_Mac.put(device.getMacAddress(), device.getNameDevice());
+			else
+				MAP_people_devices_name_Mac.put(device.getMacAddress(), device.getOwnerDevice());
+		
+		
+		
+	
+	}
+
+
+
 
 	/**
 	 * checks who has started the ativity
@@ -433,16 +489,39 @@ public class AddTask extends   FragmentActivity
 		autoTitle.setText(title); 
 		textViewDate.setText(deadline);
 		
-		for( i = 0; i < devices.length -1 ; i++)
-			devicesString += devices[i] + ",";
+		if(devices.length != 0 )
+		{
+			for( i = 0; i < devices.length -1 ; i++){
+				devicesString += MAP_myDevices_name_Mac.get( devices[i]) + ",";
+				if(MAP_myDevices_name_Mac.containsKey(devices[i]))
+					IntegerDevicesCheckedItems.add(i); 
+			}
 		
-		devicesString +=devices[i];
+			devicesString +=  MAP_myDevices_name_Mac.get(devices[i]);
+			if(MAP_myDevices_name_Mac.containsKey(devices[i]))
+				IntegerDevicesCheckedItems.add(i); 
+		}
+		else
+			devicesString = Constants.noChoose;
+		if(people.length != 0)
+		{
+			for(i = 0; i < people.length -1 ; i++){
+				peopleString += MAP_people_devices_name_Mac.get( people[i]) + ",";
+				if(MAP_people_devices_name_Mac.containsKey(people[i]))
+					IntegerPeopleCheckeditems.add(i); 
+			}
 		
-		for(i = 0; i < people.length -1 ; i++)
-			peopleString += people[i] + ",";
+			peopleString += MAP_people_devices_name_Mac.get( people[i]);
+			if( MAP_people_devices_name_Mac.containsKey(people[i]))
+				IntegerPeopleCheckeditems.add(i); 
+		
+		}
+		else
+			peopleString = Constants.noChoose;
+		System.out.println("Persoanele din lista " + IntegerPeopleCheckeditems.toString());
+		System.out.println("Dispozitivele din lista " + IntegerDevicesCheckedItems.toString());
 		
 		
-		peopleString += people[i];
 		textViewDevices.setText(devicesString);
 		textViewPeople.setText(peopleString);
 		
@@ -454,7 +533,6 @@ public class AddTask extends   FragmentActivity
 		
 		location = Double.toString( locationDouble[0]) + " " + Double.toString(locationDouble[1]);
 		position = new LatLng(locationDouble[0], locationDouble[1]);
-		map.clear();
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
 
 
@@ -554,16 +632,21 @@ public class AddTask extends   FragmentActivity
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choose with which people the task must be executed");
-		List<Device> devices = MainActivity.getDatabase().getAllDevices();
-		ArrayList<String> contacts = createContactList(devices);
+		
+		ArrayList<String> contacts = new ArrayList<String>(MAP_people_devices_name_Mac.values());
+		ArrayList<String> keyDevicesMac = new ArrayList<String>(MAP_people_devices_name_Mac.keySet());
+		
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
 		final CharSequence[] items =  contacts.toArray( new CharSequence[contacts.size()]);
 		
 		boolean checkedItems[];
 		
 		
-		if(booleanGetFromTaskToModify == true)
-			checkedItems = oldParamatersTask.detectOldPeopleSelected( contacts, itemsId);
+		
+		if(booleanGetFromTaskToModify == true){
+			checkedItems = oldParamatersTask.detectOldPeopleSelected( keyDevicesMac, itemsId);
+			System.out.println("ItemsId la people este " + itemsId);
+		}
 		else
 			checkedItems = null;
 
@@ -610,6 +693,11 @@ public class AddTask extends   FragmentActivity
             	textViewPeople.setText(peopleString);
             	addPeopleNeeded.setFocusableInTouchMode(true);
             	addPeopleNeeded.requestFocus();
+            	
+            	IntegerPeopleCheckeditems = itemsId;
+            	
+            	
+            	
             }
         });
 		
@@ -627,15 +715,18 @@ public class AddTask extends   FragmentActivity
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		builder.setTitle("Choose which devices are needed for executing the task");
-		List<Device> devicesDatabase = MainActivity.getDatabase().getAllDevices();
-		ArrayList<String> devicesMy = createMyDevicesList(devicesDatabase);
+		ArrayList<String> devicesMy = new ArrayList<String>(MAP_myDevices_name_Mac.values());
+		ArrayList<String> keyDevicesMac = new ArrayList<String>(MAP_myDevices_name_Mac.keySet());
+		
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
 		final CharSequence[] items =  devicesMy.toArray( new CharSequence[devicesMy.size()]);
 		boolean checkedItems[];
 		
 		
-		if(booleanGetFromTaskToModify == true)
-			checkedItems = oldParamatersTask.detectOldDevicesSelected( devicesMy, itemsId);
+		if(booleanGetFromTaskToModify == true){
+			checkedItems = oldParamatersTask.detectOldDevicesSelected( keyDevicesMac, itemsId);
+			System.out.println("ItemsId la devices este " + itemsId);
+		}
 		else
 			checkedItems = null;
 		
@@ -684,6 +775,11 @@ public class AddTask extends   FragmentActivity
             	textViewDevices.setText(deviceString);
             	addDevicesNeeded.setFocusableInTouchMode(true);
             	addDevicesNeeded.requestFocus();
+            	
+            	
+            	IntegerDevicesCheckedItems = itemsId;
+            	
+            	System.out.println("ID-URILE DISPOZITIVELOR SELECTATE" + IntegerDevicesCheckedItems);
              
             }
         });
@@ -1214,6 +1310,62 @@ public ParametersToModify getOldParamatersTask() {
 
 public void setOldParamatersTask(ParametersToModify oldParamatersTask) {
 	this.oldParamatersTask = oldParamatersTask;
+}
+
+
+
+
+public LinkedHashMap<String,String> getMy_devices_name_Mac() {
+	return MAP_myDevices_name_Mac;
+}
+
+
+
+
+public void setMy_devices_name_Mac(LinkedHashMap<String,String> my_devices_name_Mac) {
+	this.MAP_myDevices_name_Mac = my_devices_name_Mac;
+}
+
+
+
+
+public LinkedHashMap<String,String> getPeople_devices_name_Mac() {
+	return MAP_people_devices_name_Mac;
+}
+
+
+
+
+public void setPeople_devices_name_Mac(LinkedHashMap<String,String> people_devices_name_Mac) {
+	this.MAP_people_devices_name_Mac = people_devices_name_Mac;
+}
+
+
+
+
+public ArrayList<Integer> getIntegerDevicesCheckedItems() {
+	return IntegerDevicesCheckedItems; 
+}
+
+
+
+
+public void setBooleanDevicesCheckedItems(ArrayList<Integer> booleanDevicesCheckedItems) {
+	IntegerDevicesCheckedItems = booleanDevicesCheckedItems;
+}
+
+
+
+
+public ArrayList<Integer> getIntegerPeopleCheckeditems() { 
+	return IntegerPeopleCheckeditems;
+}
+
+
+
+
+public void setBooleanPeopleCheckeditems(ArrayList<Integer> booleanPeopleCheckeditems) {
+	IntegerPeopleCheckeditems = booleanPeopleCheckeditems;
 }
 
 

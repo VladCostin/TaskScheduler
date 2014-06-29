@@ -1,6 +1,8 @@
 package DatabaseOperation;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import com.example.meniu.AddTask;
 import com.example.meniu.Core;
@@ -60,6 +62,32 @@ public class AddTaskButton implements OnClickListener {
 	
 	public void updateTask()
 	{
+		 String devicesMac="";
+		
+		 ArrayList<Entry<String,String>> myDevicesData = new ArrayList<Entry<String,String>>
+		 (task.getMy_devices_name_Mac().entrySet());
+		 
+		 ArrayList<Entry<String,String>> peopleData = new ArrayList<Entry<String,String>>
+		 (task.getPeople_devices_name_Mac().entrySet());
+		 
+		 System.out.println("PeopleCheckedItems : " + task.getIntegerPeopleCheckeditems());
+		 
+		 
+		 for(Integer position : task.getIntegerDevicesCheckedItems())
+		 {
+			 Entry<String,String> deviceData = myDevicesData.get(position);
+			 devicesMac = devicesMac +  "," +  deviceData.getKey() ;
+		 }
+		 
+		 for(Integer position : task.getIntegerPeopleCheckeditems())
+		 {
+			 Entry<String,String> deviceData = peopleData.get(position);
+			 devicesMac = devicesMac + "," + deviceData.getKey() ;
+		 }
+		 devicesMac = devicesMac.substring(1);
+		
+		
+		
 		ArrayList<String> attributes = new ArrayList<String>();
 		ArrayList<String> values	 = new ArrayList<String>();
 		
@@ -69,14 +97,12 @@ public class AddTaskButton implements OnClickListener {
 		attributes.add(Tasks.KEY_Date);
 		attributes.add(Tasks.KEY_Title);
 		attributes.add(Tasks.KEY_Priority);
-		attributes.add(Tasks.KEY_People);
 		
 		values.add(task.getLocation());
-		values.add(task.getDevices().getText().toString());
+		values.add(devicesMac);
 		values.add(task.getDate().getText().toString());
 		values.add(task.getTitleTask().getText().toString());
 		values.add(task.getPriority().getSelectedItem().toString());
-		values.add(task.getPeople().getText().toString());
 		
 		
 		 MainActivity.getDatabase().updateTask(task.getOldParamatersTask().getId(), attributes, values);
@@ -84,6 +110,16 @@ public class AddTaskButton implements OnClickListener {
 	
 	public void saveTask()
 	{
+		
+		// Set<Entry<String,String>> myDevicesData = task.getMy_devices_name_Mac().entrySet(); 
+		// Set<Entry<String,String>> peopleData	 = task.getPeople_devices_name_Mac().entrySet();
+		 
+		 ArrayList<Entry<String,String>> myDevicesData = new ArrayList<Entry<String,String>>
+		 (task.getMy_devices_name_Mac().entrySet());
+		 
+		 ArrayList<Entry<String,String>> peopleData = new ArrayList<Entry<String,String>>
+		 (task.getPeople_devices_name_Mac().entrySet());
+		
 		 task.getMessageInsert().setText( messageToShow );
 		 task.getMessageInsert().setFocusableInTouchMode(true);
 		 task.getMessageInsert().requestFocus(); 
@@ -93,21 +129,31 @@ public class AddTaskButton implements OnClickListener {
 		 String location = task.getLocation();
 		 String priority = task.getPriority().getSelectedItem().toString();
 		 String name = task.getTitleTask().getText().toString();
-		 String people = task.getPeople().getText().toString();
-		 String device = task.getDevices().getText().toString();
+		 String device="";
 		 String duration = task.getDuration().getSelectedItem().toString();
 		 
 		 
-		 System.out.println("INTRODUC PERSOANELE" + people);
-		 System.out.println("INTRODUC DISPOZITIVELE" + device);
+		 for(Integer position : task.getIntegerDevicesCheckedItems())
+		 {
+			 Entry<String,String> deviceData = myDevicesData.get(position);
+			 device = device +  "," +  deviceData.getKey() ;
+		 }
 		 
+		 for(Integer position : task.getIntegerPeopleCheckeditems())
+		 {
+			 Entry<String,String> deviceData = peopleData.get(position);
+			 device = device + "," + deviceData.getKey() ;
+		 }
+		 if(device.length()> 0 )
+			 device = device.substring(1);
 		 
+		 System.out.println("INTRODUC DISPOZITIVELE " + device);
 		 
-		 
-		 Log.w("information",date + " " + location + " " + priority + " " + name + " " + people + " " + device);
+
+		 Log.w("information",date + " " + location + " " + priority + " " + name +  " " + device);
 		
 		 MainActivity.getDatabase().addTask
-		 (name,priority,location,date, people, device, 
+		 (name,priority,location,date, device, 
 		 Core.getDurationMinutes().get(duration).toString(), "");      
 	}
 

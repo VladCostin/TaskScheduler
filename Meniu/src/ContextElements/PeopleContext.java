@@ -2,6 +2,8 @@ package ContextElements;
 
 import java.util.ArrayList;
 
+import com.example.meniu.Constants;
+
 /**
  * contains an array with the people needed to execute the task
  * @author ${Vlad Herescu}
@@ -37,6 +39,10 @@ public class PeopleContext extends ContextElement{
 		
 		String peopleString="";
 		int i;
+		
+		if(peopleTask.size() == 0)
+			return Constants.noChoose;
+		
 		for(i = 0; i < peopleTask.size() -1 ; i++)
 		{
 			peopleString += peopleTask.get(i) + " ,";

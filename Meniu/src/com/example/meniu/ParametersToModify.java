@@ -87,7 +87,8 @@ public class ParametersToModify
 			}
 			
 			oldDevices[i] = isOld;
-			itemsId.add(i);
+			if(isOld == true)
+				itemsId.add(i);
 		}
 		devices = null;
 		
@@ -121,8 +122,10 @@ public class ParametersToModify
 				}
 			}
 			
+			
 			oldPeople[i] = isOld;
-			itemsId.add(i);
+			if(isOld == true)
+				itemsId.add(i);
 		}
 		people = null;
 		

@@ -34,7 +34,7 @@ public class DeviceCompatibility extends Compatibility{
 		
 		
 		
-		if(devicesNeeded.get(0).compareTo(Constants.noChoose) == 0){
+		if(devicesNeeded.size() == 0){
 			
 			System.out.println(nrRan + "Nu am ales dispozitivul, deci nu este nicio pretentie aici ");
 			return true;
