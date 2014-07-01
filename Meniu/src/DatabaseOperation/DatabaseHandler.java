@@ -507,7 +507,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		   new String[] { Integer.toString(idTask) });
 		
 		
-		
+		   db.close();
 		
 	}
 
@@ -534,6 +534,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		 db.update(TABLE_TASKS, newValues, Tasks.KEY_ID + " = ?",
 		 new String[] { Integer.toString(idTask) });
 		
+		 db.close();
 	}
 	
 	
@@ -578,7 +579,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
              } while (cursor.moveToNext());
          }
   
-         // return contact list
+         db.close();
          return tasksList;
 	}
 
@@ -626,6 +627,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		    // updating row
 		 db.update(TABLE_FIXED_TASKS, newValues, Tasks.KEY_ID + " = ?",
 		 new String[] { Integer.toString(idTask) });
+		 
+		 db.close();
 		
 	}
 
@@ -642,6 +645,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	
     	db.close();
 		
+	}
+	
+	/**
+	 * @param idTask : the task to be updated
+	 * @param attribute : the attribute whose value is going to be changed
+	 * @param stringKeyValue : the new value of the attribute
+	 */
+	public void updateDevice(Integer idDevice, String attribute,
+			String stringKeyValue) {
+		
+		  SQLiteDatabase db = this.getWritableDatabase();
+		  
+		  ContentValues values = new ContentValues();
+		  values.put(attribute, stringKeyValue);
+		 
+		    // updating row
+		   db.update(TABLE_DEVICES, values, DeviceData.KEY_ID + " = ?",
+		   new String[] { Integer.toString(idDevice) });
+		
+		
+		   db.close();
+		
+	}
+	
+	
+	/**
+	 * @param idDevice : the id of the device to be removed
+	 */
+	public void deleteDevice(Integer idDevice)
+	{
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	
+    	//db.delete(TABLE_TASKS, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
+    	
+    	db.delete(TABLE_DEVICES, DeviceData.KEY_ID + " = ?",new String[] { Integer.toString(idDevice) });
+    	
+    	
+    	db.close();
 	}
 	
 	

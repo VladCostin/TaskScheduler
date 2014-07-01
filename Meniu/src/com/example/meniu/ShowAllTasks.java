@@ -454,7 +454,6 @@ public class ShowAllTasks extends Activity
 			
 			line.setBackgroundColor(Color.BLUE);
 			line.setId( ++ numberOfView);
-		
 			params_line.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			line.setLayoutParams(params_line);
 			

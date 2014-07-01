@@ -64,6 +64,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	Button buttonDetectDevicesActivity;
 	
+	
+	Button buttonChangeDeviceDataActivity;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,7 +119,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			System.out.println(d.getNameDevice() + " " + d.getOwnerDevice() + " " +d.getMacAddress());
 		}*/
 		
-		List<Task> tasks = database.getAllTasks();
+/*		List<Task> tasks = database.getAllTasks();
 		for(Task task : tasks)
 		{
 			DeviceContext devices = (DeviceContext) task.getInternContext().
@@ -127,7 +130,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			System.out.println("Dispozitivele sunt " +  devices.getDeviceTask().toString());
 			System.out.println("Persoanele sunt" +   people.getPeopleTask().toString());
-		}
+		}*/
 		
 		
 		 
@@ -164,6 +167,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		buttonDetectDevicesActivity = (Button)  findViewById(R.id.buttonActivityDetectDevices);
 		buttonDetectDevicesActivity.setOnClickListener(this);
+		
+		buttonChangeDeviceDataActivity = (Button)  findViewById(R.id.buttonActivityChangeDeviceData);
+		buttonChangeDeviceDataActivity.setOnClickListener(this);
+		
 	}
 
 
@@ -1777,7 +1784,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(intentStartActivity);
 		}
 		
-		 
+		 if(b == this.buttonChangeDeviceDataActivity)
+		 {
+			 intentStartActivity = new Intent(this, ActivityChangeDeviceData.class);
+			 startActivity(intentStartActivity);
+		 }
 		
 		
 		
