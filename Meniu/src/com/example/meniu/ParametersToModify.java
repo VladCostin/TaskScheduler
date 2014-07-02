@@ -1,6 +1,7 @@
 package com.example.meniu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ParametersToModify
 {
@@ -41,6 +42,11 @@ public class ParametersToModify
 	}
 	
 	
+	public ParametersToModify() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void changeDeadline(String deadline )
 	{
 		String data[] = deadline.split("-");
@@ -58,6 +64,20 @@ public class ParametersToModify
 		this.devices = devices;
 	}
 	
+	public void changeDevices(ArrayList<String> devices)
+	{
+		//String[] stockArr = new String[stock_list.size()];
+		//stockArr = stock_list.toArray(stockArr);
+		
+		this.devices = new String[devices.size()];
+		devices.toArray(this.devices);
+		
+		
+		for(String device : this.devices)
+			System.out.println("Un dispozitiv este " + device);
+	}
+	
+	
 	public void changePeople(String people[])
 	{
 		this.people = people;
@@ -68,8 +88,15 @@ public class ParametersToModify
 		int i,j;
 		boolean isOld;
 		
-		if(devices == null)
+		System.out.println("A INTRAT AICI n detect olda devices " + devices.length);
+		for(i = 0; i < devices.length; i++)
+			System.out.println("ADRESA MAC " + devices[i]);
+		
+		if(devices == null){
+			
+			System.out.println("devices  ESTE NULL");
 			return null;
+		}
 		
 		
 		oldDevices = new boolean[myDevicesAll.size()];
@@ -90,7 +117,15 @@ public class ParametersToModify
 			if(isOld == true)
 				itemsId.add(i);
 		}
-		devices = null;
+		
+		System.out.println("IN metoda asta, itemsId are la sfarsit " + itemsId);
+		System.out.println("###########");
+		for(i = 0; i < oldDevices.length; i++)
+			System.out.print(oldDevices[i]+ " , ");
+		System.out.println("########");
+		
+		
+	//	devices = null;
 		
 		return oldDevices;
 		

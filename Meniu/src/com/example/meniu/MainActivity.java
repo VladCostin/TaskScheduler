@@ -91,9 +91,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		
-	/*	addTasksDifferentNamesDifferentTimes_abonament_metrou();
+/*		addTasksDifferentNamesDifferentTimes_abonament_metrou();
 		addTasksFrizerie();
 		addTasksCumparaturi();
+		addTaskLicenta();
+		addTaskCadou();
 	*/	
 		
 	//	KMeansDuration clustering = new KMeansDuration();
@@ -139,6 +141,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 
 
+
+
+
 	private void initButtons() {
 		
 		
@@ -172,6 +177,56 @@ public class MainActivity extends Activity implements OnClickListener {
 		buttonChangeDeviceDataActivity.setOnClickListener(this);
 		
 	}
+	
+	
+
+
+	private void addTaskLicenta() {
+		
+		MainActivity.database.addTaskPriori
+		("lucrare licenta", "44.438 26.048", "120", "28/05/2014/17/46", "68:5D:43:DA:FA:FB");
+		
+		MainActivity.database.addTaskPriori
+		("lucrare licenta", "44.438 26.048", "240", "28/05/2014/17/46", "68:5D:43:DA:FA:FB");
+		
+		
+		MainActivity.database.addTaskPriori
+		("lucrare licenta", "44.438 26.048", "120", "28/05/2014/17/46", "68:5D:43:DA:FA:FB");
+		
+		MainActivity.database.addTaskPriori
+		("lucrare licenta", "44.438 26.048", "60", "28/05/2014/17/46", "68:5D:43:DA:FA:FB");
+		
+		
+		MainActivity.database.addTaskPriori
+		("lucrare licenta", "44.438 26.048", "45", "28/05/2014/17/46", "68:5D:43:DA:FA:FB");
+		
+	}
+	
+
+
+	private void addTaskCadou() {
+		
+		MainActivity.database.addTaskPriori
+		("cadrou cristi", "44.445 26.098", "120", "28/05/2014/17/46", "D8:2A:7E:DD:63:06");
+		
+		MainActivity.database.addTaskPriori
+		("ccumapraturi cadou cristi", "44.445 26.098", "240", "28/05/2014/17/46", "D8:2A:7E:DD:63:06");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumapratarui cadou", "44.445 26.098", "120", "28/05/2014/17/46", "D8:2A:7E:DD:63:06");
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi cadou", "44.445 26.098", "60", "28/05/2014/17/46", "D8:2A:7E:DD:63:06");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cristian cadou", "44.445 26.098", "45", "28/05/2014/17/46", "D8:2A:7E:DD:63:06");
+		
+	}
+
+
+
 
 
 	private void addTasksDifferentNamesDifferentTimes_abonament_metrou() {
@@ -185,19 +240,19 @@ public class MainActivity extends Activity implements OnClickListener {
 				
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46","");
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","55", "28/05/2014/17/20");
+		("abonament metrou", "44.427 26.102","55", "28/05/2014/17/20","");
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30","");
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55");
+		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55","");
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","20", "28/05/2014/18/45");	
+		("abonament metrou", "44.427 26.102","20", "28/05/2014/18/45","");	
 		
 		
 		// 
@@ -205,23 +260,23 @@ public class MainActivity extends Activity implements OnClickListener {
 		//
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/30");
+		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/30","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01");
+		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/33");
+		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/33","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/45");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/45","");
 		
 		
 		//
@@ -229,22 +284,22 @@ public class MainActivity extends Activity implements OnClickListener {
 		//
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "10", "28/05/2014/14/01");
+		("abonament metrou", "44.427 26.102",  "10", "28/05/2014/14/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "7", "28/05/2014/14/35");
+		("abonament metrou",  "44.427 26.102", "7", "28/05/2014/14/35","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/15");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50");
+		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/15","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "20", "28/05/2014/15/53");
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102",  "20", "28/05/2014/15/53","");
 		
 		
 		
@@ -254,20 +309,20 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30");
+		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/9/00");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/9/00","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10");
+		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30","");
 		
 		
 
@@ -285,77 +340,77 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie",  "44.4137 26.1057", "15", "28/05/2014/7/20");
+		("tuns la frizerie",  "44.4137 26.1057", "15", "28/05/2014/7/20","");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/7/50");
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/7/50","");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "25", "28/05/2014/8/15");
-		
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/8/55");
-		
+		("tuns la frizerie", "44.4137 26.1057", "25", "28/05/2014/8/15","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/9/20");
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "25", "28/05/2014/9/50");
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/10/15");
-		
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/10/40");
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/8/55","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/11/0");
+		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/9/20","");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "35", "28/05/2014/11/35");
+		("tuns la frizerie", "44.4137 26.1057", "25", "28/05/2014/9/50","");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/12/15");
-		
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "30", "28/05/2014/12/40");
-		
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/10/15","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/13/10");
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "35", "28/05/2014/13/55");
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/14/25");
-		
-		
-		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "30", "28/05/2014/14/57");
+		("tuns la frizerie", "44.4137 26.1057", "20", "28/05/2014/10/40","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie",  "44.4137 26.1057", "55", "28/05/2014/15/17");
+		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/11/0","");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "45", "28/05/2014/15/55");
+		("tuns la frizerie", "44.4137 26.1057", "35", "28/05/2014/11/35","");
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/16/28");
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/12/15","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("tuns la frizerie", "44.4137 26.1057", "53", "28/05/2014/16/57");
+		("tuns la frizerie", "44.4137 26.1057", "30", "28/05/2014/12/40","");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "25", "28/05/2014/13/10","");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "35", "28/05/2014/13/55","");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/14/25","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "30", "28/05/2014/14/57","");
+		
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie",  "44.4137 26.1057", "55", "28/05/2014/15/17","");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "45", "28/05/2014/15/55","");
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "40", "28/05/2014/16/28","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("tuns la frizerie", "44.4137 26.1057", "53", "28/05/2014/16/57","");
 	}
 	
 	
@@ -364,35 +419,35 @@ public class MainActivity extends Activity implements OnClickListener {
 /*	private void addTasksCumparaturi() {
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.4131 26.114", "55", "28/05/2014/17/00");
+		("abonament metrout","44.4131 26.114", "55", "28/05/2014/17/00","");
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.4131 26.114",  "40", "28/05/2014/17/25");
+		("Metrou abonament", "44.4131 26.114",  "40", "28/05/2014/17/25","");
 		
 	
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "45", "28/05/2014/17/35");
+		("abonament metrou", "44.4131 26.114", "45", "28/05/2014/17/35","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "35", "28/05/2014/18/05");
+		("abonament metrou", "44.4131 26.114", "35", "28/05/2014/18/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114","35", "28/05/2014/18/25");
+		("abonament metrou", "44.4131 26.114","35", "28/05/2014/18/25","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114","40", "28/05/2014/17/46");
+		("abonament metrou", "44.4131 26.114","40", "28/05/2014/17/46","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114","20", "28/05/2014/17/20");
+		("abonament metrou", "44.4131 26.114","20", "28/05/2014/17/20","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114","40", "28/05/2014/18/30");
+		("abonament metrou", "44.4131 26.114","40", "28/05/2014/18/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114","37", "28/05/2014/17/55");
+		("abonament metrou", "44.4131 26.114","37", "28/05/2014/17/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114","32", "28/05/2014/17/10");
+		("abonament metrou", "44.4131 26.114","32", "28/05/2014/17/10","");
 		
 		
 		
@@ -404,42 +459,42 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114",  "25", "28/05/2014/10/45");
+		("abonament metrou",  "44.4131 26.114",  "25", "28/05/2014/10/45","");
 
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/11/15");
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/11/15","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "25", "28/05/2014/11/30");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.4131 26.114", "25", "28/05/2014/11/30","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "12", "28/05/2014/12/01");
+		("abonament metrou",  "44.4131 26.114", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "24", "28/05/2014/12/01");
+		("abonament metrou",  "44.4131 26.114", "12", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/11/11");
+		("abonament metrou",  "44.4131 26.114", "24", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "17", "28/05/2014/11/22");
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/11/11","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/12/05");
+		("abonament metrou",  "44.4131 26.114", "17", "28/05/2014/11/22","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "14", "28/05/2014/10/55");
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/12/05","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114", "14", "28/05/2014/10/55","");
 		
 
 		
@@ -448,40 +503,40 @@ public class MainActivity extends Activity implements OnClickListener {
 		////////
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "43", "28/05/2014/9/30");
+		("abonament metrou",  "44.4131 26.114", "43", "28/05/2014/9/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "60", "28/05/2014/8/00");
+		("abonament metrou", "44.4131 26.114", "60", "28/05/2014/8/00","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "55", "28/05/2014/8/10");
+		("abonament metrou", "44.4131 26.114", "55", "28/05/2014/8/10","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "45", "28/05/2014/8/45");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "60", "28/05/2014/8/30");
+		("abonament metrou", "44.4131 26.114", "45", "28/05/2014/8/45","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114",  "35", "28/05/2014/9/10");
+		("abonament metrou", "44.4131 26.114", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114",  "35", "28/05/2014/9/10","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "66", "28/05/2014/7/55");
+		("abonament metrou", "44.4131 26.114", "66", "28/05/2014/7/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "47", "28/05/2014/8/25");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "72", "28/05/2014/9/23");
+		("abonament metrou", "44.4131 26.114", "47", "28/05/2014/8/25","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114",  "42", "28/05/2014/9/5");
+		("abonament metrou", "44.4131 26.114", "72", "28/05/2014/9/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.4131 26.114",  "42", "28/05/2014/9/5","");
 		
 		
 		
@@ -492,49 +547,49 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114",  "15", "28/05/2014/14/01");
+		("abonament metrou", "44.4131 26.114",  "15", "28/05/2014/14/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/14/05");
+		("abonament metrou",  "44.4131 26.114", "20", "28/05/2014/14/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "6", "28/05/2014/15/05");
+		("abonament metrou", "44.4131 26.114", "6", "28/05/2014/15/05","");
 		
 		
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "5", "28/05/2014/14/50");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114",  "7", "28/05/2014/14/53");
+		("abonament metrou", "44.4131 26.114", "5", "28/05/2014/14/50","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.4131 26.114",  "7", "28/05/2014/14/53","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.4131 26.114", "5", "28/05/2014/14/57");
+		("metrou aonament", "44.4131 26.114", "5", "28/05/2014/14/57","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "15", "28/05/2014/15/25");
+		("abonament metrou", "44.4131 26.114", "15", "28/05/2014/15/25","");
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.4131 26.114", "1", "28/05/2014/14/10");
+		("abonament metrou", "44.4131 26.114", "1", "28/05/2014/14/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.4131 26.114",  "2", "28/05/2014/14/22");
+		("abonament metrou",  "44.4131 26.114",  "2", "28/05/2014/14/22","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.4131 26.114", "5", "28/05/2014/14/33");
+		("metrou aonament", "44.4131 26.114", "5", "28/05/2014/14/33","");
 		
 		
 		
@@ -547,23 +602,23 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114",  "40", "28/05/2014/17/25");
+		("cumparaturi", "44.4131 26.114",  "40", "28/05/2014/17/25","");
 		
 	
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "45", "28/05/2014/17/35");
+		("cumparaturi", "44.4131 26.114", "45", "28/05/2014/17/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114","35", "28/05/2014/18/25");
+		("cumparaturi", "44.4131 26.114","35", "28/05/2014/18/25","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114","20", "28/05/2014/17/20");
+		("cumparaturi", "44.4131 26.114","20", "28/05/2014/17/20","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114","37", "28/05/2014/17/55");
+		("cumparaturi", "44.4131 26.114","37", "28/05/2014/17/55","");
 		
 
 		
@@ -574,27 +629,27 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114", "20", "28/05/2014/11/15");
+		("cumparaturi",  "44.4131 26.114", "20", "28/05/2014/11/15","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114", "15", "28/05/2014/11/46");
+		("cumparaturi",  "44.4131 26.114", "15", "28/05/2014/11/46","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114", "24", "28/05/2014/12/01");
+		("cumparaturi",  "44.4131 26.114", "24", "28/05/2014/12/01","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114", "17", "28/05/2014/11/22");
+		("cumparaturi",  "44.4131 26.114", "17", "28/05/2014/11/22","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114", "14", "28/05/2014/10/55");
+		("cumparaturi",  "44.4131 26.114", "14", "28/05/2014/10/55","");
 		
 
 		
@@ -604,29 +659,29 @@ public class MainActivity extends Activity implements OnClickListener {
 				
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "60", "28/05/2014/8/00");
+		("cumparaturi", "44.4131 26.114", "60", "28/05/2014/8/00","");
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "55", "28/05/2014/8/10");
-		
-		
-		
-		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "60", "28/05/2014/8/30");
-		
+		("cumparaturi", "44.4131 26.114", "55", "28/05/2014/8/10","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "47", "28/05/2014/8/25");
+		("cumparaturi", "44.4131 26.114", "60", "28/05/2014/8/30","");
+		
+		
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "72", "28/05/2014/9/23");
+		("cumparaturi", "44.4131 26.114", "47", "28/05/2014/8/25","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114",  "42", "28/05/2014/9/5");
+		("cumparaturi", "44.4131 26.114", "72", "28/05/2014/9/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114",  "42", "28/05/2014/9/5","");
 		
 		
 		
@@ -639,25 +694,25 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114", "20", "28/05/2014/14/05");
+		("cumparaturi",  "44.4131 26.114", "20", "28/05/2014/14/05","");
 
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "5", "28/05/2014/14/50");
-		
-
-		
-		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "5", "28/05/2014/14/57");
+		("cumparaturi", "44.4131 26.114", "5", "28/05/2014/14/50","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi", "44.4131 26.114", "1", "28/05/2014/14/10");
+		("cumparaturi", "44.4131 26.114", "5", "28/05/2014/14/57","");
+		
+
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi", "44.4131 26.114", "1", "28/05/2014/14/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi",  "44.4131 26.114",  "2", "28/05/2014/14/22");
+		("cumparaturi",  "44.4131 26.114",  "2", "28/05/2014/14/22","");
 		
 		
 
@@ -677,35 +732,35 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.427 26.102", "55", "28/05/2014/17/00");
+		("abonament metrout","44.427 26.102", "55", "28/05/2014/17/00","");
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.427 26.102",  "40", "28/05/2014/17/25");
+		("Metrou abonament", "44.427 26.102",  "40", "28/05/2014/17/25","");
 		
 	
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/35");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/35","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "35", "28/05/2014/18/05");
+		("abonament metrou", "44.427 26.102", "35", "28/05/2014/18/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","35", "28/05/2014/18/25");
+		("abonament metrou", "44.427 26.102","35", "28/05/2014/18/25","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","20", "28/05/2014/17/20");
+		("abonament metrou", "44.427 26.102","20", "28/05/2014/17/20","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55");
+		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","32", "28/05/2014/17/10");
+		("abonament metrou", "44.427 26.102","32", "28/05/2014/17/10","");
 		
 		
 		
@@ -717,42 +772,42 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "25", "28/05/2014/10/45");
+		("abonament metrou",  "44.427 26.102",  "25", "28/05/2014/10/45","");
 
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/15");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/15","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "25", "28/05/2014/11/30");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.427 26.102", "25", "28/05/2014/11/30","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/01");
+		("abonament metrou",  "44.427 26.102", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01");
+		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11");
+		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/22");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/05");
+		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/22","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "14", "28/05/2014/10/55");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/05","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "14", "28/05/2014/10/55","");
 		
 
 		
@@ -761,40 +816,40 @@ public class MainActivity extends Activity implements OnClickListener {
 		////////
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30");
+		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/00");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/00","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10");
+		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "35", "28/05/2014/9/10");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102",  "35", "28/05/2014/9/10","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "66", "28/05/2014/7/55");
+		("abonament metrou", "44.427 26.102", "66", "28/05/2014/7/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "47", "28/05/2014/8/25");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "72", "28/05/2014/9/23");
+		("abonament metrou", "44.427 26.102", "47", "28/05/2014/8/25","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "42", "28/05/2014/9/5");
+		("abonament metrou", "44.427 26.102", "72", "28/05/2014/9/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102",  "42", "28/05/2014/9/5","");
 		
 		
 		
@@ -805,49 +860,49 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "15", "28/05/2014/14/01");
+		("abonament metrou", "44.427 26.102",  "15", "28/05/2014/14/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/14/05");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/14/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "6", "28/05/2014/15/05");
+		("abonament metrou", "44.427 26.102", "6", "28/05/2014/15/05","");
 		
 		
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "7", "28/05/2014/14/53");
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102",  "7", "28/05/2014/14/53","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/57");
+		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/57","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/25");
+		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/25","");
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "1", "28/05/2014/14/10");
+		("abonament metrou", "44.427 26.102", "1", "28/05/2014/14/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "2", "28/05/2014/14/22");
+		("abonament metrou",  "44.427 26.102",  "2", "28/05/2014/14/22","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/33");
+		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/33","");
 		
 		
 		
@@ -859,35 +914,35 @@ public class MainActivity extends Activity implements OnClickListener {
 		//seara
 	
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.434 26.054", "55", "28/05/2014/17/00");
+		("abonament metrout","44.434 26.054", "55", "28/05/2014/17/00","");
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.434 26.054",  "40", "28/05/2014/17/25");
+		("Metrou abonament", "44.434 26.054",  "40", "28/05/2014/17/25","");
 		
 	
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "45", "28/05/2014/17/35");
+		("abonament metrou", "44.434 26.054", "45", "28/05/2014/17/35","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "35", "28/05/2014/18/05");
+		("abonament metrou", "44.434 26.054", "35", "28/05/2014/18/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054","35", "28/05/2014/18/25");
+		("abonament metrou", "44.434 26.054","35", "28/05/2014/18/25","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054","40", "28/05/2014/17/46");
+		("abonament metrou", "44.434 26.054","40", "28/05/2014/17/46","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054","20", "28/05/2014/17/20");
+		("abonament metrou", "44.434 26.054","20", "28/05/2014/17/20","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054","40", "28/05/2014/18/30");
+		("abonament metrou", "44.434 26.054","40", "28/05/2014/18/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054","37", "28/05/2014/17/55");
+		("abonament metrou", "44.434 26.054","37", "28/05/2014/17/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054","32", "28/05/2014/17/10");
+		("abonament metrou", "44.434 26.054","32", "28/05/2014/17/10","");
 		
 		
 		
@@ -899,42 +954,42 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054",  "25", "28/05/2014/10/45");
+		("abonament metrou",  "44.434 26.054",  "25", "28/05/2014/10/45","");
 
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/11/15");
+		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/11/15","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "25", "28/05/2014/11/30");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.434 26.054", "25", "28/05/2014/11/30","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "12", "28/05/2014/12/01");
+		("abonament metrou",  "44.434 26.054", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "24", "28/05/2014/12/01");
+		("abonament metrou",  "44.434 26.054", "12", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/11/11");
+		("abonament metrou",  "44.434 26.054", "24", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "17", "28/05/2014/11/22");
+		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/11/11","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/12/05");
+		("abonament metrou",  "44.434 26.054", "17", "28/05/2014/11/22","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "14", "28/05/2014/10/55");
+		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/12/05","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.434 26.054", "14", "28/05/2014/10/55","");
 		
 
 		
@@ -943,40 +998,40 @@ public class MainActivity extends Activity implements OnClickListener {
 		////////
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "43", "28/05/2014/9/30");
+		("abonament metrou",  "44.434 26.054", "43", "28/05/2014/9/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "60", "28/05/2014/8/00");
+		("abonament metrou", "44.434 26.054", "60", "28/05/2014/8/00","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "55", "28/05/2014/8/10");
+		("abonament metrou", "44.434 26.054", "55", "28/05/2014/8/10","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "45", "28/05/2014/8/45");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "60", "28/05/2014/8/30");
+		("abonament metrou", "44.434 26.054", "45", "28/05/2014/8/45","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054",  "35", "28/05/2014/9/10");
+		("abonament metrou", "44.434 26.054", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.434 26.054",  "35", "28/05/2014/9/10","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "66", "28/05/2014/7/55");
+		("abonament metrou", "44.434 26.054", "66", "28/05/2014/7/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "47", "28/05/2014/8/25");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "72", "28/05/2014/9/23");
+		("abonament metrou", "44.434 26.054", "47", "28/05/2014/8/25","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054",  "42", "28/05/2014/9/5");
+		("abonament metrou", "44.434 26.054", "72", "28/05/2014/9/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.434 26.054",  "42", "28/05/2014/9/5","");
 		
 		
 		
@@ -987,49 +1042,49 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054",  "15", "28/05/2014/14/01");
+		("abonament metrou", "44.434 26.054",  "15", "28/05/2014/14/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/14/05");
+		("abonament metrou",  "44.434 26.054", "20", "28/05/2014/14/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "6", "28/05/2014/15/05");
+		("abonament metrou", "44.434 26.054", "6", "28/05/2014/15/05","");
 		
 		
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "5", "28/05/2014/14/50");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054",  "7", "28/05/2014/14/53");
+		("abonament metrou", "44.434 26.054", "5", "28/05/2014/14/50","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.434 26.054",  "7", "28/05/2014/14/53","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.434 26.054", "5", "28/05/2014/14/57");
+		("metrou aonament", "44.434 26.054", "5", "28/05/2014/14/57","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "15", "28/05/2014/15/25");
+		("abonament metrou", "44.434 26.054", "15", "28/05/2014/15/25","");
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.434 26.054", "1", "28/05/2014/14/10");
+		("abonament metrou", "44.434 26.054", "1", "28/05/2014/14/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.434 26.054",  "2", "28/05/2014/14/22");
+		("abonament metrou",  "44.434 26.054",  "2", "28/05/2014/14/22","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.434 26.054", "5", "28/05/2014/14/33");
+		("metrou aonament", "44.434 26.054", "5", "28/05/2014/14/33","");
 		
 	}
 
@@ -1039,48 +1094,48 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "35", "28/05/2014/10/34");
+		("abonament metrou",  "44.427 26.102",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.427 26.102", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/05");
+		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05");
+		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "65", "28/05/2014/09/10");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
+		("abonament metrou", "44.427 26.102",  "65", "28/05/2014/09/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "6", "28/05/2014/14/35");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102", "6", "28/05/2014/14/35","");
 		
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/13/35");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "10", "28/05/2014/14/23");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/13/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/05");
+		("abonament metrou",  "44.427 26.102",  "10", "28/05/2014/14/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/05","");
 		
 		
 		
@@ -1098,18 +1153,18 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("proiect licenta prezentare", "44.438 26.049", "45", "28/05/2014/17/21");
+		("proiect licenta prezentare", "44.438 26.049", "45", "28/05/2014/17/21","");
 		
 		MainActivity.database.addTaskPriori
-		("proiect licenta lucru",  "44.438 26.049",  "35", "28/05/2014/10/34");
-		
-		
-		MainActivity.database.addTaskPriori
-		("proiect licenta discutie", "44.438 26.049", "15", "28/05/2014/11/46");
+		("proiect licenta lucru",  "44.438 26.049",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("proiect licenta prezentare",  "44.438 26.049", "12", "28/05/2014/12/05");
+		("proiect licenta discutie", "44.438 26.049", "15", "28/05/2014/11/46","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("proiect licenta prezentare",  "44.438 26.049", "12", "28/05/2014/12/05","");
 		
 		
 
@@ -1119,18 +1174,18 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("proiect licenta lucru", "44.438 26.049","40", "28/05/2014/18/21");
+		("proiect licenta lucru", "44.438 26.049","40", "28/05/2014/18/21","");
 		
 		MainActivity.database.addTaskPriori
-		("proiect licenta", "44.438 26.049", "20", "28/05/2014/13/35");
-		
-		
-		MainActivity.database.addTaskPriori
-		("proiect licenta",  "44.438 26.049",  "10", "28/05/2014/14/23");
+		("proiect licenta", "44.438 26.049", "20", "28/05/2014/13/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("proiect licenta",  "44.438 26.049", "24", "28/05/2014/12/05");
+		("proiect licenta",  "44.438 26.049",  "10", "28/05/2014/14/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("proiect licenta",  "44.438 26.049", "24", "28/05/2014/12/05","");
 		
 		
 		
@@ -1146,25 +1201,25 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("alergat parc", "44.41 26.105", "45", "28/05/2014/17/21");
+		("alergat parc", "44.41 26.105", "45", "28/05/2014/17/21","");
 		
 		MainActivity.database.addTaskPriori
-		("alergat parc",  "44.41 26.105",  "35", "28/05/2014/10/34");
-		
-		
-		MainActivity.database.addTaskPriori
-		("parc alergare", "44.41 26.105", "15", "28/05/2014/11/46");
+		("alergat parc",  "44.41 26.105",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("alergare paaarc",  "44.41 26.105", "12", "28/05/2014/12/05");
+		("parc alergare", "44.41 26.105", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("alergareee parc","44.41 26.105", "55", "28/05/2014/16/05");
+		("alergare paaarc",  "44.41 26.105", "12", "28/05/2014/12/05","");
+		
 		
 		MainActivity.database.addTaskPriori
-		("la alergat parc", "44.41 26.105",  "65", "28/05/2014/09/10");
+		("alergareee parc","44.41 26.105", "55", "28/05/2014/16/05","");
+		
+		MainActivity.database.addTaskPriori
+		("la alergat parc", "44.41 26.105",  "65", "28/05/2014/09/10","");
 		
 
 		
@@ -1188,35 +1243,35 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.427 26.102", "55", "28/05/2014/17/00");
+		("abonament metrout","44.427 26.102", "55", "28/05/2014/17/00","");
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.427 26.102",  "40", "28/05/2014/17/25");
+		("Metrou abonament", "44.427 26.102",  "40", "28/05/2014/17/25","");
 		
 	
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/35");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/35","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "35", "28/05/2014/18/05");
+		("abonament metrou", "44.427 26.102", "35", "28/05/2014/18/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","35", "28/05/2014/18/25");
+		("abonament metrou", "44.427 26.102","35", "28/05/2014/18/25","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/17/46","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","20", "28/05/2014/17/20");
+		("abonament metrou", "44.427 26.102","20", "28/05/2014/17/20","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55");
+		("abonament metrou", "44.427 26.102","37", "28/05/2014/17/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","32", "28/05/2014/17/10");
+		("abonament metrou", "44.427 26.102","32", "28/05/2014/17/10","");
 		
 		
 		
@@ -1228,42 +1283,42 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "25", "28/05/2014/10/45");
+		("abonament metrou",  "44.427 26.102",  "25", "28/05/2014/10/45","");
 
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/15");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/15","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "25", "28/05/2014/11/30");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.427 26.102", "25", "28/05/2014/11/30","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/01");
+		("abonament metrou",  "44.427 26.102", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01");
+		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11");
+		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/22");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/11/11","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/05");
+		("abonament metrou",  "44.427 26.102", "17", "28/05/2014/11/22","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "14", "28/05/2014/10/55");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/12/05","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "14", "28/05/2014/10/55","");
 		
 
 		
@@ -1272,40 +1327,40 @@ public class MainActivity extends Activity implements OnClickListener {
 		////////
 				
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30");
+		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/9/30","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/00");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/00","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10");
+		("abonament metrou", "44.427 26.102", "55", "28/05/2014/8/10","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/8/45","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "35", "28/05/2014/9/10");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102",  "35", "28/05/2014/9/10","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "66", "28/05/2014/7/55");
+		("abonament metrou", "44.427 26.102", "66", "28/05/2014/7/55","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "47", "28/05/2014/8/25");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "72", "28/05/2014/9/23");
+		("abonament metrou", "44.427 26.102", "47", "28/05/2014/8/25","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "42", "28/05/2014/9/5");
+		("abonament metrou", "44.427 26.102", "72", "28/05/2014/9/23","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102",  "42", "28/05/2014/9/5","");
 		
 		
 		
@@ -1316,49 +1371,49 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "15", "28/05/2014/14/01");
+		("abonament metrou", "44.427 26.102",  "15", "28/05/2014/14/01","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/14/05");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/14/05","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "6", "28/05/2014/15/05");
+		("abonament metrou", "44.427 26.102", "6", "28/05/2014/15/05","");
 		
 		
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "7", "28/05/2014/14/53");
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/50","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102",  "7", "28/05/2014/14/53","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/57");
+		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/57","");
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/25");
+		("abonament metrou", "44.427 26.102", "15", "28/05/2014/15/25","");
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "1", "28/05/2014/14/10");
+		("abonament metrou", "44.427 26.102", "1", "28/05/2014/14/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "2", "28/05/2014/14/22");
+		("abonament metrou",  "44.427 26.102",  "2", "28/05/2014/14/22","");
 		
 
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/33");
+		("metrou aonament", "44.427 26.102", "5", "28/05/2014/14/33","");
 		
 		
 		
@@ -1374,84 +1429,84 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	private void addTaskforCheckDurationDifferentTitle_2() {
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/21");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament tramvai",  "44.428 26.103", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05");
+		("abonament tramvai",  "44.428 26.103", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05");
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.43 26.101",  "65", "28/05/2014/09/10");
+		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103", "60", "28/05/2014/8/30");
+		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.43 26.101",  "65", "28/05/2014/09/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament tramvai", "44.428 26.103", "6", "28/05/2014/14/35");
+		("abonament metrou", "44.428 26.103", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament tramvai", "44.428 26.103", "6", "28/05/2014/14/35","");
 		
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101", "20", "28/05/2014/13/35");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament tramvai",  "44.428 26.103",  "10", "28/05/2014/14/23");
+		("abonament metrou",  "44.43 26.101", "20", "28/05/2014/13/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05");
+		("abonament tramvai",  "44.428 26.103",  "10", "28/05/2014/14/23","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/20");
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101", "30", "28/05/2014/10/55");
+		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103",  "5", "28/05/2014/13/10");
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/20","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.43 26.101", "30", "28/05/2014/10/55","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament tramvai", "44.428 26.103",  "30", "28/05/2014/16/35");
+		("abonament metrou", "44.428 26.103",  "5", "28/05/2014/13/10","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament tramvai", "44.428 26.103",  "30", "28/05/2014/16/35","");
 		
 		
 	
 		
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27");
+		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101", "43", "28/05/2014/10/05");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103",  "15", "28/05/2014/13/15");
+		("abonament metrou",  "44.43 26.101", "43", "28/05/2014/10/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament tramvai", "44.428 26.103",  "35", "28/05/2014/16/15");
+		("abonament metrou", "44.428 26.103",  "15", "28/05/2014/13/15","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament tramvai", "44.428 26.103",  "35", "28/05/2014/16/15","");
 		
 		
 	}
@@ -1459,84 +1514,84 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private void addTaskforCheckDurationDifferentTitle() {
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/21");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102",  "35", "28/05/2014/10/34");
-		
-		
-		MainActivity.database.addTaskPriori
-		("cumparaturi metro",  "44.427 26.102", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.427 26.102",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/05");
+		("cumparaturi metro",  "44.427 26.102", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05");
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "65", "28/05/2014/09/10");
+		("abonament metrou",  "44.427 26.102", "12", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30");
+		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.427 26.102",  "65", "28/05/2014/09/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi metro", "44.427 26.102", "6", "28/05/2014/14/35");
+		("abonament metrou", "44.427 26.102", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi metro", "44.427 26.102", "6", "28/05/2014/14/35","");
 		
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/13/35");
-		
-		
-		MainActivity.database.addTaskPriori
-		("cumparaturi metro",  "44.427 26.102",  "10", "28/05/2014/14/23");
+		("abonament metrou",  "44.427 26.102", "20", "28/05/2014/13/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/05");
+		("cumparaturi metro",  "44.427 26.102",  "10", "28/05/2014/14/23","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/20");
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "30", "28/05/2014/10/55");
+		("abonament metrou",  "44.427 26.102", "24", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "5", "28/05/2014/13/10");
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/20","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.427 26.102", "30", "28/05/2014/10/55","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi metro", "44.427 26.102",  "30", "28/05/2014/16/35");
+		("abonament metrou", "44.427 26.102",  "5", "28/05/2014/13/10","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi metro", "44.427 26.102",  "30", "28/05/2014/16/35","");
 		
 		
 	
 		
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27");
+		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/10/05");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102",  "15", "28/05/2014/13/15");
+		("abonament metrou",  "44.427 26.102", "43", "28/05/2014/10/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("cumparaturi metro", "44.427 26.102",  "35", "28/05/2014/16/15");
+		("abonament metrou", "44.427 26.102",  "15", "28/05/2014/13/15","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("cumparaturi metro", "44.427 26.102",  "35", "28/05/2014/16/15","");
 		
 	}
 
@@ -1544,168 +1599,168 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void addTaskForCheckSameTitle()
 	{
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/21");
+		("abonament metrou", "44.427 26.102", "45", "28/05/2014/17/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05");
+		("abonament metrou",  "44.428 26.103", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05");
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.43 26.101",  "65", "28/05/2014/09/10");
+		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103", "60", "28/05/2014/8/30");
+		("abonament metrout","44.427 26.102", "55", "28/05/2014/16/05","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.43 26.101",  "65", "28/05/2014/09/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103", "6", "28/05/2014/14/35");
+		("abonament metrou", "44.428 26.103", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.428 26.103", "6", "28/05/2014/14/35","");
 		
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101", "20", "28/05/2014/13/35");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103",  "10", "28/05/2014/14/23");
+		("abonament metrou",  "44.43 26.101", "20", "28/05/2014/13/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05");
+		("abonament metrou",  "44.428 26.103",  "10", "28/05/2014/14/23","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/20");
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101", "30", "28/05/2014/10/55");
+		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103",  "5", "28/05/2014/13/10");
+		("abonament metrou", "44.427 26.102", "5", "28/05/2014/14/20","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou",  "44.43 26.101", "30", "28/05/2014/10/55","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.428 26.103",  "30", "28/05/2014/16/35");
+		("abonament metrou", "44.428 26.103",  "5", "28/05/2014/13/10","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103",  "30", "28/05/2014/16/35","");
 		
 		
 	
 		
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27");
+		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101", "43", "28/05/2014/10/05");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103",  "15", "28/05/2014/13/15");
+		("abonament metrou",  "44.43 26.101", "43", "28/05/2014/10/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.428 26.103",  "35", "28/05/2014/16/15");
+		("abonament metrou", "44.428 26.103",  "15", "28/05/2014/13/15","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("abonament metrou", "44.428 26.103",  "35", "28/05/2014/16/15","");
 	}
 
 	private void addTasksforCheckDuration() {
 		
 		
 		MainActivity.database.addTaskPriori
-		("ma duc sa imi fac abonament", "44.427 26.102", "45", "28/05/2014/17/21");
+		("ma duc sa imi fac abonament", "44.427 26.102", "45", "28/05/2014/17/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34");
-		
-		
-		MainActivity.database.addTaskPriori
-		("abonament metrou lunar",  "44.428 26.103", "15", "28/05/2014/11/46");
+		("abonament metrou",  "44.43 26.101",  "35", "28/05/2014/10/34","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05");
+		("abonament metrou lunar",  "44.428 26.103", "15", "28/05/2014/11/46","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("ma duc sa imi fac abonament","44.427 26.102", "55", "28/05/2014/16/05");
-		
-		MainActivity.database.addTaskPriori
-		("abonament m luna", "44.43 26.101",  "65", "28/05/2014/09/10");
+		("abonament metrou",  "44.428 26.103", "12", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("metrou ab", "44.428 26.103", "60", "28/05/2014/8/30");
+		("ma duc sa imi fac abonament","44.427 26.102", "55", "28/05/2014/16/05","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament m luna", "44.43 26.101",  "65", "28/05/2014/09/10","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.428 26.103", "6", "28/05/2014/14/35");
+		("metrou ab", "44.428 26.103", "60", "28/05/2014/8/30","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103", "6", "28/05/2014/14/35","");
 		
 		
 		
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21");
+		("abonament metrou", "44.427 26.102","40", "28/05/2014/18/21","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament",  "44.43 26.101", "20", "28/05/2014/13/35");
-		
-		
-		MainActivity.database.addTaskPriori
-		("metrou",  "44.428 26.103",  "10", "28/05/2014/14/23");
+		("abonament",  "44.43 26.101", "20", "28/05/2014/13/35","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05");
+		("metrou",  "44.428 26.103",  "10", "28/05/2014/14/23","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("metro abonare", "44.427 26.102", "5", "28/05/2014/14/20");
-		
-		MainActivity.database.addTaskPriori
-		("abonament m luna",  "44.43 26.101", "30", "28/05/2014/10/55");
+		("abonament metrou",  "44.428 26.103", "24", "28/05/2014/12/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("metrou ab", "44.428 26.103",  "5", "28/05/2014/13/10");
+		("metro abonare", "44.427 26.102", "5", "28/05/2014/14/20","");
+		
+		MainActivity.database.addTaskPriori
+		("abonament m luna",  "44.43 26.101", "30", "28/05/2014/10/55","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.428 26.103",  "30", "28/05/2014/16/35");
+		("metrou ab", "44.428 26.103",  "5", "28/05/2014/13/10","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103",  "30", "28/05/2014/16/35","");
 		
 		
 	
 		
 		
 		MainActivity.database.addTaskPriori
-		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27");
+		("metrou aonament", "44.427 26.102", "17", "28/05/2014/14/27","");
 		
 		MainActivity.database.addTaskPriori
-		("abonament m luna",  "44.43 26.101", "43", "28/05/2014/10/05");
-		
-		
-		MainActivity.database.addTaskPriori
-		("metrou ab", "44.428 26.103",  "15", "28/05/2014/13/15");
+		("abonament m luna",  "44.43 26.101", "43", "28/05/2014/10/05","");
 		
 		
 		MainActivity.database.addTaskPriori
-		("Metrou abonament", "44.428 26.103",  "35", "28/05/2014/16/15");
+		("metrou ab", "44.428 26.103",  "15", "28/05/2014/13/15","");
+		
+		
+		MainActivity.database.addTaskPriori
+		("Metrou abonament", "44.428 26.103",  "35", "28/05/2014/16/15","");
 		
 		
 		

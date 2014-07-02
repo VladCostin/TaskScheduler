@@ -167,7 +167,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param duration
      * @param beginHour
      */
-    public void addTaskPriori(String name, String location, String duration, String beginHour  )
+    public void addTaskPriori(String name, String location, String duration, String beginHour, String devices  )
     {
     	ContentValues values = new ContentValues();
     	values.put(Tasks.KEY_Title, name);  
@@ -175,7 +175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	values.put(Tasks.KEY_Status, TaskState.EXECUTED.toString());
     	values.put(Tasks.KEY_Location, location);
     	values.put(Tasks.KEY_Date, "");
-    	values.put(Tasks.KEY_Device, "");
+    	values.put(Tasks.KEY_Device, devices);
     	values.put(Tasks.KEY_Duration, duration); 
      	values.put(Tasks.KEY_Begin_Hour, beginHour);
      	
@@ -364,7 +364,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //    System.out.println("Dispozitivele necesare sunt" + deviceList.toString());
         
         
-        System.out.println("Pozitia 0 " + cursor.getString(0));
+   /*     System.out.println("Pozitia 0 " + cursor.getString(0));
         System.out.println("Pozitia 1 " + cursor.getString(1));
 
         
@@ -377,7 +377,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         
         System.out.println("Pozitia 6 " + cursor.getString(6));
         System.out.println("Pozitia 7 " + cursor.getString(7));
-        
+     */   
         
         return oneTask;
     	   	
@@ -405,8 +405,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     		}
     	}
     	
-    	System.out.println("Devices Mac este " +devicesMac);
-    	System.out.println("Persoanele selectate " + people);
+    //	System.out.println("Devices Mac este " +devicesMac);
+    //	System.out.println("Persoanele selectate " + people);
     	
     	return people;
     	
@@ -523,16 +523,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues newValues = new ContentValues();
-		int i;
+		int i, nrUpdatat;
 		
 		for(i= 0; i < attributes.size(); i++)
 			newValues.put(attributes.get(i), values.get(i));
 		
-		  
+		 System.out.println("UPDATEZ " + newValues.toString());
 		 
 		    // updating row
-		 db.update(TABLE_TASKS, newValues, Tasks.KEY_ID + " = ?",
+		 nrUpdatat = db.update(TABLE_TASKS, newValues, Tasks.KEY_ID + " = ?",
 		 new String[] { Integer.toString(idTask) });
+		 
+		 
+		 System.out.println("AM UPDATAT " + nrUpdatat);
 		
 		 db.close();
 	}

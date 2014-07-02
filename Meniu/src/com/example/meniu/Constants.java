@@ -30,4 +30,10 @@ public interface Constants {
 	
 	Integer startMinute = 0;
 	
+	
+	Integer deviceFirstShow = 1002;
+	
+	
+	Integer notFromModifyTask = -1;
+	
 }

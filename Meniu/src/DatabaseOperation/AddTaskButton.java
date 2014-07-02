@@ -62,7 +62,7 @@ public class AddTaskButton implements OnClickListener {
 	
 	public void updateTask()
 	{
-		 String devicesMac="";
+		 String device="";
 		
 		 ArrayList<Entry<String,String>> myDevicesData = new ArrayList<Entry<String,String>>
 		 (task.getMy_devices_name_Mac().entrySet());
@@ -71,20 +71,24 @@ public class AddTaskButton implements OnClickListener {
 		 (task.getPeople_devices_name_Mac().entrySet());
 		 
 		 System.out.println("PeopleCheckedItems : " + task.getIntegerPeopleCheckeditems());
+		 System.out.println("DevicesCheckedItems :" + task.getIntegerDevicesCheckedItems());
 		 
 		 
 		 for(Integer position : task.getIntegerDevicesCheckedItems())
 		 {
 			 Entry<String,String> deviceData = myDevicesData.get(position);
-			 devicesMac = devicesMac +  "," +  deviceData.getKey() ;
+			 device = device +  "," +  deviceData.getKey() ;
 		 }
 		 
 		 for(Integer position : task.getIntegerPeopleCheckeditems())
 		 {
 			 Entry<String,String> deviceData = peopleData.get(position);
-			 devicesMac = devicesMac + "," + deviceData.getKey() ;
+			 device = device + "," + deviceData.getKey() ;
 		 }
-		 devicesMac = devicesMac.substring(1);
+		 if(device.length()> 0 )
+			 device = device.substring(1);
+		 
+		 System.out.println("DevicesMac :" + device);
 		
 		
 		
@@ -99,13 +103,13 @@ public class AddTaskButton implements OnClickListener {
 		attributes.add(Tasks.KEY_Priority);
 		
 		values.add(task.getLocation());
-		values.add(devicesMac);
+		values.add(device);
 		values.add(task.getDate().getText().toString());
 		values.add(task.getTitleTask().getText().toString());
 		values.add(task.getPriority().getSelectedItem().toString());
 		
 		
-		 MainActivity.getDatabase().updateTask(task.getOldParamatersTask().getId(), attributes, values);
+		 MainActivity.getDatabase().updateTask(task.getIdTask(), attributes, values);
 	}
 	
 	public void saveTask()

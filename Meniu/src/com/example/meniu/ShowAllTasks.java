@@ -112,12 +112,15 @@ public class ShowAllTasks extends Activity
 	public void loadDevicesData() {
 		
 		List<Device> devices = MainActivity.getDatabase().getAllDevices();
-		for(Device device : devices)
+		for(Device device : devices){
+			
+			System.out.println("Am extras dispozitivul :" + device.getIdDevice() + " " + device.getMacAddress() + " " + device.getNameDevice());
+			
 			if(device.getOwnerDevice().equals(getResources().getString(R.string.myDeviceConstant)))
 				MAP_My_Device.put(device.getMacAddress(), device.getNameDevice());
 			else
 				MAP_Device_owner.put(device.getMacAddress(), device.getOwnerDevice());
-		
+		}
 		
 		
 	}
@@ -191,6 +194,8 @@ public class ShowAllTasks extends Activity
 		statesToShow.add(TaskState.AMONG_TO_DO_LIST);
 		
 		tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
+		
+		System.out.println(" checkAllTaskscompatibility - intru iar aici ");
 		
 		
 		if(tasks.size() == 0)
