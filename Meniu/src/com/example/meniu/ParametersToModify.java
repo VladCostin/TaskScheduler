@@ -16,26 +16,26 @@ public class ParametersToModify
 	/**
 	 * the old devices received as parameter from the intent that started this activity
 	 */
-	String devices[];
+	public String devices[];
 	
 	
 	/**
 	 * the old people received as a parameter from the intent that started this activity
 	 */
-	String people[];
+	public String people[];
 	
 	
 	/**
 	 * for every item in the list of devices, true if it was in the string received 
 	 * from modify task
 	 */
-	boolean oldDevices[];
+	public boolean oldDevices[];
 	
 	/**
 	 * for every item in the list of people, true if it was in the string received 
 	 * from modify task
 	 */
-	boolean oldPeople[];
+	public boolean oldPeople[];
 	
 	public ParametersToModify(int id) {
 		this.id = id;
@@ -98,9 +98,9 @@ public class ParametersToModify
 		int i,j;
 		boolean isOld;
 		
-		System.out.println("A INTRAT AICI n detect olda devices " + devices.length);
+/*		System.out.println("A INTRAT AICI n detect olda devices " + devices.length);
 		for(i = 0; i < devices.length; i++)
-			System.out.println("ADRESA MAC " + devices[i]);
+			System.out.println("ADRESA MAC " + devices[i]);*/
 		
 		if(devices == null){
 			

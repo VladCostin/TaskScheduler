@@ -38,4 +38,7 @@ public interface Constants {
 	
 	Integer notFromModifyTask = -1;
 	
+	
+	Integer MessageAddTaskTimer = 2000;
+	
 }

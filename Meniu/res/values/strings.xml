@@ -124,5 +124,12 @@
     <string name="messagePatience">Please be patient. This may take several days</string>
     <string name="activityChangeDeviceData">Change Device Data</string>
     <string name="title_activity_activity_change_device_data">ActivityChangeDeviceData</string>
+    
+    
+    
+    <string name="checkBoxLocation">Location</string>
+    <string name="checkBoxDevices">Devices</string>
+    <string name="checkBoxPeople">People</string>
+    <string name="checkBoxSchedule">Schedule</string>
 
 </resources>

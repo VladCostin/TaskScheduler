@@ -5,9 +5,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.example.meniu.AddTask;
+import com.example.meniu.Constants;
 import com.example.meniu.Core;
 import com.example.meniu.MainActivity;
+import com.example.meniu.ParametersToModify;
 import com.example.meniu.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 
 import android.util.Log;
 import android.view.View;
@@ -170,6 +173,43 @@ public class AddTaskButton implements OnClickListener {
 		 
 		 ThreadShowMessage myThread = new ThreadShowMessage(task);
 		 myThread.start();
+		 UpdateGUIData();
+	}
+	
+	
+	public void UpdateGUIData()
+	{
+		task.setBooleanHasDetectedLocation(false);
+		task.getAutoTitle().setText(""); 
+		task.getAutoLocationSearch().setText("");
+		task.getPeople().setText(Constants.noChoose);
+		task.getDevices().setText(Constants.noChoose);
+		task.getDate().setText(Constants.noChoose);
+		
+		task.getIntegerDevicesCheckedItems().clear();
+		task.getIntegerPeopleCheckeditems().clear();
+		
+		task.setOldParamatersTask(new ParametersToModify());
+		
+		task.getOldParamatersTask().devices = new String[0];
+		task.getOldParamatersTask().people = new String[0];
+		
+		task.setPEOPLE_DIALOG_ID(task.getPEOPLE_DIALOG_ID()+ 2);
+		task.setDEVICES_DIALOG_ID(task.getDEVICES_DIALOG_ID() + 2);
+
+		
+		
+		task.onCreateDialog(task.getDEVICES_DIALOG_ID());
+		task.onCreateDialog(task.getPEOPLE_DIALOG_ID());
+
+		
+		
+		task.getPriority().setSelection(0);
+		task.getDuration().setSelection(0);
+		
+		task.getMap().clear();    	
+		task.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(task.getPositionCurrent(), 15));
+		
 	}
 
 
@@ -221,7 +261,7 @@ class ThreadShowMessage extends Thread
 	public void run()
 	{
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(Constants.MessageAddTaskTimer);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

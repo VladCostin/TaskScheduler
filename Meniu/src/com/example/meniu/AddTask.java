@@ -193,7 +193,7 @@ public class AddTask extends   FragmentActivity
 	/**
 	 * the position detected bu the device
 	 */
-	LatLng  positionCurrent;
+	private LatLng  positionCurrent;
 	
 	/**
 	 * the key to the list of locations tapped
@@ -220,7 +220,7 @@ public class AddTask extends   FragmentActivity
 	 * if a location has been detected, then don't try to move again
 	 * on map ( it's already moving)
 	 */
-	boolean booleanHasDetectedLocation;
+	private boolean booleanHasDetectedLocation;
 	
 	
 	
@@ -232,13 +232,13 @@ public class AddTask extends   FragmentActivity
 	/**
 	 * used to determine which people to choose
 	 */
-	static int PEOPLE_DIALOG_ID;
+	private static int PEOPLE_DIALOG_ID;
 	
 	
 	/**
 	 * used to determine which devices to choose
 	 */
-	static int DEVICES_DIALOG_ID;
+	private static int DEVICES_DIALOG_ID;
 	
 	
 	/**
@@ -608,7 +608,7 @@ public class AddTask extends   FragmentActivity
 
 	
 	@Override
-	protected Dialog onCreateDialog(int id) {
+	public Dialog onCreateDialog(int id) {
 		
 		if( id == this.DATE_DIALOG_ID)
 			return dateDialog();
@@ -625,25 +625,7 @@ public class AddTask extends   FragmentActivity
 		return null;
 		
 		
-		
-/*	switch (id) {
-		case DATE_DIALOG_ID:
-			
-			return dateDialog();
-			
-			
-		   
-		case PEOPLE_DIALOG_ID:
-			
-			return peopleDialog();
-			
-		case DEVICES_DIALOG_ID:
-			
-			System.out.println("NU AR TREBUI SA INTRE IAR AICI ???");
-			
-			return devicesDialog();
-		}
-		return null; */
+
 	}
 	
 	
@@ -795,11 +777,11 @@ public class AddTask extends   FragmentActivity
 			if(booleanUpdateGuiCentroidData == true){
 				checkedItems = oldParamatersTask.detectOldDevicesSelected(keyDevicesMac, itemsId);
 				
-				System.out.println("----------");
+			/*	System.out.println("----------");
 				for(int i = 0; i < checkedItems.length; i++)
 					System.out.print(checkedItems[i]+ " , ");
 				
-				System.out.println("----------");
+				System.out.println("----------");*/
 			}
 			else
 				checkedItems = null;
@@ -1325,19 +1307,40 @@ public void setTitle(AutoCompleteTextView title) {
 @Override
 public void afterTextChanged(Editable s) {
 	
+	
+	System.out.println("1.  NICI MACAR AICI NU INTRA ?");
+	
 
 	if(autoTitle.getEditableText()  == s)
 	{	
+		
+		System.out.println("2.  NICI MACAR AICI NU INTRA ?");
 		
 		Task currentTask = new Task();
 		currentTask.setNameTask(s.toString());
 		
 		
 		Task returnTask =  Core.getClusteringLocation().detectCentroid(currentTask);
+		
+		if(returnTask == null)
+			System.out.println("Taskul descoperit este null");
+		else
+			System.out.println("Taskul descoperit NU ESTE NULL");
+		
+		
+		if(booleanHasDetectedLocation == false)
+			System.out.println("booleanHasDetectedLocation este false");
+		else
+			System.out.println("booleanHasDetectedLocation este true");
+		
+		
 		if(returnTask != null && booleanHasDetectedLocation == false)
 		{
 			booleanHasDetectedLocation = true;
 			booleanUpdateGuiCentroidData = true;
+			
+			
+			System.out.println("3.   NICI MACAR AICI NU INTRA ?");
 			
 			
 			LocationContext location = (LocationContext)returnTask.getInternContext().
@@ -1423,6 +1426,7 @@ private void loadPeopleFromCentroid(Task centroid) {
 public void loadDevicesFromCentroid(Task centroid)
 {
 	int i;
+	System.out.println("INTRA AICI????? " + DEVICES_DIALOG_ID);
 	
 	DeviceContext deviceC = (DeviceContext) centroid.getInternContext().
 	getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
@@ -1587,6 +1591,90 @@ public int getIdTask() {
 
 public void setIdTask(int idTask) {
 	this.idTask = idTask;
+}
+
+
+
+
+public AutoCompleteTextView getAutoTitle() {
+	return autoTitle;
+}
+
+
+
+
+public void setAutoTitle(AutoCompleteTextView autoTitle) {
+	this.autoTitle = autoTitle;
+}
+
+
+
+
+public static int getPEOPLE_DIALOG_ID() {
+	return PEOPLE_DIALOG_ID;
+}
+
+
+
+
+public static void setPEOPLE_DIALOG_ID(int pEOPLE_DIALOG_ID) {
+	PEOPLE_DIALOG_ID = pEOPLE_DIALOG_ID;
+}
+
+
+
+
+public static int getDEVICES_DIALOG_ID() {
+	return DEVICES_DIALOG_ID;
+}
+
+
+
+
+public static void setDEVICES_DIALOG_ID(int dEVICES_DIALOG_ID) {
+	DEVICES_DIALOG_ID = dEVICES_DIALOG_ID;
+}
+
+
+
+
+public LatLng getPositionCurrent() {
+	return positionCurrent;
+}
+
+
+
+
+public void setPositionCurrent(LatLng positionCurrent) {
+	this.positionCurrent = positionCurrent;
+}
+
+
+
+
+public AutoCompleteTextView getAutoLocationSearch() {
+	return autoLocationSearch;
+}
+
+
+
+
+public void setAutoLocationSearch(AutoCompleteTextView autoLocationSearch) {
+	this.autoLocationSearch = autoLocationSearch;
+}
+
+
+
+
+public boolean isBooleanHasDetectedLocation() {
+	return booleanHasDetectedLocation;
+}
+
+
+
+
+public void setBooleanHasDetectedLocation(boolean booleanHasDetectedLocation) {
+	this.booleanHasDetectedLocation = booleanHasDetectedLocation;
 }
 
 

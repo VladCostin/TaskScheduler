@@ -50,6 +50,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -97,6 +98,9 @@ public class ShowTasks extends Activity
 	 * the checkers to check whether the task is comaptible
 	 */
 	HashMap<ContextElementType,Compatibility> checkers;
+	
+	
+	HashMap<ContextElementType,Boolean> hashMapCheckBox;
 	
 	/**
 	 * the number of the view to add to the relative layout
@@ -161,6 +165,9 @@ public class ShowTasks extends Activity
 	 */
 	private LinkedHashMap<String,String> MAP_people_devices_name_Mac;
 	
+	
+
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +185,7 @@ public class ShowTasks extends Activity
 		layout = (RelativeLayout) findViewById(R.id.RelativeLayoutShow);
 		
 		checkers = new HashMap<ContextElementType,Compatibility>();
+		hashMapCheckBox = new HashMap<ContextElementType, Boolean>();
 		idTasks = new HashMap<Integer,Integer>();
 		deviceInfo = new HashMap<String,String>();
 		
@@ -217,7 +225,7 @@ public class ShowTasks extends Activity
 		getFixedTasksForToday();
 		loadDevices();
 		
-		
+	//	addCheckersToInterface();
 		
 	}
 	
@@ -466,6 +474,10 @@ public class ShowTasks extends Activity
 			System.out.println( "Am verificat compatibilitatea pentru " + task.getNameTask() + " " + isTaskCompatible);
 			
 			if(isTaskCompatible == true){
+				
+				if(noCompatibleTask == true)
+					addCheckersToInterface(); 
+				
 				noCompatibleTask = false;
 				addTaskToInterface(task) ;
 			}
@@ -512,6 +524,86 @@ public class ShowTasks extends Activity
 		currentConditions.prepareIntervals(task);
 
 		
+	}
+	
+	
+	public void addCheckersToInterface()
+	{
+		 RelativeLayout.LayoutParams params_location_checkBox = 
+		 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				                         RelativeLayout.LayoutParams.WRAP_CONTENT);
+		 
+		 params_location_checkBox.setMargins(30, 20, 0, 0);
+		 
+		 
+		 RelativeLayout.LayoutParams params_devices_checkBox = 
+		 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				                         RelativeLayout.LayoutParams.WRAP_CONTENT);
+		 
+		 params_devices_checkBox.setMargins(30, 20, 0, 0);
+		 
+		 
+		 RelativeLayout.LayoutParams params_people_checkBox = 
+		 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				                         RelativeLayout.LayoutParams.WRAP_CONTENT);
+		 
+		 
+		 params_people_checkBox.setMargins(30, 20, 0, 0);
+		 
+		 RelativeLayout.LayoutParams params_schedule_checkBox = 
+		 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				                         RelativeLayout.LayoutParams.WRAP_CONTENT);
+		 
+		 params_schedule_checkBox.setMargins(30, 20, 0, 0);
+		 
+		 
+		 CheckBox checkboxLocation = new CheckBox(this);
+		 checkboxLocation.setChecked(false);
+		 checkboxLocation.setTextSize(20);
+		 checkboxLocation.setText(getResources().getString(R.string.checkBoxLocation)); 
+		 checkboxLocation.setId(++ numberOfView);
+		 
+		 params_location_checkBox.addRule(RelativeLayout.BELOW, numberOfView - 1);
+		 checkboxLocation.setLayoutParams(params_location_checkBox);
+		 
+		 
+		 CheckBox checkboxDevices = new CheckBox(this);
+		 checkboxDevices.setChecked(false);
+		 checkboxDevices.setTextSize(20);
+		 checkboxDevices.setText(getResources().getString(R.string.checkBoxDevices)); 
+		 checkboxDevices.setId(++ numberOfView);
+		 
+		 params_devices_checkBox.addRule(RelativeLayout.BELOW, numberOfView - 1);
+		 checkboxDevices.setLayoutParams(params_devices_checkBox);
+		 
+		 
+		 CheckBox checkboxPeople = new CheckBox(this);
+		 checkboxPeople.setChecked(false);
+		 checkboxPeople.setTextSize(20);
+		 checkboxPeople.setText(getResources().getString(R.string.checkBoxPeople)); 
+		 checkboxPeople.setId(++ numberOfView);
+		 
+		 params_people_checkBox.addRule(RelativeLayout.BELOW, numberOfView - 1);
+		 checkboxPeople.setLayoutParams(params_people_checkBox);
+		 
+		 CheckBox checkboxSchedule = new CheckBox(this);
+		 checkboxSchedule.setChecked(false);
+		 checkboxSchedule.setTextSize(20);
+		 checkboxSchedule.setText(getResources().getString(R.string.checkBoxSchedule)); 
+		 checkboxSchedule.setId(++ numberOfView);
+		 
+		 params_schedule_checkBox.addRule(RelativeLayout.BELOW, numberOfView - 1);
+		 checkboxSchedule.setLayoutParams(params_schedule_checkBox);
+		 
+		 
+		 layout.addView(checkboxLocation);
+		 layout.addView(checkboxDevices);
+		 layout.addView(checkboxPeople);
+		 layout.addView(checkboxSchedule);
+		 
+		 
+		 
+		 
 	}
 	
 	
