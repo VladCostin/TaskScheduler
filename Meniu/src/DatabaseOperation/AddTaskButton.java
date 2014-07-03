@@ -21,7 +21,7 @@ import android.view.View.OnClickListener;
 public class AddTaskButton implements OnClickListener {
 	
 	/**
-	 * instance of class which has the data introduces by the user
+	 * instance of class which has the data introduced by the user
 	 */
 	AddTask task;
 	
@@ -110,6 +110,12 @@ public class AddTaskButton implements OnClickListener {
 		
 		
 		 MainActivity.getDatabase().updateTask(task.getIdTask(), attributes, values);
+		 
+		 task.getMessageInsert().setText( task.getResources().getString(R.string.UPDATEMessage) );
+		 task.getMessageInsert().setFocusableInTouchMode(true);
+		 task.getMessageInsert().requestFocus(); 
+		 ThreadShowMessage myThread = new ThreadShowMessage(task);
+		 myThread.start();
 	}
 	
 	public void saveTask()
@@ -160,7 +166,10 @@ public class AddTaskButton implements OnClickListener {
 		
 		 MainActivity.getDatabase().addTask
 		 (name,priority,location,date, device, 
-		 Core.getDurationMinutes().get(duration).toString(), "");      
+		 Core.getDurationMinutes().get(duration).toString(), "");    
+		 
+		 ThreadShowMessage myThread = new ThreadShowMessage(task);
+		 myThread.start();
 	}
 
 
@@ -197,9 +206,41 @@ public class AddTaskButton implements OnClickListener {
 
 class ThreadShowMessage extends Thread
 {
+	/**
+	 * instance of class which has the data introduced by the user
+	 */
+	AddTask task;
 	
-	public ThreadShowMessage() {
-		// TODO Auto-generated constructor stub
+	
+	public ThreadShowMessage(AddTask task) {
+			this.task = task;
+
+	}
+	
+	
+	public void run()
+	{
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		task.runOnUiThread( new Runnable()
+		{
+
+			@Override
+			public void run() {
+				 task.getMessageInsert().setText("");
+				
+			}
+			
+		});
+		
+		
+		
 	}
 	
 	

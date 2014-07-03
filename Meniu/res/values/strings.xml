@@ -100,6 +100,7 @@
     <string name="myDeviceConstant">My Device</string>
     <string name="noDevice">No new Devices have been detected</string>
     <string name="Succes">The data has been inserted  </string>
+    <string name="UPDATEMessage">The data has been updated  </string>
     <string name="Error">Please insert the :</string>
     <string name="textNotChoosed">Not Chosen</string>
     <string name="title_activity_show_all_tasks">View all tasks</string>
