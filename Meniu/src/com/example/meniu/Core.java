@@ -226,39 +226,44 @@ public class Core {
 		
 		
 		for(Task centroid : centersTitles)
+			changeTaskDevice(centroid, devices);
+		
+		for(Task centroid : centersDuration)
+			changeTaskDevice(centroid,devices);
+		
+		
+		
+	}
+	
+	
+	public static void changeTaskDevice(Task centroid, List<Device> devices)
+	{
+		DeviceContext deviceC = (DeviceContext) centroid.getInternContext().
+		getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+				
+		PeopleContext peopleC = (PeopleContext) centroid.getInternContext().
+		getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+				
+				
+		for(Device device : devices)
 		{
-			DeviceContext deviceC = (DeviceContext) centroid.getInternContext().
-			getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
-			
-			PeopleContext peopleC = (PeopleContext) centroid.getInternContext().
-			getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
-			
-			
-			for(Device device : devices)
+			if(device.getOwnerDevice().equals(Constants.myDevice) &&
+			peopleC.getPeopleTask().contains(device.getMacAddress())) 
 			{
-				if(device.getOwnerDevice().equals(Constants.myDevice) &&
-				   peopleC.getPeopleTask().contains(device.getMacAddress())) 
-				{
-					deviceC.getDeviceTask().add(device.getMacAddress());
-					peopleC.getPeopleTask().remove(device.getMacAddress());
-				}
-				
-				if(device.getOwnerDevice().equals(Constants.myDevice)== false &&
-				   deviceC.getDeviceTask().contains(device.getMacAddress()))
-				{
-					peopleC.getPeopleTask().add(device.getMacAddress());
-					deviceC.getDeviceTask().remove(device.getMacAddress());
-				}
-				
-				
-				
+				deviceC.getDeviceTask().add(device.getMacAddress());
+				peopleC.getPeopleTask().remove(device.getMacAddress());
 			}
-			
-			
+					
+			if(device.getOwnerDevice().equals(Constants.myDevice)== false &&
+			deviceC.getDeviceTask().contains(device.getMacAddress()))
+			{
+				peopleC.getPeopleTask().add(device.getMacAddress());
+				deviceC.getDeviceTask().remove(device.getMacAddress());
+			}
+					
+					
+					
 		}
-		
-		
-		
 	}
 	
 	

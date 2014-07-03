@@ -192,3 +192,16 @@ public class AddTaskButton implements OnClickListener {
 	}
 
 }
+
+
+
+class ThreadShowMessage extends Thread
+{
+	
+	public ThreadShowMessage() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+}
+
