@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import Task.Task;
 import Clusters.KMeansDistances;
 import Clusters.KMeansTitle;
+import ContextElements.ContextElementType;
+import ContextElements.DeviceContext;
+import ContextElements.PeopleContext;
+import DeviceData.Device;
 
 /**
  * contains general information such as what does minor,major mean
@@ -214,6 +219,49 @@ public class Core {
 		Core.setCentersTitle(clusteringLocation.getFinalCenters()); 
 	}
 	
+	
+	public static void changeTasksDevices() {
+		
+		List<Device> devices = MainActivity.getDatabase().getAllDevices();
+		
+		
+		for(Task centroid : centersTitles)
+		{
+			DeviceContext deviceC = (DeviceContext) centroid.getInternContext().
+			getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+			
+			PeopleContext peopleC = (PeopleContext) centroid.getInternContext().
+			getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+			
+			
+			for(Device device : devices)
+			{
+				if(device.getOwnerDevice().equals(Constants.myDevice) &&
+				   peopleC.getPeopleTask().contains(device.getMacAddress())) 
+				{
+					deviceC.getDeviceTask().add(device.getMacAddress());
+					peopleC.getPeopleTask().remove(device.getMacAddress());
+				}
+				
+				if(device.getOwnerDevice().equals(Constants.myDevice)== false &&
+				   deviceC.getDeviceTask().contains(device.getMacAddress()))
+				{
+					peopleC.getPeopleTask().add(device.getMacAddress());
+					deviceC.getDeviceTask().remove(device.getMacAddress());
+				}
+				
+				
+				
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	
+	
 
 	public static HashMap<String,Integer> getPrioritiesValues() {
 		return prioritiesValues;
@@ -262,6 +310,7 @@ public class Core {
 	public static void setClusteringLocation(KMeansTitle clusteringLocation) {
 		Core.clusteringLocation = clusteringLocation;
 	}
-	
+
+
 	
 }

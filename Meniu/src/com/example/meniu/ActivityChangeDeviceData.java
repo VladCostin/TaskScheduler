@@ -416,6 +416,8 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			
 		}
 		
+		Core.changeTasksDevices();
+		
 	//	MainActivity.getDatabase().updateTask(1, Tasks.KEY_Device, "");
 	//	MainActivity.getDatabase().updateTask(2, Tasks.KEY_Device, "");
 		

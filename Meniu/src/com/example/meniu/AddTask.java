@@ -742,7 +742,7 @@ public class AddTask extends   FragmentActivity
                
             	int i;
             	String peopleString="";
-
+            	
             	
             	if(itemsId.size() != 0)
             	{
@@ -1345,6 +1345,15 @@ public void afterTextChanged(Editable s) {
 			
 			changeMarkers(location.getPositionLatLng());
 			
+			PeopleContext peopleC = (PeopleContext) returnTask.getInternContext().
+			getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
+			
+			
+			
+			DeviceContext deviceC = (DeviceContext) returnTask.getInternContext().
+			getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
+			
+			
 			
 			if(booleanGetFromTaskToModify == false || DEVICES_DIALOG_ID != Constants.deviceFirstShow)
 			{
@@ -1385,7 +1394,7 @@ private void loadPeopleFromCentroid(Task centroid) {
 
 	IntegerPeopleCheckeditems.clear();
 	
-	if(people.size() != 0 )
+	if(people.size() != 0 && people.get(0).equals("")== false)
 	{
 		for( i = 0; i < people.size() -1 ; i++){
 			peopleString += MAP_people_devices_name_Mac.get( people.get(i)) + ",";
