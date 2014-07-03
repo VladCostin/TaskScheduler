@@ -33,6 +33,8 @@ public interface Constants {
 	
 	Integer deviceFirstShow = 1002;
 	
+	Integer peopleFirstShow = 1001;
+	
 	
 	Integer notFromModifyTask = -1;
 	

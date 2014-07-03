@@ -83,6 +83,16 @@ public class ParametersToModify
 		this.people = people;
 	}
 	
+
+	public void changePeople(ArrayList<String> people) {
+		
+		
+		this.people = new String[people.size()];
+		people.toArray(this.people);
+		
+	}
+	
+	
 	public boolean[] detectOldDevicesSelected(ArrayList<String> myDevicesAll, ArrayList<Integer> itemsId)
 	{
 		int i,j;
@@ -162,7 +172,7 @@ public class ParametersToModify
 			if(isOld == true)
 				itemsId.add(i);
 		}
-		people = null;
+	//	people = null;
 		
 		return oldPeople;
 		
@@ -177,5 +187,6 @@ public class ParametersToModify
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+
 }

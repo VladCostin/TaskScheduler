@@ -137,6 +137,8 @@ public class AddTaskButton implements OnClickListener {
 		 String duration = task.getDuration().getSelectedItem().toString();
 		 
 		 
+		 System.out.println("dispozitivele sunt saveTask + " + task.getIntegerDevicesCheckedItems());
+		 
 		 for(Integer position : task.getIntegerDevicesCheckedItems())
 		 {
 			 Entry<String,String> deviceData = myDevicesData.get(position);

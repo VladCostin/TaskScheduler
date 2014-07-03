@@ -337,7 +337,7 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 
 		
 		System.out.println("idDevice " + idDevice);
-	//	MainActivity.getDatabase().updateDevice(idDevice, DeviceData.KEY_OWNER, nameOwner.getText().toString());
+		MainActivity.getDatabase().updateDevice(idDevice, DeviceData.KEY_OWNER, nameOwner.getText().toString());
 		
 		
 	}
