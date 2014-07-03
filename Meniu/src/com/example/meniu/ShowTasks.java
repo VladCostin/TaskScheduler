@@ -49,6 +49,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -64,7 +65,7 @@ import android.bluetooth.BluetoothAdapter;
  */
 public class ShowTasks extends Activity
 					   implements GooglePlayServicesClient.ConnectionCallbacks,
-					   			  GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+					   			  GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, OnClickListener{
 	
 	
 
@@ -100,7 +101,18 @@ public class ShowTasks extends Activity
 	HashMap<ContextElementType,Compatibility> checkers;
 	
 	
-	HashMap<ContextElementType,Boolean> hashMapCheckBox;
+	/**
+	 * contains the boolean values for the checkers which show which filters are activated
+	 */
+	HashMap<String,Boolean> hashMapCheckBox;
+	
+	
+	/**
+	 * at showing the tasks, determine the value of the pair which is the name of the fitler
+	 * then determine the boolean value;
+	 * if it is true, take it into consideration, else, do not take it into consideration
+	 */
+	HashMap<ContextElementType,String> hashMapCheckBoxNames_contextTypes;
 	
 	/**
 	 * the number of the view to add to the relative layout
@@ -166,7 +178,10 @@ public class ShowTasks extends Activity
 	private LinkedHashMap<String,String> MAP_people_devices_name_Mac;
 	
 	
-
+	/**
+	 * contains the information regarding the current context
+	 */
+	Context currentContext;
 	
 
 	@Override
@@ -185,14 +200,37 @@ public class ShowTasks extends Activity
 		layout = (RelativeLayout) findViewById(R.id.RelativeLayoutShow);
 		
 		checkers = new HashMap<ContextElementType,Compatibility>();
-		hashMapCheckBox = new HashMap<ContextElementType, Boolean>();
+		hashMapCheckBox = new HashMap<String, Boolean>();
 		idTasks = new HashMap<Integer,Integer>();
 		deviceInfo = new HashMap<String,String>();
+		hashMapCheckBoxNames_contextTypes = new HashMap<ContextElementType, String>();
 		
 		checkers.put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationCompatibility());
 		checkers.put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalCompatibility());
 		checkers.put(ContextElementType.DEVICES_ELEMENT, new DeviceCompatibility());
 		checkers.put(ContextElementType.PEOPLE_ELEMENT, new PeopleCompatibility());
+		
+		
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxLocation), true);
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxDevices), true);
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxPeople), true);
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxSchedule), true);
+		
+		
+		hashMapCheckBoxNames_contextTypes.put(ContextElementType.LOCATION_CONTEXT_ELEMENT, 
+				getResources().getString(R.string.checkBoxLocation));
+		
+		hashMapCheckBoxNames_contextTypes.put(ContextElementType.DEVICES_ELEMENT, 
+				getResources().getString(R.string.checkBoxDevices));
+		
+		hashMapCheckBoxNames_contextTypes.put(ContextElementType.TIME_CONTEXT_ELEMENT, 
+				getResources().getString(R.string.checkBoxSchedule));
+		
+		hashMapCheckBoxNames_contextTypes.put(ContextElementType.PEOPLE_ELEMENT, 
+				getResources().getString(R.string.checkBoxPeople));
+		
+		
+		
 		
 		mLocationClient = new LocationClient(this,this,this);
 		locationRequest = new LocationRequest();
@@ -414,6 +452,8 @@ public class ShowTasks extends Activity
     	put(ContextElementType.DEVICES_ELEMENT, new DeviceContext(myDevices));
     	
 
+    	
+    	this.currentContext = currentContext; 
     	return currentContext;
     	
 		
@@ -459,6 +499,12 @@ public class ShowTasks extends Activity
 			
 			for(ContextElementType elementType: checkers.keySet())
 			{
+				String nameFilter = hashMapCheckBoxNames_contextTypes.get(elementType);
+				Boolean checkTyped = hashMapCheckBox.get(nameFilter);
+				
+				if(checkTyped == false)
+					continue;
+				
 				
 				Compatibility  checker = checkers.get(elementType);
 				
@@ -558,8 +604,9 @@ public class ShowTasks extends Activity
 		 
 		 
 		 CheckBox checkboxLocation = new CheckBox(this);
-		 checkboxLocation.setChecked(false);
 		 checkboxLocation.setTextSize(20);
+		 checkboxLocation.setOnClickListener(this);
+		 checkboxLocation.setChecked(hashMapCheckBox.get(getResources().getString(R.string.checkBoxLocation)));
 		 checkboxLocation.setText(getResources().getString(R.string.checkBoxLocation)); 
 		 checkboxLocation.setId(++ numberOfView);
 		 
@@ -568,8 +615,9 @@ public class ShowTasks extends Activity
 		 
 		 
 		 CheckBox checkboxDevices = new CheckBox(this);
-		 checkboxDevices.setChecked(false);
 		 checkboxDevices.setTextSize(20);
+		 checkboxDevices.setOnClickListener(this);
+		 checkboxDevices.setChecked(hashMapCheckBox.get(getResources().getString(R.string.checkBoxDevices)));
 		 checkboxDevices.setText(getResources().getString(R.string.checkBoxDevices)); 
 		 checkboxDevices.setId(++ numberOfView);
 		 
@@ -578,8 +626,9 @@ public class ShowTasks extends Activity
 		 
 		 
 		 CheckBox checkboxPeople = new CheckBox(this);
-		 checkboxPeople.setChecked(false);
 		 checkboxPeople.setTextSize(20);
+		 checkboxPeople.setOnClickListener(this);
+		 checkboxPeople.setChecked(hashMapCheckBox.get(getResources().getString(R.string.checkBoxPeople)));
 		 checkboxPeople.setText(getResources().getString(R.string.checkBoxPeople)); 
 		 checkboxPeople.setId(++ numberOfView);
 		 
@@ -587,8 +636,9 @@ public class ShowTasks extends Activity
 		 checkboxPeople.setLayoutParams(params_people_checkBox);
 		 
 		 CheckBox checkboxSchedule = new CheckBox(this);
-		 checkboxSchedule.setChecked(false);
 		 checkboxSchedule.setTextSize(20);
+		 checkboxSchedule.setOnClickListener(this);
+		 checkboxSchedule.setChecked(hashMapCheckBox.get(getResources().getString(R.string.checkBoxSchedule)));
 		 checkboxSchedule.setText(getResources().getString(R.string.checkBoxSchedule)); 
 		 checkboxSchedule.setId(++ numberOfView);
 		 
@@ -992,6 +1042,52 @@ public class ShowTasks extends Activity
 	public void setMAP_people_devices_name_Mac(
 			LinkedHashMap<String,String> mAP_people_devices_name_Mac) {
 		MAP_people_devices_name_Mac = mAP_people_devices_name_Mac;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		CheckBox check = (CheckBox) v;
+		String name = check.getText().toString();
+		Boolean checkValue = hashMapCheckBox.get(name);
+		
+		hashMapCheckBox.remove(name);
+		
+		
+		if(checkValue == true)
+			hashMapCheckBox.put(name, false);
+		else
+			hashMapCheckBox.put(name, true);
+		
+	/*	for(String checkBoxName : hashMapCheckBox.keySet())
+		{
+			Boolean booleanValue = hashMapCheckBox.get(checkBoxName);
+			
+			if(booleanValue == true)
+			{
+				
+				
+				
+			}
+			
+			
+			
+		}
+		
+		*/
+		
+		
+		System.out.println("Am apasat pe :" + name);
+		
+		System.out.println("Mapul este " + hashMapCheckBox.toString());
+		
+	//	checkAllTasksCompatibility(currentContext);
+		
+		 showUpdate();
+		
+		
+		
+		
 	}
 
 
