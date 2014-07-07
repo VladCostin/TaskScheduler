@@ -106,7 +106,7 @@ public class PopulationEvolution {
 	
 	public void startEvolution()
 	{
-		int decade= 0, nrDecades = 45;
+		int decade= 0, nrDecades = 30,indexInd;
 		this.population.clear();
 		this.newPopulation.clear();
 		
@@ -117,8 +117,8 @@ public class PopulationEvolution {
 		System.out.println(startTimeMinutes + " " + endTimeMinutes);
 		
 		
-		for(Task task :shiftingTasks)
-			System.out.println(task.getNameTask() + " " + task.getPriority());
+	//	for(Task task :shiftingTasks)
+	//		System.out.println(task.getNameTask() + " " + task.getPriority());
 		
 		
 	//	Individual ind = new Individual();
@@ -151,9 +151,21 @@ public class PopulationEvolution {
 			
 			
 			crossOver();
+			
+			
+	/*		System.out.println("INAINTE");
+			for(indexInd = 0; indexInd < newPopulation.size(); indexInd++)
+				System.out.print( newPopulation.get(indexInd).getOrderTasks() +" --- " + newPopulation.get(indexInd).getFitnessValue() + " , ");
+	*/		
 			mutation();
 			
 			
+	/*		System.out.println("DUPA");
+			for(indexInd = 0; indexInd < newPopulation.size(); indexInd++)
+				System.out.print( newPopulation.get(indexInd).getOrderTasks() +" --- " + newPopulation.get(indexInd).getFitnessValue() + " , ");
+			
+			System.out.println("   ######");
+	*/		
 			population.clear();
 			population.addAll(newPopulation);
 			newPopulation.clear();
@@ -180,12 +192,16 @@ public class PopulationEvolution {
 		
 		for(indexTask = 1; indexTask <= shiftingTasks.size(); indexTask++)
 		{
-			factorial *= indexTask;
+	//		factorial *= indexTask;
 			taskId.add(indexTask -1 );
 		}
 		
 		
-		sizePopulation = Math.max(20,  factorial / ConstantsPopulation.nrIndRatio);
+	//	sizePopulation = Math.max(20,  factorial / ConstantsPopulation.nrIndRatio);
+		
+	
+		sizePopulation = shiftingTasks.size() * 10;
+		
 		sizeTasks = shiftingTasks.size();
 		
 		for(indexIndivid = 0; indexIndivid < sizePopulation; indexIndivid++  )
@@ -196,14 +212,46 @@ public class PopulationEvolution {
 			for(indexTask = 0; indexTask < sizeTasks; indexTask++)
 				ind.getOrderTasks().add( tasksRemained.remove(r.nextInt(tasksRemained.size())) ); 
 			
-			System.out.println("Terminare " + endTimeMinutes);
-			System.out.println("Inceput " + startTimeMinutes);
+	//		System.out.println("Terminare " + endTimeMinutes);
+	//		System.out.println("Inceput " + startTimeMinutes);
 			
 			
 			ind.setStartTime(startTimeMinutes +
 			r.nextInt(endTimeMinutes - startTimeMinutes));
 			
 			population.add(ind);
+			
+		}
+		
+		
+		
+		for(indexIndivid = 0; indexIndivid < sizePopulation; indexIndivid++  )
+		{
+			tasksRemained.addAll(taskId);
+
+			int nr = r.nextInt(tasksRemained.size());
+
+			Individual ind = new Individual();
+			for(indexTask = 0; indexTask < nr; indexTask++)
+					ind.getOrderTasks().add( tasksRemained.remove(r.nextInt(tasksRemained.size())) ); 
+			
+			
+			
+			
+		
+			
+		//	for(indexTask = 0; indexTask < sizeTasks; indexTask++)
+		//		ind.getOrderTasks().add( tasksRemained.remove(r.nextInt(tasksRemained.size())) ); 
+			
+	//		System.out.println("Terminare " + endTimeMinutes);
+	//		System.out.println("Inceput " + startTimeMinutes);
+			
+			
+			ind.setStartTime(startTimeMinutes +
+			r.nextInt(endTimeMinutes - startTimeMinutes));
+			
+			population.add(ind);
+			tasksRemained.clear();
 			
 		}
 		
@@ -235,29 +283,32 @@ public class PopulationEvolution {
 			ind.setFitnessValue( fitness );
 		}
 		Collections.sort(population, new ComparatorFitness());
+		
+		
+		System.out.println("INAINTE");
+		for(indexInd = 0; indexInd < population.size(); indexInd++)
+			System.out.print(indexInd + "---- " + population.get(indexInd).getOrderTasks() +" --- " + population.get(indexInd).getFitnessValue() + " , ");
+		
 
-		System.out.println("%%%%%%%%%%%%%%%%%%");
-		System.out.println("%%%%%%%%%%%%%%%%%%");
+//		System.out.println("%%%%%%%%%%%%%%%%%%");
+//		System.out.println("%%%%%%%%%%%%%%%%%%");
 		
 		for(indexInd = 0; indexInd < sizeSelection; indexInd++){
 			
-			if(indexInd == 0)
+	/*		if(indexInd == 0)
 			{
 				System.out.println(population.get(indexInd).getFitnessValue() + "--- " + population.get(indexInd).getStartTime() + "---" + population.get(indexInd).getOrderTasks().size() + " " + population.get(indexInd).getDuration());
 				System.out.println(population.get(indexInd).getOrderTasks().toString() );
 				System.out.println("##################");
-			}
+			}*/
 			
 			newPopulation.add(population.get(indexInd));
 		}
 		
-	/*	for(indexInd = 0; indexInd < newPopulation.size(); indexInd++)
-		{
-			System.out.print(newPopulation.get(indexInd).getFitnessValue() + " ");
-		}
+
 		
-		System.out.println(population.get(0).getOrderTasks().toString() );
-		*/
+	//	System.out.println(population.get(0).getOrderTasks().toString() );
+		
 		
 	}
 	
@@ -520,16 +571,43 @@ public class PopulationEvolution {
 	private void mutation() {
 
 		Random r = new Random();
+		ArrayList<Integer> toRemoveTasks;
+		ArrayList<Integer> toAddTasks;
+		ArrayList<Integer> switchIndexTasks;
 		int mutationType;
 		int indexTask;
+		int indexInd;
+		float mutationThresHold;
+		int firstInd = newPopulation.size() * 2 / 10;
+		int secondInd = firstInd * 2;
 		
 		
+	/*	System.out.println("INAINTE");
+		for(indexInd = 0; indexInd < newPopulation.size(); indexInd++)
+			System.out.print(indexInd + "---- " + newPopulation.get(indexInd).getOrderTasks() +" --- " + newPopulation.get(indexInd).getFitnessValue() + " , ");*/
+		
+		indexInd = 0;
 		
 		
-		
-		for(Individual ind : population)
+		System.out.println("FirstInd este" + firstInd);
+		for(Individual ind : newPopulation)
+	//	for(Individual ind : population)
 		{
-			if(r.nextFloat() < ConstantsPopulation.mutationThreshold )
+			
+		//	if(indexInd >= 0 && indexInd < firstInd  )
+				mutationThresHold = ConstantsPopulation.mutationThresholdOne;
+			if(indexInd >= firstInd && indexInd < secondInd)
+				mutationThresHold = ConstantsPopulation.mutationThresHoldTwo;
+			
+			if(indexInd >= secondInd)
+				mutationThresHold = ConstantsPopulation.mutationThresHoldThree;
+		
+			
+		//	mutationThresHold = (float) 0.25;
+			
+			
+		//	if(r.nextFloat() < ConstantsPopulation.mutationThresholdOne )
+			if(r.nextFloat() < mutationThresHold)
 			{
 				if(ind.getOrderTasks().size() == 0)
 				{
@@ -542,18 +620,18 @@ public class PopulationEvolution {
 				
 				mutationType = r.nextInt(6);
 				
-		//		System.out.println("S-a produs o mutatie");
+			//	System.out.println("S-a produs o mutatie " + mutationType + " " + indexInd);
 				
 				switch(mutationType)
 				{
-					case 0 : 
+					case 0 :  // se adauga minute la momentul de incepere
 						
 					ind.setStartTime(ind.getStartTime() + ConstantsPopulation.minMutationMinutes 
 					+ r.nextInt(ConstantsPopulation.maxMutationMinutes - ConstantsPopulation.minMutationMinutes));
 					
 					break;
 					
-					case 1 : 
+					case 1 :  // se elimina minute de la momentul de incepere
 						
 					ind.setStartTime(ind.getStartTime() - ConstantsPopulation.minMutationMinutes 
 					+ r.nextInt(ConstantsPopulation.maxMutationMinutes - ConstantsPopulation.minMutationMinutes));
@@ -561,26 +639,56 @@ public class PopulationEvolution {
 					break; 
 					
 					
-					case 2 :
+					case 2 :  
 						
-					
-					
+			//			System.out.println(" Mutatie inainte : " + indexInd + " " + ind.getOrderTasks().toString());	
+				
+					toAddTasks = new ArrayList<Integer>();
+					int addId;
 					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+						if(! ind.getOrderTasks().contains(indexTask))
+							toAddTasks.add(indexTask);
+						
+					if(toAddTasks.size() !=0)
+					{
+						addId = toAddTasks.get(r.nextInt(toAddTasks.size()));
+					//	ind.getOrderTasks().add(object)
+						ind.getOrderTasks().add(r.nextInt(ind.getOrderTasks().size()), addId);
+					}
+					
+			//		System.out.println(" Mutatie dupa : " + indexInd + " " + ind.getOrderTasks().toString());
+					
+				/*	for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
 						if(! ind.getOrderTasks().contains(indexTask))
 						{
 							ind.getOrderTasks().add(indexTask);
 							break;
 						}
-					
+					*/
 					
 					break;
 					
 					
 					case 3 :
 						
+					toRemoveTasks = new ArrayList<Integer>();
+					int removeId;
 					
-						
+			//		System.out.println(" Mutatie inainte : " + indexInd + " " + ind.getOrderTasks().toString() );
+					
 					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+						if(ind.getOrderTasks().contains(indexTask))
+						{
+							toRemoveTasks.add(indexTask);
+						}
+						
+					removeId = toRemoveTasks.get(r.nextInt(toRemoveTasks.size()));
+					ind.getOrderTasks().remove(new Integer(removeId)); 
+					
+				//	System.out.println(toRemoveTasks.toString() + " " + removeId);
+				//	System.out.println("Mutatie dupa :  " + indexInd + " " + ind.getOrderTasks().toString());
+				
+			/*		for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
 						if(ind.getOrderTasks().contains(indexTask))
 						{
 							ind.getOrderTasks().remove(new Integer(indexTask));
@@ -589,36 +697,72 @@ public class PopulationEvolution {
 							break;
 						}
 						
+			*/
+						
 					break; 
 					
 					
 					case 4 :
-						
+			//		System.out.println(" Mutatie inainte : " + indexInd + " " + ind.getOrderTasks().toString());
 						
 					Integer aux;
+					switchIndexTasks = new ArrayList<Integer>();
 					int position1, position2;
 					position1 = r.nextInt(ind.getOrderTasks().size());
-					position2 = r.nextInt(ind.getOrderTasks().size());
+					
+					for(int i = 0; i < ind.getOrderTasks().size(); i++)
+						if(position1 != i)
+							switchIndexTasks.add(i);
+					
+					
+					
+					// cod noud, ca sa nu fie aceiasi indici
+					//position2 =   r.nextInt(ind.getOrderTasks().size());
+					
+					if(switchIndexTasks.size() == 0)
+						break;
+					
+					position2 = switchIndexTasks.get(r.nextInt(switchIndexTasks.size()));
 					
 					aux = ind.getOrderTasks().get(position1);
 					ind.getOrderTasks().set(position1, ind.getOrderTasks().get(position2));
 					ind.getOrderTasks().set(position2, aux);
 					
-			//		System.out.println("Mutatie " + ind.getOrderTasks().toString());
+				//	System.out.println(position1 + " " + position2);
+				//	System.out.println("Mutatie dupa :  " + indexInd + " " + ind.getOrderTasks().toString());
 					
 					break;
 					
 					case 5 :
+					
+					
+						
+					toAddTasks = new ArrayList<Integer>();
+					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+						if(!ind.getOrderTasks().contains(indexTask))
+							toAddTasks.add(new Integer(indexTask));
+					
+					
+					if(toAddTasks.size() > 0 ){
+						
+						System.out.println(" Mutatie inainte : " + indexInd + " " + ind.getOrderTasks().toString());
+						
+						ind.getOrderTasks().set(r.nextInt(ind.getOrderTasks().size()),
+						toAddTasks.get(r.nextInt(toAddTasks.size())));
+						
+						System.out.println(" Mutatie dupa : " + indexInd + " " + ind.getOrderTasks().toString());
+					}
+					
 						
 					
-					for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
+			/*		for(indexTask = 0; indexTask < shiftingTasks.size(); indexTask++)
 					if(!ind.getOrderTasks().contains(indexTask))
 					{
 								ind.getOrderTasks().remove(r.nextInt(ind.getOrderTasks().size()));
 								ind.getOrderTasks().add(new Integer(indexTask));
 								break;
 					}
-							
+				*/			
 					break; 
 					
 				
@@ -627,9 +771,15 @@ public class PopulationEvolution {
 		//		System.out.println("new Dim " + ind.getOrderTasks().size());
 				
 			}
+			
+			indexInd++;
 		}
 		
+		System.out.println("DUPA");
+		for(indexInd = 0; indexInd < newPopulation.size(); indexInd++)
+			System.out.print(indexInd + "------ " + newPopulation.get(indexInd).getOrderTasks() +" --- " + newPopulation.get(indexInd).getFitnessValue() + " , ");
 		
+		System.out.println("   ######");
 		
 		
 		
@@ -798,14 +948,21 @@ public class PopulationEvolution {
 		}
 		if(durationOver >= 15 && durationOver < 30  )
 		{
+			
+		//	penalty = ConstantsPopulation.penalty_two * durationOver;
+			
 			penalty =  ConstantsPopulation.penalty_one * 15;
 			penalty += ConstantsPopulation.penalty_two *  (durationOver - 15);
 		}
 		if(durationOver >= 30)
 		{
-			penalty =  ConstantsPopulation.penalty_one * 15;
+			penalty = ConstantsPopulation.penalty_three * durationOver;
+			
+		/*	penalty =  ConstantsPopulation.penalty_one * 15;
 			penalty += ConstantsPopulation.penalty_two *  (30 - 15);
 			penalty += ConstantsPopulation.penalty_three * (durationOver - 30);
+			
+		*/
 		}
 		
 		
@@ -817,7 +974,7 @@ public class PopulationEvolution {
 		
 	}
 
-	public float penaltyMorningCompute(Individual ind)
+/*	public float penaltyMorningCompute(Individual ind)
 	{
 		float penaltyMorning = 0;
 		
@@ -871,7 +1028,7 @@ public class PopulationEvolution {
 	//	System.out.println("Datele sunt " + ind.getStartTime() + " " + sumMinutes + " " + penaltyEvening);
 		
 		return penaltyEvening;
-	}
+	}*/
 
 	public ArrayList<Individual> getPopulation() {
 		return population;

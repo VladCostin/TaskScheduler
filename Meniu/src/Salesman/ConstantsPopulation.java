@@ -30,8 +30,13 @@ public interface ConstantsPopulation
 	float sample2Alpha			= (float)  0.25;
 	
 	
-	float mutationThreshold		= (float) 0.25;
+	float mutationThresholdOne		= (float) 0.05;
 	
+	
+	float mutationThresHoldTwo		= (float) 0.15;
+	
+	float mutationThresHoldThree	= (float) 0.3;
+
 	
 	int maxMutationMinutes		= 120;
 	
