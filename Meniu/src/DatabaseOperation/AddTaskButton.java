@@ -11,6 +11,8 @@ import com.example.meniu.MainActivity;
 import com.example.meniu.ParametersToModify;
 import com.example.meniu.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.util.Log;
 import android.view.View;
@@ -209,6 +211,8 @@ public class AddTaskButton implements OnClickListener {
 		
 		task.getMap().clear();    	
 		task.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(task.getPositionCurrent(), 15));
+    	task.getMap().addMarker(new MarkerOptions().position(task.getPositionCurrent()).
+    	icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)));
 		
 	}
 

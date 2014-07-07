@@ -44,6 +44,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -184,6 +186,9 @@ public class ShowTasks extends Activity
 	 */
 	Context currentContext;
 	
+	
+	SharedPreferences sharedPreferencesFilter;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -212,10 +217,7 @@ public class ShowTasks extends Activity
 		checkers.put(ContextElementType.PEOPLE_ELEMENT, new PeopleCompatibility());
 		
 		
-		hashMapCheckBox.put(getResources().getString(R.string.checkBoxLocation), true);
-		hashMapCheckBox.put(getResources().getString(R.string.checkBoxDevices), true);
-		hashMapCheckBox.put(getResources().getString(R.string.checkBoxPeople), true);
-		hashMapCheckBox.put(getResources().getString(R.string.checkBoxSchedule), true);
+
 		
 		
 		hashMapCheckBoxNames_contextTypes.put(ContextElementType.LOCATION_CONTEXT_ELEMENT, 
@@ -263,10 +265,42 @@ public class ShowTasks extends Activity
 		
 		getFixedTasksForToday();
 		loadDevices();
+		loadSharedPreferencesFilter();
+		
+
 		
 		
 	}
 	
+	/**
+	 * loads the filters saved in shared preferences
+	 */
+	private void loadSharedPreferencesFilter() {
+		
+		Boolean locationValue, devicesValue,peopleValue,scheduleValue;
+		
+		sharedPreferencesFilter =  getPreferences(MODE_PRIVATE);
+		
+		locationValue = sharedPreferencesFilter.
+		getBoolean(getResources().getString(R.string.checkBoxLocation), true);
+		
+		devicesValue = sharedPreferencesFilter.
+		getBoolean(getResources().getString(R.string.checkBoxDevices), true);
+		
+		peopleValue = sharedPreferencesFilter.
+		getBoolean(getResources().getString(R.string.checkBoxPeople), true);
+		
+		
+		scheduleValue = sharedPreferencesFilter.
+		getBoolean(getResources().getString(R.string.checkBoxSchedule), true);
+		
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxLocation), locationValue);
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxDevices), devicesValue);
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxPeople), peopleValue);
+		hashMapCheckBox.put(getResources().getString(R.string.checkBoxSchedule), scheduleValue);
+		
+	}
+
 	/**
 	 * loads the devices contained in the databse
 	 */
@@ -412,12 +446,38 @@ public class ShowTasks extends Activity
         // Disconnecting the client invalidates it.
     	super.onStop();
         mLocationClient.disconnect();
-     
         
+        
+        saveFilterSharedPreferences();
+     
+
         
     }
     
-    protected void onDestroy(){
+    /**
+     * saves the filter selected by the user into shared prefenreces
+     */
+    public void saveFilterSharedPreferences() {
+    	
+    	Editor editor = sharedPreferencesFilter.edit();
+    	editor.putBoolean(getResources().getString(R.string.checkBoxLocation),
+    	hashMapCheckBox.get(getResources().getString(R.string.checkBoxLocation)));
+    	
+    	
+    	editor.putBoolean(getResources().getString(R.string.checkBoxDevices),
+    	hashMapCheckBox.get(getResources().getString(R.string.checkBoxDevices)));
+    	
+    	editor.putBoolean(getResources().getString(R.string.checkBoxPeople),
+    	hashMapCheckBox.get(getResources().getString(R.string.checkBoxPeople)));
+    	
+    	editor.putBoolean(getResources().getString(R.string.checkBoxSchedule),
+    	hashMapCheckBox.get(getResources().getString(R.string.checkBoxSchedule)));
+    
+    	editor.commit();
+		
+	}
+
+	protected void onDestroy(){
     	
 		super.onDestroy();
 		mBluetoothAdapter.cancelDiscovery();
