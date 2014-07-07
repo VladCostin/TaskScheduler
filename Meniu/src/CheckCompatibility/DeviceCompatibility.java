@@ -29,14 +29,14 @@ public class DeviceCompatibility extends Compatibility{
 		ArrayList<String> devicesNeeded = taskContext.getDeviceTask();
 		ArrayList<String> devicesHave   = currentContext.getDeviceTask();
 		
-		System.out.println(nrRan +  " Dispozitivele de care am nevoie sunt" + devicesNeeded);
-		System.out.println(nrRan + " dispozitivele pe care le am sunt" + devicesHave);
+	//	System.out.println(nrRan +  " Dispozitivele de care am nevoie sunt" + devicesNeeded);
+	//	System.out.println(nrRan + " dispozitivele pe care le am sunt" + devicesHave);
 		
 		
 		
 		if(devicesNeeded.size() == 0){
 			
-			System.out.println(nrRan + "Nu am ales dispozitivul, deci nu este nicio pretentie aici ");
+	//		System.out.println(nrRan + "Nu am ales dispozitivul, deci nu este nicio pretentie aici ");
 			return true;
 		}
 		
@@ -44,10 +44,10 @@ public class DeviceCompatibility extends Compatibility{
 		for(String deviceNeeded : devicesNeeded)
 			if(devicesHave.contains(deviceNeeded) == false)
 			{
-				System.out.println(nrRan + "Nu este gasit dispozitivul" + deviceNeeded);
+		//		System.out.println(nrRan + "Nu este gasit dispozitivul" + deviceNeeded);
 				return false;
 			}
-		System.out.println(nrRan + "Totul este ok privind device-urile");
+//		System.out.println(nrRan + "Totul este ok privind device-urile");
 		
 		return true;
 	}

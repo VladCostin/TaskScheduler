@@ -186,10 +186,12 @@ public class Core {
 	public static int calculateDurationTravel(double lat1, double long1, double lat2, double long2)
 	{
 		int distance = calculateDistanceTravel(lat1, long1, lat2, long2);
+		float durationTravel;
 		
-		
-		double durationTravel = distance * 1.5  /60;
-		
+		if(distance > Constants.thresHoldDistance)
+			durationTravel = distance * Constants.speedByTranportation  /60;
+		else
+			durationTravel = distance * Constants.speedByWalk  /60;
 		
 		return (int) durationTravel;
 		

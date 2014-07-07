@@ -1,5 +1,8 @@
 package CheckCompatibility;
 
+import com.example.meniu.Constants;
+import com.example.meniu.Core;
+
 import Task.Task;
 import android.location.Location;
 import ContextElements.ContextElement;
@@ -18,7 +21,7 @@ public class LocationCompatibility extends Compatibility  {
 	@Override
 	public boolean check(ContextElement task, ContextElement current, Task taskdetails) {
 		
-		float results[] = new float[3];
+	/*	float results[] = new float[3];
 		
 		LocationContext currentContext = (LocationContext) current;
 		LocationContext taskContext = (LocationContext) task;
@@ -27,6 +30,23 @@ public class LocationCompatibility extends Compatibility  {
 		Location.distanceBetween(currentContext.getLatitude(), currentContext.getLongitude(),
 				                 taskContext.getLatitude(), taskContext.getLongitude(), results);
 		taskdetails.setDistance(results[0]);
+		
+	*/
+		
+		int distance;
+		LocationContext currentContext = (LocationContext) current;
+		LocationContext taskContext = (LocationContext) task;
+		
+	
+		
+		distance = Core.calculateDistanceTravel
+		(currentContext.getLatitude(), currentContext.getLongitude(), taskContext.getLatitude(), taskContext.getLongitude());
+		
+		taskdetails.setDistance(distance);
+		
+		
+		if(taskdetails.getDistance() > Constants.thresHoldDistance)
+			return false;
 		
 		
 		return true;

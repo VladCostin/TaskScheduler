@@ -403,16 +403,23 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			for(String macDevice : idDevicesToErase)
 				devices.remove(macDevice);
 			
+			System.out.println("Dispozitivele ramase sunt : " + devices);
+			
 			
 			String devicesString="";
 			for(String device : devices)
 				devicesString += "," + device;
 			
+			
+			
+			
 			if(devicesString.length() > 0)
 			{
 				devicesString = devicesString.substring(1);
-				MainActivity.getDatabase().updateTask(task.getID(), Tasks.KEY_Device , devicesString);
 			}
+				System.out.println("Sirul de macuri este in final :" + devicesString);
+				MainActivity.getDatabase().updateTask(task.getID(), Tasks.KEY_Device , devicesString);
+			
 			
 		}
 		

@@ -41,4 +41,16 @@ public interface Constants {
 	
 	Integer MessageAddTaskTimer = 2000;
 	
+	
+	Integer thresHoldDistance = 750;
+	
+	
+	
+	float speedByWalk		= (float) 1.5;
+	
+	
+	float speedByTranportation  = (float) 0.6;
+	
+	
+	
 }

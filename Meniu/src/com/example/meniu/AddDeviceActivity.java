@@ -81,7 +81,7 @@ public class AddDeviceActivity extends Activity {
 		
 		deviceInfo = new HashMap<String,String>();
 		System.out.println("1.AM INTRAT AICI " + Thread.currentThread().getId());
-	//	devices = MainActivity.getDatabase().getAllDevices();
+		devices = MainActivity.getDatabase().getAllDevices();
 
 		
 		System.out.println( "1. MOMENTAN SUNT " + Thread.activeCount());
@@ -402,13 +402,13 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	       //     System.out.println(System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
 	        //    System.out.println ("dispozitivele mele sunt " +  myActivy.getDeviceInfo().toString());
 	            
-	     //      if(checkIfExists(device.getAddress()) == false){
+	          if(checkIfExists(device.getAddress()) == false){
 	        	   myActivy.getDeviceInfo().put(device.getAddress(), device.getName());
 	           
 	           	   System.out.println("Inca nu are dispozitivul " + device.getName());
 	           
 	           	   myActivy.addInfoMethod();
-	       //    }
+	           }
 	           
 	           
 	           
@@ -424,7 +424,7 @@ class MyBroadCastRecv extends BroadcastReceiver{
 			
 		 	System.out.println("Verific daca exista in baza de date");
 		 
-	/*		for(Device d : myActivy.getDevices())
+			for(Device d : myActivy.getDevices())
 			{
 				System.out.println(d.getMacAddress() + " " + macAddress);
 				
@@ -432,7 +432,6 @@ class MyBroadCastRecv extends BroadcastReceiver{
 					return true;
 			}
 			
-			return false;*/
 		 	return false;
 		}
 	

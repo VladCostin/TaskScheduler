@@ -74,12 +74,12 @@ public class ComputationalMethods {
 	{
 		int distance = calculateDistanceTravel(lat1, long1, lat2, long2);
 		double durationTravel;
-		if(distance > 750)
+		if(distance > Constants.thresHoldDistance)
 		// face un metru in 1.5 secunde
 		// transform in minute
-			durationTravel = distance * 0.6  /60;
+			durationTravel = distance * Constants.speedByTranportation  /60;
 		else
-			durationTravel = distance * 1.5  /60;
+			durationTravel = distance * Constants.speedByWalk  /60;
 		
 		
 		return (int) durationTravel;

@@ -293,6 +293,12 @@ public class AddTask extends   FragmentActivity
 	private int idTask;
 	
 	
+	/**
+	 * the last title of the task introduced by the user
+	 */
+	private String stringLastTitle; 
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -430,6 +436,7 @@ public class AddTask extends   FragmentActivity
 		
 		
 		booleanUpdateGuiCentroidData = false;
+		stringLastTitle = "";
 		
 	}
 	
@@ -1316,6 +1323,10 @@ public void afterTextChanged(Editable s) {
 		
 		System.out.println("2.  NICI MACAR AICI NU INTRA ?");
 		
+		if(   Math.abs(s.toString().length() - stringLastTitle.length() ) > 5 )
+			 booleanHasDetectedLocation = false;
+		
+		
 		Task currentTask = new Task();
 		currentTask.setNameTask(s.toString());
 		
@@ -1385,7 +1396,7 @@ public void afterTextChanged(Editable s) {
 private void loadPeopleFromCentroid(Task centroid) {
 	
 	int i;
-	
+	List<String> keyList = new ArrayList<String>(MAP_people_devices_name_Mac.keySet());
 	PeopleContext peopleC = (PeopleContext) centroid.getInternContext().
 	getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
 	
@@ -1394,12 +1405,13 @@ private void loadPeopleFromCentroid(Task centroid) {
 	oldParamatersTask.changePeople(people);
 	
 	System.out.println("Persoanele din peopleC sunt :" + people);
+	System.out.println("MACURILE persoanelor sunt " + MAP_people_devices_name_Mac);
 
 	IntegerPeopleCheckeditems.clear();
 	
 	if(people.size() != 0 && people.get(0).equals("")== false)
 	{
-		for( i = 0; i < people.size() -1 ; i++){
+	/*	for( i = 0; i < people.size() -1 ; i++){
 			peopleString += MAP_people_devices_name_Mac.get( people.get(i)) + ",";
 			if(MAP_people_devices_name_Mac.containsKey(people.get(i)))
 				IntegerPeopleCheckeditems.add(i); 
@@ -1408,16 +1420,28 @@ private void loadPeopleFromCentroid(Task centroid) {
 		peopleString +=  MAP_people_devices_name_Mac.get(people.get(i));
 		if(MAP_people_devices_name_Mac.containsKey(people.get(i)))
 			IntegerPeopleCheckeditems.add(i); 
+			
+			*/
+		
+		for( i = 0; i < people.size() -1 ; i++){
+			peopleString += MAP_people_devices_name_Mac.get( people.get(i)) + ",";
+			
+			IntegerPeopleCheckeditems.add(keyList.indexOf( people.get(i))); 
+			
+		}
+		peopleString +=  MAP_people_devices_name_Mac.get(people.get(i));
+		IntegerPeopleCheckeditems.add(keyList.indexOf( people.get(i))); 
+		
 	}
 	else
 		peopleString = Constants.noChoose;
 	
 	textViewPeople.setText(peopleString);
-
+	System.out.println("1.IntegerPeopleChedkItems este " + IntegerPeopleCheckeditems);
 	
 	PEOPLE_DIALOG_ID += 2;
 	onCreateDialog(PEOPLE_DIALOG_ID);
-	
+	System.out.println("2.IntegerPeopleChedkItems este " + IntegerPeopleCheckeditems);
 }
 
 
@@ -1426,6 +1450,7 @@ private void loadPeopleFromCentroid(Task centroid) {
 public void loadDevicesFromCentroid(Task centroid)
 {
 	int i;
+	List<String> keyList = new ArrayList<String>(MAP_myDevices_name_Mac.keySet());
 	System.out.println("INTRA AICI????? " + DEVICES_DIALOG_ID);
 	
 	DeviceContext deviceC = (DeviceContext) centroid.getInternContext().
@@ -1436,20 +1461,30 @@ public void loadDevicesFromCentroid(Task centroid)
 	oldParamatersTask.changeDevices(devices);
 	
 	System.out.println("Dispozitivele din deviceC sunt " + devices );
+	System.out.println("Mapul myDevice este : " + MAP_myDevices_name_Mac);
 
 	IntegerDevicesCheckedItems.clear();
 	
 	if(devices.size() != 0 && devices.get(0).equals("")== false )
 	{
-		for( i = 0; i < devices.size() -1 ; i++){
+	/*	for( i = 0; i < devices.size() -1 ; i++){
 			devicesString += MAP_myDevices_name_Mac.get( devices.get(i)) + ",";
 			if(MAP_myDevices_name_Mac.containsKey(devices.get(i)))
 				IntegerDevicesCheckedItems.add(i); 
 		}
 	
+		devicesString +=  MAP_myDevices_name_Mac.get(devices.get(devices.size() - 1));
+		if(MAP_myDevices_name_Mac.containsKey(devices.get(devices.size() - 1)))
+			IntegerDevicesCheckedItems.add(devices.size() - 1); */
+		
+		for( i = 0; i < devices.size() -1 ; i++){
+			devicesString += MAP_myDevices_name_Mac.get( devices.get(i)) + ",";
+			
+			IntegerDevicesCheckedItems.add(keyList.indexOf( devices.get(i))); 
+			
+		}
 		devicesString +=  MAP_myDevices_name_Mac.get(devices.get(i));
-		if(MAP_myDevices_name_Mac.containsKey(devices.get(i)))
-			IntegerDevicesCheckedItems.add(i); 
+		IntegerDevicesCheckedItems.add(keyList.indexOf( devices.get(i))); 
 	}
 	else
 		devicesString = Constants.noChoose;

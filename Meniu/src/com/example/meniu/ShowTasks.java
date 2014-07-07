@@ -45,6 +45,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -263,7 +264,6 @@ public class ShowTasks extends Activity
 		getFixedTasksForToday();
 		loadDevices();
 		
-	//	addCheckersToInterface();
 		
 	}
 	
@@ -482,7 +482,7 @@ public class ShowTasks extends Activity
 
 		
 		System.out.println("INCEP SA AFISEZ TASKURILE!!!!!!!!!");
-		
+		addCheckersToInterface(); 
 		for(Task task : tasks)
 		{
 			
@@ -490,7 +490,7 @@ public class ShowTasks extends Activity
 			
 			System.out.println("INAINTE AVEA START TIME EGAL CU" + task.getStartTime());
 			
-			prepareTask(task); 
+			prepareTask(task, currentContext); 
 			
 			
 			System.out.println("ACUM ARE START TIME EGAL CU" + task.getStartTime());
@@ -501,18 +501,17 @@ public class ShowTasks extends Activity
 			{
 				String nameFilter = hashMapCheckBoxNames_contextTypes.get(elementType);
 				Boolean checkTyped = hashMapCheckBox.get(nameFilter);
-				
-				if(checkTyped == false)
-					continue;
-				
-				
+								
 				Compatibility  checker = checkers.get(elementType);
 				
 				if( checker.check(task.getScheduledContext().getContextElementsCollection().get(elementType), 
 					               currentContext.getContextElementsCollection().get(elementType), task) == false){
 					
+					
+					if(checkTyped == false)
+						continue;
+					
 					isTaskCompatible = false;
-					break;
 				}
 				
 			}
@@ -521,8 +520,8 @@ public class ShowTasks extends Activity
 			
 			if(isTaskCompatible == true){
 				
-				if(noCompatibleTask == true)
-					addCheckersToInterface(); 
+			//	if(noCompatibleTask == true)
+			//		addCheckersToInterface(); 
 				
 				noCompatibleTask = false;
 				addTaskToInterface(task) ;
@@ -537,11 +536,15 @@ public class ShowTasks extends Activity
 			           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 			                                           RelativeLayout.LayoutParams.MATCH_PARENT);
 			
+			
+			
 			showMessageTask.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL); 
 			showMessageTask.setText(Constants.noExecutableTaskMessage);
 			showMessageTask.setTextColor(Color.BLUE);
 			showMessageTask.setTextSize(25);
+			
 			params_title.setMargins(0, 100, 0, 0);
+			params_title.addRule(RelativeLayout.BELOW, numberOfView);
 		    showMessageTask.setLayoutParams(params_title);
 		    
 		    
@@ -554,9 +557,15 @@ public class ShowTasks extends Activity
 	
 	
 	/**
+	 *  - adds the collections from ExternalContext and from InternalContext into
+	 * one single collection
+	 * - calcualtes the duration of the task
+	 * - calculates the intervals of execution, taking into consideration
+	 * the time to arrive to the location of a fixed task
 	 * @param task : one of task from to do list
+	 * @param currentContext: calculates the distance between the task's location and the currentLocation
 	 */
-	public void prepareTask(Task task){
+	public void prepareTask(Task task, Context currentContext){
 		
 		
 		task.getScheduledContext().getContextElementsCollection().
@@ -568,6 +577,7 @@ public class ShowTasks extends Activity
 		
 		currentConditions.prepareDurationTask(task);
 		currentConditions.prepareIntervals(task);
+//		currentConditions.prepareDistance(task, currentContext);
 
 		
 	}
@@ -815,6 +825,9 @@ public class ShowTasks extends Activity
 			params_distance.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			distance.setLayoutParams(params_distance);
 			
+			
+			
+			
 			distanceValue.setText(Integer.toString(task.getDistance()));
 			distanceValue.setTextSize(20);	
 			distanceValue.setId( ++ numberOfView);
@@ -1059,22 +1072,6 @@ public class ShowTasks extends Activity
 		else
 			hashMapCheckBox.put(name, true);
 		
-	/*	for(String checkBoxName : hashMapCheckBox.keySet())
-		{
-			Boolean booleanValue = hashMapCheckBox.get(checkBoxName);
-			
-			if(booleanValue == true)
-			{
-				
-				
-				
-			}
-			
-			
-			
-		}
-		
-		*/
 		
 		
 		System.out.println("Am apasat pe :" + name);

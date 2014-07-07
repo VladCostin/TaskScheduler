@@ -3,6 +3,7 @@ package com.example.meniu;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import Task.Context;
 import Task.Task;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -211,5 +212,21 @@ public class CalculateCurrentContext {
 		
 
 	}
+
+/*	public void prepareDistance(Task task, Context currentContext) {
+		
+		int distance;
+		LocationContext currentContext = (LocationContext) currentContext;
+		LocationContext taskContext = (LocationContext) task.getInternContext().
+		getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
+		
+	
+		
+		distance = Core.calculateDistanceTravel
+		(currentContext.getLatitude(), currentContext.getLongitude(), taskContext.getLatitude(), taskContext.getLongitude());
+		
+		taskdetails.setDistance(distance);
+		
+	}*/
 	
 }

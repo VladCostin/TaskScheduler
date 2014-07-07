@@ -369,13 +369,6 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 			
 		
 		nrSeconds = 60 - (int) diffSeconds;
-			
-			
-	/*	hours.setText(Integer.toString( nrHours));
-		minutes.setText( Integer.toString(nrMinutes ));
-		seconds.setText(Integer.toString(nrSeconds));
-	*/	
-		
 		durationRemained.setText
 		(Integer.toString( nrHours) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
 	}
@@ -523,8 +516,21 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 		
 		isRunning = false;
 		layout.removeAllViews();
-		
-		
+
+		TextView showMessageTask = new TextView(this);
+			
+		RelativeLayout.LayoutParams params_title = 
+			           new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+			                                           RelativeLayout.LayoutParams.MATCH_PARENT);
+		showMessageTask.setGravity(Gravity.CENTER); 
+		showMessageTask.setText(Constants.noCurrentTaskMessage);
+		showMessageTask.setTextColor(Color.BLUE);
+		showMessageTask.setTextSize(20);
+		showMessageTask.setLayoutParams(params_title);
+		    
+		    
+		    
+		layout.addView(showMessageTask);	
 		
 	}
 	
@@ -565,7 +571,7 @@ public class ShowCurrentTask extends Activity implements OnClickListener {
 	//	hours.setText(Integer.toString(nrHours++));
 		
 		durationRemained.setText
-		(Integer.toString( nrHours) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
+		(Integer.toString( nrHours++) + " : "+ Integer.toString(nrMinutes) + " : " + Integer.toString(nrSeconds) );
 		
 		
 		DurationContext durationTask = (DurationContext)
