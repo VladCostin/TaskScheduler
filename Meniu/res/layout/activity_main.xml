@@ -1,3 +1,4 @@
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
- 		<Button
+    
+    <Button
  		    
  		   android:id="@+id/buttonActivityAddTask"
  		   android:layout_marginTop="40dp"
  		   android:layout_centerHorizontal="true"
+ 		   android:layout_above="@+id/buttonActivityViewTasks"
  		   android:paddingLeft="20dp"
  		   android:paddingRight="20dp"
  		   android:paddingTop="10dp"
@@ -29,8 +32,8 @@
 	<Button
  		    
  		   android:id="@+id/buttonActivityViewTasks"
- 		   android:layout_marginTop="20dp"
- 		   android:layout_below="@+id/buttonActivityAddTask"
+ 		   android:layout_marginTop="16dp"
+ 		   android:layout_above="@+id/buttonActivityViewCompatibleTasks"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
  		   android:paddingRight="20dp"
@@ -43,13 +46,13 @@
  		   android:textColor="#0000FF"
  		   android:background="@drawable/buttoncolors"
  	/>
-	
-	
-	<Button
+    
+    
+    <Button
  		    
  		   android:id="@+id/buttonActivityViewCompatibleTasks"
- 		   android:layout_marginTop="20dp"
- 		   android:layout_below="@+id/buttonActivityViewTasks"
+ 		   android:layout_marginTop="16dp"
+ 		   android:layout_above="@+id/buttonActivityRunningTask"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
  		   android:paddingRight="20dp"
@@ -62,12 +65,12 @@
  		   android:textColor="#0000FF"
  		   android:background="@drawable/buttoncolors"
  	/>
-	
-	<Button
+    
+    <Button
  		    
  		   android:id="@+id/buttonActivityRunningTask"
- 		   android:layout_marginTop="20dp"
- 		   android:layout_below="@+id/buttonActivityViewCompatibleTasks"
+ 		   android:layout_marginTop="16dp"
+ 		   android:layout_above="@+id/buttonActivityFixedSchedule"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
  		   android:paddingRight="20dp"
@@ -79,14 +82,13 @@
  		   android:textSize="20sp"
  		   android:textColor="#0000FF"
  		   android:background="@drawable/buttoncolors"
- 	/>
-	
-	
-	<Button
+ 	 />
+ 
+    <Button
  		    
  		   android:id="@+id/buttonActivityFixedSchedule"
- 		   android:layout_marginTop="20dp"
- 		   android:layout_below="@+id/buttonActivityRunningTask"
+ 		   android:layout_marginTop="16dp"
+ 		   android:layout_centerVertical="true"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
  		   android:paddingRight="20dp"
@@ -99,12 +101,12 @@
  		   android:textColor="#0000FF"
  		   android:background="@drawable/buttoncolors"
  	/>
-	
-	
-	<Button
+    
+    
+    <Button
  		    
  		   android:id="@+id/buttonActivitySuggestSchedule"
- 		   android:layout_marginTop="20dp"
+ 		   android:layout_marginTop="16dp"
  		   android:layout_below="@+id/buttonActivityFixedSchedule"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
@@ -118,12 +120,11 @@
  		   android:textColor="#0000FF"
  		   android:background="@drawable/buttoncolors"
  	/>
-	
-	
-	<Button
+    
+    <Button
  		    
  		   android:id="@+id/buttonActivityDetectDevices"
- 		   android:layout_marginTop="20dp"
+ 		   android:layout_marginTop="16dp"
  		   android:layout_below="@+id/buttonActivitySuggestSchedule"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
@@ -141,7 +142,7 @@
 	<Button
  		    
  		   android:id="@+id/buttonActivityChangeDeviceData"
- 		   android:layout_marginTop="20dp"
+ 		   android:layout_marginTop="16dp"
  		   android:layout_below="@+id/buttonActivityDetectDevices"
  		   android:layout_centerHorizontal="true"
  		   android:paddingLeft="20dp"
@@ -155,7 +156,6 @@
  		   android:textColor="#0000FF"
  		   android:background="@drawable/buttoncolors"
  	/>
-     
      
      
 

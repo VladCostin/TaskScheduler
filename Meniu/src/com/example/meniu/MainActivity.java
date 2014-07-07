@@ -94,12 +94,13 @@ public class MainActivity extends Activity implements OnClickListener {
 /*		addTasksDifferentNamesDifferentTimes_abonament_metrou();
 		addTasksFrizerie();
 		addTasksCumparaturi();
-		addTaskLicenta();
+		*/
+/*		addTaskLicenta();
 		addTaskCadou();
 	*/	
 		
-	//	KMeansDuration clustering = new KMeansDuration();
-	//	clustering.calculateKlusters();
+		KMeansDuration clustering = new KMeansDuration();
+		clustering.calculateKlusters();
 		Core.calculateClusters();
 		
 	//	addTasksDifferentTitlesForLocation();

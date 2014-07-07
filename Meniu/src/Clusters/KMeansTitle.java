@@ -163,6 +163,9 @@ public class KMeansTitle implements KMeans {
 		}
 		
 		
+		for(Task finalTask : finalCenters)
+			System.out.println("Numele centroidului este : " + finalTask.getNameTask());
+		
 
 	}
 
