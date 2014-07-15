@@ -159,9 +159,7 @@ public class KMeansDuration implements KMeans{
 		
 		k = (int) Math.ceil( Math.sqrt(tasks.size()  ) );
 	//	k = (int) Math.ceil( Math.sqrt(tasks.size() / 2 ) );
-		
-		System.out.println("Numarul de taskuri" + tasks.size());
-		System.out.println("K este : " + k);
+
 		
 		
 		nrClusters = k;
@@ -197,7 +195,6 @@ public class KMeansDuration implements KMeans{
 		while(true)
 		{
 			calculateNewCentroizi();
-			System.out.println("INTRA AICI");
 		
 			for(Task task : tasks)
 			{
@@ -390,21 +387,16 @@ public class KMeansDuration implements KMeans{
 	public void calculateDurationMedium() {
 
 		
-		System.out.println("AFISEZ DURATELE");
-		
 		int iCentroid, iTask, pointsSameCenter;
 		int durationAverage;
 		TreeMap<String, Integer> frequency;
 		nrClusters = finalCenters.size();
-		
-		
-		System.out.println( "nrClusters este : " +   nrClusters);
-		System.out.println("idCentroid este : " + finalIdCentroid.size() + " " + finalIdCentroid);
+
 		
 		
 		for(iCentroid = 0; iCentroid <  nrClusters ; iCentroid++)
 		{
-		//	System.out.println("AFISEZ duratele pentru un centroid " + idCentroid);
+
 			durationAverage = 0;
 			pointsSameCenter = 0;
 			frequency = new TreeMap<String,Integer>();
@@ -413,8 +405,7 @@ public class KMeansDuration implements KMeans{
 			{
 				if(finalIdCentroid.get(iTask) == iCentroid)
 				{
-					
-				//	System.out.println("NUMELE TASKULUI ESTE " + tasks.get(iTask).getNameTask());
+
 					
 					frequency.putAll(calculateFrequencyWords(iTask, frequency.keySet()));
 					
@@ -428,31 +419,18 @@ public class KMeansDuration implements KMeans{
 					
 					pointsSameCenter++;
 					
-					
-					
-					System.out.println(tasks.get(iTask).getNameTask() + " " + duration.getDuration()  + " " + location.getLatitude() + " " + location.getLongitude() + " " + tasks.get(iTask).getStartTime() );
+										
 				}
 			}
 			
 
-			durationAverage = durationAverage / pointsSameCenter;
-
-			System.out.println("MEDIA ESTE " + durationAverage);
-			
-			System.out.println("----------------------");
-			System.out.println(frequency.keySet().toString());
-			System.out.println(frequency.values().toString());
-			System.out.println("-----------------------");
-			
-
-			
+			durationAverage = durationAverage / pointsSameCenter;			
 			
 			DurationContext duration = new DurationContext(durationAverage);
 			
 			finalCenters.get(iCentroid).getInternContext().getContextElementsCollection()
 			.put(ContextElementType.DURATION_ELEMENT, duration);
-			
-			System.out.println("START TIME Mediu este " + finalCenters.get(iCentroid).getStartTime());
+
 			
 			
 		}
@@ -587,8 +565,6 @@ public class KMeansDuration implements KMeans{
 			
 			for(taskPos = 0; taskPos < tasks.size(); taskPos++)
 			{
-			//	System.out.println("Dimensiunea este " + idCentroid.size() + " " + idCentroid.toString() );
-				
 				
 				if(idCentroid.get(taskPos) == i)
 				{
@@ -637,28 +613,7 @@ public class KMeansDuration implements KMeans{
 			put(ContextElementType.LOCATION_CONTEXT_ELEMENT, location);
 			
 			centroizi.set(i, centroidNou);
-			
-			
-		/*	centroid.getInternContext().getContextElementsCollection().
-			put(ContextElementType.LOCATION_CONTEXT_ELEMENT, new LocationContext(new LatLng(latitude, longitude)));
-			
-			
-			String dataValues[] = centroizi.get(i).getStartTime().split("/");
-			centroid.setNameTask(centroizi.get(i).getNameTask()); 
-			centroid.setStartTime(dataValues[0]+"/"+dataValues[1]+"/"+dataValues[2]+"/"+hours+"/"+minutes);*/
-			
-			
-			
-			
-			
-			
-		/*System.out.println( i + "  " + nrPoints + " " + latitude + " " + longitude + " " + hours+"/"+minutes);
-			centroid =  centroizi.get(i);
-			locationinainte = (LocationContext)
-			centroid.getInternContext().getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-			
-			System.out.println(i + " " + centroid.getNameTask() + " " + centroid.getStartTime() + " " + locationinainte.getLatitude() + " " + locationinainte.getLongitude()); 
-		*/
+
 		}
 		
 		
@@ -673,7 +628,6 @@ public class KMeansDuration implements KMeans{
 		int i;
 		for(i = 0; i < tasks.size(); i++)
 		{
-		//	System.out.println(idCentroid.get(i) +  " " + idNewCentroid.get(i) );
 			if(idCentroid.get(i) != idNewCentroid.get(i) )
 			{
 				idCentroid.clear();
@@ -810,34 +764,10 @@ public class KMeansDuration implements KMeans{
 		
 	}
 
-/*	@Override
-	public int calculateDistance(Task t1, Task t2) {
-		
-
-		
-	//	System.out.println("START TIME t1 este " + t1.getStartTime());
-	//	System.out.println("START TIME t2 este " + t2.getStartTime());
-		
-		
-		int stringDistance =   KMeansDistances.calculateDistanceTitles(t1.getNameTask(), t2.getNameTask());
-		int timeDistance =    KMeansDistances.calculateDistanceStartTime(t1.getStartTime(), t2.getStartTime());
-		int locationDistance = KMeansDistances.calculateDistanceLocation(t1, t2); 
-	//    System.out.println("DISTANTA INTRE NUME " + t1.getNameTask() + " ----  " + t2.getNameTask() + " : " +  stringDistance);
-	//	System.out.println("distanta temporala intre " + t1.getStartTime() + " ----  " + t2.getStartTime() + " : " +  timeDistance * sameNumitorStartTime );
-	//	System.out.println("distanta intre locatii intre " + t1.getNameTask() + " ----  " + t2.getNameTask() + " : " +  locationDistance * sameNumitorLocation);
-		
-		return timeDistance * sameNumitorStartTime + 
-		stringDistance * sameNumitorTitle + locationDistance *sameNumitorLocation  ;
-	}*/
 	
 	
 	@Override
 	public int calculateDistance(Task t1, Task t2) {
-		
-
-		
-	//	System.out.println("START TIME t1 este " + t1.getStartTime());
-	//	System.out.println("START TIME t2 este " + t2.getStartTime());
 		
 		
 		int stringDistance =   KMeansDistances.calculateDistanceTitles(t1.getNameTask(), t2.getNameTask());
@@ -849,9 +779,6 @@ public class KMeansDuration implements KMeans{
 			    stringDistance * stringDistance * sameNumitorTitle * sameNumitorTitle +
 			    locationDistance * locationDistance * sameNumitorLocation * sameNumitorLocation);
 
-		
-	//	return timeDistance * sameNumitorStartTime + 
-	//	stringDistance * sameNumitorTitle + locationDistance *sameNumitorLocation  ;
 	}
 	
 	
@@ -999,9 +926,6 @@ public class KMeansDuration implements KMeans{
 			
 		Task chosenTask =  Core.getCentersDuration().get(0);
 		
-		if(chosenTask == null || currentTask == null)
-			System.out.println("UNUL DIN TASKURI ESTE NULL");
-		
 		float distanceMaxim = calculateDistance(currentTask, Core.getCentersDuration().get(0));
 		float distance;
 		
@@ -1010,12 +934,8 @@ public class KMeansDuration implements KMeans{
 		
 		for(Task center : Core.getCentersDuration())
 		{
-		//	System.out.println(" Un centroid are numele" + center.getNameTask());
 			
 			DurationContext duration = (DurationContext) center.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
-			
-		//	if(duration == null)
-		//		System.out.println("Durata este null" + center.getNameTask());
 			
 			distance = calculateDistance(center, currentTask);
 			

@@ -254,7 +254,7 @@ public class KMeansTitle implements KMeans {
 		
 		for(Task center : finalCenters)
 		{
-		//	System.out.println(" Un centroid are numele" + center.getNameTask());
+
 			distance = calculateDistance(center, currentTask);
 			
 			if( distance < distanceMaxim  )
@@ -320,31 +320,6 @@ public class KMeansTitle implements KMeans {
 		idCentroiziChosen.add(newCentroidIndex);
 
 		centroizi.add(tasks.get(idCentroiziChosen.get( idCentroiziChosen.size() - 1 )));
-		
-		
-	/*	System.out.println(idCentroiziChosen.toString());
-		for(iCentroid = 0; iCentroid< idCentroiziChosen.size(); iCentroid++)
-		{
-			
-			
-			Task t = new Task();
-			t.setNameTask(tasks.get(idCentroiziChosen.get(iCentroid)).getNameTask());
-			t.setStartTime(tasks.get(idCentroiziChosen.get(iCentroid)).getStartTime());
-			
-			
-			LocationContext location = (LocationContext)
-			tasks.get(idCentroiziChosen.get(iCentroid)).getInternContext().
-			getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-			
-			
-			t.getInternContext().getContextElementsCollection().
-			put(ContextElementType.LOCATION_CONTEXT_ELEMENT, location);
-			
-			
-			centroizi.add(t);
-			
-			
-		}*/
 
 	}
 

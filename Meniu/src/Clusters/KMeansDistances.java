@@ -175,10 +175,6 @@ public class KMeansDistances {
 		minutes2 = Integer.parseInt(startTimeMinutesAndAhours2[4]);
 		hours2   = Integer.parseInt(startTimeMinutesAndAhours2[3]);
 		
-		
-		
-		
-//		System.out.println(hours1 + " " + minutes1 + " "  + hours2 + " " + minutes2);
 		return Math.abs((hours1 * 60 +  minutes1) - (hours2 * 60 +  minutes2) );
 	}
 	
@@ -210,9 +206,7 @@ public class KMeansDistances {
 		 if(dist < 0) {
 		        dist = dist + Math.PI;
 		 }
-		 
-		 
-	//	 System.out.println("Distanta este " +  Math.round(dist * 6378100));
+
 		 
 		    return (int)  Math.round(dist * 6378100);
 		
