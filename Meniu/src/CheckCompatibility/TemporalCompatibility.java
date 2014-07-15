@@ -39,29 +39,19 @@ public class TemporalCompatibility extends Compatibility{
 		
 		
 		taskLocation = location.getPositionLatLng();
-	//	System.out.println(" A INTRAT AICI, in temporal context");
 		
 		
 		minutes_EndTask = taskTimeParameters.getEndHour() * 60 + taskTimeParameters.getEndMinute();
 		minutes_StartTask = taskTimeParameters.getStartHour() * 60 + taskTimeParameters.getStartMinute();
 		
 		
-		System.out.println("####################################################");
-		System.out.println("numele este " + taskDetails.getNameTask());
-		System.out.println("##################################################");
-		
-		System.out.println("incepe la : " + minutes_StartTask);
-		System.out.println("se termina la : " + minutes_EndTask);
-		
 		for(LocationInterval interval : currentParameters.getIntervals()  )
 		{
 			minutes_StartCurrent = interval.getStartHour() * 60 + interval.getStartMinute();
 			minutes_EndCurrent   = interval.getEndHour() * 60 + interval.getEndMinute();
 			
-			if(minutes_EndCurrent < minutes_StartTask){
-				System.out.println(" A INTRAT AICI, in comparaita asta");
+			if(minutes_EndCurrent < minutes_StartTask)
 				continue;
-			}
 			
 			minutesTravel = Core.calculateDurationTravel(location.getLatitude(),
 			location.getLongitude(), interval.getPosition().latitude, interval.getPosition().longitude);
@@ -69,14 +59,8 @@ public class TemporalCompatibility extends Compatibility{
 			
 			minutes_EndTask += minutesTravel;
 			
-			System.out.println("MINUTELE DE TRAVEL sunt " + minutesTravel + "  " + interval.getStartHour() + " " + interval.getStartMinute() + " " + interval.getEndHour() + " " + interval.getEndMinute());
-			System.out.println("SE TERMINA LA : " + minutes_EndTask);
-			System.out.println("INCEPE LA : " + minutes_StartCurrent);
-			
-			if(minutes_StartCurrent < minutes_EndTask){
-				System.out.println(" Taskul se termina dupa ce incepe celalalt");
+			if(minutes_StartCurrent < minutes_EndTask)
 				return false;
-			}
 			
 		}
 		
