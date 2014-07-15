@@ -139,9 +139,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public void addTask(String name, String priority, String location, String date,
     				    String devices, String duration, String beginDurationEstimated ) { 
-    	
-    	
-    	System.out.println( " LOCATION selected:  " +  location);
+
  
     	ContentValues values = new ContentValues();
     	values.put(Tasks.KEY_Title, name);  
@@ -275,19 +273,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	 
     	 SQLiteDatabase db = this.getWritableDatabase();
          Cursor cursor = db.rawQuery(selectQuery, null);
-    
-    //     System.out.println("SELECTEZ NUMAI UNELE TASKURI");
          
            // looping through all rows and adding to list
          if (cursor.moveToFirst()) {
              do {
-            	 
-            	 //	System.out.println( "Cum este taskul  " + cursor.getString(3));
-            	 
                		if( states.contains( TaskState.valueOf(cursor.getString(3)) ))
-               		{
                			contactList.add( takeTaskFromDataBase( cursor) );
-               		}
+               		
              } while (cursor.moveToNext());
          }
 
@@ -305,17 +297,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     	
     	Task  oneTask = new Task();
     	ArrayList<String> peopleList = new ArrayList<String>();
-    	ArrayList<String> deviceList;
-    	
-  //  	System.out.println(cursor.getColumnCount());
-    	int i,n = cursor.getColumnCount();
-    	
-  //  	for(i=0; i < n; i++)
-   // 		System.out.print(cursor.getString(i) + " " + i);
-    	
-  //  	System.out.println("\n\n");
-   // 	System.out.println("2. Data de executie :" + cursor.getString(9));
-    	
+    	ArrayList<String> deviceList;    	
     
     	oneTask.setID(Integer.parseInt(cursor.getString(0))); 
     	oneTask.setNameTask(cursor.getString(1));
@@ -339,8 +321,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         put(ContextElementType.TIME_CONTEXT_ELEMENT, new TemporalContext());
         
         
-        
-        // ???????????????????????????????????///
         if(cursor.getString(6).equals(""))
         	deviceList = new ArrayList<String>();
         else
@@ -359,25 +339,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         oneTask.getInternContext().getContextElementsCollection().
         put(ContextElementType.DURATION_ELEMENT, new DurationContext(cursor.getString(7)));
        
-       
-   //     System.out.println( "Oamenii necesari sunt " + peopleList.toString());
-    //    System.out.println("Dispozitivele necesare sunt" + deviceList.toString());
-        
-        
-   /*     System.out.println("Pozitia 0 " + cursor.getString(0));
-        System.out.println("Pozitia 1 " + cursor.getString(1));
-
-        
-        System.out.println("Pozitia 2 " + cursor.getString(2));
-        System.out.println("Pozitia 3 " + cursor.getString(3));
-        
-        System.out.println("Pozitia 4 " + cursor.getString(4));
-        System.out.println("Pozitia 5 " + cursor.getString(5));
-        
-        
-        System.out.println("Pozitia 6 " + cursor.getString(6));
-        System.out.println("Pozitia 7 " + cursor.getString(7));
-     */   
         
         return oneTask;
     	   	
@@ -405,9 +366,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     		}
     	}
     	
-    //	System.out.println("Devices Mac este " +devicesMac);
-    //	System.out.println("Persoanele selectate " + people);
-    	
     	return people;
     	
     }
@@ -419,12 +377,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deleteTask(Integer id) { 
     	
     	SQLiteDatabase db = this.getWritableDatabase();
-    	
-    	//db.delete(TABLE_TASKS, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
-    	
     	db.delete(TABLE_TASKS, Tasks.KEY_ID + " = ?",new String[] { Integer.toString(id) });
-    	
-    	
     	db.close();
     
     }
@@ -527,15 +480,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		for(i= 0; i < attributes.size(); i++)
 			newValues.put(attributes.get(i), values.get(i));
-		
-		 System.out.println("UPDATEZ " + newValues.toString());
 		 
 		    // updating row
 		 nrUpdatat = db.update(TABLE_TASKS, newValues, Tasks.KEY_ID + " = ?",
 		 new String[] { Integer.toString(idTask) });
 		 
-		 
-		 System.out.println("AM UPDATAT " + nrUpdatat);
 		
 		 db.close();
 	}
@@ -597,7 +546,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		task.setIdTask(Integer.parseInt( cursor.getString(0)));
 		task.setDayWeek(cursor.getString(1)); 
 		task.setLocation("44.4384,26.049");
-	//	task.setLocation(cursor.getString(2));
 		task.setStartHour(Integer.parseInt(cursor.getString(3)));
 		task.setStartMinute(Integer.parseInt(cursor.getString(4)));
 		
@@ -640,12 +588,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * @param idTask : the task's id to be deleted
 	 */
 	public void deleteFixedTask(Integer idTask) {
+		
 		SQLiteDatabase db = this.getWritableDatabase();
-    	
-    	//db.delete(TABLE_TASKS, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
-    	
     	db.delete(TABLE_FIXED_TASKS, fixedTasks.KEY_ID + " = ?",new String[] { Integer.toString(idTask) });
-    	
     	db.close();
 		
 	}
@@ -679,12 +624,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void deleteDevice(Integer idDevice)
 	{
     	SQLiteDatabase db = this.getWritableDatabase();
-    	
-    	//db.delete(TABLE_TASKS, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
-    	
     	db.delete(TABLE_DEVICES, DeviceData.KEY_ID + " = ?",new String[] { Integer.toString(idDevice) });
-    	
-    	
     	db.close();
 	}
 	

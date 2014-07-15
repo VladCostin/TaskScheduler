@@ -74,11 +74,7 @@ public class AddTaskButton implements OnClickListener {
 		 
 		 ArrayList<Entry<String,String>> peopleData = new ArrayList<Entry<String,String>>
 		 (task.getPeople_devices_name_Mac().entrySet());
-		 
-		 System.out.println("PeopleCheckedItems : " + task.getIntegerPeopleCheckeditems());
-		 System.out.println("DevicesCheckedItems :" + task.getIntegerDevicesCheckedItems());
-		 
-		 
+	 
 		 for(Integer position : task.getIntegerDevicesCheckedItems())
 		 {
 			 Entry<String,String> deviceData = myDevicesData.get(position);
@@ -92,10 +88,6 @@ public class AddTaskButton implements OnClickListener {
 		 }
 		 if(device.length()> 0 )
 			 device = device.substring(1);
-		 
-		 System.out.println("DevicesMac :" + device);
-		
-		
 		
 		ArrayList<String> attributes = new ArrayList<String>();
 		ArrayList<String> values	 = new ArrayList<String>();
@@ -127,9 +119,6 @@ public class AddTaskButton implements OnClickListener {
 	
 	public void saveTask()
 	{
-		
-		// Set<Entry<String,String>> myDevicesData = task.getMy_devices_name_Mac().entrySet(); 
-		// Set<Entry<String,String>> peopleData	 = task.getPeople_devices_name_Mac().entrySet();
 		 
 		 ArrayList<Entry<String,String>> myDevicesData = new ArrayList<Entry<String,String>>
 		 (task.getMy_devices_name_Mac().entrySet());
@@ -148,9 +137,7 @@ public class AddTaskButton implements OnClickListener {
 		 String name = task.getTitleTask().getText().toString();
 		 String device="";
 		 String duration = task.getDuration().getSelectedItem().toString();
-		 
-		 
-		 System.out.println("dispozitivele sunt saveTask + " + task.getIntegerDevicesCheckedItems());
+
 		 
 		 for(Integer position : task.getIntegerDevicesCheckedItems())
 		 {
@@ -165,11 +152,7 @@ public class AddTaskButton implements OnClickListener {
 		 }
 		 if(device.length()> 0 )
 			 device = device.substring(1);
-		 
-		 System.out.println("INTRODUC DISPOZITIVELE " + device);
-		 
 
-		 Log.w("information",date + " " + location + " " + priority + " " + name +  " " + device);
 		
 		 MainActivity.getDatabase().addTask
 		 (name,priority,location,date, device, 

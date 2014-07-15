@@ -60,9 +60,6 @@ public class ExecuteTaskButton implements OnClickListener {
 		
 		duration = (TextView)  executableTasksActivity.getLayout().getChildAt(v.getId() -2 );
 		time = duration.getText().toString().split(":");	  
-		
-		System.out.println("ORA -" +  time[0] + "-  -" + " MINUTE" +  time[1] + "-");
-		
 		timeMinutes =  Integer.toString( Integer.parseInt( time[0]) * 60 + Integer.parseInt(time[1]) );
 		
 		attributes.add(Tasks.KEY_Status);
@@ -73,22 +70,8 @@ public class ExecuteTaskButton implements OnClickListener {
 		values.add( TaskState.CURRENT_TASK.toString() );
 		values.add( Core.currentTimeParseToString()); 
 		values.add(timeMinutes);
-		
-		
-		System.out.println("ora de executie este  " +   Core.currentTimeParseToString());
-		
-		System.out.println("1.DATA de executie " + values.get(1));
-		
-		
-		idTask = executableTasksActivity.getIdTasks().get(v.getId());	
-		
-		
-		System.out.println("ID_UL ESTE" + v.getId());
-		
 
-		System.out.println( "NOILE VALORI " + attributes +  "  " + values);
-		
-		
+		idTask = executableTasksActivity.getIdTasks().get(v.getId());	
 		MainActivity.getDatabase().updateTask(idTask,attributes, values);
 		
 		executableTasksActivity.showUpdate();

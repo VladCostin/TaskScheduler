@@ -53,10 +53,7 @@ public class AlterateTask implements OnClickListener  {
 	public void onClick(View arg0) {
 		
 		Button buton = (Button) arg0;
-		
-		System.out.println(buton.getText().toString());
-		
-		
+
 		if(buton.getText().toString().equals(show.getResources().getString(R.string.ERASE)))
 			deleteTask(arg0);
 		if(buton.getText().toString().equals(show.getResources().getString(R.string.Modify)))
@@ -72,8 +69,7 @@ public class AlterateTask implements OnClickListener  {
 	 * @param arg0 : the modify button associated to the task specified to be deleted
 	 */
 	public void modifyTask(View arg0) {
-		
-		System.out.println("Trebuie sa modifice un task");
+
 		Integer idTask = show.getIdTasks().get(arg0.getId());
 		
 		List<Task> tasks = show.getTasks();
@@ -138,9 +134,7 @@ public class AlterateTask implements OnClickListener  {
 		intentModify.putExtra(LOCATION_MESSAGE, locationArray);
 		intentModify.putExtra(PRIORITY_MESSAGE, taskToModify.getPriority());
 		intentModify.putExtra(DURATION_MESSAGE, Integer.toString( duration.getDuration()));
-		
-		
-		System.out.println("DEADLINE_UL ESTE " +  deadline.getDeadline());
+
 		
 		 show.startActivity(intentModify);
 		
