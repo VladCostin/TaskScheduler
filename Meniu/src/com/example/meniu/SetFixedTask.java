@@ -139,8 +139,6 @@ public class SetFixedTask extends Activity implements OnClickListener {
 		tasksFromDataBase = MainActivity.getDatabase().getFixedTasks(currentDayShown.toString());
 		
 		
-		System.out.println("ARE DIMENSIUNEA " + tasksFromDataBase.size());
-		
 		for(FixedTaskInformation task : tasksFromDataBase)
 			addNewTaskEnt(task.getStartHour(), task.getStartMinute(),
 			task.getEndHour(), task.getEndMinute(), task.getIdTask());
@@ -212,9 +210,6 @@ public class SetFixedTask extends Activity implements OnClickListener {
 			addNewTaskEnt();
 		}
 		
-		
-		System.out.println(buton.getText().toString());
-		
 		if(buton.getText().toString().equals("ERASE TASK"))
 		{
 			
@@ -222,10 +217,6 @@ public class SetFixedTask extends Activity implements OnClickListener {
 			int position = v.getId()  - this.idAddButton;
 			int nextPosition = position + 3 + 1 + 3;
 			numberOfView = v.getId() - 1;
-		
-			
-			System.out.println("HAshMap-ul asta este " +  tasksId.toString());
-			System.out.println(v.getId() + " " + tasksId.get(v.getId()));
 			
 			MainActivity.getDatabase().deleteFixedTask(tasksId.get(v.getId() ));
 			tasksId.remove(v.getId() );
@@ -249,10 +240,11 @@ public class SetFixedTask extends Activity implements OnClickListener {
 				
 				
 			}
-			System.out.println(layout.getChildCount() + " " + (position + 3));
+
+			
 			if(position + 3  < layout.getChildCount())
 			{
-			//	System.out.println( layout.getChildCount() - 3 - position );
+
 				
 				layout.removeViews(position + 3, layout.getChildCount() - 3 - position);
 				
@@ -278,8 +270,7 @@ public class SetFixedTask extends Activity implements OnClickListener {
 	 * inserts the tasks into the database;
 	 */
 	public void addTasksToDataBase() {
-		
-		System.out.println("A INTRAT AICI, A ADAUGAT DATE IN BD");
+
 		
 		for(Integer taskId : tasksId.keySet())
 		{
@@ -338,9 +329,6 @@ public class SetFixedTask extends Activity implements OnClickListener {
 	 */
 	public void addNewTaskEnt() {
 		
-		
-		System.out.println("CUCU INTRA AICI IAR");
-		
 		TimePicker startTime, endTime;
 		Button eraseTask;
 		
@@ -369,7 +357,6 @@ public class SetFixedTask extends Activity implements OnClickListener {
 		eraseTask.setLayoutParams(params_removeTask);
 		eraseTask.setOnClickListener(this); 
 		
-		System.out.println("NUMBEROFVIEW ESTE " + numberOfView);
 		tasksId.put(numberOfView, -1);
 		
 		
@@ -421,9 +408,7 @@ public class SetFixedTask extends Activity implements OnClickListener {
 	
 	
 	public void addNewTaskEnt(int startHour, int startMinute, int endHour, int endMinute, int idTask)
-	{
-		System.out.println("ADAUGA IN INTERFATA UN NOU TASK");
-		
+	{		
 		TimePicker startTime, endTime;
 		Button eraseTask;
 		

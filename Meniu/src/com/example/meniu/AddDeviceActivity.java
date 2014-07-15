@@ -80,12 +80,7 @@ public class AddDeviceActivity extends Activity {
 		setContentView(R.layout.activity_add_device);
 		
 		deviceInfo = new HashMap<String,String>();
-		System.out.println("1.AM INTRAT AICI " + Thread.currentThread().getId());
 		devices = MainActivity.getDatabase().getAllDevices();
-
-		
-		System.out.println( "1. MOMENTAN SUNT " + Thread.activeCount());
-		
 		addDevice  = new AddDeviceButton(this);
 
 		
@@ -102,11 +97,6 @@ public class AddDeviceActivity extends Activity {
 		
 		
 		layout = (RelativeLayout) findViewById(R.id.layoutAfisare);
-		System.out.println("AFISEZ DISPOZITIVELE PAIRED");
-		System.out.println("AM AFISAT DISPOZTIVELE PAIRED");
-		System.out.println("APELEZ BROADCAST RECV");
-		
-		
 		mReceiver = new MyBroadCastRecv(this); 
 		
 		
@@ -397,16 +387,9 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
-	           // mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-
-	       //     System.out.println(System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
-	        //    System.out.println ("dispozitivele mele sunt " +  myActivy.getDeviceInfo().toString());
 	            
 	          if(checkIfExists(device.getAddress()) == false){
-	        	   myActivy.getDeviceInfo().put(device.getAddress(), device.getName());
-	           
-	           	   System.out.println("Inca nu are dispozitivul " + device.getName());
-	           
+	        	   myActivy.getDeviceInfo().put(device.getAddress(), device.getName());	           
 	           	   myActivy.addInfoMethod();
 	           }
 	           
@@ -421,16 +404,10 @@ class MyBroadCastRecv extends BroadcastReceiver{
 	 * @return : if the device is in database
 	 */
 	public boolean checkIfExists(String macAddress) {
-			
-		 	System.out.println("Verific daca exista in baza de date");
 		 
 			for(Device d : myActivy.getDevices())
-			{
-				System.out.println(d.getMacAddress() + " " + macAddress);
-				
 				if(d.getMacAddress().compareTo(macAddress) == 0)
 					return true;
-			}
 			
 		 	return false;
 		}

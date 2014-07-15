@@ -199,7 +199,6 @@ public class ShowTasks extends Activity
 		// daca las asta la urma in metoda onCreate, o sa dea eroare la broadcast receiver
 		// pentru ca probabil nu a avut timp sa faca ceva
 		durationAlg = new KMeansDuration();
-	//	durationAlg.calculateKlusters();
 		
 		currentConditions = new CalculateCurrentContext(this);
 
@@ -334,8 +333,7 @@ public class ShowTasks extends Activity
 		String dayString = Core.getDays().get(day).toString();
 		
 		fixedTasks = MainActivity.getDatabase().getFixedTasks(dayString);
-		
-		System.out.println("ACUM TREBUIE SA EXECUT" + fixedTasks.size());
+
 		
 	}
 
@@ -534,27 +532,14 @@ public class ShowTasks extends Activity
 		boolean noCompatibleTask = true;
 		boolean isTaskCompatible = true;
 		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(statesToShow);
-	//	System.out.println("AFISEAZA TASKURILE AICI");
-	//	System.out.println( "Dimensiune taskuri " + tasks.size());
-		
-		
-	//	Collections.sort(tasks, new PriorityComparator());
 
-		
-		System.out.println("INCEP SA AFISEZ TASKURILE!!!!!!!!!");
+
 		addCheckersToInterface(); 
 		for(Task task : tasks)
 		{
 			
-			isTaskCompatible = true;
-			
-			System.out.println("INAINTE AVEA START TIME EGAL CU" + task.getStartTime());
-			
+			isTaskCompatible = true;		
 			prepareTask(task, currentContext); 
-			
-			
-			System.out.println("ACUM ARE START TIME EGAL CU" + task.getStartTime());
-			
 
 			
 			for(ContextElementType elementType: checkers.keySet())
@@ -575,14 +560,9 @@ public class ShowTasks extends Activity
 				}
 				
 			}
-			
-			System.out.println( "Am verificat compatibilitatea pentru " + task.getNameTask() + " " + isTaskCompatible);
-			
+						
 			if(isTaskCompatible == true){
-				
-			//	if(noCompatibleTask == true)
-			//		addCheckersToInterface(); 
-				
+
 				noCompatibleTask = false;
 				addTaskToInterface(task) ;
 			}
@@ -637,7 +617,6 @@ public class ShowTasks extends Activity
 		
 		currentConditions.prepareDurationTask(task);
 		currentConditions.prepareIntervals(task);
-//		currentConditions.prepareDistance(task, currentContext);
 
 		
 	}
@@ -975,11 +954,7 @@ public class ShowTasks extends Activity
 			params_duration_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			params_duration_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			durationValue.setLayoutParams(params_duration_value);
-			
-			
-		//	System.out.println("DURATA DETERMINATA ESTE " + durationValue.getText().toString());
-			
-			
+	
 			buttonExecuteTask.setText(Constants.executeTask);
 			buttonExecuteTask.setOnClickListener(new ExecuteTaskButton(this));
 			buttonExecuteTask.setTextSize(20);	
@@ -1133,13 +1108,6 @@ public class ShowTasks extends Activity
 			hashMapCheckBox.put(name, true);
 		
 		
-		
-		System.out.println("Am apasat pe :" + name);
-		
-		System.out.println("Mapul este " + hashMapCheckBox.toString());
-		
-	//	checkAllTasksCompatibility(currentContext);
-		
 		 showUpdate();
 		
 		
@@ -1174,8 +1142,8 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 
 	@Override
 	public void onReceive(android.content.Context context, Intent intent) {
+		
 		 String action = intent.getAction();
-		 System.out.println("CUCU");
 		 
 	        // When discovery finds a device
 	     if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -1183,15 +1151,11 @@ class MyBroadCastRecvShow extends BroadcastReceiver{
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
-	           // mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
 
-	      //      System.out.println("Sunt in noul broadcaster"  +" " +System.currentTimeMillis() + " " + device.getName() + "\n" + device.getAddress());
 	            
 	        if(myActivy.getDeviceInfo().containsKey(device.getAddress()) == false)
 	        {
-	           System.out.println("A RECEPTAT un NOU DEVICE " + myActivy.getDeviceInfo().toString());
 	           myActivy.getDeviceInfo().put(device.getAddress(), device.getName());	
-	       //    myActivy.mLocationClient.requestLocationUpdates(myActivy.locationRequest, myActivy);
 	           myActivy.showUpdate();
 	           
 	        }

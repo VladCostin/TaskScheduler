@@ -334,8 +334,6 @@ public class AddTask extends   FragmentActivity
 			}
 		});
 		
-	//	addPeopleNeeded.setOnClickListener(this);
-		
 		addDeadline = (Button) findViewById(R.id.setDeadline);
 		addDeadline.setOnClickListener(new OnClickListener() {
 			
@@ -528,15 +526,9 @@ public class AddTask extends   FragmentActivity
 		
 		this.duration.setSelection(i); 
 		
-	//	System.out.println("TITLUL ESTE " + title);
-		
 
 		autoTitle.setText(title); 
 		textViewDate.setText(deadline);
-		
-		
-		System.out.println("dispozitivele mele + nume sunt " +  MAP_myDevices_name_Mac);
-		System.out.println("dispozigele din modify task sunt "  + devices.length);
 		
 		
 		if(devices.length != 0 )
@@ -569,17 +561,10 @@ public class AddTask extends   FragmentActivity
 		}
 		else
 			peopleString = Constants.noChoose;
-		System.out.println("Persoanele din lista " + IntegerPeopleCheckeditems.toString());
-		System.out.println("Dispozitivele din lista " + IntegerDevicesCheckedItems.toString());
 		
 		
 		textViewDevices.setText(devicesString);
 		textViewPeople.setText(peopleString);
-		
-		
-		System.out.println("Dispozitivele extrase sunt " + devicesString);
-
-		System.out.println("DEADLINE" + deadline);
 		
 		
 		location = Double.toString( locationDouble[0]) + " " + Double.toString(locationDouble[1]);
@@ -702,23 +687,14 @@ public class AddTask extends   FragmentActivity
 		
 		
 		
-		if(booleanGetFromTaskToModify == true){
+		if(booleanGetFromTaskToModify == true)
 			checkedItems = oldParamatersTask.detectOldPeopleSelected( keyDevicesMac, itemsId);
-			System.out.println("ItemsId la people este " + itemsId);
-		}
 		else
 			if(booleanUpdateGuiCentroidData == true){
 				checkedItems = oldParamatersTask.detectOldPeopleSelected(keyDevicesMac, itemsId);
-				
-				System.out.println("----------");
-				for(int i = 0; i < checkedItems.length; i++)
-					System.out.print(checkedItems[i]+ " , ");
-				
-				System.out.println("----------");
 			}
 			else
 				checkedItems = null;
-		//	checkedItems = null;
 
 
 		builder.setMultiChoiceItems(items, checkedItems,
@@ -727,8 +703,6 @@ public class AddTask extends   FragmentActivity
 					@Override
 					public void onClick(DialogInterface arg0, int indexSelected,
 							boolean isChecked) {
-						
-						System.out.println("DIALOG AM APASAT PE "  +  indexSelected + " " +  isChecked);
 						
 						if(isChecked == true)
 							itemsId.add(indexSelected);
@@ -780,7 +754,6 @@ public class AddTask extends   FragmentActivity
 	
 	public Dialog devicesDialog()
 	{
-		System.out.println("NU AR TREBUI SA INTRE IAR AICI?");
 		AlertDialog.Builder builder =  new AlertDialog.Builder(this);
 		
 		builder.setTitle("Choose which devices are needed for executing the task");
@@ -788,7 +761,6 @@ public class AddTask extends   FragmentActivity
 		ArrayList<String> keyDevicesMac = new ArrayList<String>(MAP_myDevices_name_Mac.keySet());
 		
 		final ArrayList<Integer> itemsId = new ArrayList<Integer>();
-//		final ArrayList<Integer> itemsId = IntegerDevicesCheckedItems;
 		final CharSequence[] items =  devicesMy.toArray( new CharSequence[devicesMy.size()]);
 		boolean checkedItems[];
 		
@@ -800,20 +772,9 @@ public class AddTask extends   FragmentActivity
 		else
 			if(booleanUpdateGuiCentroidData == true){
 				checkedItems = oldParamatersTask.detectOldDevicesSelected(keyDevicesMac, itemsId);
-				
-			/*	System.out.println("----------");
-				for(int i = 0; i < checkedItems.length; i++)
-					System.out.print(checkedItems[i]+ " , ");
-				
-				System.out.println("----------");*/
 			}
 			else
 				checkedItems = null;
-		
-		System.out.println("itemsId :" + itemsId.size() + " " + itemsId.toString());
-		System.out.println("booleanUpdateGuiCentroidData ESTE : " + booleanUpdateGuiCentroidData);
-		System.out.println("booleanGetFromTaskToModify ESTE :  " + booleanGetFromTaskToModify);
-		System.out.println("DRACU SA O IA : " + IntegerDevicesCheckedItems);
 		
 		
 		builder.setMultiChoiceItems(items, checkedItems,
@@ -824,12 +785,6 @@ public class AddTask extends   FragmentActivity
 					@Override
 					public void onClick(DialogInterface arg0, int indexSelected,
 							boolean isChecked) {
-						
-
-						
-						
-						System.out.println("itemsId :" + itemsId.size() + " " + itemsId.toString());
-						System.out.println(indexSelected + " " + isChecked);
 						
 						if(isChecked == true)
 							itemsId.add(indexSelected);
@@ -869,8 +824,6 @@ public class AddTask extends   FragmentActivity
             	
             	
             	IntegerDevicesCheckedItems = itemsId;
-            	
-            	System.out.println("ID-URILE DISPOZITIVELOR SELECTATE" + IntegerDevicesCheckedItems);
             	
             	if(booleanUpdateGuiCentroidData == true)
             		booleanUpdateGuiCentroidData = false;
@@ -1014,9 +967,6 @@ public class AddTask extends   FragmentActivity
 	public void setPositionOnMap(Location location){
 		
 		positionCurrent = new LatLng(location.getLatitude(), location.getLongitude());
-         
-    	System.out.println("POZITIA ACTUALA" + positionCurrent.latitude + " " + positionCurrent.longitude);
-    	Log.w("Pozitie actuala", positionCurrent.latitude + " " + positionCurrent.longitude); 
     
     	map.moveCamera(CameraUpdateFactory.newLatLngZoom(positionCurrent, 15));
 
@@ -1071,7 +1021,7 @@ public class AddTask extends   FragmentActivity
 		
 		if(v.getId() == R.id.buttonSearchLocation)
 		{
-			//autoLocationSearch.getText().toString();
+
 			String searchPattern = autoLocationSearch.getText().toString();
 			
 			
@@ -1092,7 +1042,6 @@ public class AddTask extends   FragmentActivity
 							autoLocationSearch.setText("Not found");
 							return;
 						}
-						System.out.println("LOCATIA CAUTATA ESTE" + searchPattern + "---"+ addresses.toString()+"----");
 					
 						Address closest = determineClosestAddress(addresses);
 						
@@ -1122,11 +1071,8 @@ public class AddTask extends   FragmentActivity
 		double distanceMax = 10000;
 		double distance;
 		
-		System.out.println("Pozitia curenta este" + positionCurrent.latitude + "  " + positionCurrent.longitude);
-		
 		for(Address adresa : addresses)
 		{
-			System.out.println(adresa.getLatitude() + " " + adresa.getLongitude());
 			
 			
 			distance = (float) Math.pow(positionCurrent.latitude - adresa.getLatitude(), 2) +
@@ -1151,10 +1097,7 @@ public class AddTask extends   FragmentActivity
 	 * @param location : the location search by the user, to be included in sharedpreferences
 	 */
 	public void saveLocationNameToSharedPreferences(String location) {
-		
-		System.out.println( "LOCATIILE SUNT" + locationsString);
-		
-		Log.w("Location", locationsString);
+
 		
 		ArrayList<String> arrayLocations = new ArrayList<String>(Arrays.asList(locationsSearched));
 		if(arrayLocations.contains(location) == true)
@@ -1166,10 +1109,6 @@ public class AddTask extends   FragmentActivity
 		
 		
 		locationsString = locationsString + "###" + location;
-		
-//		System.out.println( "LOCATIILE SUNT" + locationsString);
-	
-		Log.w("Location", locationsString);
 		
 		edit.putString(keyLocationSharedPreferences, locationsString);
 		
@@ -1332,14 +1271,9 @@ public void setTitle(AutoCompleteTextView title) {
 @Override
 public void afterTextChanged(Editable s) {
 	
-	
-	System.out.println("1.  NICI MACAR AICI NU INTRA ?");
-	
-
 	if(autoTitle.getEditableText()  == s)
 	{	
-		
-		System.out.println("2.  NICI MACAR AICI NU INTRA ?");
+
 		
 		if(   Math.abs(s.toString().length() - stringLastTitle.length() ) > 5 )
 			 booleanHasDetectedLocation = false;
@@ -1350,26 +1284,13 @@ public void afterTextChanged(Editable s) {
 		
 		
 		Task returnTask =  Core.getClusteringLocation().detectCentroid(currentTask);
-		
-		if(returnTask == null)
-			System.out.println("Taskul descoperit este null");
-		else
-			System.out.println("Taskul descoperit NU ESTE NULL");
-		
-		
-		if(booleanHasDetectedLocation == false)
-			System.out.println("booleanHasDetectedLocation este false");
-		else
-			System.out.println("booleanHasDetectedLocation este true");
+
 		
 		
 		if(returnTask != null && booleanHasDetectedLocation == false)
 		{
 			booleanHasDetectedLocation = true;
 			booleanUpdateGuiCentroidData = true;
-			
-			
-			System.out.println("3.   NICI MACAR AICI NU INTRA ?");
 			
 			
 			LocationContext location = (LocationContext)returnTask.getInternContext().
@@ -1389,8 +1310,7 @@ public void afterTextChanged(Editable s) {
 			
 			if(booleanGetFromTaskToModify == false || DEVICES_DIALOG_ID != Constants.deviceFirstShow)
 			{
-				
-				System.out.println("APELEAZA LoadDevicesFromCentroid " + DEVICES_DIALOG_ID);
+
 				oldParamatersTask = new ParametersToModify(); 
 				loadDevicesFromCentroid(returnTask);
 				loadPeopleFromCentroid(returnTask);
@@ -1421,25 +1341,12 @@ private void loadPeopleFromCentroid(Task centroid) {
 	ArrayList<String> people = peopleC.getPeopleTask();
 	String peopleString = "";
 	oldParamatersTask.changePeople(people);
-	
-	System.out.println("Persoanele din peopleC sunt :" + people);
-	System.out.println("MACURILE persoanelor sunt " + MAP_people_devices_name_Mac);
+
 
 	IntegerPeopleCheckeditems.clear();
 	
 	if(people.size() != 0 && people.get(0).equals("")== false)
 	{
-	/*	for( i = 0; i < people.size() -1 ; i++){
-			peopleString += MAP_people_devices_name_Mac.get( people.get(i)) + ",";
-			if(MAP_people_devices_name_Mac.containsKey(people.get(i)))
-				IntegerPeopleCheckeditems.add(i); 
-		}
-	
-		peopleString +=  MAP_people_devices_name_Mac.get(people.get(i));
-		if(MAP_people_devices_name_Mac.containsKey(people.get(i)))
-			IntegerPeopleCheckeditems.add(i); 
-			
-			*/
 		
 		for( i = 0; i < people.size() -1 ; i++){
 			peopleString += MAP_people_devices_name_Mac.get( people.get(i)) + ",";
@@ -1455,11 +1362,9 @@ private void loadPeopleFromCentroid(Task centroid) {
 		peopleString = Constants.noChoose;
 	
 	textViewPeople.setText(peopleString);
-	System.out.println("1.IntegerPeopleChedkItems este " + IntegerPeopleCheckeditems);
 	
 	PEOPLE_DIALOG_ID += 2;
 	onCreateDialog(PEOPLE_DIALOG_ID);
-	System.out.println("2.IntegerPeopleChedkItems este " + IntegerPeopleCheckeditems);
 }
 
 
@@ -1469,7 +1374,6 @@ public void loadDevicesFromCentroid(Task centroid)
 {
 	int i;
 	List<String> keyList = new ArrayList<String>(MAP_myDevices_name_Mac.keySet());
-	System.out.println("INTRA AICI????? " + DEVICES_DIALOG_ID);
 	
 	DeviceContext deviceC = (DeviceContext) centroid.getInternContext().
 	getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
@@ -1477,27 +1381,15 @@ public void loadDevicesFromCentroid(Task centroid)
 	ArrayList<String> devices = deviceC.getDeviceTask();
 	String devicesString = "";
 	oldParamatersTask.changeDevices(devices);
-	
-	System.out.println("Dispozitivele din deviceC sunt " + devices );
-	System.out.println("Mapul myDevice este : " + MAP_myDevices_name_Mac);
 
 	IntegerDevicesCheckedItems.clear();
 	
 	if(devices.size() != 0 && devices.get(0).equals("")== false )
 	{
-	/*	for( i = 0; i < devices.size() -1 ; i++){
-			devicesString += MAP_myDevices_name_Mac.get( devices.get(i)) + ",";
-			if(MAP_myDevices_name_Mac.containsKey(devices.get(i)))
-				IntegerDevicesCheckedItems.add(i); 
-		}
-	
-		devicesString +=  MAP_myDevices_name_Mac.get(devices.get(devices.size() - 1));
-		if(MAP_myDevices_name_Mac.containsKey(devices.get(devices.size() - 1)))
-			IntegerDevicesCheckedItems.add(devices.size() - 1); */
 		
 		for( i = 0; i < devices.size() -1 ; i++){
-			devicesString += MAP_myDevices_name_Mac.get( devices.get(i)) + ",";
 			
+			devicesString += MAP_myDevices_name_Mac.get( devices.get(i)) + ",";
 			IntegerDevicesCheckedItems.add(keyList.indexOf( devices.get(i))); 
 			
 		}
@@ -1508,12 +1400,9 @@ public void loadDevicesFromCentroid(Task centroid)
 		devicesString = Constants.noChoose;
 	
 	textViewDevices.setText(devicesString);
-	System.out.println("1.IntegerDevicesChedkItems este " + IntegerDevicesCheckedItems);
-
-	
 	DEVICES_DIALOG_ID += 2;
 	onCreateDialog(DEVICES_DIALOG_ID);
-	System.out.println("2.IntegerDevicesChedkItems este " + IntegerDevicesCheckedItems);
+
 }
 
 

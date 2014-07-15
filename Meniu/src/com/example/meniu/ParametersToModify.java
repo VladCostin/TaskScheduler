@@ -66,15 +66,10 @@ public class ParametersToModify
 	
 	public void changeDevices(ArrayList<String> devices)
 	{
-		//String[] stockArr = new String[stock_list.size()];
-		//stockArr = stock_list.toArray(stockArr);
 		
 		this.devices = new String[devices.size()];
 		devices.toArray(this.devices);
 		
-		
-		for(String device : this.devices)
-			System.out.println("Un dispozitiv este " + device);
 	}
 	
 	
@@ -97,10 +92,6 @@ public class ParametersToModify
 	{
 		int i,j;
 		boolean isOld;
-		
-/*		System.out.println("A INTRAT AICI n detect olda devices " + devices.length);
-		for(i = 0; i < devices.length; i++)
-			System.out.println("ADRESA MAC " + devices[i]);*/
 		
 		if(devices == null){
 			
@@ -128,14 +119,6 @@ public class ParametersToModify
 				itemsId.add(i);
 		}
 		
-		System.out.println("IN metoda asta, itemsId are la sfarsit " + itemsId);
-		System.out.println("###########");
-		for(i = 0; i < oldDevices.length; i++)
-			System.out.print(oldDevices[i]+ " , ");
-		System.out.println("########");
-		
-		
-	//	devices = null;
 		
 		return oldDevices;
 		
@@ -172,7 +155,6 @@ public class ParametersToModify
 			if(isOld == true)
 				itemsId.add(i);
 		}
-	//	people = null;
 		
 		return oldPeople;
 		

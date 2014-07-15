@@ -205,7 +205,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			nameDevice.setTextSize(20);
 			nameDevice.setId( ++ numberOfView);
 			nameDevice.setTextColor(Color.BLUE);
-		//	params_nameDevice.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			params_nameDevice.addRule(RelativeLayout.BELOW, numberOfView - 1);
 		    nameDevice.setLayoutParams(params_nameDevice);
 			
@@ -213,7 +212,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			nameDeviceValue.setText(device.getNameDevice());
 			nameDeviceValue.setTextSize(20);
 			nameDeviceValue.setId( ++ numberOfView);
-		//	params_nameDevice_value.addRule(RelativeLayout.ALIGN_BASELINE, numberOfView - 1);
 			params_nameDevice_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			params_nameDevice_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 		    nameDeviceValue.setLayoutParams(params_nameDevice_value);
@@ -222,7 +220,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 		    macAddress.setTextSize(20);
 		    macAddress.setId( ++ numberOfView);
 		    macAddress.setTextColor(Color.BLUE);
-	//	    params_macAddress.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			params_macAddress.addRule(RelativeLayout.BELOW, numberOfView - 1);
 			macAddress.setLayoutParams(params_macAddress);
 			
@@ -230,7 +227,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			macAddressValue.setText(device.getMacAddress());
 			macAddressValue.setTextSize(20);
 			macAddressValue.setId( ++ numberOfView);
-		//	params_macAddress_value.addRule(RelativeLayout.ALIGN_BASELINE, numberOfView - 1);
 			params_macAddress_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			params_macAddress_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			macAddressValue.setLayoutParams(params_macAddress_value);
@@ -240,14 +236,12 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 		    nameOwner.setTextSize(20);
 		    nameOwner.setId( ++ numberOfView);
 		    nameOwner.setTextColor(Color.BLUE);
-	//	    params_nameOwner.addRule(RelativeLayout.BELOW, numberOfView - 2);
 		    params_nameOwner.addRule(RelativeLayout.BELOW, numberOfView - 1);
 		    nameOwner.setLayoutParams(params_nameOwner);	
 			
 		    nameOwnerValue.setText(device.getOwnerDevice());
 		    nameOwnerValue.setTextSize(20);
 		    nameOwnerValue.setId( ++ numberOfView);
-		//	params_macAddress_value.addRule(RelativeLayout.ALIGN_BASELINE, numberOfView - 1);
 			params_nameOwner_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			params_nameOwner_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			nameOwnerValue.setLayoutParams(params_nameOwner_value);
@@ -255,7 +249,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 		    butonSave.setText(getResources().getString(R.string.buttonSaveNewOwnerDevice));
 		    butonSave.setTextSize(20);
 		    butonSave.setId( ++ numberOfView);
-	//	    params_nameOwner.addRule(RelativeLayout.BELOW, numberOfView - 2);
 		    params_save.addRule(RelativeLayout.BELOW, numberOfView - 1);
 		    butonSave.setLayoutParams(params_save);
 		    butonSave.setOnClickListener(this);
@@ -265,7 +258,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 		    butonSaveAsMyDevice.setText(getResources().getString(R.string.buttonSaveMyDevice));
 		    butonSaveAsMyDevice.setTextSize(20);
 		    butonSaveAsMyDevice.setId( ++ numberOfView);
-	//		params_saveAsMyDevice.addRule(RelativeLayout.ALIGN_BASELINE, numberOfView - 1);
 			params_saveAsMyDevice.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 		    params_saveAsMyDevice.addRule(RelativeLayout.BELOW, numberOfView - 2); 
 		    butonSaveAsMyDevice.setLayoutParams(params_saveAsMyDevice);
@@ -275,7 +267,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 		    butonErase.setText(getResources().getString(R.string.buttonEraseDevice));
 		    butonErase.setTextSize(20);
 		    butonErase.setId( ++ numberOfView);
-	//		params_saveAsMyDevice.addRule(RelativeLayout.ALIGN_BASELINE, numberOfView - 1);
 			params_erase.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 		    params_erase.addRule(RelativeLayout.BELOW, numberOfView - 3); 
 		    butonErase.setLayoutParams(params_erase);
@@ -379,8 +370,6 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 		states.add(TaskState.AMONG_TO_DO_LIST);
 		List<Task> tasks = MainActivity.getDatabase().getFilteredTasks(states);
 		ArrayList<String> devices;
-		
-		System.out.println("A INTRAT AICI");
 
 		for(Task task : tasks)
 		{
@@ -396,15 +385,9 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			devices.addAll(peopleC.getPeopleTask());
 			
 			
-			System.out.println("MACURILE SUNT " + devices);
-			System.out.println("Dispozitivele de sters sunt" + idDevicesToErase);
-			
-			
 			for(String macDevice : idDevicesToErase)
 				devices.remove(macDevice);
-			
-			System.out.println("Dispozitivele ramase sunt : " + devices);
-			
+
 			
 			String devicesString="";
 			for(String device : devices)
@@ -414,19 +397,14 @@ public class ActivityChangeDeviceData extends Activity implements OnClickListene
 			
 			
 			if(devicesString.length() > 0)
-			{
 				devicesString = devicesString.substring(1);
-			}
-				System.out.println("Sirul de macuri este in final :" + devicesString);
-				MainActivity.getDatabase().updateTask(task.getID(), Tasks.KEY_Device , devicesString);
+			MainActivity.getDatabase().updateTask(task.getID(), Tasks.KEY_Device , devicesString);
 			
 			
 		}
 		
 		Core.changeTasksDevices();
-		
-	//	MainActivity.getDatabase().updateTask(1, Tasks.KEY_Device, "");
-	//	MainActivity.getDatabase().updateTask(2, Tasks.KEY_Device, "");
+
 		
 		
 	}

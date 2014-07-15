@@ -48,8 +48,7 @@ public class CalculateCurrentContext {
     	for(Entry<String,String> devices : activityShowTask.getMAP_people_devices_name_Mac().entrySet())
     		if(activityShowTask.getDeviceInfo().containsKey(devices.getKey())   )
     				people.add(devices.getKey());
-    	
-    	System.out.println("Persoanele cunoscute sunt" + people);
+
 		return people;
 	}
     
@@ -67,7 +66,6 @@ public class CalculateCurrentContext {
     		if(activityShowTask.getDeviceInfo().containsKey(devices.getKey())   )
     				devicesDetected.add(devices.getKey());	
     	
-    	System.out.println("Dispozitivele mele sunt" + devicesDetected);
 		return devicesDetected;
 		
 	}
@@ -124,10 +122,7 @@ public class CalculateCurrentContext {
 			Task centerTask = activityShowTask.durationAlg.detectCentroid(task);
 			DurationContext durationCenterTask = (DurationContext)
 			centerTask.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
-					
-					
-			if(durationCenterTask == null)
-				System.out.println("DURATION CENTER TASK ESTE NULL");
+
 					
 			duration.setDuration( durationCenterTask.getDuration() );
 					
@@ -194,16 +189,6 @@ public class CalculateCurrentContext {
 		endHour = minutes / 60;
 		endMinute = minutes % 60;
 		
-		//System.out.println("TIMPII SUNT " + endHour + " " + endMinute + " " + startHour + " " + startMinute + " " + contextDuration.getTemporalDurationTravel() + " " + contextDuration.getDuration());
-		System.out.println("End HOUR " + endHour);
-		System.out.println("Minute" + minutes );
-		System.out.println("End Minute " + endMinute);
-		System.out.println("Start Hour " + startHour);
-		System.out.println("Start Minute " + startMinute);
-		System.out.println("Durata travel " +  contextDuration.getTemporalDurationTravel() );
-		System.out.println("Durata task " + contextDuration.getDuration());
-		
-		
 		
 		contextInterval.setStartHour(startHour);
 		contextInterval.setStartMinute(startMinute);
@@ -212,21 +197,5 @@ public class CalculateCurrentContext {
 		
 
 	}
-
-/*	public void prepareDistance(Task task, Context currentContext) {
-		
-		int distance;
-		LocationContext currentContext = (LocationContext) currentContext;
-		LocationContext taskContext = (LocationContext) task.getInternContext().
-		getContextElementsCollection().get(ContextElementType.LOCATION_CONTEXT_ELEMENT);
-		
-	
-		
-		distance = Core.calculateDistanceTravel
-		(currentContext.getLatitude(), currentContext.getLongitude(), taskContext.getLatitude(), taskContext.getLongitude());
-		
-		taskdetails.setDistance(distance);
-		
-	}*/
 	
 }

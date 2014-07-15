@@ -712,8 +712,6 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 				setNextInterval();
 			}
 		
-	//	layout.removeView(textViewPatienceMessage);
-		
 		
 	}
 	
@@ -772,12 +770,6 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 		 
 		 populationCompute.start();
 		
-		 
-		// layout.removeView( textViewPatienceMessage);
- 		 
-		 
-		// population.startEvolution();
-		
 		
 	}
 	
@@ -820,10 +812,9 @@ public class ActivityScheduler extends Activity implements OnClickListener,
 
 	@Override
 	public void onLocationChanged(Location arg0) {
+		
 		currentPosition = new LatLng(arg0.getLatitude(), arg0.getLongitude());
-		
-		System.out.println("A intrat aici");
-		
+
 		population.setCurrentPosition(currentPosition);
 		population.setEndPosition(currentPosition); 
 		

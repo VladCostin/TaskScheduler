@@ -206,10 +206,7 @@ public class Core {
 	{
 		ArrayList<String> titles = new ArrayList<String>();
 		for(Task task : centersTitles) 
-		{
-			System.out.println("CENTROID" + task.getNameTask());
 			titles.add(task.getNameTask());
-		}
 
 		return titles;
 
@@ -230,13 +227,6 @@ public class Core {
 		
 		for(Task centroid : centersTitles)
 			changeTaskDevice(centroid, devices);
-		
-	/*	for(Task centroid : centersDuration){
-			
-			changeTaskDevice(centroid,devices);
-		}
-		
-	*/	
 		
 	}
 	
