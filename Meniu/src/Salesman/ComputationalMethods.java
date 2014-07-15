@@ -25,7 +25,6 @@ public class ComputationalMethods {
 	
 	public ComputationalMethods() {
 		
-	//	durations = new HashMap<Integer,Integer>();
 		prioritiesValues = new HashMap<Integer,Integer>();
 		kDurations = new KMeansDuration();
 		

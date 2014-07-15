@@ -19,6 +19,7 @@ import Comparators.PriorityComparator;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
+import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import ContextElements.TemporalContext;
@@ -246,8 +247,10 @@ public class ShowAllTasks extends Activity
 	{
 		  
 	
-		   TextView title,priority,  deadline,people, devices;
-		   TextView titleValue, priorityValue ,  deadlineValue, peopleValue, devicesValue;
+		   TextView title,priority,  deadline,people, devices, duration;
+		   
+		   TextView titleValue, priorityValue ,  deadlineValue, peopleValue, devicesValue, durationValue;
+		   
 		   Button butonErase, butonModifyData;
 		   
 		   
@@ -330,6 +333,21 @@ public class ShowAllTasks extends Activity
 						 				            RelativeLayout.LayoutParams.WRAP_CONTENT);
 		    
 		    params_modify.setMargins(20, 10, 0, 0);
+		    
+		    
+		    RelativeLayout.LayoutParams params_duration = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+				 				                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    
+		    params_duration.setMargins(20, 10, 0, 0);
+		    
+		    
+		    RelativeLayout.LayoutParams params_duration_value = 
+		    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+						 				            RelativeLayout.LayoutParams.WRAP_CONTENT);
+		    
+		    params_duration_value.setMargins(20, 10, 0, 0);
 				   
 			
 
@@ -337,12 +355,14 @@ public class ShowAllTasks extends Activity
 			deadline = new TextView(this);
 			people = new TextView(this);
 			devices = new TextView(this);
+			duration = new TextView(this);
 			
 			titleValue  =   new TextView(this);
 			priorityValue = new TextView(this);
 			deadlineValue = new TextView(this);
 			peopleValue =   new TextView(this);
 			devicesValue = new TextView(this);
+			durationValue = new TextView(this);
 			
 			butonErase = new Button(this);
 			butonModifyData	= new Button(this);
@@ -394,6 +414,28 @@ public class ShowAllTasks extends Activity
 			params_deadline_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
 			params_deadline_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
 			deadlineValue.setLayoutParams(params_deadline_value);
+			
+			/////////////////
+			
+			duration.setText(R.string.Duration);
+			duration.setTextSize(20);
+			duration.setId( ++ numberOfView);
+			params_duration.addRule(RelativeLayout.BELOW, numberOfView - 1);
+			duration.setLayoutParams(params_duration);
+			
+			
+			DurationContext  durationTask = (DurationContext) 
+			task.getInternContext().getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+			
+			durationValue.setText(durationTask.getDurationString());
+			durationValue.setTextSize(20);
+			durationValue.setId( ++ numberOfView);
+			params_duration_value.addRule(RelativeLayout.BELOW, numberOfView - 2);
+			params_duration_value.addRule(RelativeLayout.RIGHT_OF, numberOfView - 1);
+			durationValue.setLayoutParams(params_duration_value);
+			
+			
+			
 			
 			
 			people.setText(R.string.buttonChoosePeople);
@@ -468,6 +510,8 @@ public class ShowAllTasks extends Activity
 			layout.addView(priorityValue);
 			layout.addView(deadline);
 			layout.addView(deadlineValue);
+			layout.addView(duration);
+			layout.addView(durationValue);
 			layout.addView(people);
 			layout.addView(peopleValue);
 			layout.addView(devices);

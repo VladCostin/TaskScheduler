@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import ContextElements.ContextElementType;
+import ContextElements.DeviceContext;
 import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import Task.Task;

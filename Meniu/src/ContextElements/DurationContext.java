@@ -1,5 +1,7 @@
 package ContextElements;
 
+import com.example.meniu.Constants;
+
 /**
  * the duration estimated by the intelligent agent based on the location and hour
  * 
@@ -38,6 +40,15 @@ public class DurationContext extends ContextElement{
 
 	public void setTemporalDurationTravel(Integer temporalDurationTravel) {
 		this.temporalDurationTravel = temporalDurationTravel;
+	}
+	
+	
+	public String getDurationString()
+	{
+		if(this.duration == -1)
+			return Constants.noChoose;
+		
+		return Integer.toString(duration);
 	}
 
 

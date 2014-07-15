@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import Task.Task;
@@ -28,7 +29,7 @@ public class Core {
 	 */
 	private static HashMap<String,Integer> prioritiesValues;
 	
-	private static HashMap<String,Integer> durationMinutes;
+	private static LinkedHashMap<String,Integer> durationMinutes;
 	
 	
 	private static KMeansDistances distancesCalculator; 
@@ -57,7 +58,7 @@ public class Core {
 	Core(){
 		
 		prioritiesValues    = new HashMap<String,Integer>();
-		durationMinutes     = new HashMap<String,Integer>();
+		durationMinutes     = new LinkedHashMap<String,Integer>();
 		distancesCalculator = new KMeansDistances();
 		days				= new HashMap<Integer, DaysOfWeek>();
 		clusteringLocation = new KMeansTitle();
@@ -230,10 +231,12 @@ public class Core {
 		for(Task centroid : centersTitles)
 			changeTaskDevice(centroid, devices);
 		
-		for(Task centroid : centersDuration)
+	/*	for(Task centroid : centersDuration){
+			
 			changeTaskDevice(centroid,devices);
+		}
 		
-		
+	*/	
 		
 	}
 	
@@ -246,9 +249,12 @@ public class Core {
 		PeopleContext peopleC = (PeopleContext) centroid.getInternContext().
 		getContextElementsCollection().get(ContextElementType.PEOPLE_ELEMENT);
 				
+		
 				
 		for(Device device : devices)
 		{
+			
+			
 			if(device.getOwnerDevice().equals(Constants.myDevice) &&
 			peopleC.getPeopleTask().contains(device.getMacAddress())) 
 			{
@@ -282,7 +288,7 @@ public class Core {
 		return durationMinutes;
 	}
 
-	public static void setDurationMinutes(HashMap<String,Integer> durationMinutes) {
+	public static void setDurationMinutes(LinkedHashMap<String,Integer> durationMinutes) {
 		Core.durationMinutes = durationMinutes;
 	}
 
@@ -299,6 +305,9 @@ public class Core {
 	}
 
 	public static void setCentersDuration(ArrayList<Task> centersDurationRecv) {
+		
+		
+		
 		centersDuration = centersDurationRecv; 
 	}
 

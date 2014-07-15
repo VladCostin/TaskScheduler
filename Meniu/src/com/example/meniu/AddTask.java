@@ -482,11 +482,13 @@ public class AddTask extends   FragmentActivity
 		}
 		
 		String title,deadline,priorityString, people[], devices[];
+		String duration;
 		double locationDouble[]; 
 		String devicesString = "";
 		String peopleString  = "";
 		LatLng position;
 		int i, id;
+		
 		
 		
 		title 	= intent.getStringExtra(AlterateTask.TITLE_MESSAGE);
@@ -495,6 +497,7 @@ public class AddTask extends   FragmentActivity
 		deadline = intent.getStringExtra(AlterateTask.DEADLINE_MESSAGE);
 		locationDouble = intent.getDoubleArrayExtra(AlterateTask.LOCATION_MESSAGE);
 		priorityString = intent.getStringExtra(AlterateTask.PRIORITY_MESSAGE);
+		duration = intent.getStringExtra(AlterateTask.DURATION_MESSAGE);
 		 
 		
 		booleanGetFromTaskToModify = true;
@@ -511,7 +514,21 @@ public class AddTask extends   FragmentActivity
 		
 		spinnerPriority.setSelection( Core.getPrioritiesValues().get(priorityString) ); 
 		
-		System.out.println("TITLUL ESTE " + title);
+		i = 0;
+		for(String s : Core.getDurationMinutes().keySet())
+		{
+			String value = Integer.toString(Core.getDurationMinutes().get(s));
+			if(value.equals(duration))
+				break;
+			i++;
+			
+		}
+		
+		System.out.println("AM AJUNS LA : "+ i);
+		
+		this.duration.setSelection(i); 
+		
+	//	System.out.println("TITLUL ESTE " + title);
 		
 
 		autoTitle.setText(title); 
@@ -940,6 +957,7 @@ public class AddTask extends   FragmentActivity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		
 	}

@@ -16,17 +16,12 @@ import ContextElements.ContextElement;
  */
 public class Context {
 
-	/**
-	 * the location where the task can be executed
-	 */
-//	LocationContext location;
+
+	
 	
 	/**
-	 * data refering to the duration and interval when the task can be executed
+	 * ccontains the data refferint to each context element
 	 */
-private //	TemporalContext time;
-	
-	
 	HashMap<ContextElementType,ContextElement> contextElementsCollection;
 
 

@@ -11,6 +11,7 @@ import com.example.meniu.ShowTasks;
 import ContextElements.ContextElementType;
 import ContextElements.DeadlineContext;
 import ContextElements.DeviceContext;
+import ContextElements.DurationContext;
 import ContextElements.LocationContext;
 import ContextElements.PeopleContext;
 import Task.Task;
@@ -34,6 +35,7 @@ public class AlterateTask implements OnClickListener  {
 	 public final static String LOCATION_MESSAGE 	= "LocationTask";
 	 public final static String DEADLINE_MESSAGE    = "DeadlineTask";
 	 public final static String PRIORITY_MESSAGE	= "PriorityTask";
+	 public final static String DURATION_MESSAGE    = "DurationTask";
 	
 	
 	/**
@@ -81,6 +83,7 @@ public class AlterateTask implements OnClickListener  {
 		DeadlineContext deadline;
 		PeopleContext people;
 		DeviceContext devices;
+		DurationContext duration;
 		
 		
 		String peopleArray[], devicesArray[];
@@ -108,6 +111,10 @@ public class AlterateTask implements OnClickListener  {
 		 devices  = (DeviceContext) taskToModify.getInternContext().
 					getContextElementsCollection().get(ContextElementType.DEVICES_ELEMENT);
 		 
+		 
+		 duration = (DurationContext) taskToModify.getInternContext().
+					getContextElementsCollection().get(ContextElementType.DURATION_ELEMENT);
+		 
 		 peopleArray = new String[people.getPeopleTask().size()];
 		 people.getPeopleTask().toArray(peopleArray);
 		 
@@ -130,6 +137,7 @@ public class AlterateTask implements OnClickListener  {
 		intentModify.putExtra(DEADLINE_MESSAGE, deadline.getDeadline());
 		intentModify.putExtra(LOCATION_MESSAGE, locationArray);
 		intentModify.putExtra(PRIORITY_MESSAGE, taskToModify.getPriority());
+		intentModify.putExtra(DURATION_MESSAGE, Integer.toString( duration.getDuration()));
 		
 		
 		System.out.println("DEADLINE_UL ESTE " +  deadline.getDeadline());
